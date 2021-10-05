@@ -4,48 +4,27 @@ import java.time.LocalDate; // import the LocalDate class
 
 public class Expense {
 
-    public static String[] categories = {"Food", "Entertainment", "Transportation", "Household", "Apparel", "Beauty", "Gift", "Other"};
-
-    private int catNum;
-    private String description;
+    private String name;
     private LocalDate date;
     private double amount;
-    private boolean monthly;
 
     public Expense() {
-        catNum = 7;
-        description = "none";
         date = LocalDate.of(2021, 1, 1);
         amount = 0;
-        monthly = false;
     }
 
-    public Expense(int catNum, String description, double amount) {
-        this.catNum = catNum;
-        this.description = description;
-        this.date = LocalDate.now();
-        this.amount = amount;
-        this.monthly = false;
+    public Expense(String name, String date, String amount) {
+        this.name = name;
+        this.date = LocalDate.parse(date);
+        this.amount = Double.parseDouble(amount);
     }
 
-    public String getCat() {
-        return categories[this.getCatNum()];
+    public String getName() {
+        return name;
     }
 
-    public int getCatNum() {
-        return catNum;
-    }
-
-    public void setCatNum(int catNum) {
-        this.catNum = catNum;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String name) {
+        this.name = name;
     }
 
     public LocalDate getDate() {
@@ -64,19 +43,8 @@ public class Expense {
         this.amount = amount;
     }
 
-    public boolean isMonthly() {
-        return monthly;
-    }
-
-    public void setMonthly(boolean monthly) {
-        this.monthly = monthly;
-    }
-
-//    mm dd yyyy |      food      | amt |description
-//    mm dd yyyy | transportation | amt |description
-
     public String toString() {
-        return getDate() + " | " + getCat() + " | $" + getAmount() + " | " + getDescription() ;
+        return getName() + " | " + getDate() + " | $" + String.format("%,.2f", getAmount());
     }
 
 }
