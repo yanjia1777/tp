@@ -41,13 +41,13 @@ public class Parser {
     public int executeCommand(ExpenseList expenseList) {
         switch(command){
         case "view":
-            //gimin add here
+            expenseList.view();
             break;
         case "add":
             expenseList.addExpense(arg1, arg2, arg3);
             break;
         case "delete":
-            //gimin add here
+            expenseList.deleteExpense(arg1, arg2, arg3);
             break;
         case "exit":
             Ui.shutdown();

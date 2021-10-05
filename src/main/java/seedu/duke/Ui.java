@@ -1,6 +1,8 @@
 package seedu.duke;
 
 public class Ui {
+    protected static final String INDENT = "    ";
+
     public static void startup() {
         System.out.println("Hello! I'm Mint");
         System.out.println("What can I do for you?");
