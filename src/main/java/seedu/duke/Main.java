@@ -12,27 +12,17 @@ public class Main {
     }
 
     public void run() {
-        ArrayList<Expense> expenseList = new ArrayList<>();
+        Ui.startup();
         Scanner in = new Scanner(System.in);
+        String userInput = in.nextLine();
+        ExpenseList expenseList = new ExpenseList();
+        Parser parser = new Parser(userInput);
         while (true) {
-            String userInput = in.nextLine();
-            if(userInput.equals("bye")) {
+            if (parser.executeCommand(expenseList) == -1) {
                 break;
-            } else {
-                addExpense(expenseList, userInput);
             }
+            userInput = in.nextLine();
+            parser.parseInput(userInput);
         }
-    }
-
-    private void addExpense(ArrayList<Expense> expenseList, String userInput) {
-        //      Expected user input: 0 Water $10
-        String[] splitUserInput = userInput.split(" ", 2);
-        int catNum = Integer.parseInt(splitUserInput[0]);
-        String[] expenseDescriptionAndAmount = splitUserInput[1].split("\\$");
-        Double amount = Double.parseDouble(expenseDescriptionAndAmount[1]);
-        String description = expenseDescriptionAndAmount[0];
-
-        expenseList.add(new Expense(catNum, description, amount));
-//        System.out.println(expenseList);
     }
 }
