@@ -22,32 +22,72 @@ public class Parser {
         return matcher.find() ? matcher.start() : -1;
     }
 
+    public String parserExtractCommand(String userInput) {
+        return userInput.split(" ", 2)[0];
+    }
+
+    private int getCurrentTagIndex(String userInput) {
+        int currentTagIndex;
+        currentTagIndex = indexOf(userInput, userTag);
+        return currentTagIndex;
+    }
+
+    private String getTagType(String userInput, int currentTagIndex) {
+        String tagType;
+        tagType = String.valueOf(userInput.charAt(currentTagIndex + 1));
+        return tagType;
+    }
+
+    private String getDescription(String userInput, int currentTagIndex) {
+        String description;
+        description = userInput.substring(currentTagIndex + 3).trim();
+        return description;
+    }
+
+    private String getDescription(String userInput, int currentTagIndex, int nextTagIndex) {
+        String description;
+        description = userInput.substring(currentTagIndex + 3, nextTagIndex).trim();
+        return description;
+    }
+
+
+    private int getNextTagIndex(String userInput) {
+        int nextTagIndex;
+        nextTagIndex = indexOf(userInput.substring(3), userTag) + 3;
+        return nextTagIndex;
+    }
+
+    private boolean hasNextTag(String userString, int currentTagIndex) {
+        return userString.substring(currentTagIndex + 3).matches(userTagRaw);
+    }
+
     public void parseInput(String userInput) {
         this.name = null;
         this.date = null;
         this.amount = null;
-
-        userInput = userInput.trim(); //get rid of whitespaces
-        String[] parseCommand = userInput.split(" ", 2); //extract command
-        this.command = parseCommand[0];
         String description;
         String tagType;
         int currentTagIndex;
-        int nextTagIndex = userInput.length();
+        int nextTagIndex;
         boolean hasNext;
+
+        userInput = userInput.trim(); //get rid of whitespaces
+        this.command = parserExtractCommand(userInput);
+        if (userInput.length() == command.length()) return; //short circuit
+        nextTagIndex = userInput.length();
 
         //prep userInput for looping
         userInput = userInput.substring(command.length());
         while (userInput.matches(userTagRaw)) {
             hasNext = false;
-            currentTagIndex = indexOf(userInput, userTag);
-            tagType = String.valueOf(userInput.charAt(currentTagIndex + 1));
-            if (userInput.substring(currentTagIndex + 3).matches(userTagRaw)) {
+            currentTagIndex = getCurrentTagIndex(userInput);
+            tagType = getTagType(userInput, currentTagIndex);
+            if (hasNextTag(userInput, currentTagIndex)) {
                 hasNext = true;
-                nextTagIndex = indexOf(userInput.substring(3), userTag) + 3;
-                description = userInput.substring(3, nextTagIndex).trim();
+                nextTagIndex = getNextTagIndex(userInput);
+                description = getDescription(userInput, currentTagIndex, nextTagIndex);
             } else {
-                description = userInput.substring(currentTagIndex + 3).trim();
+                description = getDescription(userInput, currentTagIndex);
             }
 
             switch (tagType) {
@@ -60,6 +100,8 @@ public class Parser {
             case "a":
                 this.amount = description;
                 break;
+            default:
+                Ui.printInvalidTagError();
             }
             if (hasNext) {
                 userInput = userInput.substring(nextTagIndex);
