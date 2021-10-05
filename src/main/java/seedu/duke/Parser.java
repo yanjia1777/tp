@@ -26,7 +26,7 @@ public class Parser {
                 temp = temp.substring(temp.indexOf("d/") + 2);
                 if (temp.contains("a/")) {
                     arg2 = temp.substring(0, temp.indexOf("a/") - 1);
-                    arg3 = temp.substring(temp.indexOf("a/") +2);
+                    arg3 = temp.substring(temp.indexOf("a/") + 2);
                 } else {
                     arg2 = temp;
                 }
@@ -39,15 +39,15 @@ public class Parser {
     }
 
     public int executeCommand(ExpenseList expenseList) {
-        switch(command){
+        switch (command) {
         case "view":
-            //gimin add here
+            expenseList.view();
             break;
         case "add":
             expenseList.addExpense(arg1, arg2, arg3);
             break;
         case "delete":
-            //gimin add here
+            expenseList.deleteExpense(arg1, arg2, arg3);
             break;
         case "exit":
             Ui.shutdown();
