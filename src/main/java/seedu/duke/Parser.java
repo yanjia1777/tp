@@ -39,7 +39,7 @@ public class Parser {
     }
 
     public int executeCommand(ExpenseList expenseList) {
-        switch(command) {
+        switch (command) {
         case "view":
             expenseList.view();
             break;
