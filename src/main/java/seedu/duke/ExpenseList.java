@@ -1,14 +1,21 @@
 package seedu.duke;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class ExpenseList {
     protected ArrayList<Expense> expenseList = new ArrayList<>();
 
     public void addExpense(String name, String date, String amount) {
-        Expense expense = new Expense(name, date, amount);
-        System.out.println("I have added: " + expense);
-        expenseList.add(expense);
+        try {
+            Expense expense = new Expense(name, date, amount);
+            System.out.println("I have added: " + expense);
+            expenseList.add(expense);
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid amount!");
+        } catch (DateTimeParseException e) {
+            System.out.println("Please enter a valid date!");
+        }
     }
 
     public void deleteExpense(String name, String date, String amount) {
