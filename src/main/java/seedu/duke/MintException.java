@@ -1,7 +1,7 @@
 package seedu.duke;
 
 public class MintException extends Exception {
-    public MintException (String message) {
+    public MintException(String message) {
         super(message);
     }
 }
