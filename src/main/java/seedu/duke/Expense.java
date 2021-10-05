@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import java.time.LocalDate; // import the LocalDate class
+import java.util.Objects;
 
 public class Expense {
 
@@ -47,4 +48,25 @@ public class Expense {
         return getName() + " | " + getDate() + " | $" + String.format("%,.2f", getAmount());
     }
 
+    //@@author nipafx-reused
+    //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
+    //with minor modifications
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null) {
+            return false;
+        }
+        if (getClass() != object.getClass()) {
+            return false;
+        }
+
+        Expense expense = (Expense) object;
+        boolean isNameEqual = Objects.equals(name, expense.name);
+        boolean isDateEqual = Objects.equals(date, expense.date);
+        boolean isAmountEqual = Objects.equals(amount, expense.amount);
+
+        return isNameEqual && isDateEqual && isAmountEqual;
+    }
 }
