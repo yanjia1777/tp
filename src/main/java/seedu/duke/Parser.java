@@ -67,20 +67,20 @@ public class Parser {
         this.amount = null;
         String description;
         String tagType;
-        int currentTagIndex;
-        int nextTagIndex;
         boolean hasNext;
 
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
-        if (userInput.length() == command.length()) return; //short circuit
-        nextTagIndex = userInput.length();
+        if (userInput.length() == command.length()) {
+            return; //short circuit
+        }
+        int nextTagIndex = userInput.length();
 
         //prep userInput for looping
         userInput = userInput.substring(command.length());
         while (userInput.matches(userTagRaw)) {
             hasNext = false;
-            currentTagIndex = getCurrentTagIndex(userInput);
+            int currentTagIndex = getCurrentTagIndex(userInput);
             tagType = getTagType(userInput, currentTagIndex);
             if (hasNextTag(userInput, currentTagIndex)) {
                 hasNext = true;
