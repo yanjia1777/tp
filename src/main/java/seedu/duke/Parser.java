@@ -1,53 +1,126 @@
 package seedu.duke;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Parser {
+    // take note of the blank space,example " n/"
+    public static final String userTag = "\\s[a-z]/";
+    public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
     protected String command;
-    protected String arg1;
-    protected String arg2;
-    protected  String arg3;
+    protected String name;
+    protected String date;
+    protected String amount;
 
     public Parser(String userInput) {
         parseInput(userInput);
     }
 
+    public static int indexOf(String text, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find() ? matcher.start() : -1;
+    }
+
+    public String parserExtractCommand(String userInput) {
+        return userInput.split(" ", 2)[0];
+    }
+
+    private int getCurrentTagIndex(String userInput) {
+        int currentTagIndex;
+        currentTagIndex = indexOf(userInput, userTag);
+        return currentTagIndex;
+    }
+
+    private String getTagType(String userInput, int currentTagIndex) {
+        String tagType;
+        tagType = String.valueOf(userInput.charAt(currentTagIndex + 1));
+        return tagType;
+    }
+
+    private String getDescription(String userInput, int currentTagIndex) {
+        String description;
+        description = userInput.substring(currentTagIndex + 3).trim();
+        return description;
+    }
+
+    private String getDescription(String userInput, int currentTagIndex, int nextTagIndex) {
+        String description;
+        description = userInput.substring(currentTagIndex + 3, nextTagIndex).trim();
+        return description;
+    }
+
+
+    private int getNextTagIndex(String userInput) {
+        int nextTagIndex;
+        nextTagIndex = indexOf(userInput.substring(3), userTag) + 3;
+        return nextTagIndex;
+    }
+
+    private boolean hasNextTag(String userString, int currentTagIndex) {
+        return userString.substring(currentTagIndex + 3).matches(userTagRaw);
+    }
+
     public void parseInput(String userInput) {
-        this.arg1 = null;
-        this.arg2 = null;
-        this.arg3 = null;
-        String temp;
-        if (userInput.contains("n/")) {
-            this.command = userInput.substring(0, userInput.indexOf("n/") - 1);
-            temp = userInput.substring(userInput.indexOf("n/") + 2);
-            if (temp.contains("d/")) {
-                arg1 = temp.substring(0, temp.indexOf("d/") - 1);
-                temp = temp.substring(temp.indexOf("d/") + 2);
-                if (temp.contains("a/")) {
-                    arg2 = temp.substring(0, temp.indexOf("a/") - 1);
-                    arg3 = temp.substring(temp.indexOf("a/") +2);
-                } else {
-                    arg2 = temp;
-                }
+        this.name = null;
+        this.date = null;
+        this.amount = null;
+        String description;
+        String tagType;
+        boolean hasNext;
+
+        userInput = userInput.trim(); //get rid of whitespaces
+        this.command = parserExtractCommand(userInput);
+        if (userInput.length() == command.length()) {
+            return; //short circuit
+        }
+        int nextTagIndex = userInput.length();
+
+        //prep userInput for looping
+        userInput = userInput.substring(command.length());
+        while (userInput.matches(userTagRaw)) {
+            hasNext = false;
+            int currentTagIndex = getCurrentTagIndex(userInput);
+            tagType = getTagType(userInput, currentTagIndex);
+            if (hasNextTag(userInput, currentTagIndex)) {
+                hasNext = true;
+                nextTagIndex = getNextTagIndex(userInput);
+                description = getDescription(userInput, currentTagIndex, nextTagIndex);
             } else {
-                arg1 = temp;
+                description = getDescription(userInput, currentTagIndex);
             }
-        } else {
-            this.command = userInput;
+
+            switch (tagType) {
+            case "n":
+                this.name = description;
+                break;
+            case "d":
+                this.date = description;
+                break;
+            case "a":
+                this.amount = description;
+                break;
+            default:
+                Ui.printInvalidTagError();
+            }
+            if (hasNext) {
+                userInput = userInput.substring(nextTagIndex);
+            } else {
+                break;
+            }
         }
     }
 
     public int executeCommand(ExpenseList expenseList) {
-        switch(command){
+        switch (command) {
         case "view":
-            //gimin add here
+            expenseList.view();
             break;
         case "add":
-            expenseList.addExpense(arg1, arg2, arg3);
+            expenseList.addExpense(name, date, amount);
             break;
         case "delete":
-            //gimin add here
+            expenseList.deleteExpense(name, date, amount);
             break;
         case "exit":
             Ui.shutdown();
