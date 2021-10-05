@@ -11,6 +11,7 @@ public class Ui {
     public static void shutdown() {
         System.out.println("Goodbye! Hope to see you again soon!");
     }
+
     public static void printError() {
         System.out.println("Sorry I don't know what that means. :(");
     }
