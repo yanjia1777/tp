@@ -34,7 +34,7 @@ public class Parser {
         String tagType;
         int currentTagIndex;
         int nextTagIndex = userInput.length();
-        Boolean hasNext;
+        boolean hasNext;
 
         //prep userInput for looping
         userInput = userInput.substring(command.length());
@@ -61,20 +61,24 @@ public class Parser {
                 this.amount = description;
                 break;
             }
-            if (hasNext) {userInput = userInput.substring(nextTagIndex);} else break;
+            if (hasNext) {
+                userInput = userInput.substring(nextTagIndex);
+            } else {
+                break;
+            }
         }
     }
 
     public int executeCommand(ExpenseList expenseList) {
         switch (command) {
         case "view":
-            //gimin add here
+            expenseList.view();
             break;
         case "add":
             expenseList.addExpense(name, date, amount);
             break;
         case "delete":
-            //gimin add here
+            expenseList.deleteExpense(name, date, amount);
             break;
         case "exit":
             Ui.shutdown();
