@@ -12,10 +12,6 @@ public class Ui {
         System.out.println("Goodbye! Hope to see you again soon!");
     }
 
-    public static void printError() {
-        System.out.println("Sorry I don't know what that means. :(");
-    }
-
     public static void printInvalidTagError() {
         System.out.println("Sorry, we are only able to process name, date and process for now");
         System.out.println("The following tags are available: n/ d/ a/");
