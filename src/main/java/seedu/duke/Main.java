@@ -13,15 +13,20 @@ public class Main {
     public void run() {
         Ui.startup();
         Scanner in = new Scanner(System.in);
-        String userInput = in.nextLine();
         ExpenseList expenseList = new ExpenseList();
-        Parser parser = new Parser(userInput);
+        Parser parser = new Parser();
         while (true) {
-            if (parser.executeCommand(expenseList) == -1) {
-                break;
+            String userInput = in.nextLine();
+            try {
+                parser.parseInput(userInput);
+                if (parser.executeCommand(userInput, expenseList) == -1) {
+                    break;
+                }
+            } catch (MintException e) {
+                System.out.println(e.getMessage());
+            } catch (NullPointerException e) {
+                System.out.println("Sorry I don't know what that means. :(");
             }
-            userInput = in.nextLine();
-            parser.parseInput(userInput);
         }
     }
 }
