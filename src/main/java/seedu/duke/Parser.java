@@ -12,8 +12,7 @@ public class Parser {
     protected String date;
     protected String amount;
 
-    public Parser(String userInput) {
-        parseInput(userInput);
+    public Parser() {
     }
 
     public static int indexOf(String text, String regex) {
@@ -61,13 +60,16 @@ public class Parser {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
-    public void parseInput(String userInput) {
+    public void parseInput(String userInput) throws MintException {
         this.name = null;
         this.date = null;
         this.amount = null;
         String description;
         String tagType;
         boolean hasNext;
+
+
+        checkValidityOfUserInput(userInput);
 
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
@@ -111,7 +113,12 @@ public class Parser {
         }
     }
 
-    public int executeCommand(ExpenseList expenseList) {
+    public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
+        checkValidityOfUserInput(userInput);
+        if (name.equals("")) {
+            throw new MintException("Please add the description of the item!");
+        }
+
         switch (command) {
         case "view":
             expenseList.view();
@@ -126,8 +133,17 @@ public class Parser {
             Ui.shutdown();
             return -1;
         default:
-            Ui.printError();
+            throw new NullPointerException();
         }
         return 0;
+    }
+
+    private void checkValidityOfUserInput(String userInput) throws MintException {
+        String[] keyDelimiters = {"n/", "d/", "a/"};
+        for (String delimiter : keyDelimiters) {
+            if (!userInput.contains(delimiter)) {
+                throw new MintException("Invalid command entered!");
+            }
+        }
     }
 }
