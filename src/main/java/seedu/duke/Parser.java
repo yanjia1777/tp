@@ -49,10 +49,9 @@ public class Parser {
         return description;
     }
 
-
-    private int getNextTagIndex(String userInput) {
+    private int getNextTagIndex(String userInput, int currentTagIndex) {
         int nextTagIndex;
-        nextTagIndex = indexOf(userInput.substring(3), userTag) + 3;
+        nextTagIndex = indexOf(userInput.substring(currentTagIndex + 3), userTag) + 3 + currentTagIndex;
         return nextTagIndex;
     }
 
@@ -86,7 +85,7 @@ public class Parser {
             tagType = getTagType(userInput, currentTagIndex);
             if (hasNextTag(userInput, currentTagIndex)) {
                 hasNext = true;
-                nextTagIndex = getNextTagIndex(userInput);
+                nextTagIndex = getNextTagIndex(userInput, currentTagIndex);
                 description = getDescription(userInput, currentTagIndex, nextTagIndex);
             } else {
                 description = getDescription(userInput, currentTagIndex);
