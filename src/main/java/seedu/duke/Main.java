@@ -3,6 +3,9 @@ package seedu.duke;
 import java.util.Scanner;
 
 public class Main {
+
+    protected static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
+
     /**
      * Main entry-point for the java.duke.Duke application.
      */
@@ -25,7 +28,7 @@ public class Main {
             } catch (MintException e) {
                 System.out.println(e.getMessage());
             } catch (NullPointerException e) {
-                System.out.println("Sorry I don't know what that means. :(");
+                System.out.println(ERROR_INVALID_COMMAND);
             }
         }
     }

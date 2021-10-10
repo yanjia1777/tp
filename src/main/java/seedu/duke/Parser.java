@@ -115,7 +115,7 @@ public class Parser {
     public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
         checkValidityOfUserInput(userInput);
         if (name.equals("")) {
-            throw new MintException("Please add the description of the item!");
+            throw new MintException(MintException.ERROR_NO_DESCRIPTION);
         }
 
         switch (command) {
@@ -141,7 +141,7 @@ public class Parser {
         String[] keyDelimiters = {"n/", "d/", "a/"};
         for (String delimiter : keyDelimiters) {
             if (!userInput.contains(delimiter)) {
-                throw new MintException("Invalid command entered!");
+                throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
         }
     }
