@@ -120,7 +120,7 @@ public class Parser {
 
         switch (command) {
         case "view":
-            expenseList.view();
+            expenseList.viewExpense();
             break;
         case "add":
             expenseList.addExpense(name, date, amount);
@@ -132,7 +132,7 @@ public class Parser {
             Ui.shutdown();
             return -1;
         default:
-            throw new NullPointerException();
+            throw new MintException(MintException.ERROR_INVALID_COMMAND);
         }
         return 0;
     }

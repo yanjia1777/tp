@@ -31,4 +31,6 @@ public class ExpenseConstructorTest {
         Expense expense = new Expense();
         assertEquals("null | 2021-01-01 | $0.00", expense.toString());
     }
+
+
 }
