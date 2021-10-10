@@ -1,9 +1,10 @@
 package seedu.duke;
+
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddFunctionTest {
 
@@ -12,7 +13,10 @@ class AddFunctionTest {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
         Expense expense = new Expense("burger", date.toString(), "10");
-        expenseList.addExpense(expense.getName(), expense.getDate().toString(), Double.toString(expense.getAmount()));
+        String expenseName = expense.getName();
+        String expenseDate = expense.getDate().toString();
+        String expenseAmount = Double.toString(expense.getAmount());
+        expenseList.addExpense(expenseName, expenseDate, expenseAmount);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
@@ -28,8 +32,14 @@ class AddFunctionTest {
         ExpenseList expenseList = new ExpenseList();
         Expense expenseFood = new Expense("burger", date.toString(), "10");
         Expense expenseEntertainment = new Expense("movie", date.toString(), "13");
-        expenseList.addExpense(expenseFood.getName(), expenseFood.getDate().toString(), Double.toString(expenseFood.getAmount()));
-        expenseList.addExpense(expenseEntertainment.getName(), expenseEntertainment.getDate().toString(), Double.toString(expenseEntertainment.getAmount()));
+        String foodExpenseName = expenseFood.getName();
+        String foodExpenseDate = expenseFood.getDate().toString();
+        String foodExpenseAmount = Double.toString(expenseFood.getAmount());
+        String entertainmentExpenseName = expenseEntertainment.getName();
+        String entertainmentDate = expenseEntertainment.getDate().toString();
+        String entertainmentExpenseAmount = Double.toString(expenseEntertainment.getAmount());
+        expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount);
+        expenseList.addExpense(entertainmentExpenseName, entertainmentDate, entertainmentExpenseAmount);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
