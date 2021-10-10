@@ -115,12 +115,12 @@ public class Parser {
     public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
         checkValidityOfUserInput(userInput);
         if (name.equals("")) {
-            throw new MintException("Please add the description of the item!");
+            throw new MintException(MintException.ERROR_NO_DESCRIPTION);
         }
 
         switch (command) {
         case "view":
-            expenseList.view();
+            expenseList.viewExpense();
             break;
         case "add":
             expenseList.addExpense(name, date, amount);
@@ -132,7 +132,7 @@ public class Parser {
             Ui.shutdown();
             return -1;
         default:
-            throw new NullPointerException();
+            throw new MintException(MintException.ERROR_INVALID_COMMAND);
         }
         return 0;
     }
@@ -141,7 +141,7 @@ public class Parser {
         String[] keyDelimiters = {"n/", "d/", "a/"};
         for (String delimiter : keyDelimiters) {
             if (!userInput.contains(delimiter)) {
-                throw new MintException("Invalid command entered!");
+                throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
         }
     }

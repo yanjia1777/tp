@@ -20,9 +20,9 @@ class AddFunctionTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
-        expenseList.view();
+        expenseList.viewExpense();
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
-                + Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator();
+                + Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator();// Notice the \n for new line.
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -43,7 +43,7 @@ class AddFunctionTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
-        expenseList.view();
+        expenseList.viewExpense();
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
                 + Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator()
                 + Ui.INDENT + "movie | 2021-10-10 | $13.00" + System.lineSeparator();

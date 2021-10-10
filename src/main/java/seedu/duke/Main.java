@@ -3,6 +3,7 @@ package seedu.duke;
 import java.util.Scanner;
 
 public class Main {
+
     /**
      * Main entry-point for the java.duke.Duke application.
      */
@@ -24,8 +25,6 @@ public class Main {
                 }
             } catch (MintException e) {
                 System.out.println(e.getMessage());
-            } catch (NullPointerException e) {
-                System.out.println("Sorry I don't know what that means. :(");
             }
         }
     }
