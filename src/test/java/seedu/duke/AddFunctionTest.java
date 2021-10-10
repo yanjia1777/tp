@@ -21,8 +21,8 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         expenseList.viewExpense();
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator() +
-                Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator();// Notice the \n for new line.
+        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
+                + Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator();// Notice the \n for new line.
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -44,9 +44,9 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         expenseList.viewExpense();
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator() +
-                Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator() +
-                Ui.INDENT + "movie | 2021-10-10 | $13.00" + System.lineSeparator();
+        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
+                + Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator()
+                + Ui.INDENT + "movie | 2021-10-10 | $13.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 

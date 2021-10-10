@@ -1,7 +1,8 @@
 package seedu.duke;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -60,8 +61,8 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
 
         expenseList.deleteExpense("Cheese burger", "2021-12-2", "15.5");
-        String ExpectedOutput  = "Please enter a valid date!" + System.lineSeparator();
-        assertEquals(ExpectedOutput, outContent.toString());
+        String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
+        assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
@@ -74,9 +75,9 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
 
         expenseList.viewExpense();
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator() +
-                Ui.INDENT + "Cheese burger | 2021-12-23 | $15.50" + System.lineSeparator() +
-                Ui.INDENT + "book | 2022-12-23 | $9.00" + System.lineSeparator();
+        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
+                + Ui.INDENT + "Cheese burger | 2021-12-23 | $15.50" + System.lineSeparator()
+                + Ui.INDENT + "book | 2022-12-23 | $9.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
