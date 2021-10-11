@@ -19,7 +19,6 @@ public class Main {
         while (true) {
             String userInput = in.nextLine();
             try {
-                parser.parseInput(userInput);
                 if (parser.executeCommand(userInput, expenseList) == -1) {
                     break;
                 }
