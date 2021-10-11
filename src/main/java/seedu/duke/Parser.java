@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -14,6 +15,7 @@ public class Parser {
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
     public static final String STRING_AMOUNT = "Amount of purchase\n";
+    public static final String STRING_CATNUM = "Category number of item\n";
     public static final String STRING_EMPTY = "";
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
@@ -22,6 +24,7 @@ public class Parser {
     protected String name;
     protected String date;
     protected String amount;
+    protected String catNum;
     protected String[] argumentsArray;
 
     public Parser() {
@@ -107,8 +110,9 @@ public class Parser {
 
     public void parseInputByTags(String userInput) throws MintException {
         this.name = null;
-        this.date = null;
+        this.date = LocalDate.now().toString(); //default
         this.amount = null;
+        this.catNum = "0"; //default - Others
         String description;
         String tagType;
         boolean hasNext;
@@ -141,6 +145,9 @@ public class Parser {
             case "a":
                 this.amount = description;
                 break;
+            case "c":
+                this.catNum = description;
+                break;
             default:
                 throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
             }
@@ -162,6 +169,16 @@ public class Parser {
         this.command = parserExtractCommand(userInput);
         try {
             switch (command) {
+            case "help":
+                Ui.help();
+                break;
+            case "cat":
+                //fallthrough
+            case "category":
+                //fallthrough
+            case "categories":
+                Ui.printCategories();
+                break;
             case "view":
                 parseInputByArguments(userInput);
                 expenseList.viewExpense();
@@ -169,7 +186,7 @@ public class Parser {
             case "add":
                 parseInputByTags(userInput);
                 checkValidityOfFields();
-                expenseList.addExpense(name, date, amount);
+                expenseList.addExpense(name, date, amount, catNum);
                 break;
             case "delete":
                 parseInputByTags(userInput);
@@ -188,8 +205,9 @@ public class Parser {
         return 0;
     }
 
+
     private void checkMissingFieldOfUserInput(String userInput) throws MintException {
-        String[] keyDelimiters = {"n/", "d/", "a/"};
+        String[] keyDelimiters = {"n/", "d/", "a/", "c/"};
         ArrayList<String> missingDelimiters = new ArrayList<>();
         StringBuilder missingFields = new StringBuilder();
         missingFields.append(STRING_INCLUDE);
@@ -212,6 +230,10 @@ public class Parser {
                     break;
                 case "a/":
                     missingFields.append(index).append(SEPARATOR).append(STRING_AMOUNT);
+                    index++;
+                    break;
+                case "c/":
+                    missingFields.append(index).append(SEPARATOR).append(STRING_CATNUM);
                     index++;
                     break;
                 default:

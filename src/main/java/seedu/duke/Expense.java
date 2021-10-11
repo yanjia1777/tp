@@ -4,21 +4,34 @@ import java.time.LocalDate; // import the LocalDate class
 import java.util.Objects;
 
 public class Expense {
-
+    public static final int CAT_NUM_OTHERS = 7;
+    private int catNum;
     private String name;
     private LocalDate date;
     private double amount;
 
     public Expense() {
+        catNum = CAT_NUM_OTHERS; //others
         date = LocalDate.of(2021, 1, 1);
         amount = 0;
     }
 
-    public Expense(String name, String date, String amount) {
+    public Expense(String name, String date, String amount, String catNum) {
+        this.catNum = Integer.parseInt(catNum);
         this.name = name;
         this.date = LocalDate.parse(date);
         this.amount = Double.parseDouble(amount);
     }
+
+    public Expense(String name, String date, String amount) {
+        this.catNum = CAT_NUM_OTHERS;
+        this.name = name;
+        this.date = LocalDate.parse(date);
+        this.amount = Double.parseDouble(amount);
+    }
+
+
+
 
     public String getName() {
         return name;
@@ -40,12 +53,15 @@ public class Expense {
         return amount;
     }
 
+    public String getCat() {
+        return Ui.printIndividualCategory(this.catNum);
+    }
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
     public String toString() {
-        return getName() + " | " + getDate() + " | $" + String.format("%,.2f", getAmount());
+        return getCat() + " | " + getDate() + " | " + getName() + " | $" + String.format("%,.2f", getAmount());
     }
 
     //@@author nipafx-reused

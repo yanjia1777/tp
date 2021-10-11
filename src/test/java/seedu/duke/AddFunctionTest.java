@@ -16,13 +16,14 @@ class AddFunctionTest {
         String expenseName = expense.getName();
         String expenseDate = expense.getDate().toString();
         String expenseAmount = Double.toString(expense.getAmount());
-        expenseList.addExpense(expenseName, expenseDate, expenseAmount);
+        String expenseCatNum = "1";
+        expenseList.addExpense(expenseName, expenseDate, expenseAmount,expenseCatNum);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         expenseList.viewExpense();
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
-                + Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator();// Notice the \n for new line.
+                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator();// Notice the \n for new line.
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -30,23 +31,25 @@ class AddFunctionTest {
     public void addExpense_twoAdditions_expectSuccess() {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
-        Expense expenseFood = new Expense("burger", "2021-10-10", "10");
-        Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13");
+        Expense expenseFood = new Expense("burger", "2021-10-10", "10", "1");
+        Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13", "2");
         String foodExpenseName = expenseFood.getName();
         String foodExpenseDate = expenseFood.getDate().toString();
         String foodExpenseAmount = Double.toString(expenseFood.getAmount());
         String entertainmentExpenseName = expenseEntertainment.getName();
         String entertainmentDate = expenseEntertainment.getDate().toString();
         String entertainmentExpenseAmount = Double.toString(expenseEntertainment.getAmount());
-        expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount);
-        expenseList.addExpense(entertainmentExpenseName, entertainmentDate, entertainmentExpenseAmount);
+        String foodCatNum = "1";
+        String entertainmentCatNum = "2";
+        expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount, foodCatNum);
+        expenseList.addExpense(entertainmentExpenseName, entertainmentDate, entertainmentExpenseAmount, entertainmentCatNum);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         expenseList.viewExpense();
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
-                + Ui.INDENT + "burger | 2021-10-10 | $10.00" + System.lineSeparator()
-                + Ui.INDENT + "movie | 2021-10-10 | $13.00" + System.lineSeparator();
+                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator()
+                + " Entertainment   | 2021-10-10 | movie | $13.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -58,7 +61,7 @@ class AddFunctionTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("add n/burger d/2021-12-23 a/ABCD", expenseList);
+        parser.executeCommand("add n/burger d/2021-12-23 a/ABCD c/1", expenseList);
         String expectedOutput  = "Please enter a valid amount!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -72,7 +75,7 @@ class AddFunctionTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("add n/movie d/ABCD a/10", expenseList);
+        parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList);
         String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }

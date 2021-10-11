@@ -13,13 +13,14 @@ class ExpenseListTest {
         String name = "Cheese burger";
         String date = "2021-12-23";
         String amount = "15.5";
+        String catNum = "1";
 
-        expenseList.expenseList.add(new Expense(name, date.toString(), amount));
+        expenseList.expenseList.add(new Expense(name, date.toString(), amount, catNum));
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
         expenseList.deleteExpense(name, date.toString(), amount);
-        String expectedOutput  = "I have deleted: Cheese burger | 2021-12-23 | $15.50"
+        String expectedOutput  = "I have deleted:       Gift       | 2021-12-23 | Cheese burger | $15.50"
                 + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -49,7 +50,7 @@ class ExpenseListTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("delete n/Cheese d/2021-12-23 a/15.5abc", expenseList);
+        parser.executeCommand("delete n/Cheese d/2021-12-23 a/15.5abc c/1", expenseList);
         String expectedOutput  = "Please enter a valid amount!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -62,7 +63,7 @@ class ExpenseListTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("delete n/Cheese d/2021-12 a/15.5", expenseList);
+        parser.executeCommand("delete n/Cheese d/2021-12 a/15.5 c/1", expenseList);
         String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -78,8 +79,8 @@ class ExpenseListTest {
 
         expenseList.viewExpense();
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
-                + Ui.INDENT + "Cheese burger | 2021-12-23 | $15.50" + System.lineSeparator()
-                + Ui.INDENT + "book | 2022-12-23 | $9.00" + System.lineSeparator();
+                + "      Gift       | 2021-12-23 | Cheese burger | $15.50" + System.lineSeparator()
+                + "      Gift       | 2022-12-23 | book | $9.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
