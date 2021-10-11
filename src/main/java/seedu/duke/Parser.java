@@ -150,6 +150,8 @@ public class Parser {
             parseInputByTags(userInput);
             expenseList.deleteExpense(name, date, amount);
             break;
+        case "bye":
+            //fallthrough
         case "exit":
             Ui.shutdown();
             return -1;
