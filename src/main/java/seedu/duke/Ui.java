@@ -2,6 +2,7 @@ package seedu.duke;
 
 public class Ui {
     protected static final String INDENT = "    ";
+    protected static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static void startup() {
         System.out.println("Hello! I'm Mint");
@@ -10,10 +11,5 @@ public class Ui {
 
     public static void shutdown() {
         System.out.println("Goodbye! Hope to see you again soon!");
-    }
-
-    public static void printInvalidTagError() {
-        System.out.println("Sorry, we are only able to process name, date and process for now");
-        System.out.println("The following tags are available: n/ d/ a/");
     }
 }
