@@ -12,7 +12,7 @@ class AddFunctionTest {
     public void addExpense_oneAddition_expectSuccess() {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
-        Expense expense = new Expense("burger", date.toString(), "10");
+        Expense expense = new Expense("burger", "2021-10-10", "10");
         String expenseName = expense.getName();
         String expenseDate = expense.getDate().toString();
         String expenseAmount = Double.toString(expense.getAmount());
@@ -30,8 +30,8 @@ class AddFunctionTest {
     public void addExpense_twoAdditions_expectSuccess() {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
-        Expense expenseFood = new Expense("burger", date.toString(), "10");
-        Expense expenseEntertainment = new Expense("movie", date.toString(), "13");
+        Expense expenseFood = new Expense("burger", "2021-10-10", "10");
+        Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13");
         String foodExpenseName = expenseFood.getName();
         String foodExpenseDate = expenseFood.getDate().toString();
         String foodExpenseAmount = Double.toString(expenseFood.getAmount());
