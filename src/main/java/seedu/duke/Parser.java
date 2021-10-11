@@ -168,6 +168,8 @@ public class Parser {
                     missingFields.append(index).append(SEPARATOR).append(STRING_AMOUNT);
                     index++;
                     break;
+                default:
+                    throw new MintException(MintException.ERROR_INVALID_COMMAND);
                 }
             }
             throw new MintException(missingFields.toString());
