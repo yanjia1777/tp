@@ -9,9 +9,9 @@ public class ExpenseList {
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     protected static final String ERROR_INVALID_DATE = "Please enter a valid date!";
 
-    public void addExpense(String name, String date, String amount) {
+    public void addExpense(String name, String date, String amount, String catNum) {
         try {
-            Expense expense = new Expense(name, date, amount);
+            Expense expense = new Expense(name, date, amount, catNum);
             System.out.println("I have added: " + expense);
             expenseList.add(expense);
         } catch (NumberFormatException e) {
@@ -40,7 +40,7 @@ public class ExpenseList {
     public void viewExpense() {
         System.out.println("Here is the list of your expenses:");
         for (Expense expense : expenseList) {
-            System.out.println(Ui.INDENT + expense.toString());
+            System.out.println(expense.toString());
         }
     }
 }
