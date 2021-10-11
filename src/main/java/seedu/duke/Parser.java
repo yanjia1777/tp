@@ -205,6 +205,7 @@ public class Parser {
         return 0;
     }
 
+
     private void checkMissingFieldOfUserInput(String userInput) throws MintException {
         String[] keyDelimiters = {"n/", "d/", "a/", "c/"};
         ArrayList<String> missingDelimiters = new ArrayList<>();
