@@ -51,25 +51,28 @@ class AddFunctionTest {
     }
 
     @Test
-    public void addExpense_wrongAmountFormat_expectErrorMessage() {
-        LocalDate date = LocalDate.now();
+    public void addExpense_wrongAmountFormat_expectErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        Parser parser = new Parser();
+
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        expenseList.addExpense("burger", date.toString(), "ABCD");
-        // After this all System.out.println() statements will come to outContent stream.
+
+        parser.executeCommand("add n/burger d/2021-12-23 a/ABCD", expenseList);
         String expectedOutput  = "Please enter a valid amount!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
 
     @Test
-    public void addExpense_wrongDateFormat_expectErrorMessage() {
+    public void addExpense_wrongDateFormat_expectErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        Parser parser = new Parser();
+
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        expenseList.addExpense("movie", "ABCD", "10");
-        // After this all System.out.println() statements will come to outContent stream.
+
+        parser.executeCommand("add n/movie d/ABCD a/10", expenseList);
         String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
