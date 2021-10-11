@@ -44,11 +44,12 @@ class ExpenseListTest {
     @Test
     public void deleteExpense_wrongAmountFormat_printErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        expenseList.deleteExpense("Cheese burger", "2021-12-23", "15.5abc");
+        parser.executeCommand("delete n/Cheese d/2021-12-23 a/15.5abc", expenseList);
         String expectedOutput  = "Please enter a valid amount!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -56,11 +57,12 @@ class ExpenseListTest {
     @Test
     public void deleteExpense_wrongDateFormat_printErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        expenseList.deleteExpense("Cheese burger", "2021-12-2", "15.5");
+        parser.executeCommand("delete n/Cheese d/2021-12 a/15.5", expenseList);
         String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
