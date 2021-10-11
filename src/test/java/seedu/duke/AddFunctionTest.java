@@ -38,13 +38,13 @@ class AddFunctionTest {
         String foodExpenseName = expenseFood.getName();
         String foodExpenseDate = expenseFood.getDate().toString();
         String foodExpenseAmount = Double.toString(expenseFood.getAmount());
-        String entertainmentExpenseName = expenseEntertainment.getName();
-        String entertainmentDate = expenseEntertainment.getDate().toString();
-        String entertainmentExpenseAmount = Double.toString(expenseEntertainment.getAmount());
+        String entExpenseName = expenseEntertainment.getName();
+        String entDate = expenseEntertainment.getDate().toString();
+        String entExpenseAmount = Double.toString(expenseEntertainment.getAmount());
         String foodCatNum = "1";
-        String entertainmentCatNum = "2";
+        String entCatNum = "2";
         expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount, foodCatNum);
-        expenseList.addExpense(entertainmentExpenseName, entertainmentDate, entertainmentExpenseAmount, entertainmentCatNum);
+        expenseList.addExpense(entExpenseName, entDate, entExpenseAmount, entCatNum);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
