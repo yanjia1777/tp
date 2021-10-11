@@ -68,8 +68,9 @@ public class Parser {
 
     public void parseInputByTags(String userInput) throws MintException {
         this.name = null;
-        this.date = null;
+        this.date = LocalDate.now().toString(); //default
         this.amount = null;
+        this.catNum = "0"; //default - Others
         String description;
         String tagType;
         boolean hasNext;
