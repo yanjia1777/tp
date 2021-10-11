@@ -103,6 +103,9 @@ public class Parser {
             case "a":
                 this.amount = description;
                 break;
+            case "c":
+                this.catNum = description;
+                break;
             default:
                 Ui.printInvalidTagError();
             }
