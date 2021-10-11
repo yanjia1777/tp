@@ -11,6 +11,7 @@ public class Parser {
     protected String name;
     protected String date;
     protected String amount;
+    protected String[] argumentsArray;
 
     public Parser() {
     }
@@ -59,7 +60,7 @@ public class Parser {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
-    public void parseInput(String userInput) throws MintException {
+    public void parseInputByTags(String userInput) throws MintException {
         this.name = null;
         this.date = null;
         this.amount = null;
@@ -67,14 +68,8 @@ public class Parser {
         String tagType;
         boolean hasNext;
 
-
         checkValidityOfUserInput(userInput);
 
-        userInput = userInput.trim(); //get rid of whitespaces
-        this.command = parserExtractCommand(userInput);
-        if (userInput.length() == command.length()) {
-            return; //short circuit
-        }
         int nextTagIndex = userInput.length();
 
         //prep userInput for looping
@@ -112,20 +107,24 @@ public class Parser {
         }
     }
 
-    public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
-        checkValidityOfUserInput(userInput);
-        if (name.equals("")) {
-            throw new MintException(MintException.ERROR_NO_DESCRIPTION);
-        }
+    public void parseInputByArguments(String userInput) {
+        argumentsArray = userInput.split(" ");
+    }
 
+    public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
+        userInput = userInput.trim(); //get rid of whitespaces
+        this.command = parserExtractCommand(userInput);
         switch (command) {
         case "view":
+            parseInputByArguments(userInput);
             expenseList.viewExpense();
             break;
         case "add":
+            parseInputByTags(userInput);
             expenseList.addExpense(name, date, amount);
             break;
         case "delete":
+            parseInputByTags(userInput);
             expenseList.deleteExpense(name, date, amount);
             break;
         case "exit":
