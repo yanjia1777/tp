@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class ExpenseList {
     protected ArrayList<Expense> expenseList = new ArrayList<>();
 
-    public void addExpense(String name, String date, String amount) {
-        Expense expense = new Expense(name, date, amount);
+    public void addExpense(String name, String date, String amount, String catNum) {
+        Expense expense = new Expense(name, date, amount, catNum);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
     }
@@ -24,7 +24,7 @@ public class ExpenseList {
     public void viewExpense() {
         System.out.println("Here is the list of your expenses:");
         for (Expense expense : expenseList) {
-            System.out.println(Ui.INDENT + expense.toString());
+            System.out.println(expense.toString());
         }
     }
 }
