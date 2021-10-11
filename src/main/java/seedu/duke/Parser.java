@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +8,11 @@ public class Parser {
     // take note of the blank space,example " n/"
     public static final String userTag = "\\s[a-z]/";
     public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
+    public static final String STRING_INCLUDE = "Please include the following in your command: \n";
+    public static final String STRING_DESCRIPTION = "Description of item\n";
+    public static final String STRING_DATE = "Date of purchase\n";
+    public static final String STRING_AMOUNT = "Amount of purchase\n";
+    public static final String SEPARATOR = ". ";
     protected String command;
     protected String name;
     protected String date;
@@ -138,10 +144,33 @@ public class Parser {
 
     private void checkValidityOfUserInput(String userInput) throws MintException {
         String[] keyDelimiters = {"n/", "d/", "a/"};
+        ArrayList<String> missingDelimiters = new ArrayList<>();
+        StringBuilder missingFields = new StringBuilder();
+        missingFields.append(STRING_INCLUDE);
+        int index = 1;
         for (String delimiter : keyDelimiters) {
             if (!userInput.contains(delimiter)) {
-                throw new MintException(MintException.ERROR_NO_DELIMETER);
+                missingDelimiters.add(delimiter);
             }
+        }
+        if(missingDelimiters.size() > 0) {
+            for(String delimiter : missingDelimiters) {
+                switch (delimiter) {
+                case "n/":
+                    missingFields.append(index).append(SEPARATOR).append(STRING_DESCRIPTION);
+                    index ++;
+                    break;
+                case "d/":
+                    missingFields.append(index).append(SEPARATOR).append(STRING_DATE);
+                    index ++;
+                    break;
+                case "a/":
+                    missingFields.append(index).append(SEPARATOR).append(STRING_AMOUNT);
+                    index ++;
+                    break;
+                }
+            }
+            throw new MintException(missingFields.toString());
         }
     }
 }
