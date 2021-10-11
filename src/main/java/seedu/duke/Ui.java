@@ -10,6 +10,7 @@ public class Ui {
     public static final int CAT_NUM_BEAUTY = 6;
     public static final int CAT_NUM_GIFT = 7;
     public static final int CAT_NUM_OTHERS = 0;
+    protected static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static void startup() {
         System.out.println("Hello! I'm Mint");
@@ -41,23 +42,23 @@ public class Ui {
     public static String printIndividualCategory(int catNum) {
         switch (catNum) {
         case CAT_NUM_FOOD:
-            return("      Food      ");
+            return ("      Food      ");
         case CAT_NUM_ENTERTAINMENT:
-            return(" Entertainment  ");
+            return (" Entertainment  ");
         case CAT_NUM_TRANSPORTATION:
-            return(" Transportation ");
+            return (" Transportation ");
         case CAT_NUM_HOUSEHOLD:
-            return("   Household    ");
+            return ("   Household    ");
         case CAT_NUM_APPAREL:
-            return("    Apparel     ");
+            return ("    Apparel     ");
         case CAT_NUM_BEAUTY:
-            return("     Beauty     ");
+            return ("     Beauty     ");
         case CAT_NUM_GIFT:
-            return("      Gift      ");
+            return ("      Gift      ");
         case CAT_NUM_OTHERS:
-            return("     Others     ");
+            return ("     Others     ");
         default:
-            return("No category found");
+            return ("No category found");
         }
     }
 
