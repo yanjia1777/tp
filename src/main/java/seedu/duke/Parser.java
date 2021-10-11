@@ -122,13 +122,23 @@ public class Parser {
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
         switch (command) {
+        case "help":
+            Ui.help();
+            break;
+        case "cat":
+            //fallthrough
+        case "category":
+            //fallthrough
+        case "categories":
+            Ui.printCategories();
+            break;
         case "view":
             parseInputByArguments(userInput);
             expenseList.viewExpense();
             break;
         case "add":
             parseInputByTags(userInput);
-            expenseList.addExpense(name, date, amount);
+            expenseList.addExpense(name, date, amount, catNum);
             break;
         case "delete":
             parseInputByTags(userInput);
