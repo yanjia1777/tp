@@ -153,20 +153,20 @@ public class Parser {
                 missingDelimiters.add(delimiter);
             }
         }
-        if(missingDelimiters.size() > 0) {
-            for(String delimiter : missingDelimiters) {
+        if (missingDelimiters.size() > 0) {
+            for (String delimiter : missingDelimiters) {
                 switch (delimiter) {
                 case "n/":
                     missingFields.append(index).append(SEPARATOR).append(STRING_DESCRIPTION);
-                    index ++;
+                    index++;
                     break;
                 case "d/":
                     missingFields.append(index).append(SEPARATOR).append(STRING_DATE);
-                    index ++;
+                    index++;
                     break;
                 case "a/":
                     missingFields.append(index).append(SEPARATOR).append(STRING_AMOUNT);
-                    index ++;
+                    index++;
                     break;
                 }
             }
