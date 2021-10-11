@@ -15,22 +15,10 @@ public class ExpenseConstructorTest {
     @Test
     void createExpense_allFieldsValid_success() {
         String name = "Samurai Burger";
-        String date = LocalDate.now().toString();
+        String date = "2021-10-12";
         String amount = "7.50";
-        Expense expense = new Expense(name, date, amount);
-        assertEquals("Samurai Burger | " + LocalDate.now() + " | $7.50", expense.toString());
+        String catNum = "1";
+        Expense expense = new Expense(name, date, amount, catNum);
+        assertEquals("      Food       | 2021-10-12 | Samurai Burger | $7.50", expense.toString());
     }
-
-    /**
-     * Create a valid Expense object.
-     *
-     * @result getters for Expense object should tally.
-     */
-    @Test
-    void createExpense_EmptyParameters_success() {
-        Expense expense = new Expense();
-        assertEquals("null | 2021-01-01 | $0.00", expense.toString());
-    }
-
-
 }
