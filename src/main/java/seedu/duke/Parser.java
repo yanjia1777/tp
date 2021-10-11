@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,11 +13,13 @@ public class Parser {
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
     public static final String STRING_AMOUNT = "Amount of purchase\n";
+    public static final String STRING_CATNUM = "Category number of item\n";
     public static final String SEPARATOR = ". ";
     protected String command;
     protected String name;
     protected String date;
     protected String amount;
+    protected String catNum;
     protected String[] argumentsArray;
 
     public Parser() {
@@ -157,7 +160,7 @@ public class Parser {
     }
 
     private void checkValidityOfUserInput(String userInput) throws MintException {
-        String[] keyDelimiters = {"n/", "d/", "a/"};
+        String[] keyDelimiters = {"n/", "a/", "d/", "c/"};
         ArrayList<String> missingDelimiters = new ArrayList<>();
         StringBuilder missingFields = new StringBuilder();
         missingFields.append(STRING_INCLUDE);
@@ -180,6 +183,10 @@ public class Parser {
                     break;
                 case "a/":
                     missingFields.append(index).append(SEPARATOR).append(STRING_AMOUNT);
+                    index++;
+                    break;
+                case "c/":
+                    missingFields.append(index).append(SEPARATOR).append(STRING_CATNUM);
                     index++;
                     break;
                 default:
