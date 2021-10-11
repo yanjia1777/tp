@@ -10,6 +10,7 @@ public class Ui {
     public static final int CAT_NUM_BEAUTY = 6;
     public static final int CAT_NUM_GIFT = 7;
     public static final int CAT_NUM_OTHERS = 0;
+    protected static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static void startup() {
         System.out.println("Hello! I'm Mint");
