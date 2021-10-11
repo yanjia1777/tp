@@ -30,9 +30,6 @@ public class Expense {
         this.amount = Double.parseDouble(amount);
     }
 
-
-
-
     public String getName() {
         return name;
     }
@@ -56,6 +53,7 @@ public class Expense {
     public String getCat() {
         return Ui.printIndividualCategory(this.catNum);
     }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
