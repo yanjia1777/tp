@@ -191,7 +191,7 @@ public class Parser {
             case "delete":
                 parseInputByTags(userInput);
                 checkValidityOfFields();
-                expenseList.deleteExpense(name, date, amount);
+                expenseList.deleteExpense(name, date, amount, catNum);
                 break;
             case "edit":
                 parseInputByTags(userInput);

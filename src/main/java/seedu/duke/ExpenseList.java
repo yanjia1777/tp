@@ -25,8 +25,8 @@ public class ExpenseList {
         expenseList.add(expense);
     }
 
-    public void deleteExpense(String name, String date, String amount) throws MintException {
-        Expense expense = new Expense(name, date, amount);
+    public void deleteExpense(String name, String date, String amount, String catNum) throws MintException {
+        Expense expense = new Expense(name, date, amount, catNum);
         if (expenseList.contains(expense)) {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expenseList.indexOf(expense));

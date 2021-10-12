@@ -15,12 +15,12 @@ class ExpenseListTest {
         String amount = "15.5";
         String catNum = "1";
 
-        expenseList.expenseList.add(new Expense(name, date.toString(), amount, catNum));
+        expenseList.expenseList.add(new Expense(name, date, amount, catNum));
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        expenseList.deleteExpense(name, date.toString(), amount);
-        String expectedOutput  = "I have deleted:       Gift       | 2021-12-23 | Cheese burger | $15.50"
+        expenseList.deleteExpense(name, date, amount, catNum);
+        String expectedOutput  = "I have deleted:       Food       | 2021-12-23 | Cheese burger | $15.50"
                 + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -32,8 +32,8 @@ class ExpenseListTest {
 
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            expenseList.deleteExpense("Cheese burger", "2021-12-23", "15.5");
-            String wrongExpectedOutput  = "I have deleted: Cheese burger | 2021-12-23 | $15.50"
+            expenseList.deleteExpense("Cheese burger", "2021-12-23", "15.5", "1");
+            String wrongExpectedOutput  = "I have deleted:       Food       | 2021-12-23 | Cheese burger | $15.50"
                     + System.lineSeparator();
             assertEquals(wrongExpectedOutput, outContent.toString());
             fail();
