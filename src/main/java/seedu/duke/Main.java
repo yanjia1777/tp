@@ -1,8 +1,11 @@
 package seedu.duke;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
      * Main entry-point for the java.duke.Duke application.
@@ -16,6 +19,8 @@ public class Main {
         Scanner in = new Scanner(System.in);
         ExpenseList expenseList = new ExpenseList();
         Parser parser = new Parser();
+        MintLogger.run();
+        logger.log(Level.INFO, "User started Mint");
         while (true) {
             String userInput = in.nextLine();
             try {
@@ -26,5 +31,6 @@ public class Main {
                 System.out.println(e.getMessage());
             }
         }
+        logger.log(Level.INFO, "User exited Mint");
     }
 }
