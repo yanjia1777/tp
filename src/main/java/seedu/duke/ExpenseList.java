@@ -59,7 +59,7 @@ public class ExpenseList {
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
             }
             splitChoice = choice.split(REGEX_TO_SPLIT);
-            amendExpense(indexToBeChanged, splitChoice, name, date, amount, catNum);
+            edit(indexToBeChanged, splitChoice, name, date, amount, catNum);
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
@@ -79,11 +79,11 @@ public class ExpenseList {
         return false;
     }
 
-    private void amendExpense(int index, String[] choice, String description, String date, String amt, String catNum) throws MintException {
+    private void edit(int index, String[] choice, String name, String date, String amt, String cat) throws MintException {
         for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
-                description = nonEmptyNewDescription(word);
+                name = nonEmptyNewDescription(word);
             }
             if (word.contains(DATE_SEPARATOR)) {
                 date = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
@@ -92,10 +92,10 @@ public class ExpenseList {
                 amt = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
-                catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                cat = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
         }
-        expenseList.set(index, new Expense(description, date, amt, catNum));
+        expenseList.set(index, new Expense(name, date, amt, cat));
     }
 
     private String nonEmptyNewDescription(String word) throws MintException {
