@@ -196,6 +196,11 @@ public class Parser {
             case "exit":
                 Ui.shutdown();
                 return -1;
+            case "edit":
+                parseInputByTags(userInput);
+                checkValidityOfFields();
+                expenseList.editExpense(name, date, amount, catNum);
+                break;
             default:
                 throw new MintException(MintException.ERROR_INVALID_COMMAND);
             }
