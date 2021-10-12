@@ -22,8 +22,8 @@ public class Main {
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
         while (true) {
-            String userInput = in.nextLine();
             try {
+                String userInput = in.nextLine();
                 if (parser.executeCommand(userInput, expenseList) == -1) {
                     break;
                 }
