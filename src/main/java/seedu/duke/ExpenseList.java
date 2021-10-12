@@ -65,7 +65,7 @@ public class ExpenseList {
             }
             splitChoice = choice.split(REGEX_TO_SPLIT);
             for (String word : splitChoice) {
-                assert(word != null);
+                assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
                     printEditSuccess = true;
                     newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
