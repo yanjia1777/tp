@@ -50,8 +50,8 @@ public class ExpenseList {
         String newDate = date;
         String newAmount = amount;
         String newCatNum = catNum;
-        Boolean printEditSuccess = false;
-        Boolean exceptionThrown = false;
+        boolean printEditSuccess = false;
+        boolean exceptionThrown = false;
 
         try {
             Expense expense = new Expense(name, date, amount, catNum);
