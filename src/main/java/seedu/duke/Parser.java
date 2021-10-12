@@ -200,6 +200,7 @@ public class Parser {
             case "delete":
                 parseInputByTags(userInput);
                 checkValidityOfFields();
+                assert !name.equals("") : "Name should not be empty";
                 expenseList.deleteExpense(name, date, amount, catNum);
                 break;
             case "edit":
