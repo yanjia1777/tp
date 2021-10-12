@@ -32,7 +32,7 @@ public class ExpenseList {
         if (expenseList.contains(expense)) {
             logger.log(Level.INFO, "User deleted expense: " + expense);
             System.out.println("I have deleted: " + expense);
-            expenseList.remove(expenseList.indexOf(expense));
+            expenseList.remove(expense);
         } else {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
         }
@@ -49,8 +49,12 @@ public class ExpenseList {
         String choice;
         int indexToBeChanged;
         String[] splitChoice;
-        Boolean printEditSuccess = false;
-        Boolean exceptionThrown = false;
+        String newDescription = name;
+        String newDate = date;
+        String newAmount = amount;
+        String newCatNum = catNum;
+        boolean printEditSuccess = false;
+        boolean exceptionThrown = false;
 
         try {
             Expense expense = new Expense(name, date, amount, catNum);

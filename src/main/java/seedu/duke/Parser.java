@@ -107,7 +107,7 @@ public class Parser {
 
     private void checkInvalidDate() throws MintException {
         try {
-            LocalDate.parse(date);
+            LocalDate.parse(date, Expense.dateFormatter);
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
             throw new MintException(ERROR_INVALID_DATE);
@@ -193,6 +193,7 @@ public class Parser {
             case "add":
                 parseInputByTags(userInput);
                 assert name != null;
+                assert amount != null;
                 checkValidityOfFields();
                 expenseList.addExpense(name, date, amount, catNum);
                 break;

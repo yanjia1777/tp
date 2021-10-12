@@ -15,6 +15,15 @@ public class Ui {
             + "Please check that you have included the tags of the fields you wish to edit! :(";
 
     protected static final String LINE_SEPARATOR = System.lineSeparator();
+    public static final String CAT_STR_FOOD = "      Food      ";
+    public static final String CAT_STR_ENTERTAINMENT = " Entertainment  ";
+    public static final String CAT_STR_TRANSPORTATION = " Transportation ";
+    public static final String CAT_STR_HOUSEHOLD = "   Household    ";
+    public static final String CAT_STR_APPAREL = "    Apparel     ";
+    public static final String CAT_STR_BEAUTY = "     Beauty     ";
+    public static final String CAT_STR_GIFT = "      Gift      ";
+    public static final String CAT_STR_OTHERS = "     Others     ";
+    public static final String CAT_STR_NO_CAT_FOUND = "No category found";
 
     public static void startup() {
         System.out.println("Hello! I'm Mint");
@@ -46,23 +55,23 @@ public class Ui {
     public static String printIndividualCategory(int catNum) {
         switch (catNum) {
         case CAT_NUM_FOOD:
-            return ("      Food      ");
+            return CAT_STR_FOOD;
         case CAT_NUM_ENTERTAINMENT:
-            return (" Entertainment  ");
+            return CAT_STR_ENTERTAINMENT;
         case CAT_NUM_TRANSPORTATION:
-            return (" Transportation ");
+            return CAT_STR_TRANSPORTATION;
         case CAT_NUM_HOUSEHOLD:
-            return ("   Household    ");
+            return CAT_STR_HOUSEHOLD;
         case CAT_NUM_APPAREL:
-            return ("    Apparel     ");
+            return CAT_STR_APPAREL;
         case CAT_NUM_BEAUTY:
-            return ("     Beauty     ");
+            return CAT_STR_BEAUTY;
         case CAT_NUM_GIFT:
-            return ("      Gift      ");
+            return CAT_STR_GIFT;
         case CAT_NUM_OTHERS:
-            return ("     Others     ");
+            return CAT_STR_OTHERS;
         default:
-            return ("No category found");
+            return CAT_STR_NO_CAT_FOUND;
         }
     }
 

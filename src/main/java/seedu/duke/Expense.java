@@ -1,10 +1,16 @@
 package seedu.duke;
 
 import java.time.LocalDate; // import the LocalDate class
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Expense {
+    public static DateTimeFormatter dateFormatter
+            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
+                + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
+                + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
     public static final int CAT_NUM_OTHERS = 7;
+
     private int catNum;
     private String name;
     private LocalDate date;
@@ -19,14 +25,14 @@ public class Expense {
     public Expense(String name, String date, String amount, String catNum) {
         this.catNum = Integer.parseInt(catNum);
         this.name = name;
-        this.date = LocalDate.parse(date);
+        this.date = LocalDate.parse(date, dateFormatter);
         this.amount = Double.parseDouble(amount);
     }
 
     public Expense(String name, String date, String amount) {
         this.catNum = CAT_NUM_OTHERS;
         this.name = name;
-        this.date = LocalDate.parse(date);
+        this.date = LocalDate.parse(date, dateFormatter);
         this.amount = Double.parseDouble(amount);
     }
 
@@ -59,10 +65,11 @@ public class Expense {
     }
 
     public String toString() {
-        return getCat() + " | " + getDate() + " | " + getName() + " | $" + String.format("%,.2f", getAmount());
+        return getCat() + " | " + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount());
     }
 
-    //@@author nipafx-reused
+    //@@author nipafx-reusedS
     //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
     //with minor modifications
     public boolean equals(Object object) {
