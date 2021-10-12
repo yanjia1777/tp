@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,8 @@ public class Main {
                 }
             } catch (MintException e) {
                 System.out.println(e.getMessage());
+            } catch (NoSuchElementException e) {
+                System.out.println("No new line entered");
             }
         }
         logger.log(Level.INFO, "User exited Mint");
