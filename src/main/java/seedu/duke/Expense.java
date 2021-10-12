@@ -80,7 +80,7 @@ public class Expense {
         boolean isNameEqual = Objects.equals(name, expense.name);
         boolean isDateEqual = Objects.equals(date, expense.date);
         boolean isAmountEqual = Objects.equals(amount, expense.amount);
-
-        return isNameEqual && isDateEqual && isAmountEqual;
+        boolean isCategoryEqual = Objects.equals(catNum, expense.catNum);
+        return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
 }
