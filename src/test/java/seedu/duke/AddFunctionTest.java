@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddFunctionTest {
 
+    public static final String LIST_OF_EXPENSES = "Here is the list of your expenses:";
+
     @Test
     public void addExpense_oneAddition_expectSuccess() {
         LocalDate date = LocalDate.now();
@@ -22,8 +24,8 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         expenseList.viewExpense();
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
-                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator();// Notice the \n for new line.
+        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
+                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -36,18 +38,18 @@ class AddFunctionTest {
         String foodExpenseName = expenseFood.getName();
         String foodExpenseDate = expenseFood.getDate().toString();
         String foodExpenseAmount = Double.toString(expenseFood.getAmount());
-        String entertainmentExpenseName = expenseEntertainment.getName();
-        String entertainmentDate = expenseEntertainment.getDate().toString();
-        String entertainmentExpenseAmount = Double.toString(expenseEntertainment.getAmount());
+        String entExpenseName = expenseEntertainment.getName();
+        String entDate = expenseEntertainment.getDate().toString();
+        String entExpenseAmount = Double.toString(expenseEntertainment.getAmount());
         String foodCatNum = "1";
-        String entertainmentCatNum = "2";
+        String entCatNum = "2";
         expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount, foodCatNum);
-        expenseList.addExpense(entertainmentExpenseName, entertainmentDate, entertainmentExpenseAmount, entertainmentCatNum);
+        expenseList.addExpense(entExpenseName, entDate, entExpenseAmount, entCatNum);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         expenseList.viewExpense();
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
+        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
                 + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator()
                 + " Entertainment   | 2021-10-10 | movie | $13.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
