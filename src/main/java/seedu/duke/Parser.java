@@ -187,6 +187,7 @@ public class Parser {
             case "add":
                 parseInputByTags(userInput);
                 assert name != null;
+                assert amount != null;
                 checkValidityOfFields();
                 expenseList.addExpense(name, date, amount, catNum);
                 break;
