@@ -49,10 +49,6 @@ public class ExpenseList {
         String choice;
         int indexToBeChanged;
         String[] splitChoice;
-        String newDescription = name;
-        String newDate = date;
-        String newAmount = amount;
-        String newCatNum = catNum;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
 
