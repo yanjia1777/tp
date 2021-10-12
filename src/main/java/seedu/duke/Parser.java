@@ -20,6 +20,7 @@ public class Parser {
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     protected static final String ERROR_INVALID_DATE = "Please enter a valid date!";
+    public static final String CAT_NUM_OTHERS = "0";
     protected String command;
     protected String name;
     protected String date;
@@ -109,10 +110,10 @@ public class Parser {
 
 
     public void parseInputByTags(String userInput) throws MintException {
-        this.name = null;
-        this.date = LocalDate.now().toString(); //default
-        this.amount = null;
-        this.catNum = "0"; //default - Others
+        if (this.command.equals("add")) {
+            this.date = LocalDate.now().toString();
+            this.catNum = CAT_NUM_OTHERS;
+        }
         String description;
         String tagType;
         boolean hasNext;
@@ -185,22 +186,23 @@ public class Parser {
                 break;
             case "add":
                 parseInputByTags(userInput);
+                assert name != null;
                 checkValidityOfFields();
                 expenseList.addExpense(name, date, amount, catNum);
                 break;
             case "delete":
                 parseInputByTags(userInput);
                 checkValidityOfFields();
-                expenseList.deleteExpense(name, date, amount);
+                expenseList.deleteExpense(name, date, amount, catNum);
                 break;
-            case "exit":
-                Ui.shutdown();
-                return -1;
             case "edit":
                 parseInputByTags(userInput);
                 checkValidityOfFields();
                 expenseList.editExpense(name, date, amount, catNum);
                 break;
+            case "exit":
+                Ui.shutdown();
+                return -1;
             default:
                 throw new MintException(MintException.ERROR_INVALID_COMMAND);
             }
@@ -212,7 +214,9 @@ public class Parser {
 
 
     private void checkMissingFieldOfUserInput(String userInput) throws MintException {
-        String[] keyDelimiters = {"n/", "d/", "a/", "c/"};
+        String[] keyDelimiters = command.equals("add")
+                ? new String[]{"n/", "a/"}
+                : new String[]{"n/", "d/", "a/", "c/"};
         ArrayList<String> missingDelimiters = new ArrayList<>();
         StringBuilder missingFields = new StringBuilder();
         missingFields.append(STRING_INCLUDE);
