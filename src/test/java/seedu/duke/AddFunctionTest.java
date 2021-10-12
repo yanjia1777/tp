@@ -90,7 +90,7 @@ class AddFunctionTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("add d/2021-01-01 a/10 c/3", expenseList);
+        parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList);
         String expectedOutput = "Please add the description of the item!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
