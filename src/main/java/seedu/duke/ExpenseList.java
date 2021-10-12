@@ -79,7 +79,7 @@ public class ExpenseList {
         return false;
     }
 
-    private void edit(int index, String[] choice, String name, String date, String amt, String cat) throws MintException {
+    private void edit(int i, String[] choice, String name, String date, String amt, String cat) throws MintException {
         for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
@@ -95,7 +95,7 @@ public class ExpenseList {
                 cat = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
         }
-        expenseList.set(index, new Expense(name, date, amt, cat));
+        expenseList.set(i, new Expense(name, date, amt, cat));
     }
 
     private String nonEmptyNewDescription(String word) throws MintException {
