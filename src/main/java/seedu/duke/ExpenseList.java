@@ -11,7 +11,9 @@ public class ExpenseList {
     public static final String AMOUNT_SEPARATOR = "a/";
     public static final int LENGTH_OF_SEPARATOR = 2;
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    public static final String ERROR_INVALID_AMOUNT = "Invalid amount entered! Unable to edit expense.";
+    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "I was unable to perform any edits! "
+            + "Please check that you have included the tags of the fields you wish to edit! :(";
+    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String REGEX_TO_SPLIT = " ";
@@ -23,8 +25,8 @@ public class ExpenseList {
         expenseList.add(expense);
     }
 
-    public void deleteExpense(String name, String date, String amount) throws MintException {
-        Expense expense = new Expense(name, date, amount);
+    public void deleteExpense(String name, String date, String amount, String catNum) throws MintException {
+        Expense expense = new Expense(name, date, amount, catNum);
         if (expenseList.contains(expense)) {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expenseList.indexOf(expense));
@@ -49,8 +51,10 @@ public class ExpenseList {
         String newAmount = amount;
         String newCatNum = catNum;
         Boolean printEditSuccess = false;
+        Boolean exceptionThrown = false;
+
         try {
-            Expense expense = new Expense(name, date, amount);
+            Expense expense = new Expense(name, date, amount, catNum);
             if (expenseList.contains(expense)) {
                 indexToBeChanged = expenseList.indexOf(expense);
                 Scanner scan = new Scanner(System.in);
@@ -61,6 +65,7 @@ public class ExpenseList {
             }
             splitChoice = choice.split(REGEX_TO_SPLIT);
             for (String word : splitChoice) {
+                assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
                     printEditSuccess = true;
                     newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
@@ -80,14 +85,22 @@ public class ExpenseList {
             }
             expenseList.set(indexToBeChanged, new Expense(newDescription, newDate, newAmount, newCatNum));
         } catch (NumberFormatException e) {
-            printEditSuccess = false;
-            System.out.println(ERROR_INVALID_AMOUNT);
+            exceptionThrown = true;
+            System.out.println(ERROR_INVALID_NUMBER);
         } catch (DateTimeParseException e) {
-            printEditSuccess = false;
+            exceptionThrown = true;
             System.out.println(ERROR_INVALID_DATE);
         }
-        if (printEditSuccess) {
-            System.out.println(SUCCESSFUL_EDIT_MESSAGE);
+        printAttemptToEditOutcome(printEditSuccess, exceptionThrown);
+    }
+
+    private void printAttemptToEditOutcome(Boolean printEditSuccess, Boolean exceptionThrown) {
+        if (!exceptionThrown) {
+            if (printEditSuccess) {
+                System.out.println(SUCCESSFUL_EDIT_MESSAGE);
+            } else {
+                System.out.println(UNSUCCESSFUL_EDIT_MESSAGE);
+            }
         }
     }
 
