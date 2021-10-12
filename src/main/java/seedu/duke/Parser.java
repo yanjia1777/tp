@@ -102,7 +102,7 @@ public class Parser {
 
     private void checkInvalidDate() throws MintException {
         try {
-            LocalDate.parse(date);
+            LocalDate.parse(date, Expense.dateFormatter);
         } catch (DateTimeParseException e) {
             throw new MintException(ERROR_INVALID_DATE);
         }
