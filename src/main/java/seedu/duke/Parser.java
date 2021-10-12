@@ -3,6 +3,8 @@ package seedu.duke;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.time.LocalDate;
@@ -27,6 +29,7 @@ public class Parser {
     protected String amount;
     protected String catNum;
     protected String[] argumentsArray;
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public Parser() {
     }
@@ -88,6 +91,7 @@ public class Parser {
     private void checkEmptyName() throws MintException {
         boolean hasEmptyName = name.equals(STRING_EMPTY);
         if (hasEmptyName) {
+            logger.log(Level.INFO, "User entered empty name");
             throw new MintException(MintException.ERROR_NO_NAME);
         }
     }
@@ -96,14 +100,16 @@ public class Parser {
         try {
             Double.parseDouble(amount);
         } catch (NumberFormatException e) {
+            logger.log(Level.INFO, "User entered invalid amount");
             throw new MintException(ERROR_INVALID_AMOUNT);
         }
     }
 
     private void checkInvalidDate() throws MintException {
         try {
-            LocalDate.parse(date);
+            LocalDate.parse(date, Expense.dateFormatter);
         } catch (DateTimeParseException e) {
+            logger.log(Level.INFO, "User entered invalid date");
             throw new MintException(ERROR_INVALID_DATE);
         }
     }
@@ -187,12 +193,14 @@ public class Parser {
             case "add":
                 parseInputByTags(userInput);
                 assert name != null;
+                assert amount != null;
                 checkValidityOfFields();
                 expenseList.addExpense(name, date, amount, catNum);
                 break;
             case "delete":
                 parseInputByTags(userInput);
                 checkValidityOfFields();
+                assert !name.equals("") : "Name should not be empty";
                 expenseList.deleteExpense(name, date, amount, catNum);
                 break;
             case "edit":
