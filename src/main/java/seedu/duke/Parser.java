@@ -215,8 +215,8 @@ public class Parser {
 
     private void checkMissingFieldOfUserInput(String userInput) throws MintException {
         String[] keyDelimiters = command.equals("add") ?
-                new String[] {"n/", "a/"}
-                :new String[] {"n/", "d/", "a/", "c/"};
+                new String[]{"n/", "a/"}
+                : new String[]{"n/", "d/", "a/", "c/"};
         ArrayList<String> missingDelimiters = new ArrayList<>();
         StringBuilder missingFields = new StringBuilder();
         missingFields.append(STRING_INCLUDE);
