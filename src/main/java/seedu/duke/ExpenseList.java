@@ -3,6 +3,8 @@ package seedu.duke;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExpenseList {
     public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
@@ -16,9 +18,11 @@ public class ExpenseList {
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String REGEX_TO_SPLIT = " ";
     protected ArrayList<Expense> expenseList = new ArrayList<>();
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
+        logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
     }
@@ -26,6 +30,7 @@ public class ExpenseList {
     public void deleteExpense(String name, String date, String amount, String catNum) throws MintException {
         Expense expense = new Expense(name, date, amount, catNum);
         if (expenseList.contains(expense)) {
+            logger.log(Level.INFO, "User deleted expense: " + expense);
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expenseList.indexOf(expense));
         } else {
