@@ -49,7 +49,7 @@ public class ExpenseList {
 
         try {
             Expense expense = new Expense(name, date, amount, catNum);
-            String originalExpense = expense.toString();
+            final String originalExpense = expense.toString();
             if (expenseList.contains(expense)) {
                 indexToBeChanged = expenseList.indexOf(expense);
                 Scanner scan = new Scanner(System.in);
@@ -59,7 +59,7 @@ public class ExpenseList {
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
             }
             splitChoice = choice.split(REGEX_TO_SPLIT);
-            updateEntryOfExpense(indexToBeChanged, splitChoice, name, date, amount, catNum);
+            amendExpense(indexToBeChanged, splitChoice, name, date, amount, catNum);
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
@@ -73,33 +73,39 @@ public class ExpenseList {
 
     private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
         String newExpense = expenseList.get(indexToBeChanged).toString();
-        if(!originalExpense.equals(newExpense)) {
+        if (!originalExpense.equals(newExpense)) {
             return true;
         }
         return false;
     }
 
-    private void updateEntryOfExpense(int indexToBeChanged, String[] splitChoice, String description, String date, String amount, String catNum) throws MintException {
-        for (String word : splitChoice) {
+    private void amendExpense(int index, String[] choice, String description, String date, String amt, String catNum) throws MintException {
+        for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
-                String newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR);
-                if(!newDescription.trim().equalsIgnoreCase("")) {
-                    description = newDescription.trim();
-                } else {
-                    throw new MintException(ERROR_INVALID_DESCRIPTION);
-                }
+                description = nonEmptyNewDescription(word);
             }
             if (word.contains(DATE_SEPARATOR)) {
                 date = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
             if (word.contains(AMOUNT_SEPARATOR)) {
-                amount = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                amt = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
                 catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
         }
-        expenseList.set(indexToBeChanged, new Expense(description, date, amount, catNum));
+        expenseList.set(index, new Expense(description, date, amt, catNum));
+    }
+
+    private String nonEmptyNewDescription(String word) throws MintException {
+        String description;
+        String newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR);
+        if (!newDescription.trim().equalsIgnoreCase("")) {
+            description = newDescription.trim();
+        } else {
+            throw new MintException(ERROR_INVALID_DESCRIPTION);
+        }
+        return description;
     }
 }
