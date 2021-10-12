@@ -29,7 +29,7 @@ public class ExpenseList {
         Expense expense = new Expense(name, date, amount, catNum);
         if (expenseList.contains(expense)) {
             System.out.println("I have deleted: " + expense);
-            expenseList.remove(expenseList.indexOf(expense));
+            expenseList.remove(expense);
         } else {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
         }
