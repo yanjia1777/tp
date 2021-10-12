@@ -10,6 +10,10 @@ public class Ui {
     public static final int CAT_NUM_BEAUTY = 6;
     public static final int CAT_NUM_GIFT = 7;
     public static final int CAT_NUM_OTHERS = 0;
+    public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
+    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "I was unable to perform any edits! "
+            + "Please check that you have included the tags of the fields you wish to edit! :(";
+
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     public static final String CAT_STR_FOOD = "      Food      ";
     public static final String CAT_STR_ENTERTAINMENT = " Entertainment  ";
@@ -81,6 +85,16 @@ public class Ui {
         System.out.println(Ui.INDENT + "c/6.  Beauty");
         System.out.println(Ui.INDENT + "c/7.  Gift");
         System.out.println("default c/0  Others");
+    }
+
+    public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {
+        if (!exceptionThrown) {
+            if (printEditSuccess) {
+                System.out.println(SUCCESSFUL_EDIT_MESSAGE);
+            } else {
+                System.out.println(UNSUCCESSFUL_EDIT_MESSAGE);
+            }
+        }
     }
 }
 
