@@ -80,5 +80,20 @@ class AddFunctionTest {
         parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList);
         String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
+
+
+    }
+
+    @Test
+    public void addExpense_noName_expectErrorMessage() throws MintException {
+        ExpenseList expenseList = new ExpenseList();
+        Parser parser = new Parser();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList);
+        String expectedOutput = "Please add the description of the item!" + System.lineSeparator();
+        assertEquals(expectedOutput, outContent.toString());
     }
 }
