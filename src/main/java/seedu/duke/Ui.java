@@ -11,8 +11,9 @@ public class Ui {
     public static final int CAT_NUM_GIFT = 7;
     public static final int CAT_NUM_OTHERS = 0;
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "I was unable to perform any edits! "
-            + "Please check that you have included the tags of the fields you wish to edit! :(";
+    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
+            + "I was unable to perform any edits! "
+            + "Please check that you have made changes or included the tags of the fields you wish to edit! :(";
 
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     public static final String CAT_STR_FOOD = "      Food      ";

@@ -11,6 +11,7 @@ public class ExpenseList {
     public static final String NAME_SEPARATOR = "n/";
     public static final String DATE_SEPARATOR = "d/";
     public static final String AMOUNT_SEPARATOR = "a/";
+    public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
     public static final int LENGTH_OF_SEPARATOR = 2;
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
@@ -74,10 +75,32 @@ public class ExpenseList {
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }
 
-    private void editSpecifiedEntry(String choice, int indexToBeChanged, Expense expense) throws MintException {
-        String[] splitChoice;
-        splitChoice = choice.split(REGEX_TO_SPLIT);
+    private void editSpecifiedEntry(String userInput, int indexToBeChanged, Expense expense) throws MintException {
+        Parser parser = new Parser();
+        ArrayList<String> splitChoice = new ArrayList<>();
+        String choice = " " + userInput;
+        while(choice.matches(userTagRaw)) {
+            int currentIndex = parser.getCurrentTagIndex(choice);
+            int nextIndex = choice.length();
+
+            if (parser.hasNextTag(choice, currentIndex)) {
+                nextIndex = parser.getNextTagIndex(choice, currentIndex);
+            }
+            choice = remainingString(splitChoice, choice, currentIndex, nextIndex);
+        }
         amendExpense(indexToBeChanged, splitChoice, expense);
+    }
+
+    private String remainingString(ArrayList<String> splitChoice, String choice, int currentIndex, int nextIndex) {
+        String description;
+        description = choice.substring(currentIndex, nextIndex).trim();
+        extractFieldsToAmend(splitChoice, description);
+        choice = choice.substring(nextIndex);
+        return choice;
+    }
+
+    private void extractFieldsToAmend(ArrayList<String> splitChoice, String description) {
+        splitChoice.add(description);
     }
 
     private String scanFieldsToUpdate() {
@@ -93,7 +116,7 @@ public class ExpenseList {
         return !originalExpense.equals(newExpense);
     }
 
-    private void amendExpense(int index, String[] choice, Expense expense) throws MintException {
+    private void amendExpense(int index, ArrayList<String> choice, Expense expense) throws MintException {
         String name = expense.getName();
         String date = expense.getDate().toString();
         String amount = Double.toString(expense.getAmount());
