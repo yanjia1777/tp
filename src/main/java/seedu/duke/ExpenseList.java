@@ -42,7 +42,7 @@ public class ExpenseList {
     public void viewExpense() {
         System.out.println("Here is the list of your expenses:");
         for (Expense expense : expenseList) {
-            System.out.println(expense.toString());
+            System.out.println(expense.viewToString());
         }
     }
 
