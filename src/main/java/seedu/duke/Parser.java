@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.time.LocalDate;
 
 public class Parser {
     // take note of the blank space,example " n/"
@@ -22,6 +22,7 @@ public class Parser {
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     protected static final String ERROR_INVALID_DATE = "Please enter a valid date!";
+    protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number!";
     public static final String CAT_NUM_OTHERS = "0";
     protected String command;
     protected String name;
@@ -83,6 +84,7 @@ public class Parser {
             checkEmptyName();
             checkInvalidAmount();
             checkInvalidDate();
+            checkInvalidCatNum();
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -114,6 +116,14 @@ public class Parser {
         }
     }
 
+    private void checkInvalidCatNum() throws MintException {
+        try {
+            Integer.parseInt(catNum);
+        } catch (NumberFormatException e) {
+            logger.log(Level.INFO, "User entered invalid category number");
+            throw new MintException(ERROR_INVALID_CATNUM);
+        }
+    }
 
     public void parseInputByTags(String userInput) throws MintException {
         if (this.command.equals("add")) {
@@ -158,7 +168,6 @@ public class Parser {
             default:
                 throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
             }
-
             if (hasNext) {
                 userInput = userInput.substring(nextTagIndex);
             } else {
@@ -225,39 +234,49 @@ public class Parser {
         String[] keyDelimiters = command.equals("add")
                 ? new String[]{"n/", "a/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
+        ArrayList<String> missingDelimiters = identifyDelimiters(userInput, keyDelimiters);
+        if (missingDelimiters.size() > 0) {
+            constructErrorMessage(missingDelimiters);
+            throw new MintException(constructErrorMessage(missingDelimiters).toString());
+        }
+    }
+
+    private ArrayList<String> identifyDelimiters(String userInput, String[] keyDelimiters) {
         ArrayList<String> missingDelimiters = new ArrayList<>();
-        StringBuilder missingFields = new StringBuilder();
-        missingFields.append(STRING_INCLUDE);
-        int index = 1;
         for (String delimiter : keyDelimiters) {
             if (!userInput.contains(delimiter)) {
                 missingDelimiters.add(delimiter);
             }
         }
-        if (missingDelimiters.size() > 0) {
-            for (String delimiter : missingDelimiters) {
-                switch (delimiter) {
-                case "n/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_DESCRIPTION);
-                    index++;
-                    break;
-                case "d/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_DATE);
-                    index++;
-                    break;
-                case "a/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_AMOUNT);
-                    index++;
-                    break;
-                case "c/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_CATNUM);
-                    index++;
-                    break;
-                default:
-                    throw new MintException(MintException.ERROR_INVALID_COMMAND);
-                }
+        return missingDelimiters;
+    }
+
+    private StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
+        int index = 1;
+        StringBuilder missingFieldsErrorMessage = new StringBuilder();
+        missingFieldsErrorMessage.append(STRING_INCLUDE);
+        for (String delimiter : missingDelimiters) {
+            switch (delimiter) {
+            case "n/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_DESCRIPTION);
+                index++;
+                break;
+            case "d/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_DATE);
+                index++;
+                break;
+            case "a/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_AMOUNT);
+                index++;
+                break;
+            case "c/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_CATNUM);
+                index++;
+                break;
+            default:
+                throw new MintException(MintException.ERROR_INVALID_COMMAND);
             }
-            throw new MintException(missingFields.toString());
         }
+        return missingFieldsErrorMessage;
     }
 }

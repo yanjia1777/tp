@@ -17,6 +17,7 @@ public class ExpenseList {
     public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String REGEX_TO_SPLIT = " ";
+    public static final String BLANK = "";
     protected ArrayList<Expense> expenseList = new ArrayList<>();
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -48,7 +49,6 @@ public class ExpenseList {
     public void editExpense(String name, String date, String amount, String catNum) throws MintException {
         String choice;
         int indexToBeChanged;
-        String[] splitChoice;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
 
@@ -57,14 +57,12 @@ public class ExpenseList {
             final String originalExpense = expense.toString();
             if (expenseList.contains(expense)) {
                 indexToBeChanged = expenseList.indexOf(expense);
-                Scanner scan = new Scanner(System.in);
-                System.out.println(STRING_PROMPT_EDIT);
-                choice = scan.nextLine();
+                choice = scanFieldsToUpdate();
             } else {
+                logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
             }
-            splitChoice = choice.split(REGEX_TO_SPLIT);
-            edit(indexToBeChanged, splitChoice, name, date, amount, catNum);
+            editSpecifiedEntry(choice, indexToBeChanged, expense);
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
@@ -76,15 +74,30 @@ public class ExpenseList {
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }
 
-    private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
-        String newExpense = expenseList.get(indexToBeChanged).toString();
-        if (!originalExpense.equals(newExpense)) {
-            return true;
-        }
-        return false;
+    private void editSpecifiedEntry(String choice, int indexToBeChanged, Expense expense) throws MintException {
+        String[] splitChoice;
+        splitChoice = choice.split(REGEX_TO_SPLIT);
+        amendExpense(indexToBeChanged, splitChoice, expense);
     }
 
-    private void edit(int i, String[] choice, String name, String date, String amt, String cat) throws MintException {
+    private String scanFieldsToUpdate() {
+        String choice;
+        Scanner scan = new Scanner(System.in);
+        System.out.println(STRING_PROMPT_EDIT);
+        choice = scan.nextLine();
+        return choice;
+    }
+
+    private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
+        String newExpense = expenseList.get(indexToBeChanged).toString();
+        return !originalExpense.equals(newExpense);
+    }
+
+    private void amendExpense(int index, String[] choice, Expense expense) throws MintException {
+        String name = expense.getName();
+        String date = expense.getDate().toString();
+        String amount = Double.toString(expense.getAmount());
+        String catNum = Integer.toString(expense.getCatNum());
         for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
@@ -94,19 +107,19 @@ public class ExpenseList {
                 date = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
             if (word.contains(AMOUNT_SEPARATOR)) {
-                amt = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                amount = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
-                cat = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
         }
-        expenseList.set(i, new Expense(name, date, amt, cat));
+        expenseList.set(index, new Expense(name, date, amount, catNum));
     }
 
     private String nonEmptyNewDescription(String word) throws MintException {
         String description;
         String newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR);
-        if (!newDescription.trim().equalsIgnoreCase("")) {
+        if (!newDescription.trim().equalsIgnoreCase(BLANK)) {
             description = newDescription.trim();
         } else {
             throw new MintException(ERROR_INVALID_DESCRIPTION);

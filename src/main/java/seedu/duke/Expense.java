@@ -52,6 +52,14 @@ public class Expense {
         this.date = date;
     }
 
+    public int getCatNum() {
+        return this.catNum;
+    }
+
+    public void setCatNum(int catNum) {
+        this.catNum = catNum;
+    }
+
     public double getAmount() {
         return amount;
     }
