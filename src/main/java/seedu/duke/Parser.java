@@ -1,6 +1,5 @@
 package seedu.duke;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class Parser {
     public Parser() {
     }
 
-    public static int indexOf(String text, String regex) {
+    private static int indexOfTag(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         return matcher.find() ? matcher.start() : -1;
@@ -47,7 +46,7 @@ public class Parser {
 
     private int getCurrentTagIndex(String userInput) {
         int currentTagIndex;
-        currentTagIndex = indexOf(userInput, userTag);
+        currentTagIndex = indexOfTag(userInput, userTag);
         return currentTagIndex;
     }
 
@@ -71,7 +70,7 @@ public class Parser {
 
     private int getNextTagIndex(String userInput, int currentTagIndex) {
         int nextTagIndex;
-        nextTagIndex = indexOf(userInput.substring(currentTagIndex + 3), userTag) + 3 + currentTagIndex;
+        nextTagIndex = indexOfTag(userInput.substring(currentTagIndex + 3), userTag) + 3 + currentTagIndex;
         return nextTagIndex;
     }
 
@@ -125,56 +124,64 @@ public class Parser {
         }
     }
 
-    public void parseInputByTags(String userInput) throws MintException {
-        if (this.command.equals("add")) {
-            this.date = LocalDate.now().toString();
-            this.catNum = CAT_NUM_OTHERS;
+    private void initDate() {
+        this.date = LocalDate.now().toString();
+    }
+
+    private void initCatNum() {
+        this.catNum = CAT_NUM_OTHERS;
+    }
+
+    private void setFieldsByTag(String description, String tagType) throws MintException {
+        switch (tagType) {
+        case "n":
+            this.name = description;
+            break;
+        case "d":
+            this.date = description;
+            break;
+        case "a":
+            this.amount = description;
+            break;
+        case "c":
+            this.catNum = description;
+            break;
+        default:
+            throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
         }
-        String description;
+    }
+
+    private void parseInputByTagsLoop(String userInput) throws MintException {
         String tagType;
-        boolean hasNext;
-
-        checkMissingFieldOfUserInput(userInput);
-
-        int nextTagIndex = userInput.length();
-
-        //prep userInput for looping
-        userInput = userInput.substring(command.length());
+        String description;
         while (userInput.matches(userTagRaw)) {
-            hasNext = false;
             int currentTagIndex = getCurrentTagIndex(userInput);
+            int nextTagIndex = userInput.length();
             tagType = getTagType(userInput, currentTagIndex);
+
             if (hasNextTag(userInput, currentTagIndex)) {
-                hasNext = true;
                 nextTagIndex = getNextTagIndex(userInput, currentTagIndex);
                 description = getDescription(userInput, currentTagIndex, nextTagIndex);
             } else {
                 description = getDescription(userInput, currentTagIndex);
             }
 
-            switch (tagType) {
-            case "n":
-                this.name = description;
-                break;
-            case "d":
-                this.date = description;
-                break;
-            case "a":
-                this.amount = description;
-                break;
-            case "c":
-                this.catNum = description;
-                break;
-            default:
-                throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
-            }
-            if (hasNext) {
-                userInput = userInput.substring(nextTagIndex);
-            } else {
-                break;
-            }
+            setFieldsByTag(description, tagType);
+            userInput = userInput.substring(nextTagIndex);
         }
     }
+
+    public void parseInputByTags(String userInput) throws MintException {
+        // for Add, initialise Date to today's date and category to "Others"
+        if (command.equals("add")) {
+            initDate();
+            initCatNum();
+        }
+
+        checkMissingFieldOfUserInput(userInput);
+        parseInputByTagsLoop(userInput);
+    }
+
 
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
@@ -201,8 +208,8 @@ public class Parser {
                 break;
             case "add":
                 parseInputByTags(userInput);
-                assert name != null;
-                assert amount != null;
+                assert name != null : "Name should not be empty";
+                assert amount != null : "Amount should not be empty";
                 checkValidityOfFields();
                 expenseList.addExpense(name, date, amount, catNum);
                 break;
