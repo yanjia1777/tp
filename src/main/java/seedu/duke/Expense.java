@@ -52,6 +52,14 @@ public class Expense {
         this.date = date;
     }
 
+    public int getCatNum() {
+        return this.catNum;
+    }
+
+    public void setCatNum(int catNum) {
+        this.catNum = catNum;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -60,12 +68,21 @@ public class Expense {
         return Ui.printIndividualCategory(this.catNum);
     }
 
+    public String getCatIndent() {
+        return Ui.printIndividualCategoryIndent(this.catNum);
+    }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
     public String toString() {
         return getCat() + " | " + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount());
+    }
+
+    public String viewToString() {
+        return getCatIndent() + " | " + getDate() + " | "
                 + getName() + " | $" + String.format("%,.2f", getAmount());
     }
 

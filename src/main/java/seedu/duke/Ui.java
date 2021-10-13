@@ -55,6 +55,29 @@ public class Ui {
     public static String printIndividualCategory(int catNum) {
         switch (catNum) {
         case CAT_NUM_FOOD:
+            return "Food";
+        case CAT_NUM_ENTERTAINMENT:
+            return "Entertainment";
+        case CAT_NUM_TRANSPORTATION:
+            return "Transportation";
+        case CAT_NUM_HOUSEHOLD:
+            return "Household";
+        case CAT_NUM_APPAREL:
+            return "Apparel";
+        case CAT_NUM_BEAUTY:
+            return "Beauty";
+        case CAT_NUM_GIFT:
+            return "Gift";
+        case CAT_NUM_OTHERS:
+            return "Others";
+        default:
+            return CAT_STR_NO_CAT_FOUND;
+        }
+    }
+
+    public static String printIndividualCategoryIndent(int catNum) {
+        switch (catNum) {
+        case CAT_NUM_FOOD:
             return CAT_STR_FOOD;
         case CAT_NUM_ENTERTAINMENT:
             return CAT_STR_ENTERTAINMENT;
@@ -84,7 +107,7 @@ public class Ui {
         System.out.println(Ui.INDENT + "c/5.  Apparel");
         System.out.println(Ui.INDENT + "c/6.  Beauty");
         System.out.println(Ui.INDENT + "c/7.  Gift");
-        System.out.println("default c/0  Others");
+        System.out.println("def c/0.  Others");
     }
 
     public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {

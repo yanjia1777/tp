@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.time.LocalDate;
 
 public class Parser {
     // take note of the blank space,example " n/"
@@ -22,6 +21,7 @@ public class Parser {
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     protected static final String ERROR_INVALID_DATE = "Please enter a valid date!";
+    protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number!";
     public static final String CAT_NUM_OTHERS = "0";
     protected String command;
     protected String name;
@@ -34,7 +34,7 @@ public class Parser {
     public Parser() {
     }
 
-    public static int indexOf(String text, String regex) {
+    private static int indexOfTag(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         return matcher.find() ? matcher.start() : -1;
@@ -46,7 +46,7 @@ public class Parser {
 
     private int getCurrentTagIndex(String userInput) {
         int currentTagIndex;
-        currentTagIndex = indexOf(userInput, userTag);
+        currentTagIndex = indexOfTag(userInput, userTag);
         return currentTagIndex;
     }
 
@@ -70,7 +70,7 @@ public class Parser {
 
     private int getNextTagIndex(String userInput, int currentTagIndex) {
         int nextTagIndex;
-        nextTagIndex = indexOf(userInput.substring(currentTagIndex + 3), userTag) + 3 + currentTagIndex;
+        nextTagIndex = indexOfTag(userInput.substring(currentTagIndex + 3), userTag) + 3 + currentTagIndex;
         return nextTagIndex;
     }
 
@@ -83,6 +83,7 @@ public class Parser {
             checkEmptyName();
             checkInvalidAmount();
             checkInvalidDate();
+            checkInvalidCatNum();
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -114,58 +115,73 @@ public class Parser {
         }
     }
 
-
-    public void parseInputByTags(String userInput) throws MintException {
-        if (this.command.equals("add")) {
-            this.date = LocalDate.now().toString();
-            this.catNum = CAT_NUM_OTHERS;
+    private void checkInvalidCatNum() throws MintException {
+        try {
+            Integer.parseInt(catNum);
+        } catch (NumberFormatException e) {
+            logger.log(Level.INFO, "User entered invalid category number");
+            throw new MintException(ERROR_INVALID_CATNUM);
         }
-        String description;
+    }
+
+    private void initDate() {
+        this.date = LocalDate.now().toString();
+    }
+
+    private void initCatNum() {
+        this.catNum = CAT_NUM_OTHERS;
+    }
+
+    private void setFieldsByTag(String description, String tagType) throws MintException {
+        switch (tagType) {
+        case "n":
+            this.name = description;
+            break;
+        case "d":
+            this.date = description;
+            break;
+        case "a":
+            this.amount = description;
+            break;
+        case "c":
+            this.catNum = description;
+            break;
+        default:
+            throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
+        }
+    }
+
+    private void parseInputByTagsLoop(String userInput) throws MintException {
         String tagType;
-        boolean hasNext;
-
-        checkMissingFieldOfUserInput(userInput);
-
-        int nextTagIndex = userInput.length();
-
-        //prep userInput for looping
-        userInput = userInput.substring(command.length());
+        String description;
         while (userInput.matches(userTagRaw)) {
-            hasNext = false;
             int currentTagIndex = getCurrentTagIndex(userInput);
+            int nextTagIndex = userInput.length();
             tagType = getTagType(userInput, currentTagIndex);
+
             if (hasNextTag(userInput, currentTagIndex)) {
-                hasNext = true;
                 nextTagIndex = getNextTagIndex(userInput, currentTagIndex);
                 description = getDescription(userInput, currentTagIndex, nextTagIndex);
             } else {
                 description = getDescription(userInput, currentTagIndex);
             }
 
-            switch (tagType) {
-            case "n":
-                this.name = description;
-                break;
-            case "d":
-                this.date = description;
-                break;
-            case "a":
-                this.amount = description;
-                break;
-            case "c":
-                this.catNum = description;
-                break;
-            default:
-                throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
-            }
-
-            if (hasNext) {
-                userInput = userInput.substring(nextTagIndex);
-            } else {
-                break;
-            }
+            setFieldsByTag(description, tagType);
+            userInput = userInput.substring(nextTagIndex);
         }
     }
+
+    public void parseInputByTags(String userInput) throws MintException {
+        // for Add, initialise Date to today's date and category to "Others"
+        if (command.equals("add")) {
+            initDate();
+            initCatNum();
+        }
+
+        checkMissingFieldOfUserInput(userInput);
+        parseInputByTagsLoop(userInput);
+    }
+
 
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
@@ -192,8 +208,8 @@ public class Parser {
                 break;
             case "add":
                 parseInputByTags(userInput);
-                assert name != null;
-                assert amount != null;
+                assert name != null : "Name should not be empty";
+                assert amount != null : "Amount should not be empty";
                 checkValidityOfFields();
                 expenseList.addExpense(name, date, amount, catNum);
                 break;
@@ -225,39 +241,49 @@ public class Parser {
         String[] keyDelimiters = command.equals("add")
                 ? new String[]{"n/", "a/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
+        ArrayList<String> missingDelimiters = identifyDelimiters(userInput, keyDelimiters);
+        if (missingDelimiters.size() > 0) {
+            constructErrorMessage(missingDelimiters);
+            throw new MintException(constructErrorMessage(missingDelimiters).toString());
+        }
+    }
+
+    private ArrayList<String> identifyDelimiters(String userInput, String[] keyDelimiters) {
         ArrayList<String> missingDelimiters = new ArrayList<>();
-        StringBuilder missingFields = new StringBuilder();
-        missingFields.append(STRING_INCLUDE);
-        int index = 1;
         for (String delimiter : keyDelimiters) {
             if (!userInput.contains(delimiter)) {
                 missingDelimiters.add(delimiter);
             }
         }
-        if (missingDelimiters.size() > 0) {
-            for (String delimiter : missingDelimiters) {
-                switch (delimiter) {
-                case "n/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_DESCRIPTION);
-                    index++;
-                    break;
-                case "d/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_DATE);
-                    index++;
-                    break;
-                case "a/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_AMOUNT);
-                    index++;
-                    break;
-                case "c/":
-                    missingFields.append(index).append(SEPARATOR).append(STRING_CATNUM);
-                    index++;
-                    break;
-                default:
-                    throw new MintException(MintException.ERROR_INVALID_COMMAND);
-                }
+        return missingDelimiters;
+    }
+
+    private StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
+        int index = 1;
+        StringBuilder missingFieldsErrorMessage = new StringBuilder();
+        missingFieldsErrorMessage.append(STRING_INCLUDE);
+        for (String delimiter : missingDelimiters) {
+            switch (delimiter) {
+            case "n/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_DESCRIPTION);
+                index++;
+                break;
+            case "d/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_DATE);
+                index++;
+                break;
+            case "a/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_AMOUNT);
+                index++;
+                break;
+            case "c/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_CATNUM);
+                index++;
+                break;
+            default:
+                throw new MintException(MintException.ERROR_INVALID_COMMAND);
             }
-            throw new MintException(missingFields.toString());
         }
+        return missingFieldsErrorMessage;
     }
 }
