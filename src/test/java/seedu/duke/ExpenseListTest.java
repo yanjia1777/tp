@@ -20,7 +20,7 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
 
         expenseList.deleteExpense(name, date, amount, catNum);
-        String expectedOutput  = "I have deleted:       Food       | 2021-12-23 | Cheese burger | $15.50"
+        String expectedOutput  = "I have deleted: Food | 2021-12-23 | Cheese burger | $15.50"
                 + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -33,7 +33,7 @@ class ExpenseListTest {
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
             expenseList.deleteExpense("Cheese burger", "2021-12-23", "15.5", "1");
-            String wrongExpectedOutput  = "I have deleted:       Food       | 2021-12-23 | Cheese burger | $15.50"
+            String wrongExpectedOutput  = "I have deleted: Food | 2021-12-23 | Cheese burger | $15.50"
                     + System.lineSeparator();
             assertEquals(wrongExpectedOutput, outContent.toString());
             fail();
