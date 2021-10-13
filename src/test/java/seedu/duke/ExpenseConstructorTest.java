@@ -19,6 +19,6 @@ public class ExpenseConstructorTest {
         String amount = "7.50";
         String catNum = "1";
         Expense expense = new Expense(name, date, amount, catNum);
-        assertEquals("      Food       | 2021-10-12 | Samurai Burger | $7.50", expense.toString());
+        assertEquals("Food | 2021-10-12 | Samurai Burger | $7.50", expense.toString());
     }
 }
