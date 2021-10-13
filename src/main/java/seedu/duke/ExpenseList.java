@@ -79,7 +79,7 @@ public class ExpenseList {
         Parser parser = new Parser();
         ArrayList<String> splitChoice = new ArrayList<>();
         String choice = " " + userInput;
-        while(choice.matches(userTagRaw)) {
+        while (choice.matches(userTagRaw)) {
             int currentIndex = parser.getCurrentTagIndex(choice);
             int nextIndex = choice.length();
 
