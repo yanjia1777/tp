@@ -80,6 +80,7 @@ public class Expense {
         return getCat() + " | " + getDate() + " | "
                 + getName() + " | $" + String.format("%,.2f", getAmount());
     }
+
     public String viewToString() {
         return getCatIndent() + " | " + getDate() + " | "
                 + getName() + " | $" + String.format("%,.2f", getAmount());
