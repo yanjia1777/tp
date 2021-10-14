@@ -16,7 +16,7 @@ public class Parser {
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
     public static final String STRING_AMOUNT = "Amount of purchase\n";
-    public static final String STRING_CATNUM = "Category number of item\n";
+    public static final String STRING_CATNUM = "Category number of item\n"; 
     public static final String STRING_EMPTY = "";
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
@@ -202,6 +202,8 @@ public class Parser {
             case "categories":
                 Ui.printCategories();
                 break;
+            case "list":
+                //fallthrough
             case "view":
                 parseInputByArguments(userInput);
                 expenseList.viewExpense();
@@ -224,6 +226,8 @@ public class Parser {
                 checkValidityOfFields();
                 expenseList.editExpense(name, date, amount, catNum);
                 break;
+            case "bye":
+                //fallthrough
             case "exit":
                 Ui.shutdown();
                 return -1;
