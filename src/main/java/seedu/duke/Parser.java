@@ -182,7 +182,7 @@ public class Parser {
                 break;
             case "view":
                 parseInputByArguments(userInput);
-                expenseList.viewExpense();
+                expenseList.viewExpense(argumentsArray);
                 break;
             case "add":
                 parseInputByTags(userInput);

@@ -1,14 +1,15 @@
 package seedu.duke;
 
 import java.time.LocalDate; // import the LocalDate class
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Expense {
     public static final int CAT_NUM_OTHERS = 7;
-    private int catNum;
-    private String name;
-    private LocalDate date;
-    private double amount;
+    protected int catNum;
+    protected String name;
+    protected LocalDate date;
+    protected double amount;
 
     public Expense() {
         catNum = CAT_NUM_OTHERS; //others
@@ -83,4 +84,15 @@ public class Expense {
         boolean isCategoryEqual = Objects.equals(catNum, expense.catNum);
         return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
+
+    public static Comparator<Expense> compareByAmount = new Comparator<Expense>() {
+
+        public int compare(Expense i, Expense j) {
+
+            //ascending order
+            return (int)(i.amount - j.amount);
+
+            //descending order
+            //return StudentName2.compareTo(StudentName1);
+        }};
 }
