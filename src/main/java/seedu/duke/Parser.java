@@ -44,37 +44,37 @@ public class Parser {
         return userInput.split(" ", 2)[0];
     }
 
-    private int getCurrentTagIndex(String userInput) {
+    public int getCurrentTagIndex(String userInput) {
         int currentTagIndex;
         currentTagIndex = indexOfTag(userInput, userTag);
         return currentTagIndex;
     }
 
-    private String getTagType(String userInput, int currentTagIndex) {
+    public String getTagType(String userInput, int currentTagIndex) {
         String tagType;
         tagType = String.valueOf(userInput.charAt(currentTagIndex + 1));
         return tagType;
     }
 
-    private String getDescription(String userInput, int currentTagIndex) {
+    public String getDescription(String userInput, int currentTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3).trim();
         return description;
     }
 
-    private String getDescription(String userInput, int currentTagIndex, int nextTagIndex) {
+    public String getDescription(String userInput, int currentTagIndex, int nextTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3, nextTagIndex).trim();
         return description;
     }
 
-    private int getNextTagIndex(String userInput, int currentTagIndex) {
+    public int getNextTagIndex(String userInput, int currentTagIndex) {
         int nextTagIndex;
         nextTagIndex = indexOfTag(userInput.substring(currentTagIndex + 3), userTag) + 3 + currentTagIndex;
         return nextTagIndex;
     }
 
-    private boolean hasNextTag(String userString, int currentTagIndex) {
+    public boolean hasNextTag(String userString, int currentTagIndex) {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
