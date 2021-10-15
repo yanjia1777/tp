@@ -49,7 +49,8 @@ public class ExpenseList {
 
     public void viewExpense(String[] argumentArrayInput) throws MintException {
         String sortType;
-        String fromDate;
+        LocalDate fromDate;
+        LocalDate endDate = null;
         Month month;
         String year = null;
         ArrayList<String> argumentArray= new ArrayList<>(Arrays.asList(argumentArrayInput));
@@ -61,6 +62,7 @@ public class ExpenseList {
                 sort(outputArray, sortType);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println(ERROR_INVALID_SORTTYPE);
+                return;
             }
         }
 
@@ -73,6 +75,7 @@ public class ExpenseList {
                 Sorter.trimByYear(outputArray, year);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println(ERROR_INVALID_YEAR);
+                return;
             }
         }
 
@@ -87,16 +90,27 @@ public class ExpenseList {
                 Sorter.trimByMonth(outputArray, month);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println(ERROR_INVALID_MONTH);
+                return;
             }
         }
 
         if (argumentArray.contains("from")) {
             try {
-                fromDate = argumentArray.get(argumentArray.indexOf("from") + 1);
-                System.out.println("Since " + fromDate + ":");
-                Sorter.trimFrom(outputArray, LocalDate.parse(fromDate));
-            } catch (IndexOutOfBoundsException e) {
+                fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
+                try {
+                    endDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 2));
+                } catch (IndexOutOfBoundsException | DateTimeParseException ignored) {
+                }
+                System.out.print("Since " + fromDate);
+                Sorter.trimFrom(outputArray, fromDate);
+                if (endDate != null) {
+                    Sorter.trimEnd(outputArray, endDate);
+                    System.out.print(" to " + endDate);
+                }
+                System.out.println();
+            } catch (IndexOutOfBoundsException | DateTimeParseException e) {
                 System.out.println(ERROR_INVALID_SORTDATE);
+                return;
             }
         }
 

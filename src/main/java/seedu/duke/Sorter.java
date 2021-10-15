@@ -26,4 +26,8 @@ public class Sorter extends Expense{
     public static void trimFrom(ArrayList<Expense> outputArray, LocalDate from) {
         outputArray.removeIf(expense -> expense.date.isBefore(from));
     }
+
+    public static void trimEnd(ArrayList<Expense> outputArray, LocalDate end) {
+        outputArray.removeIf(expense -> expense.date.isAfter(end));
+    }
 }
