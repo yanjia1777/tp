@@ -11,7 +11,7 @@ class AddFunctionTest {
     public static final String LIST_OF_EXPENSES = "Here is the list of your expenses:";
 
     @Test
-    public void addExpense_oneAddition_expectSuccess() {
+    public void addExpense_oneAddition_expectSuccess() throws MintException {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
         Expense expense = new Expense("burger", "2021-10-10", "10");
@@ -23,14 +23,15 @@ class AddFunctionTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
-        expenseList.viewExpense();
+        String[] emptyArray = {"view"};
+        expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
                 + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
-    public void addExpense_twoAdditions_expectSuccess() {
+    public void addExpense_twoAdditions_expectSuccess() throws MintException {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
         Expense expenseFood = new Expense("burger", "2021-10-10", "10", "1");
@@ -48,7 +49,8 @@ class AddFunctionTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
-        expenseList.viewExpense();
+        String[] emptyArray = {"view"};
+        expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
                 + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator()
                 + " Entertainment   | 2021-10-10 | movie | $13.00" + System.lineSeparator();
