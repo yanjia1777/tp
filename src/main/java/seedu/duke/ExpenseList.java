@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import java.time.format.DateTimeParseException;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -40,12 +41,62 @@ public class ExpenseList {
         }
     }
 
-    public void viewExpense() {
+    public void viewExpense(String[] argumentArray) throws MintException {
+        String sortType = "null";
+        String modifier = "null";
+        ArrayList<Expense> outputArray = (ArrayList<Expense>) expenseList.clone();
+        if(argumentArray.length > 1) {
+            sortType = argumentArray[1];
+        }
+        if(argumentArray.length > 2) {
+            modifier = argumentArray[2];
+        }
+        switch (sortType) {
+        case "null":
+            break;
+        case "name":
+            outputArray.sort(Sorter.compareByName);
+            break;
+        case "date":
+            outputArray.sort(Sorter.compareByDate);
+            break;
+        case "amount":
+            outputArray.sort(Sorter.compareByAmount);
+            break;
+        case "category":
+            outputArray.sort(Sorter.compareByCategory);
+            break;
+        default:
+            throw new MintException(MintException.ERROR_INVALID_COMMAND);
+        }
+        switch (modifier) {
+        case "null":
+            assert argumentArray.length < 3;
+            break;
+        case "ascending":
+            //fallthrough
+        case "up":
+            Collections.reverse(outputArray);
+            break;
+        case "month":
+            outputArray.sort(Sorter.compareByDate);
+            break;
+        case "amount":
+            outputArray.sort(Sorter.compareByAmount);
+            break;
+        case "category":
+            outputArray.sort(Sorter.compareByCategory);
+            break;
+        default:
+            throw new MintException(MintException.ERROR_INVALID_COMMAND);
+        }
         System.out.println("Here is the list of your expenses:");
-        for (Expense expense : expenseList) {
-            System.out.println(expense.viewToString());
+        for (Expense expense : outputArray) {
+            System.out.println(expense.toString());
         }
     }
+
+
 
     public void editExpense(String name, String date, String amount, String catNum) throws MintException {
         String choice;

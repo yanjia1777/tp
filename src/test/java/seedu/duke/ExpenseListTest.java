@@ -69,15 +69,15 @@ class ExpenseListTest {
     }
 
     @Test
-    public void viewExpense_twoExpenses_success() {
+    public void viewExpense_twoExpenses_success() throws MintException {
         ExpenseList expenseList = new ExpenseList();
 
         expenseList.expenseList.add(new Expense("Cheese burger", "2021-12-23", "15.5"));
         expenseList.expenseList.add(new Expense("book", "2022-12-23", "9"));
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-
-        expenseList.viewExpense();
+        String[] emptyArray = {"view"};
+        expenseList.viewExpense(emptyArray);
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
                 + "      Gift       | 2021-12-23 | Cheese burger | $15.50" + System.lineSeparator()
                 + "      Gift       | 2022-12-23 | book | $9.00" + System.lineSeparator();
@@ -85,13 +85,14 @@ class ExpenseListTest {
     }
 
     @Test
-    public void viewExpense_zeroExpenses_success() {
+    public void viewExpense_zeroExpenses_success() throws MintException {
         ExpenseList expenseList = new ExpenseList();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        expenseList.viewExpense();
+        String[] emptyArray = {"view"};
+        expenseList.viewExpense(emptyArray);
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
