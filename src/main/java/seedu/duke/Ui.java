@@ -11,10 +11,20 @@ public class Ui {
     public static final int CAT_NUM_GIFT = 7;
     public static final int CAT_NUM_OTHERS = 0;
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "I was unable to perform any edits! "
-            + "Please check that you have included the tags of the fields you wish to edit! :(";
+    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
+            + "I was unable to perform any edits! "
+            + "Please check that you have made changes or included the tags of the fields you wish to edit! :(";
 
     protected static final String LINE_SEPARATOR = System.lineSeparator();
+    public static final String CAT_STR_FOOD = "      Food      ";
+    public static final String CAT_STR_ENTERTAINMENT = " Entertainment  ";
+    public static final String CAT_STR_TRANSPORTATION = " Transportation ";
+    public static final String CAT_STR_HOUSEHOLD = "   Household    ";
+    public static final String CAT_STR_APPAREL = "    Apparel     ";
+    public static final String CAT_STR_BEAUTY = "     Beauty     ";
+    public static final String CAT_STR_GIFT = "      Gift      ";
+    public static final String CAT_STR_OTHERS = "     Others     ";
+    public static final String CAT_STR_NO_CAT_FOUND = "No category found";
 
     public static void startup() {
         System.out.println("Hello! I'm Mint");
@@ -36,33 +46,59 @@ public class Ui {
         System.out.println("List of commands available. "
                 + "Square brackets \"[ ]\" identifies an optional argument.");
         System.out.println("- view");
-        System.out.println("- add n/NAME a/amount [d/YYYY-MM-DD]");
-        System.out.println(INDENT + "Example: add n/chicken rice a/3.50 d/2021-09-30 ");
-        System.out.println("- delete n/NAME a/amount d/YYYY-MM-DD");
-        System.out.println(INDENT + "Example: delete n/chicken rice a/3.50 d/2021-09-30");
+        System.out.println(INDENT + "View expenses");
+        System.out.println("- cat");
+        System.out.println(INDENT + " View categories and number");
+        System.out.println("- add n/NAME a/amount [d/YYYY-MM-DD] [c/catNum]");
+        System.out.println(INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1");
+        System.out.println("- delete n/{keyword} [a/amount] [d/YYYY-MM-DD] [c/catNum]");
+        System.out.println(INDENT + "Delete expense using keyword search. Example: delete n/chicken");
         System.out.println("- exit");
     }
 
     public static String printIndividualCategory(int catNum) {
         switch (catNum) {
         case CAT_NUM_FOOD:
-            return ("      Food      ");
+            return "Food";
         case CAT_NUM_ENTERTAINMENT:
-            return (" Entertainment  ");
+            return "Entertainment";
         case CAT_NUM_TRANSPORTATION:
-            return (" Transportation ");
+            return "Transportation";
         case CAT_NUM_HOUSEHOLD:
-            return ("   Household    ");
+            return "Household";
         case CAT_NUM_APPAREL:
-            return ("    Apparel     ");
+            return "Apparel";
         case CAT_NUM_BEAUTY:
-            return ("     Beauty     ");
+            return "Beauty";
         case CAT_NUM_GIFT:
-            return ("      Gift      ");
+            return "Gift";
         case CAT_NUM_OTHERS:
-            return ("     Others     ");
+            return "Others";
         default:
-            return ("No category found");
+            return CAT_STR_NO_CAT_FOUND;
+        }
+    }
+
+    public static String printIndividualCategoryIndent(int catNum) {
+        switch (catNum) {
+        case CAT_NUM_FOOD:
+            return CAT_STR_FOOD;
+        case CAT_NUM_ENTERTAINMENT:
+            return CAT_STR_ENTERTAINMENT;
+        case CAT_NUM_TRANSPORTATION:
+            return CAT_STR_TRANSPORTATION;
+        case CAT_NUM_HOUSEHOLD:
+            return CAT_STR_HOUSEHOLD;
+        case CAT_NUM_APPAREL:
+            return CAT_STR_APPAREL;
+        case CAT_NUM_BEAUTY:
+            return CAT_STR_BEAUTY;
+        case CAT_NUM_GIFT:
+            return CAT_STR_GIFT;
+        case CAT_NUM_OTHERS:
+            return CAT_STR_OTHERS;
+        default:
+            return CAT_STR_NO_CAT_FOUND;
         }
     }
 
@@ -75,7 +111,7 @@ public class Ui {
         System.out.println(Ui.INDENT + "c/5.  Apparel");
         System.out.println(Ui.INDENT + "c/6.  Beauty");
         System.out.println(Ui.INDENT + "c/7.  Gift");
-        System.out.println("default c/0  Others");
+        System.out.println("def c/0.  Others");
     }
 
     public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {

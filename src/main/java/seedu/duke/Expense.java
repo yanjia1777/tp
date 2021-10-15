@@ -2,9 +2,14 @@ package seedu.duke;
 
 import java.time.LocalDate; // import the LocalDate class
 import java.util.Comparator;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Expense {
+    public static DateTimeFormatter dateFormatter
+            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
+                + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
+                + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
     public static final int CAT_NUM_OTHERS = 7;
     protected int catNum;
     protected String name;
@@ -20,14 +25,14 @@ public class Expense {
     public Expense(String name, String date, String amount, String catNum) {
         this.catNum = Integer.parseInt(catNum);
         this.name = name;
-        this.date = LocalDate.parse(date);
+        this.date = LocalDate.parse(date, dateFormatter);
         this.amount = Double.parseDouble(amount);
     }
 
     public Expense(String name, String date, String amount) {
         this.catNum = CAT_NUM_OTHERS;
         this.name = name;
-        this.date = LocalDate.parse(date);
+        this.date = LocalDate.parse(date, dateFormatter);
         this.amount = Double.parseDouble(amount);
     }
 
@@ -47,6 +52,14 @@ public class Expense {
         this.date = date;
     }
 
+    public int getCatNum() {
+        return this.catNum;
+    }
+
+    public void setCatNum(int catNum) {
+        this.catNum = catNum;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -55,15 +68,25 @@ public class Expense {
         return Ui.printIndividualCategory(this.catNum);
     }
 
+    public String getCatIndent() {
+        return Ui.printIndividualCategoryIndent(this.catNum);
+    }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
     public String toString() {
-        return getCat() + " | " + getDate() + " | " + getName() + " | $" + String.format("%,.2f", getAmount());
+        return getCat() + " | " + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount());
     }
 
-    //@@author nipafx-reused
+    public String viewToString() {
+        return getCatIndent() + " | " + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount());
+    }
+
+    //@@author nipafx-reusedS
     //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
     //with minor modifications
     public boolean equals(Object object) {
