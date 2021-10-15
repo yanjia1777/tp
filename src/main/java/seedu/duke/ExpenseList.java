@@ -62,6 +62,7 @@ public class ExpenseList {
         }
         switch (modifier) {
         case "null":
+            assert argumentArray.length < 3;
             break;
         case "ascending":
             //fallthrough
