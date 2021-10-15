@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.ArrayList;
@@ -17,6 +19,10 @@ public class ExpenseList {
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
+    public static final String ERROR_INVALID_MONTH = "Please input a valid month.";
+    public static final String ERROR_INVALID_YEAR = "Please input a valid year.";
+    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String REGEX_TO_SPLIT = " ";
     public static final String BLANK = "";
@@ -41,62 +47,86 @@ public class ExpenseList {
         }
     }
 
-    public void viewExpense(String[] argumentArray) throws MintException {
-        String sortType = "null";
-        String modifier = "null";
+    public void viewExpense(String[] argumentArrayInput) throws MintException {
+        String sortType;
+        String fromDate;
+        Month month;
+        String year = null;
+        ArrayList<String> argumentArray= new ArrayList<>(Arrays.asList(argumentArrayInput));
         ArrayList<Expense> outputArray = (ArrayList<Expense>) expenseList.clone();
-        if(argumentArray.length > 1) {
-            sortType = argumentArray[1];
+
+        if (argumentArray.contains("by")) {
+            try {
+                sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
+                sort(outputArray, sortType);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(ERROR_INVALID_SORTTYPE);
+            }
         }
-        if(argumentArray.length > 2) {
-            modifier = argumentArray[2];
-        }
-        switch (sortType) {
-        case "null":
-            break;
-        case "name":
-            outputArray.sort(Sorter.compareByName);
-            break;
-        case "date":
-            outputArray.sort(Sorter.compareByDate);
-            break;
-        case "amount":
-            outputArray.sort(Sorter.compareByAmount);
-            break;
-        case "category":
-            outputArray.sort(Sorter.compareByCategory);
-            break;
-        default:
-            throw new MintException(MintException.ERROR_INVALID_COMMAND);
-        }
-        switch (modifier) {
-        case "null":
-            assert argumentArray.length < 3;
-            break;
-        case "ascending":
-            //fallthrough
-        case "up":
-            Collections.reverse(outputArray);
-            break;
-        case "month":
-            outputArray.sort(Sorter.compareByDate);
-            break;
-        case "amount":
-            outputArray.sort(Sorter.compareByAmount);
-            break;
-        case "category":
-            outputArray.sort(Sorter.compareByCategory);
-            break;
-        default:
-            throw new MintException(MintException.ERROR_INVALID_COMMAND);
-        }
+
         System.out.println("Here is the list of your expenses:");
+
+        if (argumentArray.contains("year")) {
+            try {
+                year = argumentArray.get(argumentArray.indexOf("year") + 1);
+                System.out.println("For the year " + year + ":");
+                Sorter.trimByYear(outputArray, year);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(ERROR_INVALID_YEAR);
+            }
+        }
+
+        if (argumentArray.contains("month")) {
+            try {
+                month = Month.of(Integer.parseInt(argumentArray.get(argumentArray.indexOf("month") + 1)));
+                if (year == null) {
+                    year = Integer.toString(LocalDate.now().getYear());
+                    Sorter.trimByYear(outputArray, year);
+                }
+                System.out.println("For the month of " + month + ":");
+                Sorter.trimByMonth(outputArray, month);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(ERROR_INVALID_MONTH);
+            }
+        }
+
+        if (argumentArray.contains("from")) {
+            try {
+                fromDate = argumentArray.get(argumentArray.indexOf("from") + 1);
+                System.out.println("Since " + fromDate + ":");
+                Sorter.trimFrom(outputArray, LocalDate.parse(fromDate));
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(ERROR_INVALID_SORTDATE);
+            }
+        }
+
+        if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
+            Collections.reverse(outputArray);
+        }
+
         for (Expense expense : outputArray) {
             System.out.println(expense.toString());
         }
     }
 
-
+    public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
+        switch (sortType) {
+            case "name":
+                outputArray.sort(Sorter.compareByName);
+                break;
+            case "date":
+                outputArray.sort(Sorter.compareByDate);
+                break;
+            case "amount":
+                outputArray.sort(Sorter.compareByAmount);
+                break;
+            case "category":
+                outputArray.sort(Sorter.compareByCategory);
+                break;
+            default:
+                throw new MintException(MintException.ERROR_INVALID_COMMAND);
+        }
+    }
 
     public void editExpense(String name, String date, String amount, String catNum) throws MintException {
         String choice;
