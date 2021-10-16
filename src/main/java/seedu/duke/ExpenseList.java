@@ -1,8 +1,11 @@
 package seedu.duke;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeParseException;
-import java.util.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +20,8 @@ public class ExpenseList {
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
+    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String REGEX_TO_SPLIT = " ";
     public static final String BLANK = "";
@@ -41,19 +46,83 @@ public class ExpenseList {
         }
     }
 
-    public void viewExpense(String[] argumentArray) throws MintException {
-        String sortType = "null";
-        String modifier = "null";
+    public void viewExpense(String[] argumentArrayInput) throws MintException {
+        String sortType;
+        LocalDate fromDate;
+        LocalDate endDate;
+        Month month;
+        String year = null;
+        ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
         ArrayList<Expense> outputArray = (ArrayList<Expense>) expenseList.clone();
-        if(argumentArray.length > 1) {
-            sortType = argumentArray[1];
+
+        if (argumentArray.contains("by")) {
+            try {
+                sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
+                sort(outputArray, sortType);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(ERROR_INVALID_SORTTYPE);
+                return;
+            }
         }
-        if(argumentArray.length > 2) {
-            modifier = argumentArray[2];
+
+        System.out.println("Here is the list of your expenses:");
+
+        if (argumentArray.contains("year")) {
+            try {
+                year = argumentArray.get(argumentArray.indexOf("year") + 1);
+            } catch (IndexOutOfBoundsException e) {
+                year = Integer.toString(LocalDate.now().getYear());
+            }
+            System.out.println("For the year " + year + ":");
+            Sorter.trimByYear(outputArray, year);
         }
+
+        if (argumentArray.contains("month")) {
+            try {
+                month = Month.of(Integer.parseInt(argumentArray.get(argumentArray.indexOf("month") + 1)));
+                if (year == null) {
+                    year = Integer.toString(LocalDate.now().getYear());
+                    Sorter.trimByYear(outputArray, year);
+                }
+            } catch (IndexOutOfBoundsException e) {
+                month = LocalDate.now().getMonth();
+            }
+            System.out.println("For the month of " + month + ":");
+            Sorter.trimByMonth(outputArray, month);
+        }
+
+        if (argumentArray.contains("from")) {
+            try {
+                fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
+                try {
+                    endDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 2));
+                } catch (IndexOutOfBoundsException | DateTimeParseException ignored) {
+                    endDate = null;
+                }
+                System.out.print("Since " + fromDate);
+                Sorter.trimFrom(outputArray, fromDate);
+                if (endDate != null) {
+                    Sorter.trimEnd(outputArray, endDate);
+                    System.out.print(" to " + endDate);
+                }
+                System.out.println();
+            } catch (IndexOutOfBoundsException | DateTimeParseException e) {
+                System.out.println(ERROR_INVALID_SORTDATE);
+                return;
+            }
+        }
+
+        if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
+            Collections.reverse(outputArray);
+        }
+
+        for (Expense expense : outputArray) {
+            System.out.println(expense.viewToString());
+        }
+    }
+
+    public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
         switch (sortType) {
-        case "null":
-            break;
         case "name":
             outputArray.sort(Sorter.compareByName);
             break;
@@ -69,34 +138,7 @@ public class ExpenseList {
         default:
             throw new MintException(MintException.ERROR_INVALID_COMMAND);
         }
-        switch (modifier) {
-        case "null":
-            assert argumentArray.length < 3;
-            break;
-        case "ascending":
-            //fallthrough
-        case "up":
-            Collections.reverse(outputArray);
-            break;
-        case "month":
-            outputArray.sort(Sorter.compareByDate);
-            break;
-        case "amount":
-            outputArray.sort(Sorter.compareByAmount);
-            break;
-        case "category":
-            outputArray.sort(Sorter.compareByCategory);
-            break;
-        default:
-            throw new MintException(MintException.ERROR_INVALID_COMMAND);
-        }
-        System.out.println("Here is the list of your expenses:");
-        for (Expense expense : outputArray) {
-            System.out.println(expense.toString());
-        }
     }
-
-
 
     public void editExpense(String name, String date, String amount, String catNum) throws MintException {
         String choice;
