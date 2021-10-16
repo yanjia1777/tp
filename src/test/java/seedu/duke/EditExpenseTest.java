@@ -1,15 +1,16 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+
+import javax.xml.crypto.Data;
+import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EditExpenseTest {
+    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
     @Test
     public void editExpense_editOneVariable_expectSuccess() throws MintException {
@@ -17,6 +18,8 @@ class EditExpenseTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         ExpenseList expenseList = new ExpenseList();
+        DataManager dataManager = new DataManager(FILE_PATH);
+        dataManager.createDirectory(FILE_PATH, expenseList);
         expenseList.addExpense("Movie", "2021-12-23", "40", "2");
         expenseList.editExpense("Movie", "2021-12-23", "40", "2");
         String actualOutput = expenseList.getExpenseList().get(0).toString();
