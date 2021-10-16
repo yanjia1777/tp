@@ -1,7 +1,6 @@
 package seedu.duke;
 
 import java.time.LocalDate; // import the LocalDate class
-import java.util.Comparator;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
@@ -107,15 +106,4 @@ public class Expense {
         boolean isCategoryEqual = Objects.equals(catNum, expense.catNum);
         return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
-
-    public static Comparator<Expense> compareByAmount = new Comparator<Expense>() {
-
-        public int compare(Expense i, Expense j) {
-
-            //ascending order
-            return (int)(i.amount - j.amount);
-
-            //descending order
-            //return StudentName2.compareTo(StudentName1);
-        }};
 }
