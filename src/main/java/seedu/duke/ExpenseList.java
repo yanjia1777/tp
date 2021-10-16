@@ -1,8 +1,10 @@
 package seedu.duke;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
-import java.util.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,12 +24,18 @@ public class ExpenseList {
     public static final String BLANK = "";
     protected ArrayList<Expense> expenseList = new ArrayList<>();
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
+        try {
+            DataManager.appendToFileLive(FILE_PATH, expense);
+        } catch (IOException e){
+            System.out.println("Error trying to update external file!");
+        }
     }
 
     public void deleteExpense(String name, String date, String amount, String catNum) throws MintException {
@@ -36,6 +44,8 @@ public class ExpenseList {
             logger.log(Level.INFO, "User deleted expense: " + expense);
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
+            String stringToDelete = overWriteString(expense);
+            DataManager.deleteFileLive(stringToDelete);
         } else {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
         }
@@ -96,17 +106,15 @@ public class ExpenseList {
         }
     }
 
-
-
     public void editExpense(String name, String date, String amount, String catNum) throws MintException {
         String choice;
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
-
         try {
             Expense expense = new Expense(name, date, amount, catNum);
             final String originalExpense = expense.toString();
+            String stringToOverwrite = overWriteString(expense);
             if (expenseList.contains(expense)) {
                 indexToBeChanged = expenseList.indexOf(expense);
                 choice = scanFieldsToUpdate();
@@ -116,6 +124,9 @@ public class ExpenseList {
             }
             editSpecifiedEntry(choice, indexToBeChanged, expense);
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
+            String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
+            DataManager.editFileLive(stringToOverwrite, stringToUpdate);
+
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -124,6 +135,11 @@ public class ExpenseList {
             System.out.println(ERROR_INVALID_DATE);
         }
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+    }
+
+    public static String overWriteString(Expense expense) {
+        return expense.getCatNum() + "|" + expense.getDate() + "|" + expense.getName()
+                + "|" + expense.getAmount();
     }
 
     private void editSpecifiedEntry(String userInput, int indexToBeChanged, Expense expense) throws MintException {
@@ -199,5 +215,9 @@ public class ExpenseList {
             throw new MintException(ERROR_INVALID_DESCRIPTION);
         }
         return description;
+    }
+
+    public ArrayList<Expense> getExpenseList() {
+        return expenseList;
     }
 }
