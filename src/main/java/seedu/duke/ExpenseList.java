@@ -38,7 +38,7 @@ public class ExpenseList {
         expenseList.add(expense);
         try {
             DataManager.appendToFileLive(FILE_PATH, expense);
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error trying to update external file!");
         }
     }
@@ -158,7 +158,7 @@ public class ExpenseList {
         try {
             Expense expense = new Expense(name, date, amount, catNum);
             final String originalExpense = expense.toString();
-            String stringToOverwrite = overWriteString(expense);
+            final String stringToOverwrite = overWriteString(expense);
             if (expenseList.contains(expense)) {
                 indexToBeChanged = expenseList.indexOf(expense);
                 choice = scanFieldsToUpdate();
