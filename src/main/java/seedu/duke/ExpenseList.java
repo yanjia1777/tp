@@ -49,7 +49,7 @@ public class ExpenseList {
     public void viewExpense(String[] argumentArrayInput) throws MintException {
         String sortType;
         LocalDate fromDate;
-        LocalDate endDate = null;
+        LocalDate endDate;
         Month month;
         String year = null;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
@@ -96,7 +96,9 @@ public class ExpenseList {
                 fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
                 try {
                     endDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 2));
-                } catch (IndexOutOfBoundsException | DateTimeParseException ignored){}
+                } catch (IndexOutOfBoundsException | DateTimeParseException ignored) {
+                    endDate = null;
+                }
                 System.out.print("Since " + fromDate);
                 Sorter.trimFrom(outputArray, fromDate);
                 if (endDate != null) {
