@@ -3,8 +3,9 @@ package seedu.duke;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeParseException;
-import java.util.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +52,7 @@ public class ExpenseList {
         LocalDate endDate = null;
         Month month;
         String year = null;
-        ArrayList<String> argumentArray= new ArrayList<>(Arrays.asList(argumentArrayInput));
+        ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
         ArrayList<Expense> outputArray = (ArrayList<Expense>) expenseList.clone();
 
         if (argumentArray.contains("by")) {
@@ -95,8 +96,7 @@ public class ExpenseList {
                 fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
                 try {
                     endDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 2));
-                } catch (IndexOutOfBoundsException | DateTimeParseException ignored) {
-                }
+                } catch (IndexOutOfBoundsException | DateTimeParseException ignored){}
                 System.out.print("Since " + fromDate);
                 Sorter.trimFrom(outputArray, fromDate);
                 if (endDate != null) {
@@ -121,20 +121,20 @@ public class ExpenseList {
 
     public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
         switch (sortType) {
-            case "name":
-                outputArray.sort(Sorter.compareByName);
-                break;
-            case "date":
-                outputArray.sort(Sorter.compareByDate);
-                break;
-            case "amount":
-                outputArray.sort(Sorter.compareByAmount);
-                break;
-            case "category":
-                outputArray.sort(Sorter.compareByCategory);
-                break;
-            default:
-                throw new MintException(MintException.ERROR_INVALID_COMMAND);
+        case "name":
+            outputArray.sort(Sorter.compareByName);
+            break;
+        case "date":
+            outputArray.sort(Sorter.compareByDate);
+            break;
+        case "amount":
+            outputArray.sort(Sorter.compareByAmount);
+            break;
+        case "category":
+            outputArray.sort(Sorter.compareByCategory);
+            break;
+        default:
+            throw new MintException(MintException.ERROR_INVALID_COMMAND);
         }
     }
 

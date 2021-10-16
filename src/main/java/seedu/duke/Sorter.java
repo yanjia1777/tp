@@ -5,7 +5,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Sorter extends Expense{
+public class Sorter extends Expense {
 
     public static Comparator<Expense> compareByName = Comparator.comparing(i -> i.name);
 
