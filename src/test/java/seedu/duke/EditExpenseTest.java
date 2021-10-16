@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class editExpenseTest {
+class EditExpenseTest {
 
     @Test
     public void editExpense_editOneVariable_expectSuccess() throws MintException {
