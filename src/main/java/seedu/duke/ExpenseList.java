@@ -117,7 +117,7 @@ public class ExpenseList {
         }
 
         for (Expense expense : outputArray) {
-            System.out.println(expense.toString());
+            System.out.println(expense.viewToString());
         }
     }
 
