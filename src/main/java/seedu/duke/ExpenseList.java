@@ -20,8 +20,6 @@ public class ExpenseList {
     public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
     public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
-    public static final String ERROR_INVALID_MONTH = "Please input a valid month.";
-    public static final String ERROR_INVALID_YEAR = "Please input a valid year.";
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String REGEX_TO_SPLIT = " ";
@@ -71,12 +69,11 @@ public class ExpenseList {
         if (argumentArray.contains("year")) {
             try {
                 year = argumentArray.get(argumentArray.indexOf("year") + 1);
-                System.out.println("For the year " + year + ":");
-                Sorter.trimByYear(outputArray, year);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(ERROR_INVALID_YEAR);
-                return;
+                year = Integer.toString(LocalDate.now().getYear());
             }
+            System.out.println("For the year " + year + ":");
+            Sorter.trimByYear(outputArray, year);
         }
 
         if (argumentArray.contains("month")) {
@@ -86,12 +83,11 @@ public class ExpenseList {
                     year = Integer.toString(LocalDate.now().getYear());
                     Sorter.trimByYear(outputArray, year);
                 }
-                System.out.println("For the month of " + month + ":");
-                Sorter.trimByMonth(outputArray, month);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(ERROR_INVALID_MONTH);
-                return;
+                month = LocalDate.now().getMonth();
             }
+            System.out.println("For the month of " + month + ":");
+            Sorter.trimByMonth(outputArray, month);
         }
 
         if (argumentArray.contains("from")) {
