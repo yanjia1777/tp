@@ -81,7 +81,7 @@ public class Expense {
     }
 
     public String viewToString() {
-        return getCatIndent() + " | " + getDate() + " | "
+        return getCatIndent() + "| " + getDate() + " | "
                 + getName() + " | $" + String.format("%,.2f", getAmount());
     }
 

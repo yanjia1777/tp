@@ -26,7 +26,7 @@ class AddFunctionTest {
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
-                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator();
+                + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -53,8 +53,8 @@ class AddFunctionTest {
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
-                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator()
-                + " Entertainment   | 2021-10-10 | movie | $13.00" + System.lineSeparator();
+                + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator()
+                + " Entertainment  | 2021-10-10 | movie | $13.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
