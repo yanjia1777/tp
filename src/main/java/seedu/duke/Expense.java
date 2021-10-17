@@ -7,8 +7,8 @@ import java.util.Objects;
 public class Expense {
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
-                + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
-                + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
+            + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
+            + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
     public static final int CAT_NUM_OTHERS = 7;
     protected int catNum;
     protected String name;
@@ -64,11 +64,11 @@ public class Expense {
     }
 
     public String getCat() {
-        return Ui.printIndividualCategory(this.catNum);
+        return CategoryList.getCatName(this.catNum);
     }
 
     public String getCatIndent() {
-        return Ui.printIndividualCategoryIndent(this.catNum);
+        return CategoryList.getCatNameIndented(this.catNum);
     }
 
     public void setAmount(double amount) {
