@@ -30,22 +30,22 @@ public class Category {
     private StringBuilder constructNameIndented(int leftIndent, int rightIndent) {
         StringBuilder nameWithIndent = new StringBuilder();
         while (leftIndent != 0) {
-            nameWithIndent.append("");
+            nameWithIndent.append(" ");
             leftIndent--;
         }
         nameWithIndent.append(name);
         while (rightIndent != 0) {
-            nameWithIndent.append("");
+            nameWithIndent.append(" ");
             rightIndent--;
         }
         return nameWithIndent;
     }
-    
+
     public String getNameIndented() {
         double length = name.length();
-        int leftIndent = (int) Math.floor((16 - length)/2);
-        int rightIndent = (int) Math.ceil((16 - length)/2);
-        return constructNameIndented(leftIndent,rightIndent).toString();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        return constructNameIndented(leftIndent, rightIndent).toString();
     }
 
     public String toString() {
