@@ -123,6 +123,10 @@ public class Ui {
             }
         }
     }
+
+    public static void printNewUserMessage() {
+        System.out.println("No data detected! I see you are a new user...Starting afresh!");
+    }
 }
 
 

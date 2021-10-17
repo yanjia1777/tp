@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import javax.xml.crypto.Data;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class Parser {
     protected String catNum;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
     public Parser() {
     }
@@ -188,6 +191,7 @@ public class Parser {
     }
 
     public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
+        DataManager dataManager = new DataManager(FILE_PATH);
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
         try {
@@ -206,7 +210,7 @@ public class Parser {
                 //fallthrough
             case "view":
                 parseInputByArguments(userInput);
-                expenseList.viewExpense();
+                expenseList.viewExpense(argumentsArray);
                 break;
             case "add":
                 parseInputByTags(userInput);
