@@ -24,7 +24,7 @@ public class Parser {
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     protected static final String ERROR_INVALID_DATE = "Please enter a valid date!";
     protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number!";
-    public static final String CAT_NUM_OTHERS = "0";
+    public static final String CAT_NUM_OTHERS = "7";
     protected String command;
     protected String name;
     protected String date;
@@ -204,7 +204,7 @@ public class Parser {
             case "category":
                 //fallthrough
             case "categories":
-                Ui.printCategories();
+                CategoryList.viewCategories();
                 break;
             case "list":
                 //fallthrough
