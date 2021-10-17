@@ -1,12 +1,10 @@
 package seedu.duke;
 
-import java.util.ArrayList;
 
 public class Category {
-    public static final int UNLIMITED = 9999;
     private final int catNum;
     private final String name;
-    private double limit = UNLIMITED;
+    private double limit;
 
     public Category(int catNum, String name) {
         this.catNum = catNum;
