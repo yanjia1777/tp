@@ -22,6 +22,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         ExpenseList expenseList = new ExpenseList();
         Parser parser = new Parser();
+        CategoryList.initialiseCategories();
         DataManager dataManager = new DataManager(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
