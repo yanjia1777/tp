@@ -40,7 +40,7 @@ public class Category {
         }
         return nameWithIndent;
     }
-
+    
     public String getNameIndented() {
         double length = name.length();
         int leftIndent = (int) Math.floor((16 - length)/2);

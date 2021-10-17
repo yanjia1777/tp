@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import java.util.ArrayList;
+
 public class CategoryList {
     public static final int CAT_NUM_FOOD = 0;
     public static final int CAT_NUM_ENTERTAINMENT = 1;
