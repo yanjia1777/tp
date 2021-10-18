@@ -132,6 +132,7 @@ public class ExpenseList {
     }
 
     public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
+        assert sortType != null : "sortType should have a command";
         switch (sortType) {
         case "name":
             outputArray.sort(Sorter.compareByName);
