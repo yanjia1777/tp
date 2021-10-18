@@ -62,6 +62,9 @@ public class Expense {
     public double getAmount() {
         return amount;
     }
+    public String getAmountString() {
+        return Double.toString(amount);
+    }
 
     public String getCat() {
         return CategoryList.getCatName(this.catNum);

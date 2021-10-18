@@ -33,6 +33,7 @@ public class ExpenseList {
 
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
+        CategoryList.addSpending(catNum, amount);
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
@@ -50,6 +51,7 @@ public class ExpenseList {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
             String stringToDelete = overWriteString(expense);
+            CategoryList.deleteSpending(catNum, amount);
             DataManager.deleteFileLive(stringToDelete);
         } else {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
@@ -157,6 +159,8 @@ public class ExpenseList {
         boolean exceptionThrown = false;
         try {
             Expense expense = new Expense(name, date, amount, catNum);
+            final String originalAmount = expense.getAmountString();
+            System.out.println("original amount:" + originalAmount);
             final String originalExpense = expense.toString();
             final String stringToOverwrite = overWriteString(expense);
             if (expenseList.contains(expense)) {
@@ -169,6 +173,9 @@ public class ExpenseList {
             editSpecifiedEntry(choice, indexToBeChanged, expense);
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
             String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
+            final String newAmount = expenseList.get(indexToBeChanged).getAmountString();
+            System.out.println("new amount:" + newAmount);
+            CategoryList.editSpending(catNum, originalAmount, newAmount);
             DataManager.editFileLive(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {

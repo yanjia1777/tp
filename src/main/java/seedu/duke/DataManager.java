@@ -70,13 +70,14 @@ public class DataManager {
             String date = params[1];
             String name = params[2];
             String amount = params[3];
-            addExpense(name, date, amount, catNum, expenseList);
+            loadExpense(name, date, amount, catNum, expenseList);
         }
     }
 
-    public static void addExpense(String name, String date, String amount, String catNum, ExpenseList expenseList) {
+    public static void loadExpense(String name, String date, String amount, String catNum, ExpenseList expenseList) {
         ArrayList<Expense> loadedExpenseList = expenseList.getExpenseList();
         Expense expense = new Expense(name, date, amount, catNum);
+        CategoryList.addSpending(catNum, amount);
         loadedExpenseList.add(expense);
     }
 

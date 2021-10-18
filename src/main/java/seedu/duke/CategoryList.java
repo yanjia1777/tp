@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CategoryList {
     public static final int CAT_NUM_FOOD = 0;
@@ -38,24 +39,66 @@ public class CategoryList {
         }
     }
 
-    private static int checkValidCatNum(int catNum) {
-        if (!(catNum >= CAT_NUM_FOOD && catNum <= CAT_NUM_OTHERS)) {
-            catNum = CAT_NUM_OTHERS;
+    public static void viewLimit() {
+        System.out.println("test");
+        for (Category category : categoryList) {
+            int catNum = category.getCatNum();
+            System.out.println(getSpendingIndented(catNum)+ "/" + getLimitIndented(catNum) + " | c/" + catNum + " " + category.getName());
         }
-        return catNum;
     }
 
     public static String getCatName(int catNum) {
-        catNum = checkValidCatNum(catNum);
         Category category = CategoryList.categoryList.get(catNum);
         return category.getName();
     }
 
 
     public static String getCatNameIndented(int catNum) {
-        catNum = checkValidCatNum(catNum);
         Category category = CategoryList.categoryList.get(catNum);
         return category.getNameIndented();
+    }
+
+    public static String getLimitIndented(int catNum) {
+        Category category = CategoryList.categoryList.get(catNum);
+        return category.getLimitIndented();
+    }
+
+    public static String getSpendingIndented(int catNum) {
+        Category category = CategoryList.categoryList.get(catNum);
+        return category.getSpendingIndented();
+    }
+
+    public static void setLimit(String catNum, String limit) throws MintException {
+        int catNumFinal = Integer.parseInt(catNum);
+        Category category = CategoryList.categoryList.get(catNumFinal);
+        category.setLimit(limit);
+        System.out.println("Set limit of $" + limit + " for " + category + "!");
+    }
+
+    public static void addSpending(String catNum, String amount) {
+        int catNumFinal = Integer.parseInt(catNum);
+        double amountFinal = Double.parseDouble(amount);
+        Category category = CategoryList.categoryList.get(catNumFinal);
+        category.addSpending(amountFinal);
+    }
+    public static void deleteSpending(String catNum, String amount) {
+        int catNumFinal = Integer.parseInt(catNum);
+        double amountFinal = Double.parseDouble(amount);
+        Category category = CategoryList.categoryList.get(catNumFinal);
+        category.deleteSpending(amountFinal);
+    }
+    public static void editSpending(String catNum, String initialAmount, String newAmount) {
+        double initialSpending = Double.parseDouble(initialAmount);
+        double newSpending = Double.parseDouble(newAmount);
+        double difference = Math.abs(initialSpending - newSpending);
+        int catNumFinal = Integer.parseInt(catNum);
+        Category category = CategoryList.categoryList.get(catNumFinal);
+        if (initialSpending > newSpending) {
+            category.deleteSpending(difference);
+        }
+        else {
+            category.addSpending(difference);
+        }
     }
 }
 
