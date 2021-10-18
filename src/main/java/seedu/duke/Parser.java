@@ -1,6 +1,5 @@
 package seedu.duke;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -14,7 +13,7 @@ public class Parser {
     // take note of the blank space,example " n/"
     public static final String userTag = "\\s[a-z]/";
     public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
-    public static final String STRING_INCLUDE = "Please include the following in your command: \n";
+    public static final String STRING_INCLUDE = "Please include the following in your command or make them valid: \n";
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
     public static final String STRING_AMOUNT = "Amount of purchase\n";
@@ -181,11 +180,7 @@ public class Parser {
             initCatNum();
         }
 
-        if (command.equals("delete")) {
-            if (!userInput.contains("n/")) {
-                throw new MintException("Please include name!");
-            }
-        } else {
+        if (!command.equals("delete")) {
             checkMissingFieldOfUserInput(userInput);
         }
         parseInputByTagsLoop(userInput);
@@ -227,15 +222,10 @@ public class Parser {
                 break;
             case "delete":
                 parseInputByTags(userInput);
-                checkEmptyName();
-                assert !name.equals("") : "Name should not be empty";
-
-                boolean deletedByKeyword = expenseList.deleteExpenseByKeyword(name);
-                if (!deletedByKeyword) {
-                    checkMissingFieldOfUserInput(userInput);
-                    parseInputByTagsLoop(userInput);
-                    expenseList.deleteExpense(name, date, amount, catNum);
-                }
+                ArrayList<String> validTags = checkValidityOfTags(userInput,
+                        new String[]{"n/", "d/", "a/", "c/"},
+                        false);
+                expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
                 break;
             case "edit":
                 parseInputByTags(userInput);
@@ -261,6 +251,46 @@ public class Parser {
         if (!userInput.contains("n/")) {
             throw new MintException("Please include name!");
         }
+    }
+
+    private ArrayList<String> checkValidityOfTags(String userInput, String[] tags, boolean checkMissingTag) throws MintException {
+        ArrayList<String> validTags = new ArrayList<>();
+        ArrayList<String> invalidTags = new ArrayList<>();
+        for (String tag : tags) {
+            try {
+                if (userInput.contains(tag.trim())) {
+                    switch (tag.trim()) {
+                    case "n/":
+                        checkEmptyName();
+                        break;
+                    case "d/":
+                        checkInvalidDate();
+                        break;
+                    case "a/":
+                        checkInvalidAmount();
+                        break;
+                    case "c/":
+                        checkInvalidCatNum();
+                        break;
+                    default:
+                        throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
+                    }
+                    validTags.add(tag);
+                } else if (checkMissingTag) {
+                    invalidTags.add(tag);
+                }
+            } catch (MintException e) {
+                invalidTags.add(tag);
+            }
+        }
+
+        if (invalidTags.size() > 0) {
+            constructErrorMessage(invalidTags);
+            throw new MintException(constructErrorMessage(invalidTags).toString());
+        } else if (validTags.size() == 0) {
+            throw new MintException("Please enter at least one tag.");
+        }
+        return validTags;
     }
 
     private void checkMissingFieldOfUserInput(String userInput) throws MintException {
