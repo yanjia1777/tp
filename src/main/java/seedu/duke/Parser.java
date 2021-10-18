@@ -214,7 +214,9 @@ public class Parser {
     }
 
     private void checkSetFormat(String[] userInput) throws MintException {
-        if (userInput.length != 3) throw new MintException(setFormatErrorMessage);
+        if (userInput.length != 3) {
+            throw new MintException(setFormatErrorMessage);
+        }
     }
 
     private void extractCatNumFromTag(String param) {

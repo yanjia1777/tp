@@ -62,6 +62,7 @@ public class Expense {
     public double getAmount() {
         return amount;
     }
+
     public String getAmountString() {
         return Double.toString(amount);
     }

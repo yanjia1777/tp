@@ -43,7 +43,9 @@ public class CategoryList {
         System.out.println("test");
         for (Category category : categoryList) {
             int catNum = category.getCatNum();
-            System.out.println(getSpendingIndented(catNum)+ "/" + getLimitIndented(catNum) + " | c/" + catNum + " " + category.getName());
+            System.out.println(getSpendingIndented(catNum) + "/"
+                    + getLimitIndented(catNum) + " | c/"
+                    + catNum + " " + category.getName());
         }
     }
 
@@ -81,12 +83,14 @@ public class CategoryList {
         Category category = CategoryList.categoryList.get(catNumFinal);
         category.addSpending(amountFinal);
     }
+
     public static void deleteSpending(String catNum, String amount) {
         int catNumFinal = Integer.parseInt(catNum);
         double amountFinal = Double.parseDouble(amount);
         Category category = CategoryList.categoryList.get(catNumFinal);
         category.deleteSpending(amountFinal);
     }
+
     public static void editSpending(String catNum, String initialAmount, String newAmount) {
         double initialSpending = Double.parseDouble(initialAmount);
         double newSpending = Double.parseDouble(newAmount);
@@ -95,8 +99,7 @@ public class CategoryList {
         Category category = CategoryList.categoryList.get(catNumFinal);
         if (initialSpending > newSpending) {
             category.deleteSpending(difference);
-        }
-        else {
+        } else {
             category.addSpending(difference);
         }
     }
