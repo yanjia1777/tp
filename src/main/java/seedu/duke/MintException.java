@@ -7,6 +7,8 @@ public class MintException extends Exception {
     protected static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
     protected static final String ERROR_INVALID_TAG_ERROR = "Sorry, we are only able to process name, date and"
             + " process for now" + Ui.LINE_SEPARATOR + "The following tags are available: n/ d/ a/";
+    protected static final String ERROR_INDEX_INVALID_NUMBER = "Please enter a valid number.";
+    protected static final String ERROR_INDEX_OUT_OF_BOUND = "Please enter a number between 0 and total number of items listed.";
 
     public MintException(String message) {
         super(message);
