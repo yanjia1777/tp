@@ -47,7 +47,7 @@ public class Ui {
     public static void viewGivenList(ArrayList<Expense> list) {
         System.out.println("Here is the list of items containing the keyword.");
         for (int i = 0; i < list.size(); i++) {
-            System.out.println((i + 1) + "  " + list.get(i).viewToString());
+            System.out.println(INDENT + (i + 1) + "  " + list.get(i).viewToString());
         }
     }
 
