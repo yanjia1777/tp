@@ -84,7 +84,7 @@ public class DataManager {
         try {
             DataManager.readFileContents(filePath, expenseList);
         } catch (FileNotFoundException e) {
-            System.out.println("No data detected! I see you are a new user...Starting afresh!");
+            Ui.printNewUserMessage();
             createDirectory(filePath, expenseList);
         }
     }

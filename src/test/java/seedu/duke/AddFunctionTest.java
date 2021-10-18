@@ -18,7 +18,7 @@ class AddFunctionTest {
         String expenseName = expense.getName();
         String expenseDate = expense.getDate().toString();
         String expenseAmount = Double.toString(expense.getAmount());
-        String expenseCatNum = "1";
+        String expenseCatNum = "0";
         expenseList.addExpense(expenseName, expenseDate, expenseAmount,expenseCatNum);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -26,7 +26,7 @@ class AddFunctionTest {
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
-                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator();
+                + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -34,6 +34,7 @@ class AddFunctionTest {
     public void addExpense_twoAdditions_expectSuccess() throws MintException {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
+        CategoryList.initialiseCategories();
         Expense expenseFood = new Expense("burger", "2021-10-10", "10", "1");
         Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13", "2");
         String foodExpenseName = expenseFood.getName();
@@ -42,8 +43,8 @@ class AddFunctionTest {
         String entExpenseName = expenseEntertainment.getName();
         String entDate = expenseEntertainment.getDate().toString();
         String entExpenseAmount = Double.toString(expenseEntertainment.getAmount());
-        String foodCatNum = "1";
-        String entCatNum = "2";
+        String foodCatNum = "0";
+        String entCatNum = "1";
         expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount, foodCatNum);
         expenseList.addExpense(entExpenseName, entDate, entExpenseAmount, entCatNum);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -52,8 +53,8 @@ class AddFunctionTest {
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
-                + "      Food       | 2021-10-10 | burger | $10.00" + System.lineSeparator()
-                + " Entertainment   | 2021-10-10 | movie | $13.00" + System.lineSeparator();
+                + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator()
+                + " Entertainment  | 2021-10-10 | movie | $13.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 

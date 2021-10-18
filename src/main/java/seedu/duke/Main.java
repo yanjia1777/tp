@@ -20,6 +20,7 @@ public class Main {
     public void run() {
         Ui.startup();
         Scanner in = new Scanner(System.in);
+        CategoryList.initialiseCategories();
         ExpenseList expenseList = new ExpenseList();
         Parser parser = new Parser();
         DataManager dataManager = new DataManager(FILE_PATH);
