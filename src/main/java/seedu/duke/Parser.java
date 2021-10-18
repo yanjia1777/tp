@@ -178,7 +178,13 @@ public class Parser {
             initCatNum();
         }
 
-        checkMissingFieldOfUserInput(userInput);
+        if (command.equals("delete")) {
+            if (!userInput.contains("n/")) {
+                throw new MintException("Please include name!");
+            }
+        } else {
+            checkMissingFieldOfUserInput(userInput);
+        }
         parseInputByTagsLoop(userInput);
     }
 
@@ -215,9 +221,15 @@ public class Parser {
                 break;
             case "delete":
                 parseInputByTags(userInput);
-                checkValidityOfFields();
+                checkEmptyName();
                 assert !name.equals("") : "Name should not be empty";
-                expenseList.deleteExpense(name, date, amount, catNum);
+
+                boolean deletedByKeyword = expenseList.deleteExpenseByKeyword(name);
+                if (!deletedByKeyword) {
+                    checkMissingFieldOfUserInput(userInput);
+                    parseInputByTagsLoop(userInput);
+                    expenseList.deleteExpense(name, date, amount, catNum);
+                }
                 break;
             case "edit":
                 parseInputByTags(userInput);
@@ -236,6 +248,12 @@ public class Parser {
         return 0;
     }
 
+
+    private void checkMissingNameFieldOfUserInput(String userInput) throws MintException {
+        if (!userInput.contains("n/")) {
+            throw new MintException("Please include name!");
+        }
+    }
 
     private void checkMissingFieldOfUserInput(String userInput) throws MintException {
         String[] keyDelimiters = command.equals("add")

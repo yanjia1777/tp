@@ -2,9 +2,13 @@ package seedu.duke;
 
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ExpenseList {
     public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
@@ -28,6 +32,59 @@ public class ExpenseList {
         expenseList.add(expense);
     }
 
+    public ArrayList<Expense> filterExpenseByName(String name) {
+        List<Expense> filteredList = expenseList
+                .stream()
+                .filter(e -> e.getName().contains(name))
+                .sorted(Comparator.comparing(Expense::getDate))
+                .collect(Collectors.toList());
+        ArrayList<Expense> filteredArrayList = new ArrayList<Expense>(filteredList);
+        return filteredArrayList;
+    }
+
+    boolean deleteExpenseByKeyword(String name) throws MintException {
+        ArrayList<Expense> filteredList = filterExpenseByName(name);
+        if (filteredList.size() == 0) {
+            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
+        } else if (filteredList.size() == 1) {
+            Expense expense = filteredList.get(0);
+            deleteExpense(expense.getName(), expense.getDate().toString(),
+                    Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
+            return true;
+        }
+        System.out.println("Here is the list of expenses containing the keyword.");
+        for (int i = 0; i < filteredList.size(); i++) {
+            System.out.println(i + "  " + filteredList.get(i).viewToString());
+        }
+        System.out.println("Enter the index of the expense you want to delete. To cancel, type \"cancel\"");
+        Scanner in = new Scanner(System.in);
+        int index = 0;
+        boolean proceedToDelete = false;
+        while (!proceedToDelete) {
+            String userInput = in.nextLine();
+            if (userInput.trim().equals("cancel")) {
+                System.out.println("Delete process cancelled.");
+                return false;
+            }
+            try {
+                index = Integer.parseInt(userInput);
+                if (index < 0 || index > filteredList.size()) {
+                    throw new MintException("Please enter a number between 0 and total number of expenses shown. "
+                            + "To cancel, type \"cancel\"");
+                } else {
+                    proceedToDelete = true;
+                }
+            } catch (NumberFormatException e) {
+                throw new MintException("Please enter a valid number. To cancel, type \"cancel\"");
+            }
+        }
+        Expense expense = filteredList.get(index);
+        deleteExpense(expense.getName(), expense.getDate().toString(),
+                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
+        return true;
+    }
+
+
     public void deleteExpense(String name, String date, String amount, String catNum) throws MintException {
         Expense expense = new Expense(name, date, amount, catNum);
         if (expenseList.contains(expense)) {
@@ -35,7 +92,7 @@ public class ExpenseList {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
         } else {
-            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
+            deleteExpenseByKeyword(name);
         }
     }
 
