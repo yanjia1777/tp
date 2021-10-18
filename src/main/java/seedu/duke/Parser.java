@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import javax.xml.crypto.Data;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -16,13 +18,13 @@ public class Parser {
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
     public static final String STRING_AMOUNT = "Amount of purchase\n";
-    public static final String STRING_CATNUM = "Category number of item\n";
+    public static final String STRING_CATNUM = "Category number of item\n"; 
     public static final String STRING_EMPTY = "";
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     protected static final String ERROR_INVALID_DATE = "Please enter a valid date!";
     protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number!";
-    public static final String CAT_NUM_OTHERS = "0";
+    public static final String CAT_NUM_OTHERS = "7";
     protected String command;
     protected String name;
     protected String date;
@@ -30,6 +32,7 @@ public class Parser {
     protected String catNum;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
     public Parser() {
     }
@@ -44,37 +47,37 @@ public class Parser {
         return userInput.split(" ", 2)[0];
     }
 
-    private int getCurrentTagIndex(String userInput) {
+    public int getCurrentTagIndex(String userInput) {
         int currentTagIndex;
         currentTagIndex = indexOfTag(userInput, userTag);
         return currentTagIndex;
     }
 
-    private String getTagType(String userInput, int currentTagIndex) {
+    public String getTagType(String userInput, int currentTagIndex) {
         String tagType;
         tagType = String.valueOf(userInput.charAt(currentTagIndex + 1));
         return tagType;
     }
 
-    private String getDescription(String userInput, int currentTagIndex) {
+    public String getDescription(String userInput, int currentTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3).trim();
         return description;
     }
 
-    private String getDescription(String userInput, int currentTagIndex, int nextTagIndex) {
+    public String getDescription(String userInput, int currentTagIndex, int nextTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3, nextTagIndex).trim();
         return description;
     }
 
-    private int getNextTagIndex(String userInput, int currentTagIndex) {
+    public int getNextTagIndex(String userInput, int currentTagIndex) {
         int nextTagIndex;
         nextTagIndex = indexOfTag(userInput.substring(currentTagIndex + 3), userTag) + 3 + currentTagIndex;
         return nextTagIndex;
     }
 
-    private boolean hasNextTag(String userString, int currentTagIndex) {
+    public boolean hasNextTag(String userString, int currentTagIndex) {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
@@ -194,6 +197,7 @@ public class Parser {
     }
 
     public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
+        DataManager dataManager = new DataManager(FILE_PATH);
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
         try {
@@ -206,11 +210,13 @@ public class Parser {
             case "category":
                 //fallthrough
             case "categories":
-                Ui.printCategories();
+                CategoryList.viewCategories();
                 break;
+            case "list":
+                //fallthrough
             case "view":
                 parseInputByArguments(userInput);
-                expenseList.viewExpense();
+                expenseList.viewExpense(argumentsArray);
                 break;
             case "add":
                 parseInputByTags(userInput);
@@ -236,6 +242,8 @@ public class Parser {
                 checkValidityOfFields();
                 expenseList.editExpense(name, date, amount, catNum);
                 break;
+            case "bye":
+                //fallthrough
             case "exit":
                 Ui.shutdown();
                 return -1;
