@@ -72,6 +72,9 @@ public class ExpenseList {
         Ui.viewGivenList(filteredList);
         try {
             int index = Ui.determineItemToDeleteByUserInput(filteredList);
+            if (index == Ui.INDEX_CANCEL) {
+                return false;
+            }
             Expense expense = filteredList.get(index);
             deleteExpense(expense);
         } catch (MintException e) {
