@@ -160,7 +160,6 @@ public class ExpenseList {
         try {
             Expense expense = new Expense(name, date, amount, catNum);
             final String originalAmount = expense.getAmountString();
-            System.out.println("original amount:" + originalAmount);
             final String originalExpense = expense.toString();
             final String stringToOverwrite = overWriteString(expense);
             if (expenseList.contains(expense)) {
@@ -174,7 +173,6 @@ public class ExpenseList {
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
             String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
             final String newAmount = expenseList.get(indexToBeChanged).getAmountString();
-            System.out.println("new amount:" + newAmount);
             CategoryList.editSpending(catNum, originalAmount, newAmount);
             DataManager.editFileLive(stringToOverwrite, stringToUpdate);
 
@@ -252,6 +250,7 @@ public class ExpenseList {
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
                 catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                CategoryList.checkValidCatNum(catNum);
             }
         }
         expenseList.set(index, new Expense(name, date, amount, catNum));

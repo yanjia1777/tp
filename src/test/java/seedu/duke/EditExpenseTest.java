@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -74,39 +75,6 @@ class EditExpenseTest {
     }
 
     @Test
-    public void editExpense_invalidCategory_expectSuccess() throws MintException {
-        CategoryList.initialiseCategories();
-        String input = "c/1000";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        ExpenseList expenseList = new ExpenseList();
-        expenseList.addExpense("Movie", "2021-12-23", "40", "2");
-        expenseList.editExpense("Movie", "2021-12-23", "40", "2");
-        String actualOutput = expenseList.getExpenseList().get(0).toString();
-        String expectedOutput = "Others | 2021-12-23 | Movie | $40.00";
-        assertEquals(expectedOutput, actualOutput);
-    }
-
-    @Test
-    public void editExpense_invalidAmount_expectErrorMessage() throws MintException {
-        String input = "a/";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        ExpenseList expenseList = new ExpenseList();
-        expenseList.addExpense("Movie", "2021-12-23", "40", "1");
-        expenseList.editExpense("Movie", "2021-12-23", "40", "1");
-        String expectedOutput = "I have added: Entertainment | 2021-12-23 | Movie | $40.00"
-                + System.lineSeparator() + "What would you like to edit?"
-                + System.lineSeparator() + "Invalid number entered! Unable to edit expense."
-                + System.lineSeparator();
-        assertEquals(expectedOutput, outContent.toString());
-    }
-
-    @Test
     public void editExpense_invalidDate_expectErrorMessage() throws MintException {
         CategoryList.initialiseCategories();
         String input = "a/";
@@ -135,8 +103,25 @@ class EditExpenseTest {
         ExpenseList expenseList = new ExpenseList();
         expenseList.addExpense("Movie", "2021-12-23", "40", "1");
         Exception exception = assertThrows(MintException.class,
-            () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
+                () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
         String expectedMessage = "Invalid description entered! Unable to edit expense.";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void editExpense_invalidCategoryNumber_expectFailure() {
+        CategoryList.initialiseCategories();
+        String input = "c/1000";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        ExpenseList expenseList = new ExpenseList();
+        expenseList.addExpense("Movie", "2021-12-23", "40", "1");
+        Exception exception = assertThrows(MintException.class,
+                () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
+        String expectedMessage = "Please enter a valid category number! c/0 to c/7";
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
     }

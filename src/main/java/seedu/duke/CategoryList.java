@@ -2,6 +2,7 @@ package seedu.duke;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 public class CategoryList {
     public static final int CAT_NUM_FOOD = 0;
@@ -13,6 +14,9 @@ public class CategoryList {
     public static final int CAT_NUM_GIFT = 6;
     public static final int CAT_NUM_OTHERS = 7;
     private static final String CAT_STR_NO_CAT_FOUND = "No Category found";
+    public static final int CAT_NUM_FOOD_INT = 0;
+    public static final int CAT_NUM_OTHERS_INT = 7;
+    protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
 
     protected static ArrayList<Category> categoryList = new ArrayList<>();
 
@@ -68,6 +72,17 @@ public class CategoryList {
     public static String getSpendingIndented(int catNum) {
         Category category = CategoryList.categoryList.get(catNum);
         return category.getSpendingIndented();
+    }
+
+    public static void checkValidCatNum(String catNum) throws MintException {
+        int catNumInt = Integer.parseInt(catNum);
+        try {
+            if (catNumInt < CAT_NUM_FOOD_INT || catNumInt > CAT_NUM_OTHERS_INT) {
+                throw new MintException(ERROR_INVALID_CATNUM);
+            }
+        } catch (NumberFormatException e) {
+            throw new MintException(ERROR_INVALID_CATNUM);
+        }
     }
 
     public static void setLimit(String catNum, String limit) throws MintException {
