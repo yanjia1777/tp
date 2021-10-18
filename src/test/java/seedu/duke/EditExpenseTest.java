@@ -103,7 +103,7 @@ class EditExpenseTest {
         ExpenseList expenseList = new ExpenseList();
         expenseList.addExpense("Movie", "2021-12-23", "40", "1");
         Exception exception = assertThrows(MintException.class,
-                () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
+             () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
         String expectedMessage = "Invalid description entered! Unable to edit expense.";
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
@@ -120,7 +120,7 @@ class EditExpenseTest {
         ExpenseList expenseList = new ExpenseList();
         expenseList.addExpense("Movie", "2021-12-23", "40", "1");
         Exception exception = assertThrows(MintException.class,
-                () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
+             () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
         String expectedMessage = "Please enter a valid category number! c/0 to c/7";
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
