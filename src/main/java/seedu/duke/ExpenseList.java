@@ -205,8 +205,6 @@ public class ExpenseList {
             Collections.reverse(outputArray);
         }
 
-        System.out.println("    Category    |    Date    |   Name   |  Amount");
-
         for (Expense expense : outputArray) {
             System.out.println(expense.viewToString());
         }
