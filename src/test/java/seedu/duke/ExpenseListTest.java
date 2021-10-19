@@ -7,6 +7,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 class ExpenseListTest {
+
+    public static final String LIST_OF_EXPENSES = "Here is the list of your expenses:\n"
+            + "    Category    |    Date    |   Name   |  Amount";
+
+
     @Test
     public void deleteExpense_existingItem_success() throws MintException {
         ExpenseList expenseList = new ExpenseList();
@@ -78,7 +83,7 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
+        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
                 + "     Others     | 2021-12-23 | Cheese burger | $15.50" + System.lineSeparator()
                 + "     Others     | 2022-12-23 | book | $9.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
@@ -93,7 +98,7 @@ class ExpenseListTest {
 
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator();
+        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 }
