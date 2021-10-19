@@ -13,6 +13,7 @@ public class Ui {
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     protected static final int INDEX_CANCEL = -1;
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
+    public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
 
     public static void startup() {
         System.out.println("Hello! I'm Mint");
@@ -70,12 +71,12 @@ public class Ui {
             try {
                 index = Integer.parseInt(userInput);
                 if (index < 1 || index > filteredList.size()) {
-                    throw new MintException(MintException.ERROR_INDEX_OUT_OF_BOUND + CANCEL_MESSAGE);
+                    System.out.println(MintException.ERROR_INDEX_OUT_OF_BOUND + CANCEL_MESSAGE);
                 } else {
                     proceedToDelete = true;
                 }
             } catch (NumberFormatException e) {
-                throw new MintException(MintException.ERROR_INDEX_INVALID_NUMBER + CANCEL_MESSAGE);
+                System.out.println(MintException.ERROR_INDEX_INVALID_NUMBER + CANCEL_MESSAGE);
             }
         }
         return index - 1;
@@ -115,8 +116,8 @@ public class Ui {
         }
     }
 
-    public static void printNewUserMessage() {
-        System.out.println("No data detected! I see you are a new user...Starting afresh!");
+    public static void printMissingFileMessage() {
+        System.out.println(MISSING_FILE_MESSAGE);
     }
 }
 

@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -17,6 +19,7 @@ public class CategoryList {
     public static final int CAT_NUM_FOOD_INT = 0;
     public static final int CAT_NUM_OTHERS_INT = 7;
     protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
+    public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
 
     protected static ArrayList<Category> categoryList = new ArrayList<>();
 
@@ -87,8 +90,10 @@ public class CategoryList {
 
     public static void setLimit(String catNum, String limit) throws MintException {
         int catNumFinal = Integer.parseInt(catNum);
+        DataManager dataManager = new DataManager(CATEGORY_FILE_PATH);
         Category category = CategoryList.categoryList.get(catNumFinal);
         category.setLimit(limit);
+        dataManager.editCategoryFileLive(catNumFinal);
         System.out.println("Set limit of $" + limit + " for " + category + "!");
     }
 

@@ -133,3 +133,36 @@ a/8 n/Chicken Rice c/0 d/2000-09-22
 --------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
+
+
+### <a name="delete"></a>Deleting an expense
+
+**Prerequisites**
+
+- The list must have expenses that have already been added.
+
+**Test case 1: Deleting an existing expense with some fields specified. Only one expense
+exists that matches all the fields specified.**
+
+**Usage:**
+
+- `delete [include some fields of the expense you would like to delete]`
+
+**Expected**
+
+- It asks user if the user wants to delete the found expense.
+- If user inputs y, it deletes. If user inputs n, it exits the delete process.
+
+**Example of usage and expected output:**
+
+```
+delete n/Movie c/7
+--------------------------------------------------------------------
+Is this what you want to delete?
+    Others | 2021-10-19 | Movie | $12.00
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
+--------------------------------------------------------------------
+I have deleted: Others | 2021-10-19 | Movie | $12.00
+```
