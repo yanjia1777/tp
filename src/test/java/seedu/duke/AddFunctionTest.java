@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddFunctionTest {
 
-    public static final String LIST_OF_EXPENSES = "Here is the list of your expenses:";
+    public static final String LIST_OF_EXPENSES = "Here is the list of your expenses:\n    Category    |    Date    |   Name   |  Amount";
 
     @Test
     public void addExpense_oneAddition_expectSuccess() throws MintException {
