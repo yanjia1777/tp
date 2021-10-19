@@ -78,7 +78,12 @@ Sampletext
 ## <a name="nf-req"></a>Non-Functional Requirements
 
 - Should work on any [*mainstream Operating Systems*](#os) as long as Java `11` or higher has been installed on it
-  {Give non-functional requirements}
+  {Give non-functional requirements} 
+- Each command (Add, delete, edit, view) should be executed within 1 second of the user input.
+- Users can use the application throughout the week at any time during the day.
+   In the case of unexpected downtime, all features will be available again within 24 hours.
+- If the commands have errors, they can be fixed within 24 hours.
+- The application’s interface has to be intuitive and easy to use.
 
 ## <a name="glossary"></a>Glossary
 
@@ -86,5 +91,27 @@ Sampletext
 * <a name="local-storage"></a>**LocalStorage** - Refers to user's hard disk storage
 
 ## <a name="manual-test"></a>Instructions for manual testing
+### <a name="edit"></a>Editing an expense
+**Prerequisites**
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+- The list must have expenses that have already been added.
+
+**Test case 1: Editing all fields** 
+
+**Usage:** 
+- `edit [include all fields of expense you would like to edit]`
+- `a/[amount] n/[description] c/[catNum] d/[validDate]`
+
+**Expected**
+- The input fields of the selected entry are updated 
+
+**Example of usage and expected output:**
+```
+edit a/20 d/2021-12-03 n/Movie c/2
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+a/8 n/Chicken Rice c/0 d/2000-09-22
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
