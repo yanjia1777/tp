@@ -48,7 +48,7 @@ public class DataManager {
     }
 
     private void editCategoryFile(ArrayList<String> fileContent) throws IOException {
-        if(!fileContent.isEmpty()) {
+        if (!fileContent.isEmpty()) {
             amendFile(fileContent, CATEGORY_FILE_PATH);
         }
     }
@@ -65,7 +65,7 @@ public class DataManager {
     private ArrayList<String> loadStoredFileContent() throws IOException {
         ArrayList<String> fileContent;
         fileContent = new ArrayList<>(Files.readAllLines(Path.of(CATEGORY_FILE_PATH), StandardCharsets.UTF_8));
-        if(fileContent.isEmpty()) {
+        if (fileContent.isEmpty()) {
             loadCategoryTextFile();
         }
         return fileContent;
@@ -134,7 +134,7 @@ public class DataManager {
 
     public static void loadCategoryTextFile() throws IOException {
         FileWriter fileWriter = new FileWriter(CATEGORY_FILE_PATH, true);
-        for(int catNum = 0; catNum < NUMBER_OF_CATEGORIES; catNum ++) {
+        for (int catNum = 0; catNum < NUMBER_OF_CATEGORIES; catNum++) {
             fileWriter.write(CATEGORY_TAG + catNum + TEXT_DELIMITER
                     + CategoryList.getLimitIndented(catNum) + System.lineSeparator());
             fileWriter.flush();
@@ -152,7 +152,7 @@ public class DataManager {
             String catNum = params[0].replaceAll(REGEX_TO_REPLACE,"").trim();
             String limit = params[1].replaceAll(REGEX_TO_REPLACE,"").trim();
             try {
-                if(!limit.equals("")) {
+                if (!limit.equals("")) {
                     CategoryList.setLimit(catNum, limit);
                 }
             } catch (MintException e) {
