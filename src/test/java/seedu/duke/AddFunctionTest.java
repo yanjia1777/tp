@@ -70,7 +70,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("add n/burger d/2021-12-23 a/ABCD c/1", expenseList);
-        String expectedOutput  = "Please enter a valid amount!" + System.lineSeparator();
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_AMOUNT + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -84,7 +84,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList);
-        String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DATE + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
 
 
@@ -99,7 +99,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList);
-        String expectedOutput = "Please add the description of the item!" + System.lineSeparator();
+        String expectedOutput = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DESCRIPTION + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 }
