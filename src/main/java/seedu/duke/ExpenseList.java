@@ -40,8 +40,8 @@ public class ExpenseList {
         }
     }
 
-    public ArrayList<Expense> filterExpenseByTags(ArrayList<String> tags, String name,
-                                                  String date, String amount, String catNum) throws MintException {
+    public ArrayList<Expense> filterExpenseByKeywords(ArrayList<String> tags, String name,
+                                                      String date, String amount, String catNum) throws MintException {
         ArrayList<Expense> filteredList = new ArrayList<>(expenseList);
         for (String tag : tags) {
             switch (tag) {
@@ -90,7 +90,7 @@ public class ExpenseList {
 
     public Expense chooseExpenseByKeywords(ArrayList<String> tags, boolean isDelete, String name,
                                            String date, String amount, String catNum) throws MintException {
-        ArrayList<Expense> filteredList = filterExpenseByTags(tags, name, date, amount, catNum);
+        ArrayList<Expense> filteredList = filterExpenseByKeywords(tags, name, date, amount, catNum);
         Expense expense = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
