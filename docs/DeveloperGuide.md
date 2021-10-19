@@ -90,8 +90,7 @@ Sampletext
 
 ## <a name="nf-req"></a>Non-Functional Requirements
 
-- Should work on any [*mainstream Operating Systems*](#os) as long as Java `11` or higher has been installed on it {Give
-  non-functional requirements}
+- Should work on any [*mainstream Operating Systems*](#os) as long as Java `11` or higher has been installed on it.
 - Each command (Add, delete, edit, view) should be executed within 1 second of the user input.
 - Users can use the application throughout the week at any time during the day. In the case of unexpected downtime, all
   features will be available again within 24 hours.
@@ -105,7 +104,7 @@ Sampletext
 
 ## <a name="manual-test"></a>Instructions for manual testing
 
-### <a name="edit"></a>Editing an expense
+### :writing_hand: <a name="edit"></a>Editing an expense
 
 **Prerequisites**
 
@@ -140,7 +139,7 @@ Got it! I will update the fields accordingly!
 - `edit [include all fields of expense you would like to edit]`
 - Include the tags and things you would like to change in any order `tag/[input]`
 
-:bomb: CAUTION
+:bomb: **CAUTION**
 - Do not edit the same field multiple times in one command.
 
 **Expected**
@@ -161,7 +160,7 @@ Got it! I will update the fields accordingly!
 
 
 
-### <a name="delete"></a>Deleting an expense
+### :x: <a name="delete"></a>Deleting an expense
 
 **Prerequisites**
 
