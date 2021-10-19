@@ -102,37 +102,31 @@ public class ExpenseList {
         return filteredList;
     }
 
-    boolean deleteExpenseByKeywords(ArrayList<String> tags, String name,
+    void deleteExpenseByKeywords(ArrayList<String> tags, String name,
                                     String date, String amount, String catNum) throws MintException {
         try {
-            Expense expense = chooseExpenseByKeywords(tags, name, date, amount, catNum);
+            Expense expense = chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
             if (expense != null) {
                 deleteExpense(expense);
-                return true;
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
-        return false;
     }
 
-    boolean editExpenseByKeywords(ArrayList<String> tags, String name,
-                                    String date, String amount, String catNum) throws MintException {
+    void editExpenseByKeywords(ArrayList<String> tags, String name,
+                                 String date, String amount, String catNum) throws MintException {
         try {
-            Expense expense = chooseExpenseByKeywords(tags, name, date, amount, catNum);
+            Expense expense = chooseExpenseByKeywords(tags, false, name, date, amount, catNum);
             if (expense != null) {
-                //editExpense(expense);
-                return true;
+                editExpense(expense);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
-        return false;
     }
 
-
-
-    public Expense chooseExpenseByKeywords(ArrayList<String> tags, String name,
+    public Expense chooseExpenseByKeywords(ArrayList<String> tags, boolean isDelete, String name,
                                            String date, String amount, String catNum) throws MintException {
         ArrayList<Expense> filteredList = filterExpenseByTags(tags, name, date, amount, catNum);
         Expense expense = null;
@@ -140,7 +134,7 @@ public class ExpenseList {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
         } else if (filteredList.size() == 1) {
             Expense onlyExpense = filteredList.get(0);
-            if (Ui.isConfirmedToDeleteByUser(onlyExpense)) {
+            if (Ui.isConfirmedToDeleteOrEdit(onlyExpense, isDelete)) {
                 expense = onlyExpense;
             }
             return expense;
@@ -148,7 +142,7 @@ public class ExpenseList {
 
         Ui.viewGivenList(filteredList);
         try {
-            int index = Ui.determineItemToDeleteByUserInput(filteredList);
+            int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
             if (index > 0) {
                 expense = filteredList.get(index);
             }
@@ -267,6 +261,11 @@ public class ExpenseList {
         default:
             throw new MintException(MintException.ERROR_INVALID_COMMAND);
         }
+    }
+
+    public void editExpense(Expense expense) throws MintException {
+        editExpense(expense.getName(), expense.getDate().toString(),
+                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     }
 
     public void editExpense(String name, String date, String amount, String catNum) throws MintException {

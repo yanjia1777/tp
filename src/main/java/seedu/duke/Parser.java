@@ -4,6 +4,8 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -173,17 +175,14 @@ public class Parser {
         }
     }
 
-    public void parseInputByTags(String userInput) throws MintException {
+    public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         if (command.equals("add")) {
             initDate();
             initCatNum();
         }
-
-        if (!command.equals("delete")) {
-            checkMissingFieldOfUserInput(userInput);
-        }
         parseInputByTagsLoop(userInput);
+        return checkExistenceAndValidityOfTags(userInput);
     }
 
 
@@ -193,6 +192,7 @@ public class Parser {
 
     public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
         DataManager dataManager = new DataManager(FILE_PATH);
+        ArrayList<String> validTags;
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
         try {
@@ -217,20 +217,15 @@ public class Parser {
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
-                checkValidityOfFields();
                 expenseList.addExpense(name, date, amount, catNum);
                 break;
             case "delete":
-                parseInputByTags(userInput);
-                ArrayList<String> validTags = checkValidityOfTags(userInput,
-                        new String[]{"n/", "d/", "a/", "c/"},
-                        false);
+                validTags = parseInputByTags(userInput);
                 expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
                 break;
             case "edit":
-                parseInputByTags(userInput);
-                checkValidityOfFields();
-                expenseList.editExpense(name, date, amount, catNum);
+                validTags = parseInputByTags(userInput);
+                expenseList.editExpenseByKeywords(validTags, name, date, amount, catNum);
                 break;
             case "bye":
                 //fallthrough
@@ -253,9 +248,12 @@ public class Parser {
         }
     }
 
-    private ArrayList<String> checkValidityOfTags(String userInput, String[] tags, boolean checkMissingTag) throws MintException {
+    private ArrayList<String> identifyValidTags(String userInput, String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
+        String[] tags = {"n/", "d/", "a/", "c/"};
+        List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
+
         for (String tag : tags) {
             try {
                 if (userInput.contains(tag.trim())) {
@@ -276,7 +274,7 @@ public class Parser {
                         throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
                     }
                     validTags.add(tag);
-                } else if (checkMissingTag) {
+                } else if (mandatoryTagsToBeChecked.contains(tag)) {
                     invalidTags.add(tag);
                 }
             } catch (MintException e) {
@@ -291,6 +289,17 @@ public class Parser {
             throw new MintException("Please enter at least one tag.");
         }
         return validTags;
+    }
+
+    private ArrayList<String> checkExistenceAndValidityOfTags(String userInput) throws MintException {
+        try {
+            String[] mandatoryTags = command.equals("add")
+                    ? new String[]{"n/", "a/"}
+                    : new String[]{};
+            return identifyValidTags(userInput, mandatoryTags);
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
+        }
     }
 
     private void checkMissingFieldOfUserInput(String userInput) throws MintException {

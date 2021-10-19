@@ -51,8 +51,13 @@ public class Ui {
         }
     }
 
-    public static int determineItemToDeleteByUserInput(ArrayList<Expense> filteredList) throws MintException {
-        System.out.println("Enter the index of the item you want to delete. To cancel, type \"cancel\"");
+    public static int chooseItemToDeleteOrEdit(ArrayList<Expense> filteredList, boolean isDelete) throws MintException {
+        if (isDelete) {
+            System.out.println("Enter the index of the item you want to delete." + CANCEL_MESSAGE);
+        } else {
+            System.out.println("Enter the index of the item you want to edit." + CANCEL_MESSAGE);
+        }
+
         Scanner in = new Scanner(System.in);
         int index = 0;
         boolean proceedToDelete = false;
@@ -76,9 +81,13 @@ public class Ui {
         return index - 1;
     }
 
-    public static boolean isConfirmedToDeleteByUser(Expense expense) {
-        System.out.println("Is this what you want to delete?");
-        System.out.println(expense);
+    public static boolean isConfirmedToDeleteOrEdit(Expense expense, boolean isDelete) {
+        if (isDelete) {
+            System.out.println("Is this what you want to delete?");
+        } else {
+            System.out.println("Is this what you want to edit?");
+        }
+        System.out.println(INDENT + expense);
         System.out.println("Type \"y\" if yes. Type \"n\" if not.");
         Scanner in = new Scanner(System.in);
         while (true) {
