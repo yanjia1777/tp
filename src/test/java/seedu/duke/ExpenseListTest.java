@@ -39,8 +39,8 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("delete n/Cheese d/2021-12-23 a/18 c/1", expenseList);
-        String ExpectedOutput  = "Hmm.. That item is not in the list." + Ui.LINE_SEPARATOR;
-        assertEquals(ExpectedOutput, outContent.toString());
+        String expectedOutput  = "Hmm.. That item is not in the list." + Ui.LINE_SEPARATOR;
+        assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
