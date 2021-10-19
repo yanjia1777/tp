@@ -27,12 +27,19 @@
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+1. The application should work on any mainstream OS as long as it has Java 11 or above installed.
+2. Each command (Add, delete, edit, view) should be executed within 1 second of the user input.
+3. Users can use the application throughout the week at any time during the day. 
+   In the case of unexpected downtime, all features will be available again within 24 hours.
+4. If the commands have errors, they can be fixed within 24 hours.
+5. The application’s interface has to be intuitive and easy to use.
 
 ## Glossary
 
 * *glossary item* - Definition
 
 ## Instructions for manual testing
+
+
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
