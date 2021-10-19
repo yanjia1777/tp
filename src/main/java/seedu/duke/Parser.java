@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -19,13 +20,17 @@ public class Parser {
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
     public static final String STRING_AMOUNT = "Amount of purchase\n";
-    public static final String STRING_CATNUM = "Category number of item\n"; 
+    public static final String STRING_CATNUM = "Category number of item\n";
     public static final String STRING_EMPTY = "";
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     protected static final String ERROR_INVALID_DATE = "Please enter a valid date!";
-    protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number!";
+    protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
+    public static final int CAT_NUM_FOOD_INT = 0;
+    public static final int CAT_NUM_OTHERS_INT = 7;
+    public static final String CAT_NUM_FOOD = "0";
     public static final String CAT_NUM_OTHERS = "7";
+    public static final String setFormatErrorMessage = "Please follow format {set c/catNum limit}\n e.g. set c/0 100";
     protected String command;
     protected String name;
     protected String date;
@@ -121,7 +126,10 @@ public class Parser {
 
     private void checkInvalidCatNum() throws MintException {
         try {
-            Integer.parseInt(catNum);
+            int catNumInt = Integer.parseInt(catNum);
+            if (catNumInt < CAT_NUM_FOOD_INT || catNumInt > CAT_NUM_OTHERS_INT) {
+                throw new MintException(ERROR_INVALID_CATNUM);
+            }
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid category number");
             throw new MintException(ERROR_INVALID_CATNUM);
@@ -181,10 +189,41 @@ public class Parser {
             initDate();
             initCatNum();
         }
+
+        checkMissingFieldOfUserInput(userInput);
         parseInputByTagsLoop(userInput);
         return checkExistenceAndValidityOfTags(userInput);
     }
 
+    public void parserSetLimit(String[] userInput) throws MintException {
+        checkSetFormat(userInput);
+        String[] parameters = getParamsWithoutCommand(userInput);
+        for (String param : parameters) {
+            if (param.contains("c/")) {
+                extractCatNumFromTag(param);
+            } else {
+                setAmount(param);
+            }
+        }
+    }
+
+    private void setAmount(String param) {
+        amount = param.trim();
+    }
+
+    private String[] getParamsWithoutCommand(String[] userInput) {
+        return Arrays.copyOfRange(userInput, 1, userInput.length);
+    }
+
+    private void checkSetFormat(String[] userInput) throws MintException {
+        if (userInput.length != 3) {
+            throw new MintException(setFormatErrorMessage);
+        }
+    }
+
+    private void extractCatNumFromTag(String param) {
+        catNum = String.valueOf(param.trim().charAt(2));
+    }
 
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
@@ -212,6 +251,18 @@ public class Parser {
             case "view":
                 parseInputByArguments(userInput);
                 expenseList.viewExpense(argumentsArray);
+                break;
+            case "set":
+                parseInputByArguments(userInput);
+                parserSetLimit(argumentsArray);
+                checkInvalidAmount();
+                checkInvalidCatNum();
+                CategoryList.setLimit(catNum, amount);
+                break;
+            case "spending":
+                //fallthrough
+            case "limit":
+                CategoryList.viewLimit();
                 break;
             case "add":
                 parseInputByTags(userInput);

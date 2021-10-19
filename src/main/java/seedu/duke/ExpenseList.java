@@ -30,6 +30,7 @@ public class ExpenseList {
 
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
+        CategoryList.addSpending(catNum, amount);
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
@@ -126,6 +127,7 @@ public class ExpenseList {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
             String stringToDelete = overWriteString(expense);
+            CategoryList.deleteSpending(catNum, amount);
             DataManager.deleteFileLive(stringToDelete);
         }
     }
@@ -200,6 +202,8 @@ public class ExpenseList {
             Collections.reverse(outputArray);
         }
 
+        System.out.println("    Category    |    Date    |   Name   |  Amount");
+
         for (Expense expense : outputArray) {
             System.out.println(expense.viewToString());
         }
@@ -237,6 +241,7 @@ public class ExpenseList {
         boolean exceptionThrown = false;
         try {
             Expense expense = new Expense(name, date, amount, catNum);
+            final String originalAmount = expense.getAmountString();
             final String originalExpense = expense.toString();
             final String stringToOverwrite = overWriteString(expense);
             if (expenseList.contains(expense)) {
@@ -249,6 +254,8 @@ public class ExpenseList {
             editSpecifiedEntry(choice, indexToBeChanged, expense);
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
             String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
+            final String newAmount = expenseList.get(indexToBeChanged).getAmountString();
+            CategoryList.editSpending(catNum, originalAmount, newAmount);
             DataManager.editFileLive(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {
@@ -325,6 +332,7 @@ public class ExpenseList {
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
                 catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                CategoryList.checkValidCatNum(catNum);
             }
         }
         expenseList.set(index, new Expense(name, date, amount, catNum));
