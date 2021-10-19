@@ -68,11 +68,18 @@ The four main components interact with each other, as shown in the sequence diag
 
 ### <a name="target"></a>Target user profile
 
-- sampletext
+Young adults who are just started earning money and need a way to manage their savings and expenses.
 
 ### <a name="value"></a>Value proposition
 
-Sampletext
+Mint is an all-in-one desktop app for young adults who wish to better manage their expenses and set long term financial
+goals.
+
+Our application is a financial calculator and tracker that allows users to add, delete, edit and view their expenses 
+easily. In addition, users are able to track recurring expenses and set spending limits for each category to minimise 
+chances of overspending. 
+
+Our application is optimized for use via a Command Line Interface (CLI).
 
 ## <a name="stories"></a>User Stories
 
