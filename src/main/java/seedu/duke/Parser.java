@@ -257,6 +257,7 @@ public class Parser {
                 checkInvalidAmount();
                 checkInvalidCatNum();
                 CategoryList.setLimit(catNum, amount);
+                Ui.setLimitMessage(catNum, amount);
                 break;
             case "spending":
                 //fallthrough
