@@ -1,6 +1,7 @@
 # Developer Guide
 
 ### Table of Content
+
 - [Acknowledgements](#acknowledgements)
 - [Design](#design)
     - [System Architecture](#sys-arch)
@@ -25,7 +26,8 @@
   https://se-education.org/addressbook-level3/DeveloperGuide.html <br/>
   https://se-education.org/addressbook-level3/UserGuide.html
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the
+original source as well}
 
 ## <a name="design"></a>Design
 
@@ -35,21 +37,25 @@
 
 The above **System Architecture** diagram shows the high-level design of Mint.
 
-On launch, the `Main` class initialises the app components in the correct sequence and links them up
-with each other, in the correct sequence.
+On launch, the `Main` class initialises the app components in the correct sequence and links them up with each other, in
+the correct sequence.
 
-ConTech comprises four main components, namely:
+Mint comprises five main components, namely:
+
 - `Ui`: Command Line User Interface of Mint.
 - `Parser`: Parser to parser user inputs from `Ui` for `ExpenseList`.
 - `ExpenseList`: Data structure to store `Expense`s while running Mint.
+- `CategoryList`: Data structure to store `Category`s while running Mint.
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
-The four main components interact with each other, as shown in the sequence diagram below.
-{ NEED SEQUENCE DIAGRAM }
+The four main components interact with each other, as shown in the sequence diagram below. { NEED SEQUENCE DIAGRAM }
 
 ### <a name="text-ui"></a>Ui
+
 ### <a name="main-parser"></a>Parser
+
 ### <a name="contact-list"></a>ExpenseList
+
 ### <a name="storage"></a>DataManager
 
 ## <a name="implementation"></a>Implementation
@@ -59,7 +65,9 @@ The four main components interact with each other, as shown in the sequence diag
 {NOT DONE}
 
 ## <a name="scope"></a>Product scope
+
 ### <a name="target"></a>Target user profile
+
 - sampletext
 
 ### <a name="value"></a>Value proposition
@@ -68,17 +76,22 @@ Sampletext
 
 ## <a name="stories"></a>User Stories
 
-{NOT DONE}
+{UNCOMPLETED}
 
 |Version| As a ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
 |v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
+|v1.0|user|add expense
+|v1.0|user|delete expense|remove entries that I no longer need
+|v1.0|user|view past expenses|keep track of my spending|
+|v2.0|user|set spending limit|cut down on unnecessary spending|
+|v2.0|user|sort spending by amount|see which expenditure is taking up the budget
 |v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
 
 ## <a name="nf-req"></a>Non-Functional Requirements
 
-- Should work on any [*mainstream Operating Systems*](#os) as long as Java `11` or higher has been installed on it
-  {Give non-functional requirements}
+- Should work on any [*mainstream Operating Systems*](#os) as long as Java `11` or higher has been installed on it {Give
+  non-functional requirements}
 
 ## <a name="glossary"></a>Glossary
 
