@@ -23,7 +23,7 @@ class EditExpenseTest {
         System.setIn(in);
         ExpenseList expenseList = new ExpenseList();
         DataManager dataManager = new DataManager(FILE_PATH);
-        dataManager.createDirectory(FILE_PATH, expenseList);
+        dataManager.createDirectory();
         expenseList.addExpense("Movie", "2021-12-23", "40", "1");
         expenseList.editExpense("Movie", "2021-12-23", "40", "1");
         String actualOutput = expenseList.getExpenseList().get(0).toString();
