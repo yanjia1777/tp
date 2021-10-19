@@ -190,7 +190,6 @@ public class Parser {
             initCatNum();
         }
 
-        checkMissingFieldOfUserInput(userInput);
         parseInputByTagsLoop(userInput);
         return checkExistenceAndValidityOfTags(userInput);
     }
