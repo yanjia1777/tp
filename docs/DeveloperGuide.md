@@ -133,6 +133,32 @@ a/8 n/Chicken Rice c/0 d/2000-09-22
 --------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
+**Test case 2: Editing some fields**
+
+**Usage:**
+
+- `edit [include all fields of expense you would like to edit]`
+- Include the tags and things you would like to change in any order `tag/[input]`
+
+:bomb: CAUTION
+- Do not edit the same field multiple times in one command.
+
+**Expected**
+
+- The input fields of the selected entry are updated
+
+**Example of usage and expected output:**
+
+```
+edit a/20 d/2021-12-03 n/Movie c/2
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+a/8 c/0 
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
+
 
 
 ### <a name="delete"></a>Deleting an expense
