@@ -7,6 +7,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 class ExpenseListTest {
+
+    public static final String LIST_OF_EXPENSES = "Here is the list of your expenses:";
+    public static final String LIST_OF_EXPENSES2 = "    Category    |    Date    |   Name   |  Amount";
+
+
     @Test
     public void deleteExpense_existingItem_success() throws MintException {
         ExpenseList expenseList = new ExpenseList();
@@ -26,20 +31,16 @@ class ExpenseListTest {
     }
 
     @Test
-    public void deleteExpense_nonExistingItem_exceptionThrown() {
-        try {
-            ExpenseList expenseList = new ExpenseList();
+    public void deleteExpense_nonExistingItem_printErrorMessage() throws MintException {
+        ExpenseList expenseList = new ExpenseList();
+        Parser parser = new Parser();
 
-            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(outContent));
-            expenseList.deleteExpense("Cheese burger", "2021-12-23", "15.5", "1");
-            String wrongExpectedOutput  = "I have deleted: Food | 2021-12-23 | Cheese burger | $15.50"
-                    + System.lineSeparator();
-            assertEquals(wrongExpectedOutput, outContent.toString());
-            fail();
-        } catch (MintException e) {
-            assertEquals("Hmm.. That item is not in the list.", e.getMessage());
-        }
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        parser.executeCommand("delete n/Cheese d/2021-12-23 a/18 c/1", expenseList);
+        String expectedOutput  = "Hmm.. That item is not in the list." + Ui.LINE_SEPARATOR;
+        assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
@@ -51,7 +52,7 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("delete n/Cheese d/2021-12-23 a/15.5abc c/1", expenseList);
-        String expectedOutput  = "Please enter a valid amount!" + System.lineSeparator();
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_AMOUNT + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -64,7 +65,7 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("delete n/Cheese d/2021-12 a/15.5 c/1", expenseList);
-        String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DATE + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -78,7 +79,8 @@ class ExpenseListTest {
         System.setOut(new PrintStream(outContent));
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
+        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
+                + LIST_OF_EXPENSES2 + System.lineSeparator()
                 + "     Others     | 2021-12-23 | Cheese burger | $15.50" + System.lineSeparator()
                 + "     Others     | 2022-12-23 | book | $9.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
@@ -93,7 +95,8 @@ class ExpenseListTest {
 
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
-        String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator();
+        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
+                + LIST_OF_EXPENSES2 + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 }

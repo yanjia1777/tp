@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AddFunctionTest {
 
     public static final String LIST_OF_EXPENSES = "Here is the list of your expenses:";
+    public static final String LIST_OF_EXPENSES2 = "    Category    |    Date    |   Name   |  Amount";
 
     @Test
     public void addExpense_oneAddition_expectSuccess() throws MintException {
@@ -26,6 +27,7 @@ class AddFunctionTest {
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
+                + LIST_OF_EXPENSES2 + System.lineSeparator()
                 + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -53,6 +55,7 @@ class AddFunctionTest {
         String[] emptyArray = {"view"};
         expenseList.viewExpense(emptyArray);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
+                + LIST_OF_EXPENSES2 + System.lineSeparator()
                 + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator()
                 + " Entertainment  | 2021-10-10 | movie | $13.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
@@ -67,7 +70,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("add n/burger d/2021-12-23 a/ABCD c/1", expenseList);
-        String expectedOutput  = "Please enter a valid amount!" + System.lineSeparator();
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_AMOUNT + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -81,7 +84,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList);
-        String expectedOutput  = "Please enter a valid date!" + System.lineSeparator();
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DATE + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
 
 
@@ -96,7 +99,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
 
         parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList);
-        String expectedOutput = "Please add the description of the item!" + System.lineSeparator();
+        String expectedOutput = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DESCRIPTION + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 }
