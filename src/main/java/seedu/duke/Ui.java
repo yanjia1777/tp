@@ -70,12 +70,12 @@ public class Ui {
             try {
                 index = Integer.parseInt(userInput);
                 if (index < 1 || index > filteredList.size()) {
-                    throw new MintException(MintException.ERROR_INDEX_OUT_OF_BOUND + CANCEL_MESSAGE);
+                    System.out.println(MintException.ERROR_INDEX_OUT_OF_BOUND + CANCEL_MESSAGE);
                 } else {
                     proceedToDelete = true;
                 }
             } catch (NumberFormatException e) {
-                throw new MintException(MintException.ERROR_INDEX_INVALID_NUMBER + CANCEL_MESSAGE);
+                System.out.println(MintException.ERROR_INDEX_INVALID_NUMBER + CANCEL_MESSAGE);
             }
         }
         return index - 1;
