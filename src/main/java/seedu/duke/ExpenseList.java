@@ -8,7 +8,6 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class ExpenseList {
     public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
@@ -41,59 +40,22 @@ public class ExpenseList {
         }
     }
 
-    public ArrayList<Expense> filterExpenseByName(String name, ArrayList<Expense> listToFilter) {
-        List<Expense> filteredList = listToFilter
-                .stream()
-                .filter(e -> e.getName().contains(name))
-                .collect(Collectors.toList());
-        ArrayList<Expense> filteredArrayList = new ArrayList<Expense>(filteredList);
-        return filteredArrayList;
-    }
-
-    public ArrayList<Expense> filterExpenseByDate(String date, ArrayList<Expense> listToFilter) {
-        List<Expense> filteredList = listToFilter
-                .stream()
-                .filter(e -> e.getDate().equals(LocalDate.parse(date)))
-                .collect(Collectors.toList());
-        ArrayList<Expense> filteredArrayList = new ArrayList<Expense>(filteredList);
-        return filteredArrayList;
-    }
-
-    public ArrayList<Expense> filterExpenseByAmount(String amount, ArrayList<Expense> listToFilter) {
-        List<Expense> filteredList = listToFilter
-                .stream()
-                .filter(e -> e.getAmount().equals(Double.parseDouble(amount)))
-                .collect(Collectors.toList());
-        ArrayList<Expense> filteredArrayList = new ArrayList<Expense>(filteredList);
-        return filteredArrayList;
-    }
-
-
-    public ArrayList<Expense> filterExpenseByCatNum(String catNum, ArrayList<Expense> listToFilter) {
-        List<Expense> filteredList = listToFilter
-                .stream()
-                .filter(e -> e.getCatNum() == Integer.parseInt(catNum))
-                .collect(Collectors.toList());
-        ArrayList<Expense> filteredArrayList = new ArrayList<Expense>(filteredList);
-        return filteredArrayList;
-    }
-
     public ArrayList<Expense> filterExpenseByTags(ArrayList<String> tags, String name,
                                                   String date, String amount, String catNum) throws MintException {
         ArrayList<Expense> filteredList = new ArrayList<>(expenseList);
         for (String tag : tags) {
             switch (tag) {
             case "n/":
-                filteredList = filterExpenseByName(name, filteredList);
+                filteredList = Filter.filterExpenseByName(name, filteredList);
                 break;
             case "d/":
-                filteredList = filterExpenseByDate(date, filteredList);
+                filteredList = Filter.filterExpenseByDate(date, filteredList);
                 break;
             case "a/":
-                //filteredList = filterExpenseByName(name, filteredList);
+                filteredList = Filter.filterExpenseByAmount(amount, filteredList);
                 break;
             case "c/":
-                filteredList = filterExpenseByCatNum(catNum, filteredList);
+                filteredList = Filter.filterExpenseByCatNum(catNum, filteredList);
                 break;
             default:
                 throw new MintException("Unable to locate tag");
