@@ -58,7 +58,7 @@ public class ExpenseList {
         ArrayList<Expense> filteredArrayList = new ArrayList<Expense>(filteredList);
         return filteredArrayList;
     }
-    /*
+
     public ArrayList<Expense> filterExpenseByAmount(String amount, ArrayList<Expense> listToFilter) {
         List<Expense> filteredList = listToFilter
                 .stream()
@@ -67,7 +67,7 @@ public class ExpenseList {
         ArrayList<Expense> filteredArrayList = new ArrayList<Expense>(filteredList);
         return filteredArrayList;
     }
-     */
+
 
     public ArrayList<Expense> filterExpenseByCatNum(String catNum, ArrayList<Expense> listToFilter) {
         List<Expense> filteredList = listToFilter
@@ -175,7 +175,7 @@ public class ExpenseList {
         Month month;
         String year = null;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
-        ArrayList<Expense> outputArray = (ArrayList<Expense>) expenseList.clone();
+        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
 
         if (argumentArray.contains("by")) {
             try {
