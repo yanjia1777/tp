@@ -245,6 +245,7 @@ public class ExpenseList {
         try {
             Expense expense = new Expense(name, date, amount, catNum);
             final String originalAmount = expense.getAmountString();
+            final int originalCatNum = expense.getCatNum();
             final String originalExpense = expense.toString();
             final String stringToOverwrite = overWriteString(expense);
             if (expenseList.contains(expense)) {
@@ -258,6 +259,11 @@ public class ExpenseList {
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
             String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
             final String newAmount = expenseList.get(indexToBeChanged).getAmountString();
+            final int newCatNum = expenseList.get(indexToBeChanged).getCatNum();
+            if (originalCatNum != newCatNum) {
+                catNum = String.valueOf(newCatNum);
+                CategoryList.editSpendingCat(originalCatNum, newCatNum, originalAmount);
+            }
             CategoryList.editSpending(catNum, originalAmount, newAmount);
             DataManager.editFileLive(stringToOverwrite, stringToUpdate);
 
