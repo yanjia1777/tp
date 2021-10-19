@@ -118,6 +118,14 @@ public class CategoryList {
             category.addSpending(difference);
         }
     }
+
+    public static void editSpendingCat(int originalCatNum, int newCatNum, String amount) {
+        double amountFinal = Double.parseDouble(amount);
+        Category oldCategory = CategoryList.categoryList.get(originalCatNum);
+        oldCategory.deleteSpending(amountFinal);
+        Category newCategory = CategoryList.categoryList.get(newCatNum);
+        newCategory.addSpending(amountFinal);
+    }
 }
 
 
