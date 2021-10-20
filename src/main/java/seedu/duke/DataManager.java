@@ -135,7 +135,7 @@ public class DataManager {
         ArrayList<Expense> loadedExpenseList = expenseList.getExpenseList();
         Expense expense = new Expense(name, date, amount, catNum);
         if (isCurrentMonthExpense(expense)) {
-            CategoryList.addSpending(catNum, amount);
+            CategoryList.addSpending(expense);
         }
         loadedExpenseList.add(expense);
     }
