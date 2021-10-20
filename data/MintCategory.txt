@@ -1,8 +1,0 @@
-c/0| $100.00 
-c/1| Not Set 
-c/2| Not Set 
-c/3| Not Set 
-c/4| Not Set 
-c/5| Not Set 
-c/6| Not Set 
-c/7| Not Set 
