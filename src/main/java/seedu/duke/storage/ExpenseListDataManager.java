@@ -88,7 +88,7 @@ public class ExpenseListDataManager extends DataManagerActions {
     public static void loadExpense(String name, String date, String amount, String catNum, ExpenseList expenseList) {
         ArrayList<Expense> loadedExpenseList = expenseList.getExpenseList();
         Expense expense = new Expense(name, date, amount, catNum);
-        CategoryList.addSpending(catNum, amount);
+        CategoryList.addSpending(expense);
         loadedExpenseList.add(expense);
     }
 

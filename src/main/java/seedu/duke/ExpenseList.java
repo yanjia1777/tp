@@ -32,7 +32,6 @@ public class ExpenseList {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
-
     private boolean isCurrentMonthExpense(Expense expense) {
         return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
                 && expense.date.getYear() == LocalDate.now().getYear();
@@ -41,7 +40,7 @@ public class ExpenseList {
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
         if (isCurrentMonthExpense(expense)) {
-            CategoryList.addSpending(catNum, amount);
+            CategoryList.addSpending(expense);
         }
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
@@ -78,7 +77,7 @@ public class ExpenseList {
     }
 
     void deleteExpenseByKeywords(ArrayList<String> tags, String name,
-                                    String date, String amount, String catNum) throws MintException {
+                                 String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
             if (expense != null) {
@@ -90,7 +89,7 @@ public class ExpenseList {
     }
 
     void editExpenseByKeywords(ArrayList<String> tags, String name,
-                                 String date, String amount, String catNum) throws MintException {
+                               String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, false, name, date, amount, catNum);
             if (expense != null) {
@@ -139,7 +138,9 @@ public class ExpenseList {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
             String stringToDelete = overWriteString(expense);
-            CategoryList.deleteSpending(catNum, amount);
+            if (isCurrentMonthExpense(expense)) {
+                CategoryList.deleteSpending(expense);
+            }
             ExpenseListDataManager.deleteLineInTextFile(stringToDelete);
         }
     }
@@ -250,28 +251,21 @@ public class ExpenseList {
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         try {
-            Expense expense = new Expense(name, date, amount, catNum);
-            final String originalAmount = expense.getAmountString();
-            final int originalCatNum = expense.getCatNum();
-            final String originalExpense = expense.toString();
-            final String stringToOverwrite = overWriteString(expense);
-            if (expenseList.contains(expense)) {
-                indexToBeChanged = expenseList.indexOf(expense);
+            Expense originalExpense = new Expense(name, date, amount, catNum);
+            final String originalExpenseStr = originalExpense.toString();
+            final String stringToOverwrite = overWriteString(originalExpense);
+            if (expenseList.contains(originalExpense)) {
+                indexToBeChanged = expenseList.indexOf(originalExpense);
                 choice = scanFieldsToUpdate();
             } else {
                 logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
             }
-            editSpecifiedEntry(choice, indexToBeChanged, expense);
-            printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
+            editSpecifiedEntry(choice, indexToBeChanged, originalExpense);
+            printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpenseStr);
             String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
-            final String newAmount = expenseList.get(indexToBeChanged).getAmountString();
-            final int newCatNum = expenseList.get(indexToBeChanged).getCatNum();
-            if (originalCatNum != newCatNum) {
-                catNum = String.valueOf(newCatNum);
-                CategoryList.editSpendingCat(originalCatNum, newCatNum, originalAmount);
-            }
-            CategoryList.editSpending(catNum, originalAmount, newAmount);
+            final Expense newExpense = expenseList.get(indexToBeChanged);
+            CategoryList.editSpending(originalExpense, newExpense);
             ExpenseListDataManager.editExpenseListTextFile(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {
