@@ -271,6 +271,7 @@ public class Parser {
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
+                assert validTags.size() >= 1 : "There should be at least one valid tag";
                 expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
                 break;
             case "edit":
