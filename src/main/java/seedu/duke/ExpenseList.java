@@ -117,7 +117,7 @@ public class ExpenseList {
         Ui.viewGivenList(filteredList);
         try {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
-            if (index > 0) {
+            if (index >= 0) {
                 expense = filteredList.get(index);
             }
         } catch (MintException e) {
