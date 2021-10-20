@@ -58,6 +58,8 @@ The four main components interact with each other, as shown in the sequence diag
 
 ### <a name="storage"></a>DataManager
 
+![](Images/storage.png)
+
 ## <a name="implementation"></a>Implementation
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
