@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.storage.ExpenseListDataManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -25,20 +27,26 @@ public class ExpenseList {
     public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
-    public static final String REGEX_TO_SPLIT = " ";
     public static final String BLANK = "";
     protected ArrayList<Expense> expenseList = new ArrayList<>();
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
+    private boolean isCurrentMonthExpense(Expense expense) {
+        return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
+                && expense.date.getYear() == LocalDate.now().getYear();
+    }
+
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
-        CategoryList.addSpending(catNum, amount);
+        if (isCurrentMonthExpense(expense)) {
+            CategoryList.addSpending(expense);
+        }
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
         try {
-            DataManager.appendToFileLive(FILE_PATH, expense);
+            ExpenseListDataManager.appendToExpenseListTextFile(FILE_PATH, expense);
         } catch (IOException e) {
             System.out.println("Error trying to update external file!");
         }
@@ -69,7 +77,7 @@ public class ExpenseList {
     }
 
     void deleteExpenseByKeywords(ArrayList<String> tags, String name,
-                                    String date, String amount, String catNum) throws MintException {
+                                 String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
             if (expense != null) {
@@ -81,7 +89,7 @@ public class ExpenseList {
     }
 
     void editExpenseByKeywords(ArrayList<String> tags, String name,
-                                 String date, String amount, String catNum) throws MintException {
+                               String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, false, name, date, amount, catNum);
             if (expense != null) {
@@ -109,7 +117,7 @@ public class ExpenseList {
         Ui.viewGivenList(filteredList);
         try {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
-            if (index > 0) {
+            if (index >= 0) {
                 expense = filteredList.get(index);
             }
         } catch (MintException e) {
@@ -130,8 +138,10 @@ public class ExpenseList {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
             String stringToDelete = overWriteString(expense);
-            CategoryList.deleteSpending(catNum, amount);
-            DataManager.deleteFileLive(stringToDelete);
+            if (isCurrentMonthExpense(expense)) {
+                CategoryList.deleteSpending(expense);
+            }
+            ExpenseListDataManager.deleteLineInTextFile(stringToDelete);
         }
     }
 
@@ -241,29 +251,22 @@ public class ExpenseList {
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         try {
-            Expense expense = new Expense(name, date, amount, catNum);
-            final String originalAmount = expense.getAmountString();
-            final int originalCatNum = expense.getCatNum();
-            final String originalExpense = expense.toString();
-            final String stringToOverwrite = overWriteString(expense);
-            if (expenseList.contains(expense)) {
-                indexToBeChanged = expenseList.indexOf(expense);
+            Expense originalExpense = new Expense(name, date, amount, catNum);
+            final String originalExpenseStr = originalExpense.toString();
+            final String stringToOverwrite = overWriteString(originalExpense);
+            if (expenseList.contains(originalExpense)) {
+                indexToBeChanged = expenseList.indexOf(originalExpense);
                 choice = scanFieldsToUpdate();
             } else {
                 logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
             }
-            editSpecifiedEntry(choice, indexToBeChanged, expense);
-            printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpense);
+            editSpecifiedEntry(choice, indexToBeChanged, originalExpense);
+            printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpenseStr);
             String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
-            final String newAmount = expenseList.get(indexToBeChanged).getAmountString();
-            final int newCatNum = expenseList.get(indexToBeChanged).getCatNum();
-            if (originalCatNum != newCatNum) {
-                catNum = String.valueOf(newCatNum);
-                CategoryList.editSpendingCat(originalCatNum, newCatNum, originalAmount);
-            }
-            CategoryList.editSpending(catNum, originalAmount, newAmount);
-            DataManager.editFileLive(stringToOverwrite, stringToUpdate);
+            final Expense newExpense = expenseList.get(indexToBeChanged);
+            CategoryList.editSpending(originalExpense, newExpense);
+            ExpenseListDataManager.editExpenseListTextFile(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {
             exceptionThrown = true;

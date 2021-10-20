@@ -13,6 +13,7 @@ public class Ui {
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     protected static final int INDEX_CANCEL = -1;
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
+    public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
 
     public static void startup() {
         System.out.println("Hello! I'm Mint");
@@ -96,6 +97,7 @@ public class Ui {
             case "y":
                 return true;
             case "n":
+                System.out.println("Ok. I have cancelled the delete process.");
                 return false;
             default:
                 System.out.println("Sorry I don't understand what that means. +"
@@ -115,8 +117,13 @@ public class Ui {
         }
     }
 
-    public static void printNewUserMessage() {
-        System.out.println("No data detected! I see you are a new user...Starting afresh!");
+    public static void printMissingFileMessage() {
+        System.out.println(MISSING_FILE_MESSAGE);
+    }
+
+    public static void setLimitMessage(String catNumString, String amount) {
+        int catNumInt = Integer.parseInt(catNumString);
+        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
     }
 }
 

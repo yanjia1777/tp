@@ -1,24 +1,28 @@
 package seedu.duke;
 
+import seedu.duke.storage.CategoryListDataManager;
+
+import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
 
 public class CategoryList {
-    public static final int CAT_NUM_FOOD = 0;
-    public static final int CAT_NUM_ENTERTAINMENT = 1;
-    public static final int CAT_NUM_TRANSPORTATION = 2;
-    public static final int CAT_NUM_HOUSEHOLD = 3;
-    public static final int CAT_NUM_APPAREL = 4;
-    public static final int CAT_NUM_BEAUTY = 5;
-    public static final int CAT_NUM_GIFT = 6;
-    public static final int CAT_NUM_OTHERS = 7;
-    private static final String CAT_STR_NO_CAT_FOUND = "No Category found";
     public static final int CAT_NUM_FOOD_INT = 0;
     public static final int CAT_NUM_OTHERS_INT = 7;
     protected static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
+    public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
 
     protected static ArrayList<Category> categoryList = new ArrayList<>();
+
+    private static boolean isSameMonth(Expense expense1, Expense expense2) {
+        return expense1.getDate().getMonth() == expense2.getDate().getMonth()
+                && expense1.getDate().getYear() == expense1.getDate().getYear();
+    }
+
+    private static boolean isCurrentMonthExpense(Expense expense) {
+        return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
+                && expense.date.getYear() == LocalDate.now().getYear();
+    }
 
     public static void addCategory(int catNum, String name) {
         Category category = new Category(catNum, name);
@@ -44,13 +48,20 @@ public class CategoryList {
     }
 
     public static void viewLimit() {
-        System.out.println("test");
+        LocalDate current = LocalDate.now();
+        String currentMonth = current.getMonth().toString();
+        int currentYear = current.getYear();
+        double totalExpenditure = 0;
+        System.out.printf("Here are your expenditures and limit for %s %d%n",
+                currentMonth, currentYear);
         for (Category category : categoryList) {
             int catNum = category.getCatNum();
+            totalExpenditure += category.getSpending();
             System.out.println(getSpendingIndented(catNum) + "/"
                     + getLimitIndented(catNum) + " | c/"
                     + catNum + " " + category.getName());
         }
+        System.out.printf("Total expenditure for this month: $%,.2f\n", totalExpenditure);
     }
 
     public static String getCatName(int catNum) {
@@ -87,44 +98,42 @@ public class CategoryList {
 
     public static void setLimit(String catNum, String limit) throws MintException {
         int catNumFinal = Integer.parseInt(catNum);
+        CategoryListDataManager dataManager = new CategoryListDataManager(CATEGORY_FILE_PATH);
         Category category = CategoryList.categoryList.get(catNumFinal);
         category.setLimit(limit);
-        System.out.println("Set limit of $" + limit + " for " + category + "!");
+        dataManager.editCategoryTextFile(catNumFinal);
     }
 
-    public static void addSpending(String catNum, String amount) {
-        int catNumFinal = Integer.parseInt(catNum);
-        double amountFinal = Double.parseDouble(amount);
-        Category category = CategoryList.categoryList.get(catNumFinal);
-        category.addSpending(amountFinal);
-    }
-
-    public static void deleteSpending(String catNum, String amount) {
-        int catNumFinal = Integer.parseInt(catNum);
-        double amountFinal = Double.parseDouble(amount);
-        Category category = CategoryList.categoryList.get(catNumFinal);
-        category.deleteSpending(amountFinal);
-    }
-
-    public static void editSpending(String catNum, String initialAmount, String newAmount) {
-        double initialSpending = Double.parseDouble(initialAmount);
-        double newSpending = Double.parseDouble(newAmount);
-        double difference = Math.abs(initialSpending - newSpending);
-        int catNumFinal = Integer.parseInt(catNum);
-        Category category = CategoryList.categoryList.get(catNumFinal);
-        if (initialSpending > newSpending) {
-            category.deleteSpending(difference);
-        } else {
-            category.addSpending(difference);
+    public static void addSpending(Expense expense) {
+        Category category = CategoryList.categoryList.get(expense.catNum);
+        category.addSpending(expense.amount);
+        if (category.isNearThreshold()) {
+            System.out.printf("Slow down... You've set aside $%,.2f for %s,"
+                            + " but you already spent $%,.2f\n",
+                    category.getLimit(), category.getName(), category.getSpending());
         }
     }
 
-    public static void editSpendingCat(int originalCatNum, int newCatNum, String amount) {
-        double amountFinal = Double.parseDouble(amount);
-        Category oldCategory = CategoryList.categoryList.get(originalCatNum);
-        oldCategory.deleteSpending(amountFinal);
-        Category newCategory = CategoryList.categoryList.get(newCatNum);
-        newCategory.addSpending(amountFinal);
+    public static void deleteSpending(Expense expense) {
+        Category category = CategoryList.categoryList.get(expense.catNum);
+        category.deleteSpending(expense.amount);
+    }
+
+    public static void editSpending(Expense originalExpense, Expense newExpense) {
+        /*
+         * Case 1: current month --> current month
+         * Case 2: other months --> current month
+         * Case 3: current month --> other months
+         * Case 4: other months --> other months, do nothing
+         */
+        if (isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(newExpense)) {
+            deleteSpending(originalExpense);
+            addSpending(newExpense);
+        } else if (!isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(newExpense)) {
+            addSpending(newExpense);
+        } else if (!isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(originalExpense)) {
+            deleteSpending(originalExpense);
+        }
     }
 }
 

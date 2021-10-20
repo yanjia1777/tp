@@ -1,6 +1,5 @@
 package seedu.duke;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -229,7 +228,6 @@ public class Parser {
     }
 
     public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
-        DataManager dataManager = new DataManager(FILE_PATH);
         ArrayList<String> validTags;
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
@@ -257,6 +255,7 @@ public class Parser {
                 checkInvalidAmount();
                 checkInvalidCatNum();
                 CategoryList.setLimit(catNum, amount);
+                Ui.setLimitMessage(catNum, amount);
                 break;
             case "spending":
                 //fallthrough
@@ -271,6 +270,7 @@ public class Parser {
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
+                assert validTags.size() >= 1 : "There should be at least one valid tag";
                 expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
                 break;
             case "edit":
@@ -289,13 +289,6 @@ public class Parser {
             System.out.println(e.getMessage());
         }
         return 0;
-    }
-
-
-    private void checkMissingNameFieldOfUserInput(String userInput) throws MintException {
-        if (!userInput.contains("n/")) {
-            throw new MintException("Please include name!");
-        }
     }
 
     private ArrayList<String> identifyValidTags(String userInput, String[] mandatoryTags) throws MintException {
@@ -350,27 +343,6 @@ public class Parser {
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
-    }
-
-    private void checkMissingFieldOfUserInput(String userInput) throws MintException {
-        String[] keyDelimiters = command.equals("add")
-                ? new String[]{"n/", "a/"}
-                : new String[]{"n/", "d/", "a/", "c/"};
-        ArrayList<String> missingDelimiters = identifyDelimiters(userInput, keyDelimiters);
-        if (missingDelimiters.size() > 0) {
-            constructErrorMessage(missingDelimiters);
-            throw new MintException(constructErrorMessage(missingDelimiters).toString());
-        }
-    }
-
-    private ArrayList<String> identifyDelimiters(String userInput, String[] keyDelimiters) {
-        ArrayList<String> missingDelimiters = new ArrayList<>();
-        for (String delimiter : keyDelimiters) {
-            if (!userInput.contains(delimiter)) {
-                missingDelimiters.add(delimiter);
-            }
-        }
-        return missingDelimiters;
     }
 
     private StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
