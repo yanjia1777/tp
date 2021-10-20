@@ -53,8 +53,8 @@ public class CategoryList {
         String currentMonth = current.getMonth().toString();
         int currentYear = current.getYear();
         double totalExpenditure = 0;
-        System.out.printf("Here are your expenditures and limit for %s %d%n"
-                , currentMonth, currentYear);
+        System.out.printf("Here are your expenditures and limit for %s %d%n",
+                currentMonth, currentYear);
         for (Category category : categoryList) {
             int catNum = category.getCatNum();
             totalExpenditure += category.getSpending();
@@ -112,8 +112,8 @@ public class CategoryList {
         category.addSpending(amountFinal);
         if (category.isNearThreshold()) {
             System.out.printf("Slow down... You've set aside $%,.2f for %s,"
-                            + " but you already spent $%,.2f\n"
-                    , category.getLimit(), category.getName(), category.getSpending());
+                            + " but you already spent $%,.2f\n",
+                    category.getLimit(), category.getName(), category.getSpending());
         }
     }
 
