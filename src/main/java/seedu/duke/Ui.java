@@ -96,6 +96,7 @@ public class Ui {
             case "y":
                 return true;
             case "n":
+                System.out.println("Ok. I have cancelled the delete process.");
                 return false;
             default:
                 System.out.println("Sorry I don't understand what that means. +"
