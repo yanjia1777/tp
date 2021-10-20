@@ -85,24 +85,23 @@ public class Category {
     }
 
     private StringBuilder constructAmountWithIndent(int leftIndent, int rightIndent, String amountString) {
-        StringBuilder nameWithIndent = new StringBuilder();
+        StringBuilder amountWithIndent = new StringBuilder();
         while (leftIndent != 0) {
-            nameWithIndent.append(" ");
+            amountWithIndent.append(" ");
             leftIndent--;
         }
 
-        nameWithIndent.append(amountString);
+        amountWithIndent.append(amountString);
 
         while (rightIndent != 0) {
-            nameWithIndent.append(" ");
+            amountWithIndent.append(" ");
             rightIndent--;
         }
-        return nameWithIndent;
+        return amountWithIndent;
     }
 
-    public String getSpendingIndented() {
-        String spendingString = "$" + spending;
-        if (limit > 1000) {
+    private String getAmountIndented(String spendingString, double spending) {
+        if (spending > 1000) {
             return constructAmountWithIndent(1, 1, spendingString).toString();
         }
         double length = spendingString.length();
@@ -111,17 +110,15 @@ public class Category {
         return constructAmountWithIndent(leftIndent, rightIndent, spendingString).toString();
     }
 
-    public String getLimitIndented() {
-        String limitString = getLimitCat();
-        if (limit > 1000) {
-            return constructAmountWithIndent(1, 1, limitString).toString();
-        }
-        double length = limitString.length();
-        int leftIndent = (int) Math.floor((9 - length) / 2);
-        int rightIndent = (int) Math.ceil((9 - length) / 2);
-        return constructAmountWithIndent(leftIndent, rightIndent, limitString).toString();
+    public String getSpendingIndented() {
+        String spendingString = "$" + spending;
+        return getAmountIndented(spendingString, spending);
     }
 
+    public String getLimitIndented() {
+        String limitString = getIndivCatLimit();
+        return getAmountIndented(limitString, limit);
+    }
 
     public String toString() {
         return getName();
