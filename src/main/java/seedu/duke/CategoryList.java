@@ -121,16 +121,16 @@ public class CategoryList {
 
     public static void editSpending(Expense originalExpense, Expense newExpense) {
         //both Expenses have current month
-        if (isSameMonth(originalExpense,newExpense) && isCurrentMonthExpense(newExpense)) {
+        if (isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(newExpense)) {
             deleteSpending(originalExpense);
             addSpending(newExpense);
         }
         //other month Expense -> current month Expense
-        else if (!isSameMonth(originalExpense,newExpense) && isCurrentMonthExpense(newExpense)) {
+        else if (!isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(newExpense)) {
             addSpending(newExpense);
         }
         //current month Expense -> other month Expense
-        else if (!isSameMonth(originalExpense,newExpense) && isCurrentMonthExpense(originalExpense)) {
+        else if (!isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(originalExpense)) {
             deleteSpending(originalExpense);
         }
         //other month Expense to other month Expense
