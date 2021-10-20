@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -125,10 +126,17 @@ public class DataManager {
         }
     }
 
+    private static boolean isCurrentMonthExpense(Expense expense) {
+        return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
+                && expense.date.getYear() == LocalDate.now().getYear();
+    }
+
     public static void loadExpense(String name, String date, String amount, String catNum, ExpenseList expenseList) {
         ArrayList<Expense> loadedExpenseList = expenseList.getExpenseList();
         Expense expense = new Expense(name, date, amount, catNum);
-        CategoryList.addSpending(catNum, amount);
+        if (isCurrentMonthExpense(expense)) {
+            CategoryList.addSpending(catNum, amount);
+        }
         loadedExpenseList.add(expense);
     }
 

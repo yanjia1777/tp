@@ -2,6 +2,8 @@ package seedu.duke;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -47,13 +49,20 @@ public class CategoryList {
     }
 
     public static void viewLimit() {
-        System.out.println("test");
+        LocalDate current = LocalDate.now();
+        String currentMonth = current.getMonth().toString();
+        int currentYear = current.getYear();
+        double totalExpenditure = 0;
+        System.out.printf("Here are your expenditures and limit for %s %d%n"
+                , currentMonth, currentYear);
         for (Category category : categoryList) {
             int catNum = category.getCatNum();
+            totalExpenditure += category.getSpending();
             System.out.println(getSpendingIndented(catNum) + "/"
                     + getLimitIndented(catNum) + " | c/"
                     + catNum + " " + category.getName());
         }
+        System.out.printf("Total expenditure for this month: $%,.2f\n", totalExpenditure);
     }
 
     public static String getCatName(int catNum) {
