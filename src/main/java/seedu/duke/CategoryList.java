@@ -94,7 +94,6 @@ public class CategoryList {
         Category category = CategoryList.categoryList.get(catNumFinal);
         category.setLimit(limit);
         dataManager.editCategoryFileLive(catNumFinal);
-        System.out.println("Set limit of $" + limit + " for " + category + "!");
     }
 
     public static void addSpending(String catNum, String amount) {
