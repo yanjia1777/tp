@@ -1,6 +1,6 @@
 package seedu.duke;
 
-import seedu.duke.storage.DataManager;
+import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
 import java.util.NoSuchElementException;
@@ -26,10 +26,10 @@ public class Duke {
         CategoryList.initialiseCategories();
         ExpenseList expenseList = new ExpenseList();
         Parser parser = new Parser();
-        DataManager dataManager = new DataManager(FILE_PATH);
+        DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        dataManager.printPreviousFileContents(expenseList);
+        dataManagerActions.printPreviousFileContents(expenseList);
         while (true) {
             try {
                 String userInput = in.nextLine();

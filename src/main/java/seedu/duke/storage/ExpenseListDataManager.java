@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ExpenseListDataManager extends DataManager {
+public class ExpenseListDataManager extends DataManagerActions {
 
     public static final String TEXT_DELIMITER = "|";
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
@@ -23,7 +23,7 @@ public class ExpenseListDataManager extends DataManager {
         super(path);
     }
 
-    public static void appendToFile(String filePath, Expense expense) throws IOException {
+    public static void appendToExpenseListTextFile(String filePath, Expense expense) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, true);
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
         fileWriter.write(expense.getCatNum() + TEXT_DELIMITER + expense.getDate()
@@ -31,18 +31,18 @@ public class ExpenseListDataManager extends DataManager {
         fileWriter.close();
     }
 
-    public static void editTextFileLive(String originalString, String newString) {
+    public static void editExpenseListTextFile(String originalString, String newString) {
         ArrayList<String> fileContent;
         try {
             fileContent = new ArrayList<>(Files.readAllLines(Path.of(FILE_PATH), StandardCharsets.UTF_8));
-            buildContent(originalString, newString, fileContent);
+            setContentToBeChanged(originalString, newString, fileContent);
             editTextFile(fileContent, FILE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void buildContent(String originalString, String newString, ArrayList<String> fileContent) {
+    private static void setContentToBeChanged(String originalString, String newString, ArrayList<String> fileContent) {
         for (int i = 0; i < fileContent.size(); i++) {
             if (fileContent.get(i).equals(originalString)) {
                 fileContent.set(i, newString);
@@ -51,7 +51,7 @@ public class ExpenseListDataManager extends DataManager {
         }
     }
 
-    public static void deleteFileLive(String originalString) {
+    public static void deleteLineInTextFile(String originalString) {
         ArrayList<String> fileContent;
         try {
             fileContent = new ArrayList<>(Files.readAllLines(Path.of(FILE_PATH), StandardCharsets.UTF_8));

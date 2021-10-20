@@ -12,17 +12,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class DataManager {
+public class DataManagerActions {
     public static final int NUMBER_OF_CATEGORIES = 8;
     public static final String REGEX_TO_REPLACE = "[\\p{Alpha}, [\\p{Punct}&&[^.]]+]";
-    public static final String CATEGORY_TAG = "c/";
     public static final String TEXT_DELIMITER = "|";
     private final String path;
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
 
 
-    public DataManager(String path) {
+    public DataManagerActions(String path) {
         this.path = path;
     }
 

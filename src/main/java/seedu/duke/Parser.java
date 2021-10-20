@@ -1,7 +1,5 @@
 package seedu.duke;
 
-import seedu.duke.storage.DataManager;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -230,7 +228,6 @@ public class Parser {
     }
 
     public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
-        DataManager dataManager = new DataManager(FILE_PATH);
         ArrayList<String> validTags;
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);

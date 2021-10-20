@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CategoryListDataManager extends DataManager {
+public class CategoryListDataManager extends DataManagerActions {
 
     public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
     public static final String CATEGORY_TAG = "c/";

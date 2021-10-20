@@ -27,7 +27,6 @@ public class ExpenseList {
     public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
-    public static final String REGEX_TO_SPLIT = " ";
     public static final String BLANK = "";
     protected ArrayList<Expense> expenseList = new ArrayList<>();
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -48,7 +47,7 @@ public class ExpenseList {
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
         try {
-            ExpenseListDataManager.appendToFile(FILE_PATH, expense);
+            ExpenseListDataManager.appendToExpenseListTextFile(FILE_PATH, expense);
         } catch (IOException e) {
             System.out.println("Error trying to update external file!");
         }
@@ -141,7 +140,7 @@ public class ExpenseList {
             expenseList.remove(expense);
             String stringToDelete = overWriteString(expense);
             CategoryList.deleteSpending(catNum, amount);
-            ExpenseListDataManager.deleteFileLive(stringToDelete);
+            ExpenseListDataManager.deleteLineInTextFile(stringToDelete);
         }
     }
 
@@ -273,7 +272,7 @@ public class ExpenseList {
                 CategoryList.editSpendingCat(originalCatNum, newCatNum, originalAmount);
             }
             CategoryList.editSpending(catNum, originalAmount, newAmount);
-            ExpenseListDataManager.editTextFileLive(stringToOverwrite, stringToUpdate);
+            ExpenseListDataManager.editExpenseListTextFile(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {
             exceptionThrown = true;
