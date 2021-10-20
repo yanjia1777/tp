@@ -70,12 +70,13 @@ How the `Storage` component works:
 4. Upon detection, missing text files would be created.
 
 The `Storage` component: 
-1. Can save both the categoryList, and the expenseList in a text file. It is also able to read the data from the respective
-text files and read them back into the corresponding objects.
-2. Has three different classes. DataManagerActions comprises the common components used by the other two classes,
-CategoryListDataManager and ExpenseListDataManager. Both of these classes inherit from the DataManagerActions class.
-3. Depends on the ExpenseList, Expense and CategoryList class as its job is to save/retreive objects that belong to
-the aforementioned classes.
+1. Can save both the `categoryList`, and the `expenseList` in a text file. It is also able to read the data from the 
+   respective text files and read them back into the corresponding objects.
+2. Has three different classes. `DataManagerActions` comprises the common components used by the other two classes,
+   `CategoryListDataManager` and `ExpenseListDataManager`. 
+   Both of these classes inherit from the `DataManagerActions` class.
+3. Depends on the `ExpenseList`, `Expense` and `CategoryList` class as its job is to save/retreive objects that belong 
+   to the aforementioned classes.
    
 ## <a name="implementation"></a>Implementation
 
