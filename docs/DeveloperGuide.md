@@ -68,11 +68,18 @@ The four main components interact with each other, as shown in the sequence diag
 
 ### <a name="target"></a>Target user profile
 
-- sampletext
+Young adults who are just started earning money and need a way to manage their savings and expenses.
 
 ### <a name="value"></a>Value proposition
 
-Sampletext
+Mint is an all-in-one desktop app for young adults who wish to better manage their expenses and set long term financial
+goals.
+
+Our application is a financial calculator and tracker that allows users to add, delete, edit and view their expenses 
+easily. In addition, users are able to track recurring expenses and set spending limits for each category to minimise 
+chances of overspending. 
+
+Our application is optimized for use via a Command Line Interface (CLI).
 
 ## <a name="stories"></a>User Stories
 
@@ -90,8 +97,7 @@ Sampletext
 
 ## <a name="nf-req"></a>Non-Functional Requirements
 
-- Should work on any [*mainstream Operating Systems*](#os) as long as Java `11` or higher has been installed on it {Give
-  non-functional requirements}
+- Should work on any [*mainstream Operating Systems*](#os) as long as Java `11` or higher has been installed on it.
 - Each command (Add, delete, edit, view) should be executed within 1 second of the user input.
 - Users can use the application throughout the week at any time during the day. In the case of unexpected downtime, all
   features will be available again within 24 hours.
@@ -105,7 +111,7 @@ Sampletext
 
 ## <a name="manual-test"></a>Instructions for manual testing
 
-### <a name="edit"></a>Editing an expense
+### :writing_hand: <a name="edit"></a>Editing an expense
 
 **Prerequisites**
 
@@ -133,9 +139,35 @@ a/8 n/Chicken Rice c/0 d/2000-09-22
 --------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
+**Test case 2: Editing some fields**
+
+**Usage:**
+
+- `edit [include all fields of expense you would like to edit]`
+- Include the tags and things you would like to change in any order `tag/[input]`
+
+:bomb: **CAUTION**
+- Do not edit the same field multiple times in one command.
+
+**Expected**
+
+- The input fields of the selected entry are updated
+
+**Example of usage and expected output:**
+
+```
+edit a/20 d/2021-12-03 n/Movie c/2
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+a/8 c/0 
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
 
 
-### <a name="delete"></a>Deleting an expense
+
+### :x: <a name="delete"></a>Deleting an expense
 
 **Prerequisites**
 
