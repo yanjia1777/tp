@@ -1,12 +1,14 @@
 package seedu.duke;
 
+import seedu.duke.storage.DataManagerActions;
+
 import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Main {
+public class Duke {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
@@ -15,7 +17,7 @@ public class Main {
      * Main entry-point for the java.duke.Duke application.
      */
     public static void main(String[] args) {
-        new Main().run();
+        new Duke().run();
     }
 
     public void run() {
@@ -24,10 +26,10 @@ public class Main {
         CategoryList.initialiseCategories();
         ExpenseList expenseList = new ExpenseList();
         Parser parser = new Parser();
-        DataManager dataManager = new DataManager(FILE_PATH);
+        DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        dataManager.printPreviousFileContents(FILE_PATH, expenseList);
+        dataManagerActions.printPreviousFileContents(expenseList);
         while (true) {
             try {
                 String userInput = in.nextLine();
