@@ -57,7 +57,16 @@ The four main components interact with each other, as shown in the sequence diag
 ### <a name="contact-list"></a>ExpenseList
 
 ### <a name="storage"></a>DataManager
-![http://www.plantuml.com/plantuml/uml/IyglKF39JyzCLl3nT_TqZdVsz_4FYWynuYf8B2h9JCuiICmhKL2o0YlnJSnBJ4yjKb98B5P05a1JwvYIKfHQNEoKdvyTa5XK3DM08OgcApGl9TyvFpStCIy5h1w9pvMQbwAGb5y10000]
+
+```plantuml
+@startuml
+box Logic LOGIC_COLOR_T2
+participant ":LogicManager" as LogicManager
+participant ":AddressBookParser" as AddressBookParser
+participant ":UndoCommand" as UndoCommand
+end box
+@enduml
+```
 
 ## <a name="implementation"></a>Implementation
 
