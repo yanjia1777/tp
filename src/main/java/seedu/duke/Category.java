@@ -3,9 +3,18 @@ package seedu.duke;
 
 public class Category {
     private final int catNum;
-    private double spending;
     private final String name;
+    private double spending;
     private double limit;
+    private double warningThreshold;
+
+    public int getCatNum() {
+        return catNum;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public double getSpending() {
         return spending;
@@ -24,15 +33,11 @@ public class Category {
         this.name = name;
     }
 
-    public int getCatNum() {
-        return catNum;
+    public double getLimit() {
+        return limit;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getLimitCat() {
+    public String getIndivCatLimit() {
         if (this.limit != 0) {
             return String.format("$%,.2f", limit);
         }
@@ -41,6 +46,19 @@ public class Category {
 
     public void setLimit(String limit) {
         this.limit = Double.parseDouble(limit);
+        setWarningThreshold(this.limit);
+    }
+
+    public boolean isNearThreshold() {
+        if (limit == 0) {
+            return false;
+        } else {
+            return spending >= warningThreshold;
+        }
+    }
+
+    public void setWarningThreshold(double limit) {
+        this.warningThreshold = 0.8 * limit;
     }
 
     private StringBuilder constructNameWithIndent(int leftIndent, int rightIndent) {

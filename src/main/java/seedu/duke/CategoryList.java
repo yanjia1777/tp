@@ -110,6 +110,11 @@ public class CategoryList {
         double amountFinal = Double.parseDouble(amount);
         Category category = CategoryList.categoryList.get(catNumFinal);
         category.addSpending(amountFinal);
+        if (category.isNearThreshold()) {
+            System.out.printf("Slow down... You've set aside $%,.2f for %s,"
+                            + " but you already spent $%,.2f\n"
+                    , category.getLimit(), category.getName(), category.getSpending());
+        }
     }
 
     public static void deleteSpending(String catNum, String amount) {
