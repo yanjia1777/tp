@@ -31,9 +31,17 @@ public class ExpenseList {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
+
+    private boolean isCurrentMonthExpense(Expense expense) {
+        return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
+                && expense.date.getYear() == LocalDate.now().getYear();
+    }
+
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
-        CategoryList.addSpending(catNum, amount);
+        if (isCurrentMonthExpense(expense)) {
+            CategoryList.addSpending(catNum, amount);
+        }
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
