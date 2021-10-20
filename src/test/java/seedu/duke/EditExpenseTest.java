@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.storage.DataManagerActions;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,8 +23,8 @@ class EditExpenseTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         ExpenseList expenseList = new ExpenseList();
-        DataManager dataManager = new DataManager(FILE_PATH);
-        dataManager.createDirectory();
+        DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
+        dataManagerActions.createDirectory();
         expenseList.addExpense("Movie", "2021-12-23", "40", "1");
         expenseList.editExpense("Movie", "2021-12-23", "40", "1");
         String actualOutput = expenseList.getExpenseList().get(0).toString();
