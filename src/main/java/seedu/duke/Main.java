@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.storage.DataManager;
+
 import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -27,7 +29,7 @@ public class Main {
         DataManager dataManager = new DataManager(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        dataManager.printPreviousFileContents(FILE_PATH, expenseList);
+        dataManager.printPreviousFileContents(expenseList);
         while (true) {
             try {
                 String userInput = in.nextLine();

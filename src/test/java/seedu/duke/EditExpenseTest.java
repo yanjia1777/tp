@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.storage.DataManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,10 +1,9 @@
 package seedu.duke;
 
+import seedu.duke.storage.CategoryListDataManager;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
 
 public class CategoryList {
     public static final int CAT_NUM_FOOD = 0;
@@ -90,10 +89,10 @@ public class CategoryList {
 
     public static void setLimit(String catNum, String limit) throws MintException {
         int catNumFinal = Integer.parseInt(catNum);
-        DataManager dataManager = new DataManager(CATEGORY_FILE_PATH);
+        CategoryListDataManager dataManager = new CategoryListDataManager(CATEGORY_FILE_PATH);
         Category category = CategoryList.categoryList.get(catNumFinal);
         category.setLimit(limit);
-        dataManager.editCategoryFileLive(catNumFinal);
+        dataManager.editCategoryTextFile(catNumFinal);
         System.out.println("Set limit of $" + limit + " for " + category + "!");
     }
 

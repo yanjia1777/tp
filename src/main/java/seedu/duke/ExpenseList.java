@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.storage.ExpenseListDataManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -38,7 +40,7 @@ public class ExpenseList {
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
         try {
-            DataManager.appendToFileLive(FILE_PATH, expense);
+            ExpenseListDataManager.appendToFile(FILE_PATH, expense);
         } catch (IOException e) {
             System.out.println("Error trying to update external file!");
         }
@@ -131,7 +133,7 @@ public class ExpenseList {
             expenseList.remove(expense);
             String stringToDelete = overWriteString(expense);
             CategoryList.deleteSpending(catNum, amount);
-            DataManager.deleteFileLive(stringToDelete);
+            ExpenseListDataManager.deleteFileLive(stringToDelete);
         }
     }
 
@@ -263,7 +265,7 @@ public class ExpenseList {
                 CategoryList.editSpendingCat(originalCatNum, newCatNum, originalAmount);
             }
             CategoryList.editSpending(catNum, originalAmount, newAmount);
-            DataManager.editFileLive(stringToOverwrite, stringToUpdate);
+            ExpenseListDataManager.editTextFileLive(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {
             exceptionThrown = true;
