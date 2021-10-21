@@ -47,7 +47,7 @@ public class CategoryList {
         }
     }
 
-    public static void viewLimit() {
+    public static void viewMonthlyLimit() {
         LocalDate current = LocalDate.now();
         String currentMonth = current.getMonth().toString();
         int currentYear = current.getYear();

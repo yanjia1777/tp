@@ -1,6 +1,5 @@
 package seedu.duke;
 
-
 public class Category {
     private final int catNum;
     private final String name;
@@ -37,7 +36,7 @@ public class Category {
         return limit;
     }
 
-    public String getIndivCatLimit() {
+    public String getLimitStr() {
         if (this.limit != 0) {
             return String.format("$%,.2f", limit);
         }
@@ -61,20 +60,24 @@ public class Category {
         this.warningThreshold = 0.8 * limit;
     }
 
-    private StringBuilder constructNameWithIndent(int leftIndent, int rightIndent) {
-        StringBuilder nameWithIndent = new StringBuilder();
+    private StringBuilder getStringBuilder(int leftIndent, int rightIndent, String item) {
+        StringBuilder itemWithIndent = new StringBuilder();
         while (leftIndent != 0) {
-            nameWithIndent.append(" ");
+            itemWithIndent.append(" ");
             leftIndent--;
         }
 
-        nameWithIndent.append(name);
+        itemWithIndent.append(item);
 
         while (rightIndent != 0) {
-            nameWithIndent.append(" ");
+            itemWithIndent.append(" ");
             rightIndent--;
         }
-        return nameWithIndent;
+        return itemWithIndent;
+    }
+
+    private StringBuilder constructNameWithIndent(int leftIndent, int rightIndent) {
+        return getStringBuilder(leftIndent, rightIndent, name);
     }
 
     public String getNameIndented() {
@@ -85,19 +88,7 @@ public class Category {
     }
 
     private StringBuilder constructAmountWithIndent(int leftIndent, int rightIndent, String amountString) {
-        StringBuilder amountWithIndent = new StringBuilder();
-        while (leftIndent != 0) {
-            amountWithIndent.append(" ");
-            leftIndent--;
-        }
-
-        amountWithIndent.append(amountString);
-
-        while (rightIndent != 0) {
-            amountWithIndent.append(" ");
-            rightIndent--;
-        }
-        return amountWithIndent;
+        return getStringBuilder(leftIndent, rightIndent, amountString);
     }
 
     private String getAmountIndented(String spendingString, double spending) {
@@ -116,7 +107,7 @@ public class Category {
     }
 
     public String getLimitIndented() {
-        String limitString = getIndivCatLimit();
+        String limitString = getLimitStr();
         return getAmountIndented(limitString, limit);
     }
 
