@@ -35,6 +35,7 @@ public class Parser {
     protected String date;
     protected String amount;
     protected String catNum;
+    protected ExpenseCategory category;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
@@ -143,6 +144,33 @@ public class Parser {
         this.catNum = CAT_NUM_OTHERS;
     }
 
+    private void initCat() {
+        this.category = ExpenseCategory.OTHERS;
+    }
+
+    private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
+        switch (catNum) {
+        case "0":
+            return ExpenseCategory.FOOD;
+        case "1":
+            return ExpenseCategory.ENTERTAINMENT;
+        case "2":
+            return ExpenseCategory.TRANSPORTATION;
+        case "3":
+            return ExpenseCategory.HOUSEHOLD;
+        case "4":
+            return ExpenseCategory.APPAREL;
+        case "5":
+            return ExpenseCategory.BEAUTY;
+        case "6":
+            return ExpenseCategory.GIFT;
+        case "7":
+            return ExpenseCategory.OTHERS;
+        default:
+            throw new MintException("Invalid category");
+        }
+    }
+
     private void setFieldsByTag(String description, String tagType) throws MintException {
         switch (tagType) {
         case "n":
@@ -156,6 +184,7 @@ public class Parser {
             break;
         case "c":
             this.catNum = description;
+            this.category = setCategoryViaCatNum(description);
             break;
         default:
             throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
@@ -187,6 +216,7 @@ public class Parser {
         if (command.equals("add")) {
             initDate();
             initCatNum();
+            initCat();
         }
 
         parseInputByTagsLoop(userInput);
@@ -266,7 +296,8 @@ public class Parser {
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
-                expenseList.addExpense(name, date, amount, catNum);
+                expenseList.addExpense(name, date, amount, category);
+                //expenseList.addExpense(name, date, amount, catNum);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);

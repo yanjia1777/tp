@@ -13,12 +13,20 @@ public class Expense {
     protected int catNum;
     protected String name;
     protected LocalDate date;
+    protected ExpenseCategory category;
     protected double amount;
 
     public Expense() {
         catNum = CAT_NUM_OTHERS; //others
         date = LocalDate.of(2021, 1, 1);
         amount = 0;
+    }
+
+    public Expense(String name, LocalDate date, Double amount, ExpenseCategory category) {
+        this.name = name;
+        this.date = date;
+        this.amount = amount;
+        this.category = category;
     }
 
     public Expense(String name, String date, String amount, String catNum) {
@@ -28,12 +36,21 @@ public class Expense {
         this.amount = Double.parseDouble(amount);
     }
 
+    public Expense(String name, String date, String amount, ExpenseCategory category) {
+        this.name = name;
+        this.date = LocalDate.parse(date, dateFormatter);
+        this.amount = Double.parseDouble(amount);
+        this.category = category;
+    }
+
     public Expense(String name, String date, String amount) {
         this.catNum = CAT_NUM_OTHERS;
         this.name = name;
         this.date = LocalDate.parse(date, dateFormatter);
         this.amount = Double.parseDouble(amount);
     }
+
+
 
     public String getName() {
         return name;
@@ -63,12 +80,9 @@ public class Expense {
         return amount;
     }
 
-    public String getAmountString() {
-        return Double.toString(amount);
-    }
 
-    public String getCat() {
-        return CategoryList.getCatName(this.catNum);
+    public ExpenseCategory getCat() {
+        return category;
     }
 
     public String getCatIndent() {
