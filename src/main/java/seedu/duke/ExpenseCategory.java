@@ -9,4 +9,4 @@ public enum ExpenseCategory {
     BEAUTY,
     GIFT,
     OTHERS
-};
+}

@@ -37,7 +37,12 @@ public class ExpenseList {
                 && expense.date.getYear() == LocalDate.now().getYear();
     }
 
-    //
+    // ideally, prepare expense in the command class
+    public void addExpense(Expense expense) {
+        expenseList.add(expense);
+    }
+
+    // intermediate
     public void addExpense(String name, String date, String amount, ExpenseCategory category) {
         Expense expense = new Expense(name, date, amount, category);
         expenseList.add(expense);
