@@ -21,11 +21,6 @@ public class ExpenseList {
     public static final String AMOUNT_SEPARATOR = "a/";
     public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
     public static final int LENGTH_OF_SEPARATOR = 2;
-    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
-    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String BLANK = "";
     protected ArrayList<Expense> expenseList = new ArrayList<>();
@@ -33,8 +28,8 @@ public class ExpenseList {
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
     private boolean isCurrentMonthExpense(Expense expense) {
-        return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
-                && expense.date.getYear() == LocalDate.now().getYear();
+        return expense.getDate().getMonthValue() == LocalDate.now().getMonthValue()
+                && expense.getDate().getYear() == LocalDate.now().getYear();
     }
 
     public void addExpense(String name, String date, String amount, String catNum) {
@@ -159,7 +154,7 @@ public class ExpenseList {
                 sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
                 sort(outputArray, sortType);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(ERROR_INVALID_SORTTYPE);
+                System.out.println(MintException.ERROR_INVALID_SORTTYPE);
                 return;
             }
         }
@@ -206,7 +201,7 @@ public class ExpenseList {
                 }
                 System.out.println();
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                System.out.println(ERROR_INVALID_SORTDATE);
+                System.out.println(MintException.ERROR_INVALID_SORTDATE);
                 return;
             }
         }
@@ -218,6 +213,15 @@ public class ExpenseList {
         for (Expense expense : outputArray) {
             System.out.println(expense.viewToString());
         }
+    }
+
+    public double calculateTotalExpense(ArrayList<Expense> expenseList,
+                                        ArrayList<RecurringExpense> recurringExpenseList) {
+        double total = 0;
+        for (Expense expense : expenseList) {
+            total += expense.getAmount();
+        }
+        return total;
     }
 
     public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
@@ -270,10 +274,10 @@ public class ExpenseList {
 
         } catch (NumberFormatException e) {
             exceptionThrown = true;
-            System.out.println(ERROR_INVALID_NUMBER);
+            System.out.println(MintException.ERROR_INVALID_NUMBER);
         } catch (DateTimeParseException e) {
             exceptionThrown = true;
-            System.out.println(ERROR_INVALID_DATE);
+            System.out.println(MintException.ERROR_INVALID_DATE);
         }
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }
@@ -354,7 +358,7 @@ public class ExpenseList {
         if (!newDescription.trim().equalsIgnoreCase(BLANK)) {
             description = newDescription.trim();
         } else {
-            throw new MintException(ERROR_INVALID_DESCRIPTION);
+            throw new MintException(MintException.ERROR_INVALID_DESCRIPTION);
         }
         return description;
     }
