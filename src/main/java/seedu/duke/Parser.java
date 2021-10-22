@@ -251,7 +251,7 @@ public class Parser {
                 parseInputByArguments(userInput);
                 expenseList.viewExpense(argumentsArray);
                 break;
-            case "set":
+            case "limit":
                 parseInputByArguments(userInput);
                 parserSetLimit(argumentsArray);
                 checkInvalidAmount();
@@ -261,8 +261,8 @@ public class Parser {
                 break;
             case "spending":
                 //fallthrough
-            case "limit":
-                CategoryList.viewLimit();
+            case "breakdown":
+                CategoryList.viewMonthlyLimit();
                 break;
             case "add":
                 parseInputByTags(userInput);
