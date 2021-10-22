@@ -87,19 +87,13 @@ The `Storage` component:
 ## <a name="scope"></a>Product scope
 
 ### <a name="target"></a>Target user profile
-
-Young adults who are just started earning money and need a way to manage their savings and expenses.
+- wants to find things fast
+- can type fast
+- is reasonably comfortable using CLI apps
 
 ### <a name="value"></a>Value proposition
 
-Mint is an all-in-one desktop app for young adults who wish to better manage their expenses and set long term financial
-goals.
-
-Our application is a financial calculator and tracker that allows users to add, delete, edit and view their expenses 
-easily. In addition, users are able to track recurring expenses and set spending limits for each category to minimise 
-chances of overspending. 
-
-Our application is optimized for use via a Command Line Interface (CLI).
+A simple way to keep track of your expenses
 
 ## <a name="stories"></a>User Stories
 
@@ -113,7 +107,9 @@ Our application is optimized for use via a Command Line Interface (CLI).
 |v1.0|user|view past expenses|keep track of my spending|
 |v2.0|user|set spending limit|cut down on unnecessary spending|
 |v2.0|user|sort spending by amount|see which expenditure is taking up the budget
-|v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
+|v2.0|user|find a particular Expense by name|locate an Expense without having to go through the entire list|
+
+{More to be added}
 
 ## <a name="nf-req"></a>Non-Functional Requirements
 

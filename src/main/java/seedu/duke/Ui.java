@@ -30,19 +30,26 @@ public class Ui {
     }
 
     public static void help() {
-        System.out.println("Available tags: n/name d/date a/amount");
-        System.out.println("Order of tags does not matter.");
-        System.out.println("List of commands available. "
-                + "Square brackets \"[ ]\" identifies an optional argument.");
-        System.out.println("- view");
-        System.out.println(INDENT + "View expenses");
-        System.out.println("- cat");
-        System.out.println(INDENT + " View categories and number");
-        System.out.println("- add n/NAME a/amount [d/YYYY-MM-DD] [c/catNum]");
-        System.out.println(INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1");
-        System.out.println("- delete n/{keyword} [a/amount] [d/YYYY-MM-DD] [c/catNum]");
-        System.out.println(INDENT + "Delete expense using keyword search. Example: delete n/chicken");
-        System.out.println("- exit");
+        System.out.println("Available tags: n/name d/date a/amount c/category_number\n"
+                + "Order of tags does not matter.\n"
+                + "List of commands available.\n"
+                + "Square brackets \"[ ]\" identifies an optional argument.\n"
+                + " - view\n"
+                + INDENT + "View expenses\n"
+                + "- cat\n"
+                + INDENT + " View categories and category number\n"
+                + "- add n/NAME a/amount [d/YYYY-MM-DD] [c/category_number]\n"
+                + INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1\n"
+                + "- delete [n/{keyword}] [a/amount] [d/YYYY-MM-DD] [c/category_number]\n"
+                + INDENT + "Delete expense using keyword search. Example: delete n/chicken\n"
+                + "- edit [n/{keyword}] [a/amount] [d/YYYY-MM-DD] [c/category number]\n"
+                + INDENT + "Edit expense using keyword search. Example: edit n/chicken\n"
+                + "- limit c/category number a/amount\n"
+                + INDENT + "Set spending limit for individual category. Example: limit c/0 100\n"
+                + "- breakdown\n"
+                + INDENT + "View breakdown on current month's expenses\n"
+                + "- exit\n"
+        );
     }
 
     public static void viewGivenList(ArrayList<Expense> list) {
