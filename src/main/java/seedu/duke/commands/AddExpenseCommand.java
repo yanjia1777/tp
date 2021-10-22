@@ -12,16 +12,16 @@ import java.util.logging.Level;
 public class AddExpenseCommand {
 
     public void addExpense(Expense expense, ArrayList<Expense> expenseList) {
-//        if (isCurrentMonthExpense(expense)) {
-//            CategoryList.addSpending(expense);
-//        }
-//        logger.log(Level.INFO, "User added expense: " + expense);
-//        System.out.println("I have added: " + expense);
+        //        if (isCurrentMonthExpense(expense)) {
+        //            CategoryList.addSpending(expense);
+        //        }
+        //        logger.log(Level.INFO, "User added expense: " + expense);
+        //        System.out.println("I have added: " + expense);
         expenseList.add(expense);
-//        try {
-//            ExpenseListDataManager.appendToExpenseListTextFile(FILE_PATH, expense);
-//        } catch (IOException e) {
-//            System.out.println("Error trying to update external file!");
-//        }
+        //        try {
+        //            ExpenseListDataManager.appendToExpenseListTextFile(FILE_PATH, expense);
+        //        } catch (IOException e) {
+        //            System.out.println("Error trying to update external file!");
+        //        }
     }
 }

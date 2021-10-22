@@ -310,6 +310,7 @@ public class ExpenseList {
         }
         amendExpense(indexToBeChanged, splitChoice, expense);
     }
+
     // MOVED
     private String remainingString(ArrayList<String> splitChoice, String choice, int currentIndex, int nextIndex) {
         String description;
@@ -318,10 +319,12 @@ public class ExpenseList {
         choice = choice.substring(nextIndex);
         return choice;
     }
+
     // MOVED
     private void extractFieldsToAmend(ArrayList<String> splitChoice, String description) {
         splitChoice.add(description);
     }
+
     // MOVED
     private String scanFieldsToUpdate() {
         String choice;
@@ -330,11 +333,13 @@ public class ExpenseList {
         choice = scan.nextLine();
         return choice;
     }
+
     // MOVED
     private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
         String newExpense = expenseList.get(indexToBeChanged).toString();
         return !originalExpense.equals(newExpense);
     }
+
     // MOVED
     private void amendExpense(int index, ArrayList<String> choice, Expense expense) throws MintException {
         String name = expense.getName();

@@ -29,7 +29,7 @@ public class ViewExpenseCommand {
         Month month;
         String year = null;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
-//        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
+        //        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
           ArrayList<Expense> outputArray = new ArrayList<Expense>((Collection<? extends Expense>) expenseList);
 
 

@@ -40,10 +40,10 @@ public class EditExpenseCommand {
     }
 
 
-//    public void editExpense(Expense expense) throws MintException {
-//        editExpense(expense.getName(), expense.getDate().toString(),
-//                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
-//    }
+    //    public void editExpense(Expense expense) throws MintException {
+    //        editExpense(expense.getName(), expense.getDate().toString(),
+    //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
+    //    }
 
     public void editExpense(Expense expense, ArrayList<Expense> expenseList) throws MintException {
         String choice;
@@ -62,7 +62,7 @@ public class EditExpenseCommand {
                 indexToBeChanged = expenseList.indexOf(originalExpense);
                 choice = scanFieldsToUpdate();
             } else {
-//                logger.log(Level.INFO, "User entered invalid entry");
+            //                logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
             editSpecifiedEntry(choice, indexToBeChanged, originalExpense, expenseList);
