@@ -10,10 +10,10 @@ public class Expense {
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
     public static final int CAT_NUM_OTHERS = 7;
-    protected int catNum;
-    protected String name;
-    protected LocalDate date;
-    protected double amount;
+    private int catNum;
+    private String name;
+    private LocalDate date;
+    private double amount;
 
     public Expense() {
         catNum = CAT_NUM_OTHERS; //others
