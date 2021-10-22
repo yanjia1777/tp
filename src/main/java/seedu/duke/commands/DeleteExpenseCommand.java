@@ -32,9 +32,9 @@ public class DeleteExpenseCommand {
     //    }
 
     public void deleteExpense(Expense expense, ArrayList<Expense> expenseList) throws MintException {
-        //        Expense expense = new Expense(name, date, amount, catNum);
+            //        Expense expense = new Expense(name, date, amount, catNum);
         if (expenseList.contains(expense)) {
-        //            logger.log(Level.INFO, "User deleted expense: " + expense);
+            //            logger.log(Level.INFO, "User deleted expense: " + expense);
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
             String stringToDelete = ExpenseList.overWriteString(expense);

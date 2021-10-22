@@ -1,8 +1,13 @@
 package seedu.duke.commands;
 
-import seedu.duke.*;
-import seedu.duke.storage.ExpenseListDataManager;
 
+import seedu.duke.CategoryList;
+import seedu.duke.Expense;
+import seedu.duke.ExpenseList;
+import seedu.duke.MintException;
+import seedu.duke.storage.ExpenseListDataManager;
+import seedu.duke.Parser;
+import seedu.duke.Ui;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -62,7 +67,7 @@ public class EditExpenseCommand {
                 indexToBeChanged = expenseList.indexOf(originalExpense);
                 choice = scanFieldsToUpdate();
             } else {
-            //                logger.log(Level.INFO, "User entered invalid entry");
+                //                logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
             editSpecifiedEntry(choice, indexToBeChanged, originalExpense, expenseList);
