@@ -1,6 +1,11 @@
 package seedu.duke;
 
 public class MintException extends Exception {
+    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
+    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     protected static final String ERROR_NO_DELIMETER = "Invalid command entered!";
     protected static final String ERROR_NO_NAME = "Please add the description of the item!";
     protected static final String ERROR_EXPENSE_NOT_IN_LIST = "Hmm.. That item is not in the list.";

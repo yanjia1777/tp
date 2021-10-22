@@ -20,6 +20,7 @@ public class Parser {
     public static final String STRING_DATE = "Date of purchase\n";
     public static final String STRING_AMOUNT = "Amount of purchase\n";
     public static final String STRING_CATNUM = "Category number of item\n";
+    public static final String STRING_INTERVAL = "Interval of item\n";
     public static final String STRING_EMPTY = "";
     public static final String SEPARATOR = ". ";
     protected static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
@@ -35,6 +36,8 @@ public class Parser {
     protected String date;
     protected String amount;
     protected String catNum;
+    protected String interval;
+    protected boolean isRecurring = false;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
@@ -86,6 +89,7 @@ public class Parser {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
+
     private void checkValidityOfFields() throws MintException {
         try {
             checkEmptyName();
@@ -135,6 +139,16 @@ public class Parser {
         }
     }
 
+    private void checkInvalidInterval() throws MintException {
+        try {
+            RecurringExpense expense = new RecurringExpense();
+            expense.setInterval(interval);
+        } catch (MintException e) {
+            logger.log(Level.INFO, "User entered invalid interval");
+            throw new MintException(e.getMessage());
+        }
+    }
+
     private void initDate() {
         this.date = LocalDate.now().toString();
     }
@@ -156,6 +170,13 @@ public class Parser {
             break;
         case "c":
             this.catNum = description;
+            break;
+        case "i":
+            if (isRecurring) {
+                this.interval = description;
+            } else {
+                throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
+            }
             break;
         default:
             throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
@@ -184,7 +205,7 @@ public class Parser {
 
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
-        if (command.equals("add")) {
+        if (command.equals("add") || command.equals("addR")) {
             initDate();
             initCatNum();
         }
@@ -227,7 +248,7 @@ public class Parser {
         argumentsArray = userInput.split(" ");
     }
 
-    public int executeCommand(String userInput, ExpenseList expenseList) throws MintException {
+    public int executeCommand(String userInput, ExpenseList expenseList, RecurringExpenseList recurringExpenseList) throws MintException {
         ArrayList<String> validTags;
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
@@ -248,6 +269,7 @@ public class Parser {
             case "view":
                 parseInputByArguments(userInput);
                 expenseList.viewExpense(argumentsArray);
+                recurringExpenseList.viewRecurringExpense(argumentsArray);
                 break;
             case "limit":
                 parseInputByArguments(userInput);
@@ -275,7 +297,27 @@ public class Parser {
                 break;
             case "edit":
                 validTags = parseInputByTags(userInput);
+                assert validTags.size() >= 1 : "There should be at least one valid tag";
                 expenseList.editExpenseByKeywords(validTags, name, date, amount, catNum);
+                break;
+            case "addR":
+                isRecurring = true;
+                parseInputByTags(userInput);
+                assert name != null : "Name should not be empty";
+                assert amount != null : "Amount should not be empty";
+                recurringExpenseList.addRecurringExpense(name, date, amount, catNum, interval);
+                break;
+            case "deleteR":
+                isRecurring = true;
+                validTags = parseInputByTags(userInput);
+                assert validTags.size() >= 1 : "There should be at least one valid tag";
+                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, name, date, amount, catNum, interval);
+                break;
+            case "editR":
+                isRecurring = true;
+                validTags = parseInputByTags(userInput);
+                assert validTags.size() >= 1 : "There should be at least one valid tag";
+                recurringExpenseList.editRecurringExpenseByKeywords(validTags, name, date, amount, catNum, interval);
                 break;
             case "bye":
                 //fallthrough
@@ -283,18 +325,22 @@ public class Parser {
                 Ui.shutdown();
                 return -1;
             default:
+                isRecurring = false;
                 throw new MintException(MintException.ERROR_INVALID_COMMAND);
             }
         } catch (MintException e) {
+            isRecurring = false;
             System.out.println(e.getMessage());
         }
+        isRecurring = false;
         return 0;
     }
 
     private ArrayList<String> identifyValidTags(String userInput, String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = {"n/", "d/", "a/", "c/"};
+        String[] tags = isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/"}
+                : new String[]{"n/", "d/", "a/", "c/"};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
         for (String tag : tags) {
@@ -312,6 +358,9 @@ public class Parser {
                         break;
                     case "c/":
                         checkInvalidCatNum();
+                        break;
+                    case "i/":
+                        checkInvalidInterval();
                         break;
                     default:
                         throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
@@ -336,9 +385,17 @@ public class Parser {
 
     private ArrayList<String> checkExistenceAndValidityOfTags(String userInput) throws MintException {
         try {
-            String[] mandatoryTags = command.equals("add")
-                    ? new String[]{"n/", "a/"}
-                    : new String[]{};
+            String[] mandatoryTags;
+            switch (command) {
+            case "add":
+                mandatoryTags = new String[]{"n/", "a/"};
+                break;
+            case "addR":
+                mandatoryTags = new String[]{"n/", "a/", "i/"};
+                break;
+            default:
+                mandatoryTags = new String[]{};
+            }
             return identifyValidTags(userInput, mandatoryTags);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
@@ -365,6 +422,10 @@ public class Parser {
                 break;
             case "c/":
                 missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_CATNUM);
+                index++;
+                break;
+            case "i/":
+                missingFieldsErrorMessage.append(index).append(SEPARATOR).append(STRING_INTERVAL);
                 index++;
                 break;
             default:
