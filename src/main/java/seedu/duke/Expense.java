@@ -22,6 +22,7 @@ public class Expense {
         amount = 0;
     }
 
+    //ideally
     public Expense(String name, LocalDate date, Double amount, ExpenseCategory category) {
         this.name = name;
         this.date = date;
