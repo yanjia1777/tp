@@ -33,33 +33,10 @@ public class ExpenseList {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
-    private boolean isCurrentMonthExpense(Expense expense) {
-        return expense.getDate().getMonthValue() == LocalDate.now().getMonthValue()
-                && expense.getDate().getYear() == LocalDate.now().getYear();
-    }
-
-    public void addExpense(Expense expense) {
-        addExpense(expense.getName(), expense.getDate().toString(),
-                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
-    }
-
-    // ideally, prepare expense in the command class
-    public void addExpense(Expense expense) {
-        expenseList.add(expense);
-    }
-
-    // intermediate
-    public void addExpense(String name, String date, String amount, ExpenseCategory category) {
-        Expense expense = new Expense(name, date, amount, category);
-        expenseList.add(expense);
-    }
-
     // MOVED
-    public void addExpense(String name, String date, String amount, String catNum) {
-        Expense expense = new Expense(name, date, amount, catNum);
-        if (isCurrentMonthExpense(expense)) {
-            CategoryList.addSpending(expense);
-        }
+    public void addExpense(String name, String date, String amount, ExpenseCategory category) {
+        //typecasting to be done in parser, command
+        Expense expense = new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), category);
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         expenseList.add(expense);
@@ -71,7 +48,7 @@ public class ExpenseList {
     }
 
     public ArrayList<Expense> filterExpenseByKeywords(ArrayList<String> tags, String name,
-                                                      String date, String amount, String catNum) throws MintException {
+                                                      String date, String amount, ExpenseCategory category) throws MintException {
         ArrayList<Expense> filteredList = new ArrayList<>(expenseList);
         for (String tag : tags) {
             switch (tag) {
@@ -85,7 +62,7 @@ public class ExpenseList {
                 filteredList = Filter.filterExpenseByAmount(amount, filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterExpenseByCatNum(catNum, filteredList);
+                filteredList = Filter.filterExpenseByCategory(category, filteredList);
                 break;
             default:
                 throw new MintException("Unable to locate tag");
@@ -96,9 +73,9 @@ public class ExpenseList {
 
     // MOVED
     public void deleteExpenseByKeywords(ArrayList<String> tags, String name,
-                                 String date, String amount, String catNum) throws MintException {
+                                 String date, String amount, ExpenseCategory category) throws MintException {
         try {
-            Expense expense = chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
+            Expense expense = chooseExpenseByKeywords(tags, true, name, date, amount, category);
             if (expense != null) {
                 deleteExpense(expense);
             }
@@ -109,9 +86,9 @@ public class ExpenseList {
 
     // MOVED
     public void editExpenseByKeywords(ArrayList<String> tags, String name,
-                               String date, String amount, String catNum) throws MintException {
+                               String date, String amount, ExpenseCategory category) throws MintException {
         try {
-            Expense expense = chooseExpenseByKeywords(tags, false, name, date, amount, catNum);
+            Expense expense = chooseExpenseByKeywords(tags, false, name, date, amount, category);
             if (expense != null) {
                 editExpense(expense);
             }
@@ -122,8 +99,8 @@ public class ExpenseList {
 
     // Common method
     public Expense chooseExpenseByKeywords(ArrayList<String> tags, boolean isDelete, String name,
-                                           String date, String amount, String catNum) throws MintException {
-        ArrayList<Expense> filteredList = filterExpenseByKeywords(tags, name, date, amount, catNum);
+                                           String date, String amount, ExpenseCategory category) throws MintException {
+        ArrayList<Expense> filteredList = filterExpenseByKeywords(tags, name, date, amount, category);
         Expense expense = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
@@ -150,20 +127,17 @@ public class ExpenseList {
     // MOVED
     public void deleteExpense(Expense expense) throws MintException {
         deleteExpense(expense.getName(), expense.getDate().toString(),
-                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
+                Double.toString(expense.getAmount()), expense.category);
     }
 
     // MOVED
-    public void deleteExpense(String name, String date, String amount, String catNum) throws MintException {
-        Expense expense = new Expense(name, date, amount, catNum);
+    public void deleteExpense(String name, String date, String amount, ExpenseCategory category)  {
+        Expense expense = new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), category);
         if (expenseList.contains(expense)) {
             logger.log(Level.INFO, "User deleted expense: " + expense);
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
             String stringToDelete = overWriteString(expense);
-            if (isCurrentMonthExpense(expense)) {
-                CategoryList.deleteSpending(expense);
-            }
             ExpenseListDataManager.deleteLineInTextFile(stringToDelete);
         }
     }
@@ -249,7 +223,7 @@ public class ExpenseList {
         }
 
         for (Expense expense : outputArray) {
-            System.out.println(expense.viewToString());
+            System.out.println(expense);
         }
     }
 
@@ -285,17 +259,17 @@ public class ExpenseList {
     // MOVED
     public void editExpense(Expense expense) throws MintException {
         editExpense(expense.getName(), expense.getDate().toString(),
-                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
+               Double.toString(expense.getAmount()), expense.getCategory());
     }
 
     // MOVED
-    public void editExpense(String name, String date, String amount, String catNum) throws MintException {
+    public void editExpense(String name, String date, String amount, ExpenseCategory category) throws MintException {
         String choice;
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         try {
-            Expense originalExpense = new Expense(name, date, amount, catNum);
+            Expense originalExpense = new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), category);
             final String originalExpenseStr = originalExpense.toString();
             final String stringToOverwrite = overWriteString(originalExpense);
             if (expenseList.contains(originalExpense)) {
@@ -309,7 +283,6 @@ public class ExpenseList {
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpenseStr);
             String stringToUpdate = overWriteString(expenseList.get(indexToBeChanged));
             final Expense newExpense = expenseList.get(indexToBeChanged);
-            CategoryList.editSpending(originalExpense, newExpense);
             ExpenseListDataManager.editExpenseListTextFile(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {
@@ -324,7 +297,7 @@ public class ExpenseList {
 
     // common method
     public static String overWriteString(Expense expense) {
-        return expense.getCatNum() + "|" + expense.getDate() + "|" + expense.getName()
+        return expense.getCategory() + "|" + expense.getDate() + "|" + expense.getName()
                 + "|" + expense.getAmount();
     }
 
@@ -379,7 +352,7 @@ public class ExpenseList {
         String name = expense.getName();
         String date = expense.getDate().toString();
         String amount = Double.toString(expense.getAmount());
-        String catNum = Integer.toString(expense.getCatNum());
+        ExpenseCategory category = expense.getCategory();
         for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
@@ -392,11 +365,10 @@ public class ExpenseList {
                 amount = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
-                catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                CategoryList.checkValidCatNum(catNum);
+                category = ExpenseCategory.valueOf(word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim());
             }
         }
-        expenseList.set(index, new Expense(name, date, amount, catNum));
+        expenseList.set(index, new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), category));
     }
 
     // MOVED

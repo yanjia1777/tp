@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.parser.ValidityChecker;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -17,7 +19,7 @@ public class Filter {
     public static ArrayList<Expense> filterExpenseByDate(String date, ArrayList<Expense> listToFilter) {
         ArrayList<Expense> filteredArrayList = listToFilter
                 .stream()
-                .filter(e -> e.getDate().equals(LocalDate.parse(date, Expense.dateFormatter)))
+                .filter(e -> e.getDate().equals(LocalDate.parse(date, ValidityChecker.dateFormatter)))
                 .collect(Collectors.toCollection(ArrayList::new));
         return filteredArrayList;
     }
@@ -30,10 +32,10 @@ public class Filter {
         return filteredArrayList;
     }
 
-    public static ArrayList<Expense> filterExpenseByCatNum(String catNum, ArrayList<Expense> listToFilter) {
+    public static ArrayList<Expense> filterExpenseByCategory(ExpenseCategory category, ArrayList<Expense> listToFilter) {
         ArrayList<Expense> filteredArrayList = listToFilter
                 .stream()
-                .filter(e -> e.getCatNum() == Integer.parseInt(catNum))
+                .filter(e -> e.getCategory() == category)
                 .collect(Collectors.toCollection(ArrayList::new));
         return filteredArrayList;
     }
