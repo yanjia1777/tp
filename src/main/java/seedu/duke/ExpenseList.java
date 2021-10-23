@@ -319,7 +319,8 @@ public class ExpenseList {
     }
 
     // MOVED
-    //    private void editSpecifiedEntry(String userInput, int indexToBeChanged, Expense expense) throws MintException {
+    //    private void editSpecifiedEntry(String userInput, int indexToBeChanged, Expense expense)
+    //    throws MintException {
     //        Parser parser = new Parser();
     //        ArrayList<String> splitChoice = new ArrayList<>();
     //        String choice = " " + userInput;
@@ -336,7 +337,8 @@ public class ExpenseList {
     //    }
     //
     //    // MOVED
-    //    private String remainingString(ArrayList<String> splitChoice, String choice, int currentIndex, int nextIndex) {
+    //    private String remainingString(ArrayList<String> splitChoice, String choice, int currentIndex,
+    //    int nextIndex) {
     //        String description;
     //        description = choice.substring(currentIndex, nextIndex).trim();
     //        extractFieldsToAmend(splitChoice, description);

@@ -20,7 +20,8 @@ public class ViewExpenseCommand {
     protected static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
 
     public void viewExpense(String[] argumentArrayInput,
-                            RecurringExpenseList recurringExpenseList, ArrayList<Expense> expenseList) throws MintException {
+                            RecurringExpenseList recurringExpenseList,
+                            ArrayList<Expense> expenseList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
