@@ -7,8 +7,8 @@ public class RecurringExpense extends Expense {
     private Interval interval;
     private LocalDate endDate;
 
-    public RecurringExpense(String name, LocalDate date, Double amount, ExpenseCategory category
-            , Interval interval,LocalDate endDate) {
+    public RecurringExpense(String name, LocalDate date, Double amount, ExpenseCategory category,
+                            Interval interval, LocalDate endDate) {
         super(name, date, amount, category);
         this.interval = interval;
         this.endDate = endDate;
@@ -52,7 +52,7 @@ public class RecurringExpense extends Expense {
         }
 
         RecurringExpense recurringExpense = (RecurringExpense) object;
-        boolean isNameEqual = Objects.equals(getName(),recurringExpense.getName());
+        boolean isNameEqual = Objects.equals(getName(), recurringExpense.getName());
         boolean isDateEqual = Objects.equals(getDate(), recurringExpense.getDate());
         boolean isAmountEqual = Objects.equals(getAmount(), recurringExpense.getAmount());
         boolean isCategoryEqual = Objects.equals(getCategory(), recurringExpense.getCategory());

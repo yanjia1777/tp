@@ -30,7 +30,8 @@ public class RecurringExpenseList {
 
     public void addRecurringExpense(String name, String date, String amount,
                                     ExpenseCategory category, Interval interval, String endDate) throws MintException {
-        RecurringExpense expense = new RecurringExpense(name, LocalDate.parse(date), Double.parseDouble(amount), category, interval, LocalDate.parse(endDate));
+        RecurringExpense expense = new RecurringExpense(name, LocalDate.parse(date),
+                Double.parseDouble(amount), category, interval, LocalDate.parse(endDate));
         logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + expense);
         recurringExpenseList.add(expense);
@@ -67,7 +68,8 @@ public class RecurringExpenseList {
     }
 
     public void deleteRecurringExpenseByKeywords(ArrayList<String> tags, String name,
-                                 String date, String amount, ExpenseCategory category, Interval interval) throws MintException {
+                                                 String date, String amount,
+                                                 ExpenseCategory category, Interval interval) throws MintException {
         try {
             RecurringExpense expense = chooseRecurringExpenseByKeywords(tags, true, name,
                     date, amount, category, interval);
@@ -80,7 +82,8 @@ public class RecurringExpenseList {
     }
 
     public void editRecurringExpenseByKeywords(ArrayList<String> tags, String name, String date,
-                                               String amount, ExpenseCategory category, Interval interval) throws MintException {
+                                               String amount, ExpenseCategory category,
+                                               Interval interval) throws MintException {
         try {
             RecurringExpense expense = (RecurringExpense) chooseRecurringExpenseByKeywords(tags, true, name,
                     date, amount, category, interval);
@@ -345,7 +348,7 @@ public class RecurringExpenseList {
     }
 
     public static String overWriteString(Expense expense) {
-        return expense.getCategory()+ "|" + expense.getDate() + "|" + expense.getName()
+        return expense.getCategory() + "|" + expense.getDate() + "|" + expense.getName()
                 + "|" + expense.getAmount();
     }
 
