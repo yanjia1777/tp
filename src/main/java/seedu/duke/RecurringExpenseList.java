@@ -181,6 +181,8 @@ public class RecurringExpenseList {
                     expenseList.add(newExpense);
                 }
                 break;
+            default:
+                break;
             }
         }
     }
