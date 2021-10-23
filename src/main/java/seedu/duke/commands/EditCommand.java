@@ -41,7 +41,7 @@ public class EditCommand extends Command {
     }
 
 
-    //    public void editExpense(Expense expense) throws MintException {
+    //          public void editExpense(Expense expense) throws MintException {
     //        editExpense(expense.getName(), expense.getDate().toString(),
     //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     //    }

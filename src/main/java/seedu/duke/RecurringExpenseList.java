@@ -390,7 +390,8 @@ public class RecurringExpenseList {
                 amount = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
-                category = ExpenseCategory.valueOf(word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim());
+                category = ExpenseCategory.valueOf(word.substring(word.indexOf(CATEGORY_SEPARATOR)
+                        + LENGTH_OF_SEPARATOR).trim());
             }
             if (word.contains(INTERVAL_SEPARATOR)) {
                 amount = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();

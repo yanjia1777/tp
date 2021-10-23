@@ -130,10 +130,10 @@ public class Ui {
         System.out.println(MISSING_FILE_MESSAGE);
     }
 
-//    public static void setLimitMessage(String catNumString, String amount) {
-//        int catNumInt = Integer.parseInt(catNumString);
-//        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
-//    }
+    //    public static void setLimitMessage(String catNumString, String amount) {
+    //        int catNumInt = Integer.parseInt(catNumString);
+    //        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
+    //    }
 
     public static StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
         int index = 1;
