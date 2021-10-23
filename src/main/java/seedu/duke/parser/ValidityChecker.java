@@ -1,6 +1,8 @@
 package seedu.duke.parser;
 
-import seedu.duke.*;
+import seedu.duke.Interval;
+import seedu.duke.MintException;
+import seedu.duke.Ui;
 
 import java.io.File;
 import java.time.LocalDate;
