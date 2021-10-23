@@ -23,29 +23,23 @@ public class EntryList {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
-    private boolean isCurrentMonthEntry(Entry entry) {
-        return entry.getDate().getMonthValue() == LocalDate.now().getMonthValue()
-                && entry.getDate().getYear() == LocalDate.now().getYear();
-    }
 
-    public static ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, String name,
-                                                      String date, String amount, String catNum,
+    public static ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry entry,
                                                       ArrayList<Entry> entryList) throws MintException {
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
             switch (tag) {
             case "n/":
-                filteredList = Filter.filterEntryByName(name, filteredList);
+                filteredList = Filter.filterEntryByName(entry.getName(), filteredList);
                 break;
             case "d/":
-                filteredList = Filter.filterEntryByDate(date, filteredList);
+                filteredList = Filter.filterEntryByDate(entry.getDate(), filteredList);
                 break;
             case "a/":
-                filteredList = Filter.filterEntryByAmount(amount, filteredList);
+                filteredList = Filter.filterEntryByAmount(entry.getAmount(), filteredList);
                 break;
             case "c/":
-                int index = Integer.parseInt(catNum);
-                filteredList = Filter.filterEntryByCategory(ExpenseCategory.values()[index], filteredList);
+                filteredList = Filter.filterEntryByCategory(entry.getCategory(), filteredList);
 
                 break;
             default:
@@ -56,10 +50,9 @@ public class EntryList {
     }
 
     // Common method
-    public static Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, String name,
-                                           String date, String amount, String catNum,
+    public static Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query,
                                            ArrayList<Entry> entryList) throws MintException {
-        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, name, date, amount, catNum, entryList);
+        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query, entryList);
         Entry entry = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);

@@ -78,7 +78,7 @@ public class EntryListDataManager extends DataManagerActions {
         }
     }
 
-    public static void loadEntryListContents(ArrayList<Entry> EntryList) throws FileNotFoundException {
+    public static void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException {
         File mintEntryList = new File(FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintEntryList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
@@ -93,10 +93,15 @@ public class EntryListDataManager extends DataManagerActions {
     }
 
 
-    public static void loadEntry(String name, String date, String amount, String catNum) {
+    public static void loadEntry(String name, String dateStr, String amountStr, String catNumStr) {
         ArrayList<Entry> loadedEntryList = entryList;
         //should check type before loading
-        Entry entry = new Entry(name, date, amount, catNum);
-        loadedEntryList.add(entry);
+        //Entry entry = new Entry(name, date, amount, catNum);
+        LocalDate date = LocalDate.parse(dateStr);
+        double amount = Double.parseDouble(amountStr);
+        int index = Integer.parseInt(catNumStr);
+        ExpenseCategory category = ExpenseCategory.values()[index];
+        Expense expense = new Expense(name, date, amount, category);
+        loadedEntryList.add(expense);
     }
 }

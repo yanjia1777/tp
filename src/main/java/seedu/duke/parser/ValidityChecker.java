@@ -33,7 +33,7 @@ public class ValidityChecker {
 
     static void checkInvalidAmount(Parser parser) throws MintException {
         try {
-            Double.parseDouble(parser.amount);
+            Double.parseDouble(parser.amountStr);
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid amount");
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
@@ -42,7 +42,7 @@ public class ValidityChecker {
 
     static void checkInvalidDate(Parser parser) throws MintException {
         try {
-            LocalDate.parse(parser.date, dateFormatter);
+            LocalDate.parse(parser.dateStr, dateFormatter);
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
             throw new MintException(MintException.ERROR_INVALID_DATE);
@@ -52,7 +52,7 @@ public class ValidityChecker {
 
     static void checkInvalidCatNum(Parser parser) throws MintException {
         try {
-            int catNumInt = Integer.parseInt(parser.catNum);
+            int catNumInt = Integer.parseInt(parser.catNumStr);
             if (catNumInt < Parser.CAT_NUM_FOOD_INT || catNumInt > Parser.CAT_NUM_OTHERS_INT) {
                 throw new MintException(MintException.ERROR_INVALID_CATNUM);
             }

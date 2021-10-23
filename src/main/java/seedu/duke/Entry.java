@@ -1,8 +1,7 @@
 package seedu.duke;
 
 import java.time.LocalDate; // import the LocalDate class
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+
 
 public abstract class Entry {
     protected String name;

@@ -7,6 +7,9 @@ public class RecurringExpense extends Expense {
     private Interval interval;
     private LocalDate endDate;
 
+    public RecurringExpense(Expense expense) {
+        super(expense.getName(), expense.getDate(), expense.getAmount(), expense.getCategory());
+    }
     public RecurringExpense(String name, LocalDate date, Double amount, ExpenseCategory category,
                             Interval interval, LocalDate endDate) {
         super(name, date, amount, category);

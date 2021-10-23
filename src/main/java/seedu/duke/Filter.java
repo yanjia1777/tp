@@ -16,24 +16,24 @@ public class Filter {
         return filteredArrayList;
     }
 
-    public static ArrayList<Entry> filterEntryByDate(String date, ArrayList<Entry> listToFilter) {
+    public static ArrayList<Entry> filterEntryByDate(LocalDate date, ArrayList<Entry> listToFilter) {
         ArrayList<Entry> filteredArrayList = listToFilter
                 .stream()
-                .filter(e -> e.getDate().equals(LocalDate.parse(date, ValidityChecker.dateFormatter)))
+                .filter(e -> e.getDate().equals(date))
                 .collect(Collectors.toCollection(ArrayList::new));
         return filteredArrayList;
     }
 
-    public static ArrayList<Entry> filterEntryByAmount(String amount, ArrayList<Entry> listToFilter) {
+    public static ArrayList<Entry> filterEntryByAmount(Double amount, ArrayList<Entry> listToFilter) {
         ArrayList<Entry> filteredArrayList = listToFilter
                 .stream()
-                .filter(e -> e.getAmount() == Double.parseDouble(amount))
+                .filter(e -> e.getAmount() == amount)
                 .collect(Collectors.toCollection(ArrayList::new));
         return filteredArrayList;
     }
 
 
-    public static ArrayList<Entry> filterEntryByCategory(ExpenseCategory category, ArrayList<Entry> listToFilter) {
+    public static ArrayList<Entry> filterEntryByCategory(Enum category, ArrayList<Entry> listToFilter) {
         ArrayList<Entry> filteredArrayList = listToFilter
                 .stream()
                 .filter(e -> e.getCategory().equals(category))

@@ -14,7 +14,7 @@ public class Sorter  {
 
     public static Comparator<Entry> compareByDate = (i, j) -> j.getDate().compareTo(i.getDate());
 
-    public static Comparator<Expense> compareByCategory = (i, j) -> j.getCategory().compareTo(i.getCategory());
+    public static Comparator<Entry> compareByCategory = (i, j) -> j.getCategory().compareTo(i.getCategory());
 
 
 

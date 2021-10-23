@@ -1,11 +1,11 @@
 package seedu.duke.commands;
 
 import seedu.duke.Entry;
-import seedu.duke.Expense;
 import seedu.duke.EntryList;
 import seedu.duke.MintException;
 import seedu.duke.storage.EntryListDataManager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DeleteCommand extends Command {
@@ -13,11 +13,7 @@ public class DeleteCommand extends Command {
     public void deleteByKeywords(ArrayList<String> tags, Entry entry,
                                         ArrayList<Entry> entryList) throws MintException {
         try {
-            String name = entry.getName();
-            String date = entry.getDate().toString();
-            String amount = Double.toString(entry.getAmount());
-            String catNum = Integer.toString(entry.getCatNum());
-            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, name, date, amount, catNum,
+            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, entry,
                     entryList);
             if (finalEntry != null) {
                 delete(finalEntry, entryList);
@@ -32,7 +28,7 @@ public class DeleteCommand extends Command {
     //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     //    }
 
-    public void delete (Entry entry, ArrayList<Entry> entryList) throws MintException {
+    public void delete(Entry entry, ArrayList<Entry> entryList) throws MintException {
         //        Expense expense = new Expense(name, date, amount, catNum);
         if (entryList.contains(entry)) {
             //            logger.log(Level.INFO, "User deleted expense: " + expense);

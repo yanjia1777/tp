@@ -33,9 +33,11 @@ public class Parser {
     public static final String CAT_NUM_OTHERS = "7";
     protected String command;
     protected String name;
-    protected String date;
-    protected String amount;
-    protected String catNum;
+    protected String dateStr;
+    protected LocalDate date;
+    protected String amountStr;
+    protected double amount;
+    protected String catNumStr;
     protected ExpenseCategory category;
     protected String interval;
     protected String endDate;
@@ -92,7 +94,7 @@ public class Parser {
     }
 
     private void setAmount(String param) {
-        amount = param.trim();
+        amountStr = param.trim();
     }
 
     private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
@@ -135,14 +137,14 @@ public class Parser {
             this.name = description;
             break;
         case "d":
-            this.date = description;
+            this.dateStr = description;
             break;
         case "a":
-            this.amount = description;
+            this.amountStr = description;
             break;
         case "c":
-            this.catNum = description;
-            this.category = setCategoryViaCatNum(catNum);
+            this.catNumStr = description;
+            this.category = setCategoryViaCatNum(catNumStr);
             break;
         case "i":
             if (isRecurring) {
@@ -155,11 +157,11 @@ public class Parser {
     }
 
     private void initDate() {
-        this.date = LocalDate.now().toString();
+        this.dateStr = LocalDate.now().toString();
     }
 
     private void initCatNum() {
-        this.catNum = CAT_NUM_OTHERS;
+        this.catNumStr = CAT_NUM_OTHERS;
     }
 
     private void initEndDate() {
@@ -219,16 +221,25 @@ public class Parser {
     }
 
     private void extractCatNumFromTag(String param) {
-        catNum = String.valueOf(param.trim().charAt(2));
+        catNumStr = String.valueOf(param.trim().charAt(2));
     }
 
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
     }
 
+    private Expense createExpenseObject() {
+        date = LocalDate.parse(dateStr);
+        amount = Double.parseDouble(amountStr);
+        int catNum = Integer.parseInt(catNumStr);
+        category = ExpenseCategory.values()[catNum];
+        return new Expense(name, date, amount, category);
+    }
+
     public int executeCommand(String userInput, ArrayList<Entry> entryList,
                               RecurringExpenseList recurringExpenseList) throws MintException {
         ArrayList<String> validTags;
+        Expense expense;
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
         try {
@@ -257,45 +268,45 @@ public class Parser {
 //                break;
             case "add":
                 parseInputByTags(userInput);
-                assert name != null : "Name should not be empty";
-                assert amount != null : "Amount should not be empty";
-                Entry entry = new Entry(name, date, amount, catNum);
+                expense = createExpenseObject();
                 AddCommand addCommand = new AddCommand();
-                addCommand.add(entry, entryList);
+                addCommand.add(expense, entryList);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                entry = new Entry(name, date, amount, catNum);
+                expense = createExpenseObject();
                 DeleteCommand deleteCommand = new DeleteCommand();
-                deleteCommand.deleteByKeywords(validTags, entry, entryList);
+                deleteCommand.deleteByKeywords(validTags, expense, entryList);
                 break;
             case "edit":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
                 //                expenseList.editExpenseByKeywords(validTags, expense, expenseList);
                 EditCommand editCommand = new EditCommand();
-                entry = new Entry(name, date, amount, catNum);
-                editCommand.editByKeywords(validTags, entry, entryList);
+                expense = createExpenseObject();
+                editCommand.editByKeywords(validTags, expense, entryList);
                 break;
             case "addR":
                 isRecurring = true;
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
-                assert amount != null : "Amount should not be empty";
-                recurringExpenseList.addRecurringExpense(name, date, amount, category, Interval.valueOf(interval), endDate);
+                assert amountStr != null : "Amount should not be empty";
+                recurringExpenseList.addRecurringExpense(name, dateStr, amountStr, category, Interval.valueOf(interval), endDate);
                 break;
             case "deleteR":
                 isRecurring = true;
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, name, date, amount, category, Interval.valueOf(interval));
+                expense = createExpenseObject();
+                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, expense, interval);
                 break;
             case "editR":
                 isRecurring = true;
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                recurringExpenseList.editRecurringExpenseByKeywords(validTags, name, date, amount, category, Interval.valueOf(interval));
+                expense = createExpenseObject();
+                recurringExpenseList.editRecurringExpenseByKeywords(validTags, expense, interval);
                 break;
             case "bye":
                 //fallthrough
