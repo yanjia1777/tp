@@ -54,7 +54,7 @@ public class ExpenseList {
     //    }
 
     //    public static ArrayList<Expense> filterExpenseByKeywords(ArrayList<String> tags,Entry entry,
-    //                                                             ArrayList<Expense> expenseList) throws MintException {
+    //                                   ArrayList<Expense> expenseList) throws MintException {
     //
     //        ArrayList<Expense> filteredList = new ArrayList<>(expenseList);
     //        for (String tag : tags) {
