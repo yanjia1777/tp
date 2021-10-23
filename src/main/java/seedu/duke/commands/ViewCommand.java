@@ -12,21 +12,17 @@ import java.util.Collections;
 
 public class ViewCommand extends Command {
 
-    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
-    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
-    protected static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
-
-    public void view(String[] argumentArrayInput,
-                            RecurringExpenseList recurringExpenseList,
+    public void view(String[] argumentArrayInput, RecurringExpenseList recurringExpenseList,
                             ArrayList<Entry> entryList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
-        Month month;
+        Month month = null;
         String year = null;
+        boolean isViewFrom = false;
+        boolean isViewAll = true;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
         ArrayList<Entry> outputArray = new ArrayList<>(entryList);
-
 
         if (argumentArray.contains("by")) {
             try {
@@ -48,6 +44,7 @@ public class ViewCommand extends Command {
             }
             System.out.println("For the year " + year + ":");
             Sorter.trimByYear(outputArray, year);
+            isViewAll = false;
         }
 
         if (argumentArray.contains("month")) {
@@ -62,14 +59,11 @@ public class ViewCommand extends Command {
             }
             System.out.println("For the month of " + month + ":");
             Sorter.trimByMonth(outputArray, month);
-            if (year == null) {
-                year = Integer.toString(LocalDate.now().getYear());
-            }
-            //recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(),
-            //        Integer.parseInt(year));
+            isViewAll = false;
         }
 
         if (argumentArray.contains("from")) {
+            isViewFrom = true;
             try {
                 fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
                 try {
@@ -82,6 +76,8 @@ public class ViewCommand extends Command {
                 if (endDate != null) {
                     Sorter.trimEnd(outputArray, endDate);
                     System.out.print(" to " + endDate);
+                } else {
+                    endDate = LocalDate.now();
                 }
                 System.out.println();
 
@@ -89,9 +85,22 @@ public class ViewCommand extends Command {
                 System.out.println(MintException.ERROR_INVALID_SORTDATE);
                 return;
             }
-            //recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
-            //        endDate);
+            recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
+                    endDate);
+            isViewAll = false;
         }
+
+        if (!isViewAll && !isViewFrom) {
+            if (year == null) {
+                year = Integer.toString(LocalDate.now().getYear());
+            }
+            if (month == null) {
+                recurringExpenseList.viewRecurringExpenseByYear(outputArray, Integer.parseInt(year));
+            } else {
+                recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(), Integer.parseInt(year));
+            }
+        }
+        outputArray.sort(Sorter.compareByDate);
 
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
             Collections.reverse(outputArray);
@@ -118,7 +127,7 @@ public class ViewCommand extends Command {
             outputArray.sort(Sorter.compareByCategory);
             break;
         default:
-            throw new MintException(ERROR_INVALID_COMMAND); // Link to MintException
+            throw new MintException(MintException.ERROR_INVALID_COMMAND); // Link to MintException
         }
     }
 
