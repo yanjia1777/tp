@@ -8,5 +8,5 @@ public enum ExpenseCategory {
     APPAREL,
     BEAUTY,
     GIFT,
-    OTHERS
+    OTHERS;
 }
