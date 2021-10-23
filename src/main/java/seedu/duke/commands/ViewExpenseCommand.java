@@ -1,13 +1,16 @@
 package seedu.duke.commands;
 
-import seedu.duke.*;
+
+import seedu.duke.Expense;
+import seedu.duke.MintException;
+import seedu.duke.RecurringExpenseList;
+import seedu.duke.Sorter;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class ViewExpenseCommand {

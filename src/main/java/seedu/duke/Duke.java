@@ -27,13 +27,13 @@ public class Duke {
         Ui.startup();
         Scanner in = new Scanner(System.in);
         CategoryList.initialiseCategories();
-//        ExpenseList expenseList = new ExpenseList();
+        //        ExpenseList expenseList = new ExpenseList();
         RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-//        dataManagerActions.printPreviousFileContents(expenseList);
+        //        dataManagerActions.printPreviousFileContents(expenseList);
         while (true) {
             try {
                 String userInput = in.nextLine();

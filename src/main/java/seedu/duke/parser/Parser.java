@@ -212,7 +212,7 @@ public class Parser {
                 //fallthrough
             case "view":
                 parseInputByArguments(userInput);
-//                expenseList.viewExpense(argumentsArray, recurringExpenseList);
+                //                expenseList.viewExpense(argumentsArray, recurringExpenseList);
                 ViewExpenseCommand viewExpenseCommand = new ViewExpenseCommand();
                 viewExpenseCommand.viewExpense(argumentsArray, recurringExpenseList, expenseList);
                 break;
@@ -234,15 +234,15 @@ public class Parser {
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
                 Expense expense = new Expense(name, date, amount, catNum);
-//                expenseList.addExpense(name, date, amount, catNum);
+                //                expenseList.addExpense(name, date, amount, catNum);
                 AddExpenseCommand addExpenseCommand = new AddExpenseCommand();
                 addExpenseCommand.addExpense(expense, expenseList);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-//                expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
-//                Expense expense = new Expense(name, date, amount, catNum);
+                //                expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
+                //                Expense expense = new Expense(name, date, amount, catNum);
                 expense = new Expense(name, date, amount, catNum);
                 DeleteExpenseCommand deleteExpenseCommand = new DeleteExpenseCommand();
                 deleteExpenseCommand.deleteExpenseByKeywords(validTags, expense, expenseList);
@@ -250,7 +250,7 @@ public class Parser {
             case "edit":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-//                expenseList.editExpenseByKeywords(validTags, expense, expenseList);
+                //                expenseList.editExpenseByKeywords(validTags, expense, expenseList);
                 EditExpenseCommand editExpenseCommand = new EditExpenseCommand();
                 expense = new Expense(name, date, amount, catNum);
                 editExpenseCommand.editExpenseByKeywords(validTags, expense, expenseList);
