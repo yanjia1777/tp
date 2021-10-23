@@ -20,8 +20,8 @@ public class CategoryList {
     }
 
     private static boolean isCurrentMonthExpense(Expense expense) {
-        return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
-                && expense.date.getYear() == LocalDate.now().getYear();
+        return expense.getDate().getMonthValue() == LocalDate.now().getMonthValue()
+                && expense.getDate().getYear() == LocalDate.now().getYear();
     }
 
     public static void addCategory(int catNum, String name) {
@@ -105,8 +105,8 @@ public class CategoryList {
     }
 
     public static void addSpending(Expense expense) {
-        Category category = CategoryList.categoryList.get(expense.catNum);
-        category.addSpending(expense.amount);
+        Category category = CategoryList.categoryList.get(expense.getCatNum());
+        category.addSpending(expense.getAmount());
         if (category.isNearThreshold()) {
             System.out.printf("Slow down... You've set aside $%,.2f for %s,"
                             + " but you already spent $%,.2f\n",
@@ -115,8 +115,8 @@ public class CategoryList {
     }
 
     public static void deleteSpending(Expense expense) {
-        Category category = CategoryList.categoryList.get(expense.catNum);
-        category.deleteSpending(expense.amount);
+        Category category = CategoryList.categoryList.get(expense.getCatNum());
+        category.deleteSpending(expense.getAmount());
     }
 
     public static void editSpending(Expense originalExpense, Expense newExpense) {

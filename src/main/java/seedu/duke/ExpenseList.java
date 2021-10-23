@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import seedu.duke.parser.Parser;
 import seedu.duke.storage.ExpenseListDataManager;
 
 import java.io.File;
@@ -33,8 +34,13 @@ public class ExpenseList {
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
     private boolean isCurrentMonthExpense(Expense expense) {
-        return expense.date.getMonthValue() == LocalDate.now().getMonthValue()
-                && expense.date.getYear() == LocalDate.now().getYear();
+        return expense.getDate().getMonthValue() == LocalDate.now().getMonthValue()
+                && expense.getDate().getYear() == LocalDate.now().getYear();
+    }
+
+    public void addExpense(Expense expense) {
+        addExpense(expense.getName(), expense.getDate().toString(),
+                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     }
 
     // ideally, prepare expense in the command class
@@ -89,7 +95,7 @@ public class ExpenseList {
     }
 
     // MOVED
-    void deleteExpenseByKeywords(ArrayList<String> tags, String name,
+    public void deleteExpenseByKeywords(ArrayList<String> tags, String name,
                                  String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
@@ -102,7 +108,7 @@ public class ExpenseList {
     }
 
     // MOVED
-    void editExpenseByKeywords(ArrayList<String> tags, String name,
+    public void editExpenseByKeywords(ArrayList<String> tags, String name,
                                String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, false, name, date, amount, catNum);
@@ -163,7 +169,8 @@ public class ExpenseList {
     }
 
     // MOVED
-    public void viewExpense(String[] argumentArrayInput) throws MintException {
+    public void viewExpense(String[] argumentArrayInput,
+                            RecurringExpenseList recurringExpenseList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
@@ -177,7 +184,7 @@ public class ExpenseList {
                 sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
                 sort(outputArray, sortType);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(ERROR_INVALID_SORTTYPE);
+                System.out.println(MintException.ERROR_INVALID_SORTTYPE);
                 return;
             }
         }
@@ -206,6 +213,11 @@ public class ExpenseList {
             }
             System.out.println("For the month of " + month + ":");
             Sorter.trimByMonth(outputArray, month);
+            if (year == null) {
+                year = Integer.toString(LocalDate.now().getYear());
+            }
+            //recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(),
+            //        Integer.parseInt(year));
         }
 
         if (argumentArray.contains("from")) {
@@ -223,10 +235,13 @@ public class ExpenseList {
                     System.out.print(" to " + endDate);
                 }
                 System.out.println();
+
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                System.out.println(ERROR_INVALID_SORTDATE);
+                System.out.println(MintException.ERROR_INVALID_SORTDATE);
                 return;
             }
+            //recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
+            //        endDate);
         }
 
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
@@ -239,6 +254,14 @@ public class ExpenseList {
     }
 
     //MOVED
+    public double calculateTotalExpense(ArrayList<Expense> expenseList) {
+        double total = 0;
+        for (Expense expense : expenseList) {
+            total += expense.getAmount();
+        }
+        return total;
+    }
+
     public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
         assert sortType != null : "sortType should have a command";
         switch (sortType) {
@@ -291,10 +314,10 @@ public class ExpenseList {
 
         } catch (NumberFormatException e) {
             exceptionThrown = true;
-            System.out.println(ERROR_INVALID_NUMBER);
+            System.out.println(MintException.ERROR_INVALID_NUMBER);
         } catch (DateTimeParseException e) {
             exceptionThrown = true;
-            System.out.println(ERROR_INVALID_DATE);
+            System.out.println(MintException.ERROR_INVALID_DATE_EDIT);
         }
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }
@@ -383,7 +406,7 @@ public class ExpenseList {
         if (!newDescription.trim().equalsIgnoreCase(BLANK)) {
             description = newDescription.trim();
         } else {
-            throw new MintException(ERROR_INVALID_DESCRIPTION);
+            throw new MintException(MintException.ERROR_INVALID_DESCRIPTION);
         }
         return description;
     }

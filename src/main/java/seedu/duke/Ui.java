@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.parser.Parser;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -131,6 +133,39 @@ public class Ui {
     public static void setLimitMessage(String catNumString, String amount) {
         int catNumInt = Integer.parseInt(catNumString);
         System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
+    }
+
+    public static StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
+        int index = 1;
+        StringBuilder missingFieldsErrorMessage = new StringBuilder();
+        missingFieldsErrorMessage.append(Parser.STRING_INCLUDE);
+        for (String delimiter : missingDelimiters) {
+            switch (delimiter) {
+            case "n/":
+                missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_DESCRIPTION);
+                index++;
+                break;
+            case "d/":
+                missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_DATE);
+                index++;
+                break;
+            case "a/":
+                missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_AMOUNT);
+                index++;
+                break;
+            case "c/":
+                missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_CATNUM);
+                index++;
+                break;
+            case "i/":
+                missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_INTERVAL);
+                index++;
+                break;
+            default:
+                throw new MintException(MintException.ERROR_INVALID_COMMAND);
+            }
+        }
+        return missingFieldsErrorMessage;
     }
 }
 
