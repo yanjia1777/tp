@@ -37,7 +37,6 @@ class AddFunctionTest {
     public void addExpense_twoAdditions_expectSuccess() throws MintException {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
-        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         CategoryList.initialiseCategories();
         Expense expenseFood = new Expense("burger", "2021-10-10", "10", "1");
         Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13", "2");
@@ -55,6 +54,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         String[] emptyArray = {"view"};
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         expenseList.viewExpense(emptyArray, recurringExpenseList);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
                 + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator()

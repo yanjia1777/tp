@@ -73,12 +73,12 @@ class ExpenseListTest {
     public void viewExpense_twoExpenses_success() throws MintException {
         CategoryList.initialiseCategories();
         ExpenseList expenseList = new ExpenseList();
-        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         expenseList.expenseList.add(new Expense("Cheese burger", "2021-12-23", "15.5"));
         expenseList.expenseList.add(new Expense("book", "2022-12-23", "9"));
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         String[] emptyArray = {"view"};
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         expenseList.viewExpense(emptyArray, recurringExpenseList);
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
                 + "     Others     | 2021-12-23 | Cheese burger | $15.50" + System.lineSeparator()
