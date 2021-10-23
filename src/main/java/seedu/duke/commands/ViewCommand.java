@@ -1,36 +1,31 @@
 package seedu.duke.commands;
 
-import seedu.duke.Expense;
-import seedu.duke.ExpenseList;
-import seedu.duke.MintException;
-import seedu.duke.Sorter;
+
+import seedu.duke.*;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
-public class ViewExpenseCommand {
+public class ViewCommand extends Command {
 
     public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     protected static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
 
-
-    ExpenseList expenseList = new ExpenseList();
-
-    public void viewExpense(String[] argumentArrayInput) throws MintException {
+    public void view(String[] argumentArrayInput,
+                            RecurringExpenseList recurringExpenseList,
+                            ArrayList<Entry> entryList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
         Month month;
         String year = null;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
-        //        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
-        ArrayList<Expense> outputArray = new ArrayList<Expense>((Collection<? extends Expense>) expenseList);
+        ArrayList<Entry> outputArray = new ArrayList<>(entryList);
 
 
         if (argumentArray.contains("by")) {
@@ -38,7 +33,7 @@ public class ViewExpenseCommand {
                 sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
                 sort(outputArray, sortType);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(ERROR_INVALID_SORTTYPE);
+                System.out.println(MintException.ERROR_INVALID_SORTTYPE);
                 return;
             }
         }
@@ -67,6 +62,11 @@ public class ViewExpenseCommand {
             }
             System.out.println("For the month of " + month + ":");
             Sorter.trimByMonth(outputArray, month);
+            if (year == null) {
+                year = Integer.toString(LocalDate.now().getYear());
+            }
+            //recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(),
+            //        Integer.parseInt(year));
         }
 
         if (argumentArray.contains("from")) {
@@ -84,22 +84,25 @@ public class ViewExpenseCommand {
                     System.out.print(" to " + endDate);
                 }
                 System.out.println();
+
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                System.out.println(ERROR_INVALID_SORTDATE);
+                System.out.println(MintException.ERROR_INVALID_SORTDATE);
                 return;
             }
+            //recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
+            //        endDate);
         }
 
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
             Collections.reverse(outputArray);
         }
 
-        for (Expense expense : outputArray) {
-            System.out.println(expense.viewToString());
+        for (Entry entry : outputArray) {
+            System.out.println(entry.viewToString());
         }
     }
 
-    public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
+    public void sort(ArrayList<Entry> outputArray, String sortType) throws MintException {
         assert sortType != null : "sortType should have a command";
         switch (sortType) {
         case "name":
