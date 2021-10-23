@@ -52,7 +52,7 @@ public class EditCommand extends Command {
     //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     //    }
 
-    public void edit (Entry entry, ArrayList<Entry> entryList) throws MintException {
+    public void edit(Entry entry, ArrayList<Entry> entryList) throws MintException {
         String choice;
         int indexToBeChanged;
         boolean printEditSuccess = false;
