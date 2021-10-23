@@ -1,6 +1,8 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.parser.Parser;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
@@ -14,6 +16,7 @@ class AddFunctionTest {
     public void addExpense_oneAddition_expectSuccess() throws MintException {
         LocalDate date = LocalDate.now();
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Expense expense = new Expense("burger", "2021-10-10", "10");
         String expenseName = expense.getName();
         String expenseDate = expense.getDate().toString();
@@ -24,7 +27,7 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         String[] emptyArray = {"view"};
-        expenseList.viewExpense(emptyArray);
+        expenseList.viewExpense(emptyArray, recurringExpenseList);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
                 + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
@@ -51,7 +54,8 @@ class AddFunctionTest {
         System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         String[] emptyArray = {"view"};
-        expenseList.viewExpense(emptyArray);
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
+        expenseList.viewExpense(emptyArray, recurringExpenseList);
         String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
                 + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator()
                 + " Entertainment  | 2021-10-10 | movie | $13.00" + System.lineSeparator();
@@ -61,12 +65,13 @@ class AddFunctionTest {
     @Test
     public void addExpense_wrongAmountFormat_expectErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("add n/burger d/2021-12-23 a/ABCD c/1", expenseList);
+        parser.executeCommand("add n/burger d/2021-12-23 a/ABCD c/1", expenseList, recurringExpenseList);
         String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_AMOUNT + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -75,12 +80,13 @@ class AddFunctionTest {
     @Test
     public void addExpense_wrongDateFormat_expectErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList);
+        parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList, recurringExpenseList);
         String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DATE + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
 
@@ -90,12 +96,13 @@ class AddFunctionTest {
     @Test
     public void addExpense_noName_expectErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList);
+        parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList, recurringExpenseList);
         String expectedOutput = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DESCRIPTION + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
