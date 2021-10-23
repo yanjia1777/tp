@@ -14,14 +14,14 @@ public class CategoryList {
 
     protected static ArrayList<Category> categoryList = new ArrayList<>();
 
-    private static boolean isSameMonth(Expense expense1, Expense expense2) {
-        return expense1.getDate().getMonth() == expense2.getDate().getMonth()
-                && expense1.getDate().getYear() == expense1.getDate().getYear();
+    private static boolean isSameMonth(Entry entry1, Entry entry2) {
+        return entry1.getDate().getMonth() == entry2.getDate().getMonth()
+                && entry1.getDate().getYear() == entry1.getDate().getYear();
     }
 
-    private static boolean isCurrentMonthExpense(Expense expense) {
-        return expense.getDate().getMonthValue() == LocalDate.now().getMonthValue()
-                && expense.getDate().getYear() == LocalDate.now().getYear();
+    private static boolean isCurrentMonthEntry(Entry entry) {
+        return entry.getDate().getMonthValue() == LocalDate.now().getMonthValue()
+                && entry.getDate().getYear() == LocalDate.now().getYear();
     }
 
     public static void addCategory(int catNum, String name) {
@@ -104,9 +104,9 @@ public class CategoryList {
         dataManager.editCategoryTextFile(catNumFinal);
     }
 
-    public static void addSpending(Expense expense) {
-        Category category = CategoryList.categoryList.get(expense.getCatNum());
-        category.addSpending(expense.getAmount());
+    public static void addSpending(Entry entry) {
+        Category category = CategoryList.categoryList.get(entry.getCatNum());
+        category.addSpending(entry.getAmount());
         if (category.isNearThreshold()) {
             System.out.printf("Slow down... You've set aside $%,.2f for %s,"
                             + " but you already spent $%,.2f\n",
@@ -114,25 +114,25 @@ public class CategoryList {
         }
     }
 
-    public static void deleteSpending(Expense expense) {
-        Category category = CategoryList.categoryList.get(expense.getCatNum());
-        category.deleteSpending(expense.getAmount());
+    public static void deleteSpending(Entry entry) {
+        Category category = CategoryList.categoryList.get(entry.getCatNum());
+        category.deleteSpending(entry.getAmount());
     }
 
-    public static void editSpending(Expense originalExpense, Expense newExpense) {
+    public static void editSpending(Entry originalEntry, Entry newEntry) {
         /*
          * Case 1: current month --> current month
          * Case 2: other months --> current month
          * Case 3: current month --> other months
          * Case 4: other months --> other months, do nothing
          */
-        if (isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(newExpense)) {
-            deleteSpending(originalExpense);
-            addSpending(newExpense);
-        } else if (!isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(newExpense)) {
-            addSpending(newExpense);
-        } else if (!isSameMonth(originalExpense, newExpense) && isCurrentMonthExpense(originalExpense)) {
-            deleteSpending(originalExpense);
+        if (isSameMonth(originalEntry, newEntry) && isCurrentMonthEntry(newEntry)) {
+            deleteSpending(originalEntry);
+            addSpending(newEntry);
+        } else if (!isSameMonth(originalEntry, newEntry) && isCurrentMonthEntry(newEntry)) {
+            addSpending(newEntry);
+        } else if (!isSameMonth(originalEntry, newEntry) && isCurrentMonthEntry(originalEntry)) {
+            deleteSpending(originalEntry);
         }
     }
 }
