@@ -43,23 +43,23 @@ public class RecurringExpenseList {
         }
     }
 
-    public ArrayList<Expense> filterRecurringExpenseByKeywords(ArrayList<String> tags, String name,
+    public ArrayList<Entry> filterRecurringExpenseByKeywords(ArrayList<String> tags, String name,
                                                                String date, String amount, String catNum,
                                                                String interval) throws MintException {
-        ArrayList<Expense> filteredList = new ArrayList<>(recurringExpenseList);
+        ArrayList<Entry> filteredList = new ArrayList<>(recurringExpenseList);
         for (String tag : tags) {
             switch (tag) {
             case "n/":
-                filteredList = Filter.filterExpenseByName(name, filteredList);
+                filteredList = Filter.filterEntryByName(name, filteredList);
                 break;
             case "d/":
-                filteredList = Filter.filterExpenseByDate(date, filteredList);
+                filteredList = Filter.filterEntryByDate(date, filteredList);
                 break;
             case "a/":
-                filteredList = Filter.filterExpenseByAmount(amount, filteredList);
+                filteredList = Filter.filterEntryByAmount(amount, filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterExpenseByCatNum(catNum, filteredList);
+                filteredList = Filter.filterEntryByCatNum(catNum, filteredList);
                 break;
             case "i/":
                 break;
@@ -99,7 +99,7 @@ public class RecurringExpenseList {
     public RecurringExpense chooseRecurringExpenseByKeywords(ArrayList<String> tags, boolean isDelete,
                                                              String name, String date, String amount,
                                                              String catNum, String interval) throws MintException {
-        ArrayList<Expense> filteredList = filterRecurringExpenseByKeywords(tags, name, date, amount, catNum, interval);
+        ArrayList<Entry> filteredList = filterRecurringExpenseByKeywords(tags, name, date, amount, catNum, interval);
         RecurringExpense expense = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
