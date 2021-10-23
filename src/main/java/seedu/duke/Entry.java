@@ -17,7 +17,7 @@ public class Entry {
 
     public Entry() {
         catNum = CAT_NUM_OTHERS; //others
-        date = LocalDate.of(2021, 1, 1);
+        date = LocalDate.now();
         amount = 0;
     }
 

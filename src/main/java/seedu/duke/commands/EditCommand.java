@@ -1,7 +1,11 @@
 package seedu.duke.commands;
 
 
-import seedu.duke.*;
+import seedu.duke.Entry;
+import seedu.duke.CategoryList;
+import seedu.duke.Ui;
+import seedu.duke.EntryList;
+import seedu.duke.MintException;
 import seedu.duke.storage.EntryListDataManager;
 import seedu.duke.parser.Parser;
 
@@ -48,7 +52,7 @@ public class EditCommand extends Command {
     //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     //    }
 
-    public void edit (Entry entry, ArrayList<Entry> entryList) throws MintException {
+    public void edit(Entry entry, ArrayList<Entry> entryList) throws MintException {
         String choice;
         int indexToBeChanged;
         boolean printEditSuccess = false;

@@ -1,7 +1,6 @@
 package seedu.duke.commands;
 
 import seedu.duke.Entry;
-import seedu.duke.Expense;
 import seedu.duke.EntryList;
 import seedu.duke.MintException;
 import seedu.duke.storage.EntryListDataManager;
@@ -32,7 +31,7 @@ public class DeleteCommand extends Command {
     //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     //    }
 
-    public void delete (Entry entry, ArrayList<Entry> entryList) throws MintException {
+    public void delete(Entry entry, ArrayList<Entry> entryList) throws MintException {
         //        Expense expense = new Expense(name, date, amount, catNum);
         if (entryList.contains(entry)) {
             //            logger.log(Level.INFO, "User deleted expense: " + expense);
