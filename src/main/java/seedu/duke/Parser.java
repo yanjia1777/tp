@@ -37,6 +37,7 @@ public class Parser {
     protected String amount;
     protected String catNum;
     protected String interval;
+    protected String endDate;
     protected boolean isRecurring = false;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -157,6 +158,10 @@ public class Parser {
         this.catNum = CAT_NUM_OTHERS;
     }
 
+    private void initEndDate() {
+        this.endDate = "2200-12-31";
+    }
+
     private void setFieldsByTag(String description, String tagType) throws MintException {
         switch (tagType) {
         case "n":
@@ -205,9 +210,13 @@ public class Parser {
 
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
-        if (command.equals("add") || command.equals("addR")) {
+        if (command.equals("add")) {
             initDate();
             initCatNum();
+        } else if (command.equals("addR")) {
+            initDate();
+            initCatNum();
+            initEndDate();
         }
 
         parseInputByTagsLoop(userInput);
@@ -268,8 +277,7 @@ public class Parser {
                 //fallthrough
             case "view":
                 parseInputByArguments(userInput);
-                expenseList.viewExpense(argumentsArray);
-                recurringExpenseList.viewRecurringExpense(argumentsArray);
+                expenseList.viewExpense(argumentsArray, recurringExpenseList);
                 break;
             case "limit":
                 parseInputByArguments(userInput);
@@ -305,7 +313,7 @@ public class Parser {
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
-                recurringExpenseList.addRecurringExpense(name, date, amount, catNum, interval);
+                recurringExpenseList.addRecurringExpense(name, date, amount, catNum, interval, endDate);
                 break;
             case "deleteR":
                 isRecurring = true;

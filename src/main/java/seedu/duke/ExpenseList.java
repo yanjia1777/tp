@@ -32,6 +32,11 @@ public class ExpenseList {
                 && expense.getDate().getYear() == LocalDate.now().getYear();
     }
 
+    public void addExpense(Expense expense) {
+        addExpense(expense.getName(), expense.getDate().toString(),
+                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
+    }
+
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
         if (isCurrentMonthExpense(expense)) {
@@ -140,7 +145,7 @@ public class ExpenseList {
         }
     }
 
-    public void viewExpense(String[] argumentArrayInput) throws MintException {
+    public void viewExpense(String[] argumentArrayInput, RecurringExpenseList recurringExpenseList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
@@ -183,6 +188,11 @@ public class ExpenseList {
             }
             System.out.println("For the month of " + month + ":");
             Sorter.trimByMonth(outputArray, month);
+            if (year == null) {
+                year = Integer.toString(LocalDate.now().getYear());
+            }
+            recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(),
+                    Integer.parseInt(year));
         }
 
         if (argumentArray.contains("from")) {
@@ -200,10 +210,13 @@ public class ExpenseList {
                     System.out.print(" to " + endDate);
                 }
                 System.out.println();
+
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
                 System.out.println(MintException.ERROR_INVALID_SORTDATE);
                 return;
             }
+            recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
+                    endDate);
         }
 
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
@@ -215,8 +228,7 @@ public class ExpenseList {
         }
     }
 
-    public double calculateTotalExpense(ArrayList<Expense> expenseList,
-                                        ArrayList<RecurringExpense> recurringExpenseList) {
+    public double calculateTotalExpense(ArrayList<Expense> expenseList) {
         double total = 0;
         for (Expense expense : expenseList) {
             total += expense.getAmount();

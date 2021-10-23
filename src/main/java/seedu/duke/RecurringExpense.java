@@ -1,18 +1,32 @@
 package seedu.duke;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class RecurringExpense extends Expense {
-    RecurringInterval interval;
+    private RecurringInterval interval;
+    private LocalDate endDate;
 
     public RecurringExpense() {
         super();
+        endDate = LocalDate.parse("2200-12-31");
     }
 
-    public RecurringExpense(String name, String date, String amount, String catNum, String interval) throws MintException {
+    public RecurringExpense(RecurringExpense e) {
+        setDescription(e.getName());
+        setDate(e.getDate());
+        setAmount(e.getAmount());
+        setCatNum(e.getCatNum());
+        setInterval(e.getInterval());
+        setEndDate(e.getEndDate());
+    }
+
+    public RecurringExpense(String name, String date, String amount,
+                            String catNum, String interval, String endDate) throws MintException {
         super(name, date, amount, catNum);
         try {
             setInterval(interval);
+            setEndDate(LocalDate.parse(endDate));
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -20,6 +34,10 @@ public class RecurringExpense extends Expense {
 
     public RecurringInterval getInterval() {
         return interval;
+    }
+
+    public void setInterval(RecurringInterval interval) {
+        this.interval = interval;
     }
 
     public void setInterval(String interval) throws MintException {
@@ -36,6 +54,14 @@ public class RecurringExpense extends Expense {
         default:
             throw new MintException("You entered invalid interval");
         }
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public String toString() {
@@ -63,10 +89,10 @@ public class RecurringExpense extends Expense {
         }
 
         RecurringExpense recurringExpense = (RecurringExpense) object;
-        boolean isNameEqual = Objects.equals(name,recurringExpense.name);
-        boolean isDateEqual = Objects.equals(date, recurringExpense.date);
-        boolean isAmountEqual = Objects.equals(amount, recurringExpense.amount);
-        boolean isCategoryEqual = Objects.equals(catNum, recurringExpense.catNum);
+        boolean isNameEqual = Objects.equals(getName(),recurringExpense.getName());
+        boolean isDateEqual = Objects.equals(getDate(), recurringExpense.getDate());
+        boolean isAmountEqual = Objects.equals(getAmount(), recurringExpense.getAmount());
+        boolean isCategoryEqual = Objects.equals(getCatNum(), recurringExpense.getCatNum());
         boolean isIntervalEqual = Objects.equals(interval, recurringExpense.interval);
         return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual && isIntervalEqual;
     }

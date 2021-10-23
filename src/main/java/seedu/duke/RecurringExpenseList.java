@@ -4,8 +4,11 @@ import seedu.duke.storage.ExpenseListDataManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +32,10 @@ public class RecurringExpenseList {
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
 
-    public void addRecurringExpense(String name, String date, String amount, String catNum, String interval) throws MintException {
+    public void addRecurringExpense(String name, String date, String amount,
+                                    String catNum, String interval, String endDate) throws MintException {
         try {
-            RecurringExpense expense = new RecurringExpense(name, date, amount, catNum, interval);
+            RecurringExpense expense = new RecurringExpense(name, date, amount, catNum, interval, endDate);
             logger.log(Level.INFO, "User added expense: " + expense);
             System.out.println("I have added: " + expense);
             recurringExpenseList.add(expense);
@@ -122,11 +126,12 @@ public class RecurringExpenseList {
     public void deleteRecurringExpense(RecurringExpense expense) throws MintException {
         deleteRecurringExpense(expense.getName(), expense.getDate().toString(),
                 Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()),
-                expense.getInterval().label);
+                expense.getInterval().label, expense.getEndDate().toString());
     }
 
-    public void deleteRecurringExpense(String name, String date, String amount, String catNum, String interval) throws MintException {
-        RecurringExpense expense = new RecurringExpense(name, date, amount, catNum, interval);
+    public void deleteRecurringExpense(String name, String date, String amount,
+                                       String catNum, String interval, String endDate) throws MintException {
+        RecurringExpense expense = new RecurringExpense(name, date, amount, catNum, interval, endDate);
         if (recurringExpenseList.contains(expense)) {
             logger.log(Level.INFO, "User deleted recurring expense: " + expense);
             System.out.println("I have deleted: " + expense);
@@ -144,7 +149,7 @@ public class RecurringExpenseList {
         String year = null;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
         ArrayList<Expense> outputArray = new ArrayList<Expense>(recurringExpenseList);
-
+/*
         if (argumentArray.contains("by")) {
             try {
                 sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
@@ -206,8 +211,137 @@ public class RecurringExpenseList {
             Collections.reverse(outputArray);
         }
 
+ */
+
         for (Expense expense : outputArray) {
             System.out.println(expense.viewToString());
+        }
+    }
+
+    public void viewRecurringExpenseByMonth(ArrayList<Expense> expenseList, int month, int year) {
+        for (RecurringExpense expense : recurringExpenseList) {
+            RecurringExpense newExpense = new RecurringExpense(expense);
+            YearMonth startYM = YearMonth.from(newExpense.getDate());
+            YearMonth endYM = YearMonth.from(newExpense.getEndDate());
+            YearMonth currentYM = YearMonth.of(year, month);
+            int startY = newExpense.getDate().getYear();
+            int endY = newExpense.getEndDate().getYear();
+
+            switch(newExpense.getInterval()) {
+            case MONTH:
+                boolean isYearMonthBetweenStartAndEnd = startYM.compareTo(currentYM) <= 0
+                        && currentYM.compareTo(endYM) <= 0;
+                if (isYearMonthBetweenStartAndEnd) {
+                    newExpense.setDate(currentYM.atDay(newExpense.getDate().getDayOfMonth()));
+                    expenseList.add(newExpense);
+                }
+                break;
+            case YEAR:
+                boolean isSameMonthAsStart = startYM.getMonth() == currentYM.getMonth();
+                boolean isYearBetweenStartAndEnd = startY <= year && year <= endY;
+                if (isSameMonthAsStart && isYearBetweenStartAndEnd) {
+                    newExpense.setDate(currentYM.atDay(newExpense.getDate().getDayOfMonth()));
+                    expenseList.add(newExpense);
+                }
+                break;
+            }
+        }
+    }
+
+    public void viewRecurringExpenseByYear(ArrayList<Expense> expenseList, int year, int month) {
+        for (RecurringExpense expense : recurringExpenseList) {
+            RecurringExpense newExpense = new RecurringExpense(expense);
+            YearMonth startYM = YearMonth.from(newExpense.getDate());
+            YearMonth endYM = YearMonth.from(newExpense.getEndDate());
+            YearMonth currentYM = YearMonth.of(year, month);
+            int startY = newExpense.getDate().getYear();
+            int endY = newExpense.getEndDate().getYear();
+
+            switch(newExpense.getInterval()) {
+            case MONTH:
+                boolean isYearMonthBetweenStartAndEnd = startYM.compareTo(currentYM) <= 0
+                        && currentYM.compareTo(endYM) <= 0;
+                if (isYearMonthBetweenStartAndEnd) {
+                    newExpense.setDate(currentYM.atDay(newExpense.getDate().getDayOfMonth()));
+                    expenseList.add(newExpense);
+                }
+                break;
+            case YEAR:
+                boolean isYearBetweenStartAndEnd = startY <= year && year <= endY;
+                if (isYearBetweenStartAndEnd) {
+                    YearMonth billYM = YearMonth.of(year, startYM.getMonthValue());
+                    newExpense.setDate(billYM.atDay(newExpense.getDate().getDayOfMonth()));
+                    expenseList.add(newExpense);
+                }
+                break;
+            }
+        }
+    }
+
+    public void viewRecurringExpenseBetweenTwoDates(ArrayList<Expense> expenseList, LocalDate startDate, LocalDate endDate) {
+        for (RecurringExpense expense : recurringExpenseList) {
+            LocalDate startRecurringDate = expense.getDate();
+            LocalDate endRecurringDate = expense.getEndDate();
+            int startRecurringYear = expense.getDate().getYear();
+            int endRecurringYear = expense.getEndDate().getYear();
+            int startYear = startDate.getYear();
+            int endYear = endDate.getYear();
+            boolean isNotInBetween;
+
+            switch(expense.getInterval()) {
+            case MONTH:
+                isNotInBetween = endRecurringDate.isBefore(startDate)
+                        || startRecurringDate.isAfter(endDate);
+                boolean isStartDateInBetween = startRecurringDate.compareTo(startDate) <= 0;
+                boolean isEndDateInBetween =endRecurringDate.compareTo(endDate) >= 0;
+
+                if (isNotInBetween) {
+                    return;
+                }
+                LocalDate effectiveStartDate = isStartDateInBetween ? startDate : startRecurringDate;
+                LocalDate effectiveEndDate = isEndDateInBetween ? endDate : endRecurringDate;
+                int effectiveStartMonth = effectiveStartDate.getMonthValue();
+                int effectiveEndMonth = effectiveEndDate.getMonthValue();
+
+                while (effectiveStartMonth <= effectiveEndMonth) {
+                    boolean isFirstMonth = effectiveStartMonth == effectiveStartDate.getMonthValue();
+                    boolean isLastMonth = effectiveStartMonth == effectiveEndMonth;
+                    boolean isStartRecurringDayAfterStartDay =
+                            startRecurringDate.getDayOfMonth() >= effectiveStartDate.getDayOfMonth();
+                    boolean isEndRecurringDayBeforeEndDay =
+                            endRecurringDate.getDayOfMonth() <= effectiveEndDate.getDayOfMonth();
+                    if ((isFirstMonth && isStartRecurringDayAfterStartDay)
+                            || (!isFirstMonth && !isLastMonth)
+                            || (isLastMonth && isEndRecurringDayBeforeEndDay)) {
+                        RecurringExpense newExpense = new RecurringExpense(expense);
+                        YearMonth billYM = YearMonth.of(effectiveStartDate.getYear(), effectiveStartMonth);
+                        newExpense.setDate(billYM.atDay(newExpense.getDate().getDayOfMonth()));
+                        expenseList.add(newExpense);
+                    }
+                    effectiveStartMonth++;
+                }
+                break;
+            case YEAR:
+                isNotInBetween = endRecurringYear < startYear || startRecurringYear > endYear;
+                boolean isStartYearInBetween = startRecurringYear <= startYear;
+                boolean isEndYearInBetween = endRecurringYear >= endYear;
+
+                if (isNotInBetween) {
+                    return;
+                }
+
+                int effectiveStartYear = isStartYearInBetween ? startYear : startRecurringYear;
+                int effectiveEndYear = isEndYearInBetween ? endYear : endRecurringYear;
+
+                while (effectiveStartYear <= effectiveEndYear) {
+                    RecurringExpense newExpense = new RecurringExpense(expense);
+                    YearMonth billYM = YearMonth.of(effectiveStartYear, startRecurringDate.getMonthValue());
+                    newExpense.setDate(billYM.atDay(newExpense.getDate().getDayOfMonth()));
+                    expenseList.add(newExpense);
+                    effectiveStartYear++;
+                }
+                break;
+            }
         }
     }
 
@@ -234,16 +368,17 @@ public class RecurringExpenseList {
     public void editRecurringExpense(RecurringExpense expense) throws MintException {
         editRecurringExpense(expense.getName(), expense.getDate().toString(),
                 Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()),
-                expense.getInterval().label);
+                expense.getInterval().label, expense.getEndDate().toString());
     }
 
-    public void editRecurringExpense(String name, String date, String amount, String catNum, String interval) throws MintException {
+    public void editRecurringExpense(String name, String date, String amount,
+                                     String catNum, String interval, String endDate) throws MintException {
         String choice;
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         try {
-            RecurringExpense originalExpense = new RecurringExpense(name, date, amount, catNum, interval);
+            RecurringExpense originalExpense = new RecurringExpense(name, date, amount, catNum, interval, endDate);
             final String originalExpenseStr = originalExpense.toString();
             final String stringToOverwrite = overWriteString(originalExpense);
             if (recurringExpenseList.contains(originalExpense)) {
@@ -322,6 +457,7 @@ public class RecurringExpenseList {
         String amount = Double.toString(expense.getAmount());
         String catNum = Integer.toString(expense.getCatNum());
         String interval = expense.getInterval().label;
+        String endDate = expense.getEndDate().toString();
         for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
@@ -341,7 +477,7 @@ public class RecurringExpenseList {
                 amount = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
         }
-        recurringExpenseList.set(index, new RecurringExpense(name, date, amount, catNum, interval));
+        recurringExpenseList.set(index, new RecurringExpense(name, date, amount, catNum, interval, endDate));
     }
 
     private String nonEmptyNewDescription(String word) throws MintException {
