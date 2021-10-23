@@ -75,7 +75,7 @@ public class EntryListDataManager extends DataManagerActions {
         }
     }
 
-    public static void loadEntryListContents(ArrayList<Entry> EntryList) throws FileNotFoundException {
+    public static void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException {
         File mintEntryList = new File(FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintEntryList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
