@@ -1,18 +1,14 @@
 package seedu.duke;
 
-import seedu.duke.storage.ExpenseListDataManager;
+import seedu.duke.parser.Parser;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,7 +69,7 @@ public class RecurringExpenseList {
         return filteredList;
     }
 
-    void deleteRecurringExpenseByKeywords(ArrayList<String> tags, String name,
+    public void deleteRecurringExpenseByKeywords(ArrayList<String> tags, String name,
                                  String date, String amount, String catNum, String interval) throws MintException {
         try {
             RecurringExpense expense = chooseRecurringExpenseByKeywords(tags, true, name, date, amount, catNum, interval);
@@ -85,7 +81,7 @@ public class RecurringExpenseList {
         }
     }
 
-    void editRecurringExpenseByKeywords(ArrayList<String> tags, String name,
+    public void editRecurringExpenseByKeywords(ArrayList<String> tags, String name,
                                           String date, String amount, String catNum, String interval) throws MintException {
         try {
             RecurringExpense expense = (RecurringExpense) chooseRecurringExpenseByKeywords(tags, true, name, date, amount, catNum, interval);
@@ -400,7 +396,7 @@ public class RecurringExpenseList {
             System.out.println(MintException.ERROR_INVALID_NUMBER);
         } catch (DateTimeParseException e) {
             exceptionThrown = true;
-            System.out.println(MintException.ERROR_INVALID_DATE);
+            System.out.println(MintException.ERROR_INVALID_DATE_EDIT);
         }
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }

@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import seedu.duke.parser.Parser;
 import seedu.duke.storage.ExpenseListDataManager;
 
 import java.io.File;
@@ -83,7 +84,7 @@ public class ExpenseList {
     }
 
     // MOVED
-    void deleteExpenseByKeywords(ArrayList<String> tags, String name,
+    public void deleteExpenseByKeywords(ArrayList<String> tags, String name,
                                  String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
@@ -96,7 +97,7 @@ public class ExpenseList {
     }
 
     // MOVED
-    void editExpenseByKeywords(ArrayList<String> tags, String name,
+    public void editExpenseByKeywords(ArrayList<String> tags, String name,
                                String date, String amount, String catNum) throws MintException {
         try {
             Expense expense = chooseExpenseByKeywords(tags, false, name, date, amount, catNum);
@@ -203,8 +204,8 @@ public class ExpenseList {
             if (year == null) {
                 year = Integer.toString(LocalDate.now().getYear());
             }
-            recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(),
-                    Integer.parseInt(year));
+            //recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(),
+            //        Integer.parseInt(year));
         }
 
         if (argumentArray.contains("from")) {
@@ -227,8 +228,8 @@ public class ExpenseList {
                 System.out.println(MintException.ERROR_INVALID_SORTDATE);
                 return;
             }
-            recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
-                    endDate);
+            //recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
+            //        endDate);
         }
 
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
@@ -304,7 +305,7 @@ public class ExpenseList {
             System.out.println(MintException.ERROR_INVALID_NUMBER);
         } catch (DateTimeParseException e) {
             exceptionThrown = true;
-            System.out.println(MintException.ERROR_INVALID_DATE);
+            System.out.println(MintException.ERROR_INVALID_DATE_EDIT);
         }
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }

@@ -6,12 +6,11 @@ import seedu.duke.Expense;
 import seedu.duke.ExpenseList;
 import seedu.duke.MintException;
 import seedu.duke.storage.ExpenseListDataManager;
-import seedu.duke.Parser;
+import seedu.duke.parser.Parser;
 import seedu.duke.Ui;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
 
 public class EditExpenseCommand {
 
