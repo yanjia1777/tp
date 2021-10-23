@@ -33,7 +33,7 @@ public class Duke {
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        //        dataManagerActions.printPreviousFileContents(expenseList);
+        dataManagerActions.printPreviousFileContents(expenseList);
         while (true) {
             try {
                 String userInput = in.nextLine();

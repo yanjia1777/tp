@@ -40,10 +40,10 @@ public class DeleteExpenseCommand {
             System.out.println("I have deleted: " + expense);
             expenseList.remove(expense);
             String stringToDelete = ExpenseList.overWriteString(expense);
-            //            if (isCurrentMonthExpense(expense)) {
-            //                CategoryList.deleteSpending(expense);
-            //            }
-            //            ExpenseListDataManager.deleteLineInTextFile(stringToDelete);
+//            if (isCurrentMonthExpense(expense)) {
+//                CategoryList.deleteSpending(expense);
+//            }
+            ExpenseListDataManager.deleteLineInTextFile(stringToDelete);
         }
     }
 }

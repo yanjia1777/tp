@@ -74,7 +74,7 @@ public class ExpenseListDataManager extends DataManagerActions {
         }
     }
 
-    public static void loadExpenseListContents(ExpenseList expenseList) throws FileNotFoundException {
+    public static void loadExpenseListContents(ArrayList<Expense> expenseList) throws FileNotFoundException {
         File mintExpenseList = new File(FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintExpenseList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
