@@ -2,13 +2,14 @@ package seedu.duke;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class Filter {
     public static ArrayList<Expense> filterExpenseByName(String name, ArrayList<Expense> listToFilter) {
         ArrayList<Expense> filteredArrayList = listToFilter
                 .stream()
-                .filter(e -> e.getName().contains(name))
+                .filter(e -> e.getName().toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT)))
                 .collect(Collectors.toCollection(ArrayList::new));
         return filteredArrayList;
     }
@@ -16,7 +17,7 @@ public class Filter {
     public static ArrayList<Expense> filterExpenseByDate(String date, ArrayList<Expense> listToFilter) {
         ArrayList<Expense> filteredArrayList = listToFilter
                 .stream()
-                .filter(e -> e.getDate().equals(LocalDate.parse(date)))
+                .filter(e -> e.getDate().equals(LocalDate.parse(date, Expense.dateFormatter)))
                 .collect(Collectors.toCollection(ArrayList::new));
         return filteredArrayList;
     }

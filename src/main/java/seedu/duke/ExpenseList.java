@@ -21,6 +21,11 @@ public class ExpenseList {
     public static final String AMOUNT_SEPARATOR = "a/";
     public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
     public static final int LENGTH_OF_SEPARATOR = 2;
+    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
+    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
+    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String BLANK = "";
     protected ArrayList<Expense> expenseList = new ArrayList<>();
@@ -37,6 +42,7 @@ public class ExpenseList {
                 Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     }
 
+    // MOVED
     public void addExpense(String name, String date, String amount, String catNum) {
         Expense expense = new Expense(name, date, amount, catNum);
         if (isCurrentMonthExpense(expense)) {
@@ -76,6 +82,7 @@ public class ExpenseList {
         return filteredList;
     }
 
+    // MOVED
     void deleteExpenseByKeywords(ArrayList<String> tags, String name,
                                  String date, String amount, String catNum) throws MintException {
         try {
@@ -88,6 +95,7 @@ public class ExpenseList {
         }
     }
 
+    // MOVED
     void editExpenseByKeywords(ArrayList<String> tags, String name,
                                String date, String amount, String catNum) throws MintException {
         try {
@@ -100,6 +108,7 @@ public class ExpenseList {
         }
     }
 
+    // Common method
     public Expense chooseExpenseByKeywords(ArrayList<String> tags, boolean isDelete, String name,
                                            String date, String amount, String catNum) throws MintException {
         ArrayList<Expense> filteredList = filterExpenseByKeywords(tags, name, date, amount, catNum);
@@ -126,11 +135,13 @@ public class ExpenseList {
         return expense;
     }
 
+    // MOVED
     public void deleteExpense(Expense expense) throws MintException {
         deleteExpense(expense.getName(), expense.getDate().toString(),
                 Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     }
 
+    // MOVED
     public void deleteExpense(String name, String date, String amount, String catNum) throws MintException {
         Expense expense = new Expense(name, date, amount, catNum);
         if (expenseList.contains(expense)) {
@@ -145,6 +156,7 @@ public class ExpenseList {
         }
     }
 
+    // MOVED
     public void viewExpense(String[] argumentArrayInput, RecurringExpenseList recurringExpenseList) throws MintException {
         String sortType;
         LocalDate fromDate;
@@ -228,6 +240,7 @@ public class ExpenseList {
         }
     }
 
+    //MOVED
     public double calculateTotalExpense(ArrayList<Expense> expenseList) {
         double total = 0;
         for (Expense expense : expenseList) {
@@ -256,11 +269,13 @@ public class ExpenseList {
         }
     }
 
+    // MOVED
     public void editExpense(Expense expense) throws MintException {
         editExpense(expense.getName(), expense.getDate().toString(),
                 Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     }
 
+    // MOVED
     public void editExpense(String name, String date, String amount, String catNum) throws MintException {
         String choice;
         int indexToBeChanged;
@@ -294,11 +309,13 @@ public class ExpenseList {
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }
 
+    // common method
     public static String overWriteString(Expense expense) {
         return expense.getCatNum() + "|" + expense.getDate() + "|" + expense.getName()
                 + "|" + expense.getAmount();
     }
 
+    // MOVED
     private void editSpecifiedEntry(String userInput, int indexToBeChanged, Expense expense) throws MintException {
         Parser parser = new Parser();
         ArrayList<String> splitChoice = new ArrayList<>();
@@ -315,6 +332,7 @@ public class ExpenseList {
         amendExpense(indexToBeChanged, splitChoice, expense);
     }
 
+    // MOVED
     private String remainingString(ArrayList<String> splitChoice, String choice, int currentIndex, int nextIndex) {
         String description;
         description = choice.substring(currentIndex, nextIndex).trim();
@@ -323,10 +341,12 @@ public class ExpenseList {
         return choice;
     }
 
+    // MOVED
     private void extractFieldsToAmend(ArrayList<String> splitChoice, String description) {
         splitChoice.add(description);
     }
 
+    // MOVED
     private String scanFieldsToUpdate() {
         String choice;
         Scanner scan = new Scanner(System.in);
@@ -335,11 +355,13 @@ public class ExpenseList {
         return choice;
     }
 
+    // MOVED
     private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
         String newExpense = expenseList.get(indexToBeChanged).toString();
         return !originalExpense.equals(newExpense);
     }
 
+    // MOVED
     private void amendExpense(int index, ArrayList<String> choice, Expense expense) throws MintException {
         String name = expense.getName();
         String date = expense.getDate().toString();
@@ -364,6 +386,7 @@ public class ExpenseList {
         expenseList.set(index, new Expense(name, date, amount, catNum));
     }
 
+    // MOVED
     private String nonEmptyNewDescription(String word) throws MintException {
         String description;
         String newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR);

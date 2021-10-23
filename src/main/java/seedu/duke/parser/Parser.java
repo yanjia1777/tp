@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import seedu.duke.commands.AddExpenseCommand;
+
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -297,6 +299,10 @@ public class Parser {
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
                 expenseList.addExpense(name, date, amount, catNum);
+                //                ArrayList<Expense> expenseList2 = new ArrayList<>();
+                //                Expense expense = new Expense(name, date, amount, catNum);
+                //                AddExpenseCommand addExpenseCommand = new AddExpenseCommand();
+                //                addExpenseCommand.addExpense(expense, expenseList2);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
