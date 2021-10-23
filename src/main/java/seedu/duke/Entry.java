@@ -10,10 +10,10 @@ public class Entry {
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
     public static final int CAT_NUM_OTHERS = 7;
-    protected int catNum;
-    protected String name;
-    protected LocalDate date;
-    protected double amount;
+    private int catNum;
+    private String name;
+    private LocalDate date;
+    private double amount;
 
     public Entry() {
         catNum = CAT_NUM_OTHERS; //others
@@ -104,10 +104,10 @@ public class Entry {
         }
 
         Expense expense = (Expense) object;
-        boolean isNameEqual = Objects.equals(name, expense.name);
-        boolean isDateEqual = Objects.equals(date, expense.date);
-        boolean isAmountEqual = Objects.equals(amount, expense.amount);
-        boolean isCategoryEqual = Objects.equals(catNum, expense.catNum);
+        boolean isNameEqual = Objects.equals(name, expense.getName());
+        boolean isDateEqual = Objects.equals(date, expense.getDate());
+        boolean isAmountEqual = Objects.equals(amount, expense.getAmount());
+        boolean isCategoryEqual = Objects.equals(catNum, expense.getCatNum());
         return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
 }

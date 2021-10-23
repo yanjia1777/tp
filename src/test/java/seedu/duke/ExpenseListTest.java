@@ -3,6 +3,8 @@ package seedu.duke;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+import seedu.duke.parser.Parser;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -28,12 +30,13 @@ class ExpenseListTest {
     @Test
     public void deleteExpense_nonExistingItem_printErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("delete n/Cheese d/2021-12-23 a/18 c/1", expenseList);
+        parser.executeCommand("delete n/Cheese d/2021-12-23 a/18 c/1", expenseList, recurringExpenseList);
         String expectedOutput  = "Hmm.. That item is not in the list." + Ui.LINE_SEPARATOR;
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -41,12 +44,13 @@ class ExpenseListTest {
     @Test
     public void deleteExpense_wrongAmountFormat_printErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("delete n/Cheese d/2021-12-23 a/15.5abc c/1", expenseList);
+        parser.executeCommand("delete n/Cheese d/2021-12-23 a/15.5abc c/1", expenseList, recurringExpenseList);
         String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_AMOUNT + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -54,12 +58,13 @@ class ExpenseListTest {
     @Test
     public void deleteExpense_wrongDateFormat_printErrorMessage() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        parser.executeCommand("delete n/Cheese d/2021-12 a/15.5 c/1", expenseList);
+        parser.executeCommand("delete n/Cheese d/2021-12 a/15.5 c/1", expenseList, recurringExpenseList);
         String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DATE + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -73,7 +78,8 @@ class ExpenseListTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         String[] emptyArray = {"view"};
-        expenseList.viewExpense(emptyArray);
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
+        expenseList.viewExpense(emptyArray, recurringExpenseList);
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator()
                 + "     Others     | 2021-12-23 | Cheese burger | $15.50" + System.lineSeparator()
                 + "     Others     | 2022-12-23 | book | $9.00" + System.lineSeparator();
@@ -83,12 +89,13 @@ class ExpenseListTest {
     @Test
     public void viewExpense_zeroExpenses_success() throws MintException {
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
         String[] emptyArray = {"view"};
-        expenseList.viewExpense(emptyArray);
+        expenseList.viewExpense(emptyArray, recurringExpenseList);
         String expectedOutput  = "Here is the list of your expenses:" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
