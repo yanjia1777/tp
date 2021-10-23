@@ -67,7 +67,8 @@ public class RecurringExpenseList {
         return filteredList;
     }
 
-    public void deleteRecurringExpenseByKeywords(ArrayList<String> tags, Entry entry, String interval) throws MintException {
+    public void deleteRecurringExpenseByKeywords(ArrayList<String> tags,
+                                                 Entry entry, String interval) throws MintException {
         try {
             RecurringExpense expense = chooseRecurringExpenseByKeywords(tags, true, entry, interval);
             if (expense != null) {
@@ -123,8 +124,10 @@ public class RecurringExpenseList {
     }
 
     public void deleteRecurringExpense(String name, String date, String amount,
-                                       ExpenseCategory category, Interval interval, String endDate) throws MintException {
-        RecurringExpense expense = new RecurringExpense(name, LocalDate.parse(date), Double.parseDouble(amount), category, interval, LocalDate.parse(endDate));
+                                       ExpenseCategory category, Interval interval,
+                                       String endDate) throws MintException {
+        RecurringExpense expense = new RecurringExpense(name, LocalDate.parse(date),
+                Double.parseDouble(amount), category, interval, LocalDate.parse(endDate));
         if (recurringExpenseList.contains(expense)) {
             logger.log(Level.INFO, "User deleted recurring expense: " + expense);
             System.out.println("I have deleted: " + expense);
@@ -293,7 +296,8 @@ public class RecurringExpenseList {
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         try {
-            RecurringExpense originalExpense = new RecurringExpense(name, LocalDate.parse(date), Double.parseDouble(amount), category, interval, LocalDate.parse(endDate));
+            RecurringExpense originalExpense = new RecurringExpense(name, LocalDate.parse(date),
+                    Double.parseDouble(amount), category, interval, LocalDate.parse(endDate));
             final String originalExpenseStr = originalExpense.toString();
             final String stringToOverwrite = overWriteString(originalExpense);
             if (recurringExpenseList.contains(originalExpense)) {
@@ -392,7 +396,8 @@ public class RecurringExpenseList {
                 amount = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
             }
         }
-        recurringExpenseList.set(index, new RecurringExpense(name, LocalDate.parse(date), Double.parseDouble(amount), category, interval, LocalDate.parse(endDate)));
+        recurringExpenseList.set(index, new RecurringExpense(name, LocalDate.parse(date),
+                Double.parseDouble(amount), category, interval, LocalDate.parse(endDate)));
     }
 
     private String nonEmptyNewDescription(String word) throws MintException {

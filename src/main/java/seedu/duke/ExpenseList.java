@@ -103,33 +103,33 @@ public class ExpenseList {
     //        }
     //    }
 
-    // Common method
-//    public static Expense chooseExpenseByKeywords(ArrayList<String> tags, boolean isDelete, String name,
-//                                                  String date, String amount, String catNum,
-//                                                  ArrayList<Expense> expenseList) throws MintException {
-//        ArrayList<Expense> filteredList = filterExpenseByKeywords(tags, name, date, amount, catNum, expenseList);
-//        Expense expense = null;
-//        if (filteredList.size() == 0) {
-//            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
-//        } else if (filteredList.size() == 1) {
-//            Expense onlyExpense = filteredList.get(0);
-//            if (Ui.isConfirmedToDeleteOrEdit(onlyExpense, isDelete)) {
-//                expense = onlyExpense;
-//            }
-//            return expense;
-//        }
-//
-//        Ui.viewGivenList(filteredList);
-//        try {
-//            int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
-//            if (index >= 0) {
-//                expense = filteredList.get(index);
-//            }
-//        } catch (MintException e) {
-//            throw new MintException(e.getMessage());
+//     Common method
+//public static Expense chooseExpenseByKeywords(ArrayList<String> tags, boolean isDelete, String name,
+//                                              String date, String amount, String catNum,
+//                                              ArrayList<Expense> expenseList) throws MintException {
+//    ArrayList<Expense> filteredList = filterExpenseByKeywords(tags, name, date, amount, catNum, expenseList);
+//    Expense expense = null;
+//    if (filteredList.size() == 0) {
+//        throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
+//    } else if (filteredList.size() == 1) {
+//        Expense onlyExpense = filteredList.get(0);
+//        if (Ui.isConfirmedToDeleteOrEdit(onlyExpense, isDelete)) {
+//            expense = onlyExpense;
 //        }
 //        return expense;
 //    }
+//
+//    Ui.viewGivenList(filteredList);
+//    try {
+//        int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
+//        if (index >= 0) {
+//            expense = filteredList.get(index);
+//        }
+//    } catch (MintException e) {
+//        throw new MintException(e.getMessage());
+//    }
+//    return expense;
+//}
 
 
     //    public void deleteExpense(Expense expense) throws MintException {
