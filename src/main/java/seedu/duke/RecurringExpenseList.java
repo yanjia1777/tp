@@ -43,8 +43,9 @@ public class RecurringExpenseList {
         }
     }
 
-    public ArrayList<Expense> filterRecurringExpenseByKeywords(ArrayList<String> tags, String name, String date,
-                                                      String amount, String catNum, String interval) throws MintException {
+    public ArrayList<Expense> filterRecurringExpenseByKeywords(ArrayList<String> tags, String name,
+                                                               String date, String amount, String catNum,
+                                                               String interval) throws MintException {
         ArrayList<Expense> filteredList = new ArrayList<>(recurringExpenseList);
         for (String tag : tags) {
             switch (tag) {
@@ -72,7 +73,8 @@ public class RecurringExpenseList {
     public void deleteRecurringExpenseByKeywords(ArrayList<String> tags, String name,
                                  String date, String amount, String catNum, String interval) throws MintException {
         try {
-            RecurringExpense expense = chooseRecurringExpenseByKeywords(tags, true, name, date, amount, catNum, interval);
+            RecurringExpense expense = chooseRecurringExpenseByKeywords(tags, true, name,
+                    date, amount, catNum, interval);
             if (expense != null) {
                 deleteRecurringExpense(expense);
             }
@@ -81,10 +83,11 @@ public class RecurringExpenseList {
         }
     }
 
-    public void editRecurringExpenseByKeywords(ArrayList<String> tags, String name,
-                                          String date, String amount, String catNum, String interval) throws MintException {
+    public void editRecurringExpenseByKeywords(ArrayList<String> tags, String name, String date,
+                                               String amount, String catNum, String interval) throws MintException {
         try {
-            RecurringExpense expense = (RecurringExpense) chooseRecurringExpenseByKeywords(tags, true, name, date, amount, catNum, interval);
+            RecurringExpense expense = (RecurringExpense) chooseRecurringExpenseByKeywords(tags, true, name,
+                    date, amount, catNum, interval);
             if (expense != null) {
                 editRecurringExpense(expense);
             }
@@ -93,8 +96,9 @@ public class RecurringExpenseList {
         }
     }
 
-    public RecurringExpense chooseRecurringExpenseByKeywords(ArrayList<String> tags, boolean isDelete, String name,
-                                           String date, String amount, String catNum, String interval) throws MintException {
+    public RecurringExpense chooseRecurringExpenseByKeywords(ArrayList<String> tags, boolean isDelete,
+                                                             String name, String date, String amount,
+                                                             String catNum, String interval) throws MintException {
         ArrayList<Expense> filteredList = filterRecurringExpenseByKeywords(tags, name, date, amount, catNum, interval);
         RecurringExpense expense = null;
         if (filteredList.size() == 0) {
@@ -223,7 +227,7 @@ public class RecurringExpenseList {
             int startY = newExpense.getDate().getYear();
             int endY = newExpense.getEndDate().getYear();
 
-            switch(newExpense.getInterval()) {
+            switch (newExpense.getInterval()) {
             case MONTH:
                 boolean isYearMonthBetweenStartAndEnd = startYM.compareTo(currentYM) <= 0
                         && currentYM.compareTo(endYM) <= 0;
@@ -253,7 +257,7 @@ public class RecurringExpenseList {
             int startY = newExpense.getDate().getYear();
             int endY = newExpense.getEndDate().getYear();
 
-            switch(newExpense.getInterval()) {
+            switch (newExpense.getInterval()) {
             case MONTH:
                 boolean isYearMonthBetweenStartAndEnd = startYM.compareTo(currentYM) <= 0
                         && currentYM.compareTo(endYM) <= 0;
@@ -270,6 +274,8 @@ public class RecurringExpenseList {
                     expenseList.add(newExpense);
                 }
                 break;
+            default:
+                break;
             }
         }
     }
@@ -284,12 +290,12 @@ public class RecurringExpenseList {
             int endYear = endDate.getYear();
             boolean isNotInBetween;
 
-            switch(expense.getInterval()) {
+            switch (expense.getInterval()) {
             case MONTH:
                 isNotInBetween = endRecurringDate.isBefore(startDate)
                         || startRecurringDate.isAfter(endDate);
                 boolean isStartDateInBetween = startRecurringDate.compareTo(startDate) <= 0;
-                boolean isEndDateInBetween =endRecurringDate.compareTo(endDate) >= 0;
+                boolean isEndDateInBetween = endRecurringDate.compareTo(endDate) >= 0;
 
                 if (isNotInBetween) {
                     return;
@@ -336,6 +342,8 @@ public class RecurringExpenseList {
                     expenseList.add(newExpense);
                     effectiveStartYear++;
                 }
+                break;
+            default:
                 break;
             }
         }
@@ -406,7 +414,8 @@ public class RecurringExpenseList {
                 + "|" + expense.getAmount();
     }
 
-    private void editSpecifiedEntry(String userInput, int indexToBeChanged, RecurringExpense expense) throws MintException {
+    private void editSpecifiedEntry(String userInput, int indexToBeChanged,
+                                    RecurringExpense expense) throws MintException {
         Parser parser = new Parser();
         ArrayList<String> splitChoice = new ArrayList<>();
         String choice = " " + userInput;
@@ -447,7 +456,8 @@ public class RecurringExpenseList {
         return !originalExpense.equals(newExpense);
     }
 
-    private void amendRecurringExpense(int index, ArrayList<String> choice, RecurringExpense expense) throws MintException {
+    private void amendRecurringExpense(int index, ArrayList<String> choice,
+                                       RecurringExpense expense) throws MintException {
         String name = expense.getName();
         String date = expense.getDate().toString();
         String amount = Double.toString(expense.getAmount());

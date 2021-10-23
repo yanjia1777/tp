@@ -1,7 +1,10 @@
 package seedu.duke.parser;
 
-import seedu.duke.*;
-
+import seedu.duke.MintException;
+import seedu.duke.ExpenseList;
+import seedu.duke.Ui;
+import seedu.duke.CategoryList;
+import seedu.duke.RecurringExpenseList;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
