@@ -1,8 +1,9 @@
 package seedu.duke.commands;
 
+
 import seedu.duke.Expense;
-import seedu.duke.ExpenseList;
 import seedu.duke.MintException;
+import seedu.duke.RecurringExpenseList;
 import seedu.duke.Sorter;
 
 import java.time.LocalDate;
@@ -10,7 +11,6 @@ import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class ViewExpenseCommand {
@@ -19,10 +19,9 @@ public class ViewExpenseCommand {
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     protected static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
 
-
-    ExpenseList expenseList = new ExpenseList();
-
-    public void viewExpense(String[] argumentArrayInput) throws MintException {
+    public void viewExpense(String[] argumentArrayInput,
+                            RecurringExpenseList recurringExpenseList,
+                            ArrayList<Expense> expenseList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
@@ -30,7 +29,7 @@ public class ViewExpenseCommand {
         String year = null;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
         //        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
-        ArrayList<Expense> outputArray = new ArrayList<Expense>((Collection<? extends Expense>) expenseList);
+        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
 
 
         if (argumentArray.contains("by")) {
@@ -38,7 +37,7 @@ public class ViewExpenseCommand {
                 sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
                 sort(outputArray, sortType);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(ERROR_INVALID_SORTTYPE);
+                System.out.println(MintException.ERROR_INVALID_SORTTYPE);
                 return;
             }
         }
@@ -67,6 +66,11 @@ public class ViewExpenseCommand {
             }
             System.out.println("For the month of " + month + ":");
             Sorter.trimByMonth(outputArray, month);
+            if (year == null) {
+                year = Integer.toString(LocalDate.now().getYear());
+            }
+            //recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(),
+            //        Integer.parseInt(year));
         }
 
         if (argumentArray.contains("from")) {
@@ -84,10 +88,13 @@ public class ViewExpenseCommand {
                     System.out.print(" to " + endDate);
                 }
                 System.out.println();
+
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                System.out.println(ERROR_INVALID_SORTDATE);
+                System.out.println(MintException.ERROR_INVALID_SORTDATE);
                 return;
             }
+            //recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
+            //        endDate);
         }
 
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {

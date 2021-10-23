@@ -4,6 +4,7 @@ import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -13,6 +14,7 @@ public class Duke {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
+    public static ArrayList<Expense> expenseList = new ArrayList<>();
 
     /**
      * Main entry-point for the java.duke.Duke application.
@@ -25,7 +27,7 @@ public class Duke {
         Ui.startup();
         Scanner in = new Scanner(System.in);
         CategoryList.initialiseCategories();
-        ExpenseList expenseList = new ExpenseList();
+        //        ExpenseList expenseList = new ExpenseList();
         RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
