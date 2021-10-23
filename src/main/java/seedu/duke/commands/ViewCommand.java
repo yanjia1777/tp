@@ -1,10 +1,7 @@
 package seedu.duke.commands;
 
 
-import seedu.duke.Expense;
-import seedu.duke.MintException;
-import seedu.duke.RecurringExpenseList;
-import seedu.duke.Sorter;
+import seedu.duke.*;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -13,23 +10,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class ViewExpenseCommand {
+public class ViewCommand extends Command {
 
     public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     protected static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
 
-    public void viewExpense(String[] argumentArrayInput,
+    public void view(String[] argumentArrayInput,
                             RecurringExpenseList recurringExpenseList,
-                            ArrayList<Expense> expenseList) throws MintException {
+                            ArrayList<Entry> entryList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
         Month month;
         String year = null;
         ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
-        //        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
-        ArrayList<Expense> outputArray = new ArrayList<Expense>(expenseList);
+        ArrayList<Entry> outputArray = new ArrayList<>(entryList);
 
 
         if (argumentArray.contains("by")) {
@@ -101,12 +97,12 @@ public class ViewExpenseCommand {
             Collections.reverse(outputArray);
         }
 
-        for (Expense expense : outputArray) {
-            System.out.println(expense.viewToString());
+        for (Entry entry : outputArray) {
+            System.out.println(entry.viewToString());
         }
     }
 
-    public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
+    public void sort(ArrayList<Entry> outputArray, String sortType) throws MintException {
         assert sortType != null : "sortType should have a command";
         switch (sortType) {
         case "name":
