@@ -189,7 +189,8 @@ public class Parser {
         argumentsArray = userInput.split(" ");
     }
 
-    public int executeCommand(String userInput, ExpenseList expenseList, RecurringExpenseList recurringExpenseList) throws MintException {
+    public int executeCommand(String userInput, ExpenseList expenseList,
+                              RecurringExpenseList recurringExpenseList) throws MintException {
         ArrayList<String> validTags;
         userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);

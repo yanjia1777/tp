@@ -66,7 +66,8 @@ public class ValidityChecker {
         }
     }
 
-    static ArrayList<String> identifyValidTags(Parser parser, String userInput, String[] mandatoryTags) throws MintException {
+    static ArrayList<String> identifyValidTags(Parser parser, String userInput,
+                                               String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
         String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/"}

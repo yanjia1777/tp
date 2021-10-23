@@ -158,7 +158,8 @@ public class ExpenseList {
     }
 
     // MOVED
-    public void viewExpense(String[] argumentArrayInput, RecurringExpenseList recurringExpenseList) throws MintException {
+    public void viewExpense(String[] argumentArrayInput,
+                            RecurringExpenseList recurringExpenseList) throws MintException {
         String sortType;
         LocalDate fromDate;
         LocalDate endDate;
