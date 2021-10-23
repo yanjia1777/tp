@@ -11,15 +11,17 @@ import java.util.logging.Level;
 
 public class DeleteExpenseCommand {
 
-    ExpenseList expenseList = new ExpenseList();
-
-    void deleteExpenseByKeywords(ArrayList<String> tags, String name,
-                                 String date, String amount, String catNum,
-                                 ArrayList<Expense> dummyExpenseList) throws MintException {
+    public void deleteExpenseByKeywords(ArrayList<String> tags, Expense expense,
+                                        ArrayList<Expense> expenseList) throws MintException {
         try {
-            Expense expense = expenseList.chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
-            if (expense != null) {
-                deleteExpense(expense, dummyExpenseList);
+            String name = expense.getName();
+            String date = expense.getDate().toString();
+            String amount = Double.toString(expense.getAmount());
+            String catNum = Integer.toString(expense.getCatNum());
+            Expense finalExpense = ExpenseList.chooseExpenseByKeywords(tags, true, name, date, amount, catNum,
+                    expenseList);
+            if (finalExpense != null) {
+                deleteExpense(finalExpense, expenseList);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());

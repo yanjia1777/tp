@@ -28,15 +28,17 @@ public class EditExpenseCommand {
     protected static final String ERROR_EXPENSE_NOT_IN_LIST = "Hmm.. That item is not in the list.";
 
 
-    ExpenseList expenseList = new ExpenseList();
-
-    void editExpenseByKeywords(ArrayList<String> tags, String name,
-                               String date, String amount, String catNum,
-                               ArrayList<Expense> dummyExpenseList) throws MintException {
+    public void editExpenseByKeywords(ArrayList<String> tags, Expense expense,
+                               ArrayList<Expense> expenseList) throws MintException {
         try {
-            Expense expense = expenseList.chooseExpenseByKeywords(tags, true, name, date, amount, catNum);
-            if (expense != null) {
-                editExpense(expense, dummyExpenseList);
+            String name = expense.getName();
+            String date = expense.getDate().toString();
+            String amount = Double.toString(expense.getAmount());
+            String catNum = Integer.toString(expense.getCatNum());
+            Expense finalExpense = ExpenseList.chooseExpenseByKeywords(tags, true, name, date, amount, catNum,
+                    expenseList);
+            if (finalExpense != null) {
+                editExpense(finalExpense, expenseList);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());

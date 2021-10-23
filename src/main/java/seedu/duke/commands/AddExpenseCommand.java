@@ -16,7 +16,7 @@ public class AddExpenseCommand {
         //            CategoryList.addSpending(expense);
         //        }
         //        logger.log(Level.INFO, "User added expense: " + expense);
-        //        System.out.println("I have added: " + expense);
+        System.out.println("I have added: " + expense);
         expenseList.add(expense);
         //        try {
         //            ExpenseListDataManager.appendToExpenseListTextFile(FILE_PATH, expense);
