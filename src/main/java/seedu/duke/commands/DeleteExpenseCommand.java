@@ -4,7 +4,7 @@ import seedu.duke.Expense;
 import seedu.duke.ExpenseCategory;
 import seedu.duke.ExpenseList;
 import seedu.duke.MintException;
-import seedu.duke.storage.ExpenseListDataManager;
+import seedu.duke.storage.EntryListDataManager;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -43,7 +43,7 @@ public class DeleteExpenseCommand {
             //            if (isCurrentMonthExpense(expense)) {
             //                CategoryList.deleteSpending(expense);
             //            }
-            ExpenseListDataManager.deleteLineInTextFile(stringToDelete);
+            EntryListDataManager.deleteLineInTextFile(stringToDelete);
         }
     }
 }

@@ -1,10 +1,11 @@
 package seedu.duke.parser;
 
+
 import seedu.duke.*;
-import seedu.duke.commands.AddExpenseCommand;
-import seedu.duke.commands.DeleteExpenseCommand;
-import seedu.duke.commands.EditExpenseCommand;
-import seedu.duke.commands.ViewExpenseCommand;
+import seedu.duke.commands.AddCommand;
+import seedu.duke.commands.DeleteCommand;
+import seedu.duke.commands.EditCommand;
+import seedu.duke.commands.ViewCommand;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -225,7 +226,7 @@ public class Parser {
         argumentsArray = userInput.split(" ");
     }
 
-    public int executeCommand(String userInput, ArrayList<Expense> expenseList,
+    public int executeCommand(String userInput, ArrayList<Entry> entryList,
                               RecurringExpenseList recurringExpenseList) throws MintException {
         ArrayList<String> validTags;
         userInput = userInput.trim(); //get rid of whitespaces
@@ -242,8 +243,8 @@ public class Parser {
             case "view":
                 parseInputByArguments(userInput);
                 //                expenseList.viewExpense(argumentsArray, recurringExpenseList);
-                ViewExpenseCommand viewExpenseCommand = new ViewExpenseCommand();
-                viewExpenseCommand.viewExpense(argumentsArray, recurringExpenseList, expenseList);
+                ViewCommand viewCommand = new ViewCommand();
+                viewCommand.view(argumentsArray, recurringExpenseList, entryList);
                 break;
 //            case "limit":
 //                parseInputByArguments(userInput);
@@ -258,25 +259,24 @@ public class Parser {
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
-                Expense expense = new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), category);
-                AddExpenseCommand addExpenseCommand = new AddExpenseCommand();
-                addExpenseCommand.addExpense(expense, expenseList);
+                Entry entry = new Entry(name, date, amount, catNum);
+                AddCommand addCommand = new AddCommand();
+                addCommand.add(entry, entryList);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                expense = new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), category);
-                DeleteExpenseCommand deleteExpenseCommand = new DeleteExpenseCommand();
-                deleteExpenseCommand.deleteExpenseByKeywords(validTags, expense, expenseList);
+                entry = new Entry(name, date, amount, catNum);
+                DeleteCommand deleteCommand = new DeleteCommand();
+                deleteCommand.deleteByKeywords(validTags, entry, entryList);
                 break;
             case "edit":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
                 //                expenseList.editExpenseByKeywords(validTags, expense, expenseList);
-                EditExpenseCommand editExpenseCommand = new EditExpenseCommand();
-                expense = new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), category);
-                editExpenseCommand.editExpenseByKeywords(validTags, expense, expenseList);
-
+                EditCommand editCommand = new EditCommand();
+                entry = new Entry(name, date, amount, catNum);
+                editCommand.editByKeywords(validTags, entry, entryList);
                 break;
             case "addR":
                 isRecurring = true;
