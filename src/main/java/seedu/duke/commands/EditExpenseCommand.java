@@ -1,13 +1,10 @@
 package seedu.duke.commands;
 
-
-import seedu.duke.CategoryList;
-import seedu.duke.Expense;
-import seedu.duke.ExpenseList;
-import seedu.duke.MintException;
+import seedu.duke.*;
 import seedu.duke.storage.ExpenseListDataManager;
 import seedu.duke.parser.Parser;
-import seedu.duke.Ui;
+
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,7 +31,7 @@ public class EditExpenseCommand {
             String name = expense.getName();
             String date = expense.getDate().toString();
             String amount = Double.toString(expense.getAmount());
-            String catNum = Integer.toString(expense.getCatNum());
+            String catNum = String.valueOf(expense.getCategory().ordinal());
             Expense finalExpense = ExpenseList.chooseExpenseByKeywords(tags, true, name, date, amount, catNum,
                     expenseList);
             if (finalExpense != null) {
@@ -58,10 +55,10 @@ public class EditExpenseCommand {
         boolean exceptionThrown = false;
         try {
             String name = expense.getName();
-            String date = expense.getDate().toString();
-            String amount = Double.toString(expense.getAmount());
-            String catNum = Integer.toString(expense.getCatNum());
-            Expense originalExpense = new Expense(name, date, amount, catNum);
+            LocalDate date = expense.getDate();
+            Double amount = expense.getAmount();
+            ExpenseCategory category = expense.getCategory();
+            Expense originalExpense = new Expense(name, date, amount, category);
             final String originalExpenseStr = originalExpense.toString();
             final String stringToOverwrite = ExpenseList.overWriteString(originalExpense);
             if (expenseList.contains(originalExpense)) {
@@ -76,7 +73,6 @@ public class EditExpenseCommand {
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalExpenseStr, expenseList);
             String stringToUpdate = ExpenseList.overWriteString(expenseList.get(indexToBeChanged));
             final Expense newExpense = expenseList.get(indexToBeChanged);
-            CategoryList.editSpending(originalExpense, newExpense);
             ExpenseListDataManager.editExpenseListTextFile(stringToOverwrite, stringToUpdate);
 
         } catch (NumberFormatException e) {
@@ -136,7 +132,7 @@ public class EditExpenseCommand {
         String name = expense.getName();
         String date = expense.getDate().toString();
         String amount = Double.toString(expense.getAmount());
-        String catNum = Integer.toString(expense.getCatNum());
+        String catNum = String.valueOf(expense.getCategory().ordinal());
         for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
@@ -150,10 +146,10 @@ public class EditExpenseCommand {
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
                 catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                CategoryList.checkValidCatNum(catNum);
             }
         }
-        expenseList.set(index, new Expense(name, date, amount, catNum));
+        int EnumIndex = Integer.parseInt(catNum);
+        expenseList.set(index, new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), ExpenseCategory.values()[EnumIndex] ));
     }
 
     private String nonEmptyNewDescription(String word) throws MintException {

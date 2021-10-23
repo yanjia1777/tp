@@ -57,7 +57,7 @@ public class Ui {
     public static void viewGivenList(ArrayList<Expense> list) {
         System.out.println("Here is the list of items containing the keyword.");
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(INDENT + (i + 1) + "  " + list.get(i).viewToString());
+            System.out.println(INDENT + (i + 1) + "  " + list.get(i).toString());
         }
     }
 
@@ -130,10 +130,10 @@ public class Ui {
         System.out.println(MISSING_FILE_MESSAGE);
     }
 
-    public static void setLimitMessage(String catNumString, String amount) {
-        int catNumInt = Integer.parseInt(catNumString);
-        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
-    }
+//    public static void setLimitMessage(String catNumString, String amount) {
+//        int catNumInt = Integer.parseInt(catNumString);
+//        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
+//    }
 
     public static StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
         int index = 1;

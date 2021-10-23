@@ -26,7 +26,6 @@ public class Duke {
     public void run() {
         Ui.startup();
         Scanner in = new Scanner(System.in);
-        CategoryList.initialiseCategories();
         //        ExpenseList expenseList = new ExpenseList();
         RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();

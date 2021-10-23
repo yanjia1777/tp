@@ -245,13 +245,13 @@ public class Parser {
                 ViewExpenseCommand viewExpenseCommand = new ViewExpenseCommand();
                 viewExpenseCommand.viewExpense(argumentsArray, recurringExpenseList, expenseList);
                 break;
-            case "limit":
-                parseInputByArguments(userInput);
-                parserSetLimit(argumentsArray);
-                ValidityChecker.checkInvalidAmount(this);
-                ValidityChecker.checkInvalidCatNum(this);
-                Ui.setLimitMessage(catNum, amount);
-                break;
+//            case "limit":
+//                parseInputByArguments(userInput);
+//                parserSetLimit(argumentsArray);
+//                ValidityChecker.checkInvalidAmount(this);
+//                ValidityChecker.checkInvalidCatNum(this);
+//                Ui.setLimitMessage(catNum, amount);
+//                break;
 //            case "breakdown":
 //                break;
             case "add":

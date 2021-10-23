@@ -1,7 +1,7 @@
 package seedu.duke.commands;
 
-import seedu.duke.CategoryList;
 import seedu.duke.Expense;
+import seedu.duke.ExpenseCategory;
 import seedu.duke.ExpenseList;
 import seedu.duke.MintException;
 import seedu.duke.storage.ExpenseListDataManager;
@@ -17,7 +17,7 @@ public class DeleteExpenseCommand {
             String name = expense.getName();
             String date = expense.getDate().toString();
             String amount = Double.toString(expense.getAmount());
-            String catNum = Integer.toString(expense.getCatNum());
+            String catNum = String.valueOf(expense.getCategory().ordinal());
             Expense finalExpense = ExpenseList.chooseExpenseByKeywords(tags, true, name, date, amount, catNum,
                     expenseList);
             if (finalExpense != null) {

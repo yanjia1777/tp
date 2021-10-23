@@ -102,7 +102,7 @@ public class ViewExpenseCommand {
         }
 
         for (Expense expense : outputArray) {
-            System.out.println(expense.viewToString());
+            System.out.println(expense.toString());
         }
     }
 

@@ -1,8 +1,7 @@
 package seedu.duke.storage;
 
-import seedu.duke.CategoryList;
 import seedu.duke.Expense;
-import seedu.duke.ExpenseList;
+import seedu.duke.ExpenseCategory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,7 +28,7 @@ public class ExpenseListDataManager extends DataManagerActions {
     public static void appendToExpenseListTextFile(String filePath, Expense expense) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, true);
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
-        fileWriter.write(expense.getCatNum() + TEXT_DELIMITER + expense.getDate()
+        fileWriter.write(expense.getCategory() + TEXT_DELIMITER + expense.getDate()
                 + TEXT_DELIMITER + expense.getName() + TEXT_DELIMITER + expense.getAmount() + System.lineSeparator());
         fileWriter.close();
     }
@@ -95,10 +94,8 @@ public class ExpenseListDataManager extends DataManagerActions {
 
     public static void loadExpense(String name, String date, String amount, String catNum) {
         ArrayList<Expense> loadedExpenseList = expenseList;
-        Expense expense = new Expense(name, date, amount, catNum);
-        if (isCurrentMonthExpense(expense)) {
-            CategoryList.addSpending(expense);
-        }
+        int EnumIndex = Integer.parseInt(catNum);
+        Expense expense = new Expense(name, LocalDate.parse(date), Double.parseDouble(amount), ExpenseCategory.values()[EnumIndex]);
         loadedExpenseList.add(expense);
     }
 }

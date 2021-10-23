@@ -1,6 +1,5 @@
 package seedu.duke.commands;
 
-import seedu.duke.CategoryList;
 import seedu.duke.Expense;
 import seedu.duke.ExpenseList;
 import seedu.duke.storage.ExpenseListDataManager;
