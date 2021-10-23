@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static seedu.duke.Duke.expenseList;
+
 public class ExpenseListDataManager extends DataManagerActions {
 
     public static final String TEXT_DELIMITER = "|";
@@ -72,7 +74,7 @@ public class ExpenseListDataManager extends DataManagerActions {
         }
     }
 
-    public static void loadExpenseListContents(ExpenseList expenseList) throws FileNotFoundException {
+    public static void loadExpenseListContents(ArrayList<Expense> expenseList) throws FileNotFoundException {
         File mintExpenseList = new File(FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintExpenseList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
@@ -82,7 +84,7 @@ public class ExpenseListDataManager extends DataManagerActions {
             String date = params[1];
             String name = params[2];
             String amount = params[3];
-            loadExpense(name, date, amount, catNum, expenseList);
+            loadExpense(name, date, amount, catNum);
         }
     }
 
@@ -91,8 +93,8 @@ public class ExpenseListDataManager extends DataManagerActions {
                 && expense.getDate().getYear() == LocalDate.now().getYear();
     }
 
-    public static void loadExpense(String name, String date, String amount, String catNum, ExpenseList expenseList) {
-        ArrayList<Expense> loadedExpenseList = expenseList.getExpenseList();
+    public static void loadExpense(String name, String date, String amount, String catNum) {
+        ArrayList<Expense> loadedExpenseList = expenseList;
         Expense expense = new Expense(name, date, amount, catNum);
         if (isCurrentMonthExpense(expense)) {
             CategoryList.addSpending(expense);

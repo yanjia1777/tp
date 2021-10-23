@@ -1,5 +1,6 @@
 package seedu.duke.storage;
 
+import seedu.duke.Expense;
 import seedu.duke.ExpenseList;
 import seedu.duke.Ui;
 
@@ -31,7 +32,7 @@ public class DataManagerActions {
         }
     }
 
-    public void printPreviousFileContents(ExpenseList expenseList) {
+    public void printPreviousFileContents(ArrayList<Expense> expenseList) {
         try {
             ExpenseListDataManager.loadExpenseListContents(expenseList);
             CategoryListDataManager.loadCategoryFileContents();
