@@ -1,10 +1,7 @@
 package seedu.duke.parser;
 
-import seedu.duke.MintException;
-import seedu.duke.ExpenseList;
-import seedu.duke.Ui;
-import seedu.duke.CategoryList;
-import seedu.duke.RecurringExpenseList;
+import seedu.duke.*;
+
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,13 +31,10 @@ public class Parser {
     protected String date;
     protected String amount;
     protected String catNum;
-<<<<<<< HEAD:src/main/java/seedu/duke/Parser.java
     protected ExpenseCategory category;
-=======
     protected String interval;
     protected String endDate;
     protected boolean isRecurring = false;
->>>>>>> upstream/master:src/main/java/seedu/duke/parser/Parser.java
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
@@ -96,10 +90,6 @@ public class Parser {
         amount = param.trim();
     }
 
-    private void initCat() {
-        this.category = ExpenseCategory.OTHERS;
-    }
-
     private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
         case "0":
@@ -123,6 +113,17 @@ public class Parser {
         }
     }
 
+    private Interval setIntervalViaString(String interval) throws MintException {
+        switch (interval) {
+        case "MONTHLY":
+            return Interval.MONTH;
+        case "YEARLY":
+            return Interval.YEAR;
+        default:
+            throw new MintException("Invalid interval");
+        }
+    }
+
     private void setFieldsByTag(String description, String tagType) throws MintException {
         switch (tagType) {
         case "n":
@@ -136,13 +137,11 @@ public class Parser {
             break;
         case "c":
             this.catNum = description;
-            this.category = setCategoryViaCatNum(description);
+            this.category = setCategoryViaCatNum(catNum);
             break;
         case "i":
             if (isRecurring) {
                 this.interval = description;
-            } else {
-                throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
             }
             break;
         default:
@@ -187,14 +186,11 @@ public class Parser {
         if (command.equals("add")) {
             initDate();
             initCatNum();
-<<<<<<< HEAD:src/main/java/seedu/duke/Parser.java
-            initCat();
-=======
+
         } else if (command.equals("addR")) {
             initDate();
             initCatNum();
             initEndDate();
->>>>>>> upstream/master:src/main/java/seedu/duke/parser/Parser.java
         }
 
         parseInputByTagsLoop(userInput);
@@ -235,13 +231,8 @@ public class Parser {
             case "help":
                 Ui.help();
                 break;
-            case "cat":
-                //fallthrough
-            case "category":
-                //fallthrough
-            case "categories":
-                CategoryList.viewCategories();
-                break;
+//            case "cat":
+//                break;
             case "list":
                 //fallthrough
             case "view":
@@ -253,14 +244,10 @@ public class Parser {
                 parserSetLimit(argumentsArray);
                 ValidityChecker.checkInvalidAmount(this);
                 ValidityChecker.checkInvalidCatNum(this);
-                CategoryList.setLimit(catNum, amount);
                 Ui.setLimitMessage(catNum, amount);
                 break;
-            case "spending":
-                //fallthrough
-            case "breakdown":
-                CategoryList.viewMonthlyLimit();
-                break;
+//            case "breakdown":
+//                break;
             case "add":
                 parseInputByTags(userInput);
                 expenseList.addExpense(name, date, amount, category); //NEW
@@ -270,31 +257,31 @@ public class Parser {
             case "delete":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
+                expenseList.deleteExpenseByKeywords(validTags, name, date, amount, category);
                 break;
             case "edit":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                expenseList.editExpenseByKeywords(validTags, name, date, amount, catNum);
+                expenseList.editExpenseByKeywords(validTags, name, date, amount, category);
                 break;
             case "addR":
                 isRecurring = true;
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
-                recurringExpenseList.addRecurringExpense(name, date, amount, catNum, interval, endDate);
+                recurringExpenseList.addRecurringExpense(name, date, amount, category, Interval.valueOf(interval), endDate);
                 break;
             case "deleteR":
                 isRecurring = true;
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, name, date, amount, catNum, interval);
+                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, name, date, amount, category, Interval.valueOf(interval));
                 break;
             case "editR":
                 isRecurring = true;
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                recurringExpenseList.editRecurringExpenseByKeywords(validTags, name, date, amount, catNum, interval);
+                recurringExpenseList.editRecurringExpenseByKeywords(validTags, name, date, amount, category, Interval.valueOf(interval));
                 break;
             case "bye":
                 //fallthrough
