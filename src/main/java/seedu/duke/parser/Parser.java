@@ -1,10 +1,16 @@
 package seedu.duke.parser;
 
-import seedu.duke.*;
+import seedu.duke.Expense;
+import seedu.duke.ExpenseCategory;
+import seedu.duke.MintException;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.EditCommand;
 import seedu.duke.commands.ViewCommand;
+import seedu.duke.Interval;
+import seedu.duke.Entry;
+import seedu.duke.RecurringExpenseList;
+import seedu.duke.Ui;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -246,8 +252,7 @@ public class Parser {
             case "help":
                 Ui.help();
                 break;
-//            case "cat":
-//                break;
+            // case cat
             case "list":
                 //fallthrough
             case "view":
@@ -256,15 +261,7 @@ public class Parser {
                 ViewCommand viewCommand = new ViewCommand();
                 viewCommand.view(argumentsArray, recurringExpenseList, entryList);
                 break;
-//            case "limit":
-//                parseInputByArguments(userInput);
-//                parserSetLimit(argumentsArray);
-//                ValidityChecker.checkInvalidAmount(this);
-//                ValidityChecker.checkInvalidCatNum(this);
-//                Ui.setLimitMessage(catNum, amount);
-//                break;
-//            case "breakdown":
-//                break;
+            //case limit, breakdown
             case "add":
                 parseInputByTags(userInput);
                 expense = createExpenseObject();
@@ -291,7 +288,8 @@ public class Parser {
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
                 assert amountStr != null : "Amount should not be empty";
-                recurringExpenseList.addRecurringExpense(name, dateStr, amountStr, category, Interval.valueOf(interval), endDate);
+                recurringExpenseList.addRecurringExpense(name, dateStr, amountStr,
+                        category, Interval.valueOf(interval), endDate);
                 break;
             case "deleteR":
                 isRecurring = true;

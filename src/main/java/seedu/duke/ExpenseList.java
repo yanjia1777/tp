@@ -53,30 +53,30 @@ public class ExpenseList {
     //        }
     //    }
 
-//    public static ArrayList<Expense> filterExpenseByKeywords(ArrayList<String> tags,Entry entry,
-//                                                             ArrayList<Expense> expenseList) throws MintException {
-//
-//        ArrayList<Expense> filteredList = new ArrayList<>(expenseList);
-//        for (String tag : tags) {
-//            switch (tag) {
-//            case "n/":
-//                filteredList = Filter.filterExpenseByName(entry.getName(), filteredList);
-//                break;
-//            case "d/":
-//                filteredList = Filter.filterExpenseByDate(entry.getDate(), filteredList);
-//                break;
-//            case "a/":
-//                filteredList = Filter.filterExpenseByAmount(entry.getAmount(), filteredList);
-//                break;
-//            case "c/":
-//                filteredList = Filter.filterExpenseByCategory(entry.getCategory(), filteredList);
-//                break;
-//            default:
-//                throw new MintException("Unable to locate tag");
-//            }
-//        }
-//        return filteredList;
-//    }
+    //    public static ArrayList<Expense> filterExpenseByKeywords(ArrayList<String> tags,Entry entry,
+    //                                                             ArrayList<Expense> expenseList) throws MintException {
+    //
+    //        ArrayList<Expense> filteredList = new ArrayList<>(expenseList);
+    //        for (String tag : tags) {
+    //            switch (tag) {
+    //            case "n/":
+    //                filteredList = Filter.filterExpenseByName(entry.getName(), filteredList);
+    //                break;
+    //            case "d/":
+    //                filteredList = Filter.filterExpenseByDate(entry.getDate(), filteredList);
+    //                break;
+    //            case "a/":
+    //                filteredList = Filter.filterExpenseByAmount(entry.getAmount(), filteredList);
+    //                break;
+    //            case "c/":
+    //                filteredList = Filter.filterExpenseByCategory(entry.getCategory(), filteredList);
+    //                break;
+    //            default:
+    //                throw new MintException("Unable to locate tag");
+    //            }
+    //        }
+    //        return filteredList;
+    //    }
 
     //    public void deleteExpenseByKeywords(ArrayList<String> tags, String name,
     //                                 String date, String amount, String catNum) throws MintException {

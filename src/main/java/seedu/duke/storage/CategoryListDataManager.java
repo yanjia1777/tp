@@ -70,15 +70,15 @@ public class CategoryListDataManager extends DataManagerActions {
             //c/0| Not Set
             String fieldsInTextFile = scanner.nextLine();
             String[] params = fieldsInTextFile.split("\\|");
-            //String catNum = params[0].replaceAll(REGEX_TO_REPLACE,"").trim();
-//            String limit = params[1].replaceAll(REGEX_TO_REPLACE,"").trim();
-//            try {
-//                if (!limit.equals("")) {
-//                    CategoryList.setLimit(catNum, limit);
-//                }
-//            } catch (MintException e) {
-//                e.printStackTrace();
-//            }
+            // String catNum = params[0].replaceAll(REGEX_TO_REPLACE, "").trim();
+            // String limit = params[1].replaceAll(REGEX_TO_REPLACE, "").trim();
+            // try {
+            // if (!limit.equals("")) {
+            //      CategoryList.setLimit(catNum, limit);
+            //                }
+            //            } catch (MintException e) {
+            //                e.printStackTrace();
+            //            }
         }
     }
     
