@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.parser.Parser;
 
 public class ParserTest {
     @Test
@@ -8,6 +9,7 @@ public class ParserTest {
         String sampleInput = "add   n/burger       d/2020-12-12   a/15";
         Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
-        parser.executeCommand(sampleInput, expenseList);
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
+        parser.executeCommand(sampleInput, expenseList, recurringExpenseList);
     }
 }

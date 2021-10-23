@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
@@ -25,6 +26,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         CategoryList.initialiseCategories();
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         Parser parser = new Parser();
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
@@ -33,7 +35,7 @@ public class Duke {
         while (true) {
             try {
                 String userInput = in.nextLine();
-                if (parser.executeCommand(userInput, expenseList) == -1) {
+                if (parser.executeCommand(userInput, expenseList, recurringExpenseList) == -1) {
                     break;
                 }
             } catch (MintException e) {

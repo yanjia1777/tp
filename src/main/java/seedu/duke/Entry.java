@@ -4,7 +4,7 @@ import java.time.LocalDate; // import the LocalDate class
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Expense extends Entry {
+public class Entry {
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
@@ -15,20 +15,20 @@ public class Expense extends Entry {
     private LocalDate date;
     private double amount;
 
-    public Expense() {
+    public Entry() {
         catNum = CAT_NUM_OTHERS; //others
         date = LocalDate.of(2021, 1, 1);
         amount = 0;
     }
 
-    public Expense(String name, String date, String amount, String catNum) {
+    public Entry(String name, String date, String amount, String catNum) {
         this.catNum = Integer.parseInt(catNum);
         this.name = name;
         this.date = LocalDate.parse(date, dateFormatter);
         this.amount = Double.parseDouble(amount);
     }
 
-    public Expense(String name, String date, String amount) {
+    public Entry(String name, String date, String amount) {
         this.catNum = CAT_NUM_OTHERS;
         this.name = name;
         this.date = LocalDate.parse(date, dateFormatter);
@@ -104,10 +104,10 @@ public class Expense extends Entry {
         }
 
         Expense expense = (Expense) object;
-        boolean isNameEqual = Objects.equals(name, expense.name);
-        boolean isDateEqual = Objects.equals(date, expense.date);
-        boolean isAmountEqual = Objects.equals(amount, expense.amount);
-        boolean isCategoryEqual = Objects.equals(catNum, expense.catNum);
+        boolean isNameEqual = Objects.equals(name, expense.getName());
+        boolean isDateEqual = Objects.equals(date, expense.getDate());
+        boolean isAmountEqual = Objects.equals(amount, expense.getAmount());
+        boolean isCategoryEqual = Objects.equals(catNum, expense.getCatNum());
         return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
 }
