@@ -84,7 +84,8 @@ public class EntryListDataManager extends DataManagerActions {
 
     public static void removeAll() {
         try {
-            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(FILE_PATH), StandardCharsets.UTF_8));
+            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(FILE_PATH),
+                    StandardCharsets.UTF_8));
             fileContent.clear();
             editTextFile(fileContent, FILE_PATH);
         } catch (IOException e) {

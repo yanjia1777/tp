@@ -179,7 +179,7 @@ public class Ui {
         return missingFieldsErrorMessage;
     }
 
-    public static void printView (ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
+    public static void printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
         System.out.println("Here is the list of your expenses:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");

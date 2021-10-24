@@ -262,7 +262,7 @@ public class Parser {
         catNumStr = String.valueOf(param.trim().charAt(2));
     }
 
-    public Entry checkType (String[] argumentsArray) {
+    public Entry checkType(String[] argumentsArray) {
         if (Objects.equals(argumentsArray[1], "income")) {
             return createIncomeObject();
         } else {
