@@ -5,7 +5,8 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Sorter extends Entry {
+
+public class Sorter  {
 
     public static Comparator<Entry> compareByName = Comparator.comparing(i -> i.getName());
 
@@ -13,7 +14,9 @@ public class Sorter extends Entry {
 
     public static Comparator<Entry> compareByDate = (i, j) -> j.getDate().compareTo(i.getDate());
 
-    public static Comparator<Entry> compareByCategory = (i, j) -> j.getCatNum() - i.getCatNum();
+    public static Comparator<Entry> compareByCategory = (i, j) -> j.getCategory().compareTo(i.getCategory());
+
+
 
     public static void trimByYear(ArrayList<Entry> outputArray, String year) {
         outputArray.removeIf(entry -> entry.getDate().getYear() != Integer.parseInt(year));

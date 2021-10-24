@@ -1,9 +1,12 @@
 package seedu.duke.storage;
 
-import seedu.duke.CategoryList;
-import seedu.duke.Entry;
+
 import seedu.duke.Expense;
-import seedu.duke.EntryList;
+import seedu.duke.ExpenseCategory;
+import seedu.duke.Entry;
+import seedu.duke.Income;
+import seedu.duke.IncomeCategory;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static seedu.duke.Duke.entryList;
@@ -30,8 +34,11 @@ public class EntryListDataManager extends DataManagerActions {
     public static void appendToEntryListTextFile(String filePath, Entry entry) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, true);
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
-        fileWriter.write(entry.getCatNum() + TEXT_DELIMITER + entry.getDate()
-                + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER + entry.getAmount() + System.lineSeparator());
+
+        fileWriter.write(entry.getType() + TEXT_DELIMITER + entry.getCategory().ordinal() + TEXT_DELIMITER
+                + entry.getDate() + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER + entry.getAmount()
+                + System.lineSeparator());
+
         fileWriter.close();
     }
 
@@ -75,30 +82,46 @@ public class EntryListDataManager extends DataManagerActions {
         }
     }
 
+    public static void removeAll() {
+        try {
+            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(FILE_PATH),
+                    StandardCharsets.UTF_8));
+            fileContent.clear();
+            editTextFile(fileContent, FILE_PATH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException {
         File mintEntryList = new File(FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintEntryList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
             String fieldsInTextFile = scanner.nextLine();
             String[] params = fieldsInTextFile.split("\\|");
-            String catNum = params[0];
-            String date = params[1];
-            String name = params[2];
-            String amount = params[3];
-            loadEntry(name, date, amount, catNum);
+            String type = params[0];
+            String catNum = params[1];
+            String date = params[2];
+            String name = params[3];
+            String amount = params[4];
+            loadEntry(type, name, date, amount, catNum);
         }
     }
 
-    private static boolean isCurrentMonthEntry(Entry entry) {
-        return entry.getDate().getMonthValue() == LocalDate.now().getMonthValue()
-                && entry.getDate().getYear() == LocalDate.now().getYear();
-    }
 
-    public static void loadEntry(String name, String date, String amount, String catNum) {
+    public static void loadEntry(String type, String name, String dateStr, String amountStr, String catNumStr) {
         ArrayList<Entry> loadedEntryList = entryList;
-        Entry entry = new Entry(name, date, amount, catNum);
-        if (isCurrentMonthEntry(entry)) {
-            CategoryList.addSpending(entry);
+        //should check type before loading
+        Entry entry;
+        LocalDate date = LocalDate.parse(dateStr);
+        double amount = Double.parseDouble(amountStr);
+        int index = Integer.parseInt(catNumStr);
+        if (Objects.equals(type, "expense")) {
+            ExpenseCategory category = ExpenseCategory.values()[index];
+            entry = new Expense(name, date, amount, category);
+        } else {
+            IncomeCategory category = IncomeCategory.values()[index];
+            entry = new Income(name, date, amount, category);
         }
         loadedEntryList.add(entry);
     }

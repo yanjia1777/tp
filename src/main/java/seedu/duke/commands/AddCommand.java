@@ -1,14 +1,12 @@
 package seedu.duke.commands;
 
-import seedu.duke.CategoryList;
-import seedu.duke.Entry;
-import seedu.duke.EntryList;
-import seedu.duke.storage.EntryListDataManager;
 
+import seedu.duke.Entry;
+import seedu.duke.storage.EntryListDataManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
+
 
 public class AddCommand extends Command {
 
