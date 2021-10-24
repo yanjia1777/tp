@@ -1,6 +1,13 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.*;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.RecurringEntry;
+import seedu.duke.entries.RecurringExpense;
+import seedu.duke.entries.RecurringIncome;
+import seedu.duke.entries.Type;
+import seedu.duke.entries.Interval;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.storage.EntryListDataManager;
@@ -156,17 +163,19 @@ public class RecurringFinanceManager extends FinanceManager {
                     interval = Interval.determineInterval(intervalStr);
                 }
             }
-            if(entry.getType() == Type.Expense) {
-                recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category, interval, endDate));
+            if (entry.getType() == Type.Expense) {
+                recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,
+                        interval, endDate));
             } else {
-                recurringEntryList.set(index, new RecurringIncome(name, date, amount, (IncomeCategory) category, interval, endDate));
+                recurringEntryList.set(index, new RecurringIncome(name, date, amount, (IncomeCategory) category,
+                        interval, endDate));
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
     }
 
-    public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
+    public void sort(ArrayList<Entry> outputArray, String sortType) throws MintException {
         assert sortType != null : "sortType should have a command";
         switch (sortType) {
         case "name":

@@ -163,7 +163,8 @@ public class NormalFinanceManager extends FinanceManager {
         }
     }
 
-    public void view(String[] argumentArrayInput, RecurringFinanceManager recurringFinanceManager) throws MintException {
+    public void view(String[] argumentArrayInput,
+                     RecurringFinanceManager recurringFinanceManager) throws MintException {
         String sortType;
         LocalDate fromDate = null;
         LocalDate endDate = null;
@@ -173,7 +174,6 @@ public class NormalFinanceManager extends FinanceManager {
         boolean isViewAll = true;
         ArrayList<String> argumentArray;
         ArrayList<Entry> outputArray;
-        double total = 0;
 
         argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
         outputArray = new ArrayList<>(entryList);
@@ -259,7 +259,8 @@ public class NormalFinanceManager extends FinanceManager {
             if (month == null) {
                 recurringFinanceManager.viewRecurringExpenseByYear(outputArray, Integer.parseInt(year));
             } else {
-                recurringFinanceManager.viewRecurringEntryByMonth(outputArray, month.getValue(), Integer.parseInt(year));
+                recurringFinanceManager.viewRecurringEntryByMonth(outputArray, month.getValue(),
+                        Integer.parseInt(year));
             }
         }
 
@@ -268,6 +269,7 @@ public class NormalFinanceManager extends FinanceManager {
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
             Collections.reverse(outputArray);
         }
+        double total = 0;
         calculateTotal(outputArray);
 
         Ui.printView(outputArray, fromDate, endDate, total);

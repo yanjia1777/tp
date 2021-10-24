@@ -1,7 +1,26 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.*;
-import seedu.duke.entries.*;
+import seedu.duke.commands.Command;
+import seedu.duke.commands.EditCommand;
+import seedu.duke.commands.InvalidCommand;
+import seedu.duke.commands.ViewCommand;
+import seedu.duke.commands.AddCommand;
+import seedu.duke.commands.AddRecurringCommand;
+import seedu.duke.commands.DeleteCommand;
+import seedu.duke.commands.DeleteRecurringCommand;
+import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.EditRecurringCommand;
+import seedu.duke.commands.HelpCommand;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.IncomeCategory;
+import seedu.duke.entries.Interval;
+import seedu.duke.entries.Type;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Expense;
+import seedu.duke.entries.Income;
+import seedu.duke.entries.RecurringEntry;
+import seedu.duke.entries.RecurringExpense;
+import seedu.duke.entries.RecurringIncome;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.RecurringFinanceManager;
 
@@ -253,7 +272,7 @@ public class Parser {
             }
             parseType(userInput);
             parseInputByTagsLoop(userInput);
-            ArrayList<String> validTags=  ValidityChecker.checkExistenceAndValidityOfTags(this, userInput);
+            ArrayList<String> validTags = ValidityChecker.checkExistenceAndValidityOfTags(this, userInput);
             isRecurring = false;
             return validTags;
         } catch (MintException e) {
@@ -393,8 +412,8 @@ public class Parser {
         try {
             isRecurring = true;
             parseInputByTags(userInput);
-            RecurringEntry entry = (type == Type.Income) ?
-                    createRecurringIncomeObject() : createRecurringExpenseObject();
+            RecurringEntry entry = (type == Type.Income)
+                    ? createRecurringIncomeObject() : createRecurringExpenseObject();
             return new AddRecurringCommand(entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
@@ -405,8 +424,8 @@ public class Parser {
         try {
             isRecurring = true;
             ArrayList<String> validTags = parseInputByTags(userInput);
-            RecurringEntry entry = (type == Type.Income) ?
-                    createRecurringIncomeObject() : createRecurringExpenseObject();
+            RecurringEntry entry = (type == Type.Income)
+                    ? createRecurringIncomeObject() : createRecurringExpenseObject();
             return new DeleteRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
@@ -418,8 +437,8 @@ public class Parser {
             isRecurring = true;
             ArrayList<String> validTags = parseInputByTags(userInput);
             assert validTags.size() >= 1 : "There should be at least one valid tag";
-            RecurringEntry entry = (type == Type.Income) ?
-                    createRecurringIncomeObject() : createRecurringExpenseObject();
+            RecurringEntry entry = (type == Type.Income)
+                    ? createRecurringIncomeObject() : createRecurringExpenseObject();
             return new EditRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
@@ -450,69 +469,13 @@ public class Parser {
         default:
             return new InvalidCommand(MintException.ERROR_INVALID_COMMAND);
         }
-
-
     }
-
-
-//            case "exit":
-//                return new ExitCommand();
-//            default:
-//                return new InvalidCommand("Invalid command");
-//            case "help":
-//                Ui.help();
-//                break;
-//            // case cat
-//            case "list":
-                //fallthrough
-//            case "view":
-//                parseInputByArguments(userInput);
-//                ViewCommand viewCommand = new ViewCommand();
-//                viewCommand.view(argumentsArray, recurringExpenseList, entryList);
-//                break;
-//            case "delete":
-//                validTags = parseInputByTags(userInput);
-//                assert validTags.size() >= 1 : "There should be at least one valid tag";
-//                Entry entry = createEntryObject();
-//                DeleteCommand deleteCommand = new DeleteCommand();
-//                deleteCommand.deleteByKeywords(validTags, entry, entryList);
-//                break;
-//            case "edit":
-//                validTags = parseInputByTags(userInput);
-//                assert validTags.size() >= 1 : "There should be at least one valid tag";
-//                //                expenseList.editExpenseByKeywords(validTags, expense, expenseList);
-//                EditCommand editCommand = new EditCommand();
-//                entry = createEntryObject();
-//                editCommand.editByKeywords(validTags, entry, entryList);
-//                break;
-//            case "addR":
-//                isRecurring = true;
-//                parseInputByTags(userInput);
-//                assert name != null : "Name should not be empty";
-//                assert amountStr != null : "Amount should not be empty";
-//                recurringExpenseList.addRecurringExpense(name, dateStr, amountStr,
-//                        expenseCategory, Interval.valueOf(interval), endDate);
-//                break;
-//            case "deleteR":
-//                isRecurring = true;
-//                validTags = parseInputByTags(userInput);
-//                assert validTags.size() >= 1 : "There should be at least one valid tag";
-//                expense = createExpenseObject();
-//                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, expense, interval);
-//                break;
-//            case "editR":
-//                isRecurring = true;
-//                validTags = parseInputByTags(userInput);
-//                assert validTags.size() >= 1 : "There should be at least one valid tag";
-//                expense = createExpenseObject();
-//                recurringExpenseList.editRecurringExpenseByKeywords(validTags, expense, interval);
-//                break;
-//            case "deleteall":
-//                deleteCommand = new DeleteCommand();
-//                deleteCommand.deleteAll(entryList);
-//                break;
-//            default:
-//                isRecurring = false;
-//                throw new MintException(MintException.ERROR_INVALID_COMMAND);
+//    case "deleteall":
+//        deleteCommand = new DeleteCommand();
+//        deleteCommand.deleteAll(entryList);
+//        break;
+//    default:
+//        isRecurring = false;
+//        throw new MintException(MintException.ERROR_INVALID_COMMAND);
 
 }
