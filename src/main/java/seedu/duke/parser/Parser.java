@@ -1,7 +1,8 @@
 package seedu.duke.parser;
 
+import seedu.duke.Entry;
 import seedu.duke.Expense;
-import seedu.duke.ExpenseCategory;
+import seedu.duke.Income;
 import seedu.duke.MintException;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteCommand;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -229,6 +231,14 @@ public class Parser {
         catNumStr = String.valueOf(param.trim().charAt(2));
     }
 
+    public Entry checkType (String[] argumentsArray) {
+        if(Objects.equals(argumentsArray[1], "income")) {
+            return new Income(name, date, amount, catNum);
+        } else {
+            return new Expense(name, date, amount, catNum);
+        }
+    }
+
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
     }
@@ -262,10 +272,15 @@ public class Parser {
                 break;
             //case limit, breakdown
             case "add":
+                parseInputByArguments(userInput);
                 parseInputByTags(userInput);
-                expense = createExpenseObject();
+                assert name != null : "Name should not be empty";
+                assert amount != null : "Amount should not be empty";
                 AddCommand addCommand = new AddCommand();
-                addCommand.add(expense, entryList);
+                addCommand.add(checkType(argumentsArray), entryList);
+                //expense = createExpenseObject();
+                //AddCommand addCommand = new AddCommand();
+                //addCommand.add(expense, entryList);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);

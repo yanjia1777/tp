@@ -7,55 +7,33 @@ import java.util.Objects;
 public class Income extends Entry {
     protected ExpenseCategory category;
 
-    public Income(String name, double amount, ExpenseCategory category) {
-        this.name = name;
-        this.amount = amount;
-        this.date = LocalDate.now();
-        this.category = category;
+    public static DateTimeFormatter dateFormatter
+            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
+            + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
+            + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
+    public static final int CAT_NUM_OTHERS = 7;
+
+    public Income() {
+        super();
+        this.type = Type.Income;
     }
 
-    public Income(String name, LocalDate date, Double amount, ExpenseCategory category) {
-        this.name = name;
-        this.date = date;
-        this.amount = amount;
-        this.category = category;
+    public Income(String name, String date, String amount, String catNum) {
+        super(name, date, amount, catNum);
+        this.type = Type.Income;
     }
 
+    public Income(String name, String date, String amount) {
+        super(name, date, amount);
+        this.type = Type.Income;
+    }
+  
     public void setCategory(ExpenseCategory category) {
         this.category = category;
     }
 
-    @Override
-    public ExpenseCategory getCategory() {
-        return category;
-    }
-
-    @Override
     public String toString() {
-        return getCategory() + " | " + getDate() + " | "
-                + getName() + " | $" + String.format("%,.2f", getAmount());
-    }
-
-    //@@author nipafx-reusedS
-    //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
-    //with minor modifications
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-
-        Income income = (Income) object;
-        boolean isNameEqual = Objects.equals(name, income.name);
-        boolean isDateEqual = Objects.equals(date, income.date);
-        boolean isAmountEqual = Objects.equals(amount, income.amount);
-        boolean isCategoryEqual = Objects.equals(category, income.category);
-        return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
+        return getType() + "  | " + getCatIndent() + " | " + getDate() + " | "
+                + getNameIndented() + " | $" + String.format("%,.2f", getAmount());
     }
 }

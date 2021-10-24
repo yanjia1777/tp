@@ -2,6 +2,7 @@ package seedu.duke;
 
 import seedu.duke.parser.Parser;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -176,6 +177,41 @@ public class Ui {
             }
         }
         return missingFieldsErrorMessage;
+    }
+
+    public static void printView (ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
+        System.out.println("Here is the list of your expenses:");
+        if (fromDate != null) {
+            System.out.println("Since " + fromDate + " to " + endDate + ":");
+        }
+        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount");
+        for (Entry entry : outputArray) {
+            System.out.println(entry.toString());
+        }
+        System.out.print("                                                Net Total: |");
+        if (total < 0) {
+            total = Math.abs(total);
+            System.out.print("-$" + String.format("%,.2f", total));
+        } else {
+            System.out.print(" $" + String.format("%,.2f", total));
+        }
+        System.out.println();
+    }
+
+    public static StringBuilder getIndent(int leftIndent, int rightIndent, String item) {
+        StringBuilder itemWithIndent = new StringBuilder();
+        while (leftIndent != 0) {
+            itemWithIndent.append(" ");
+            leftIndent--;
+        }
+
+        itemWithIndent.append(item);
+
+        while (rightIndent != 0) {
+            itemWithIndent.append(" ");
+            rightIndent--;
+        }
+        return itemWithIndent;
     }
 }
 
