@@ -5,8 +5,9 @@ import seedu.duke.EntryList;
 import seedu.duke.MintException;
 import seedu.duke.storage.EntryListDataManager;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class DeleteCommand extends Command {
 
@@ -40,5 +41,23 @@ public class DeleteCommand extends Command {
             //            }
             EntryListDataManager.deleteLineInTextFile(stringToDelete);
         }
+    }
+
+    public void deleteAll(ArrayList<Entry> entryList) {
+        if (Objects.equals(deleteConfirmations(), "yes")) {
+            entryList.clear();
+            EntryListDataManager.removeAll();
+            System.out.println("Successfully deleted all entries.");
+        } else {
+            System.out.println("Delete cancelled.");
+        }
+    }
+
+    private String deleteConfirmations() {
+        String choice;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Are you sure you want to delete all entries?");
+        choice = scan.nextLine();
+        return choice;
     }
 }

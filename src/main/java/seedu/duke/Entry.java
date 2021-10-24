@@ -2,7 +2,7 @@ package seedu.duke;
 
 import java.time.LocalDate; // import the LocalDate class
 
-public abstract class Entry {
+public class Entry {
     protected String name;
     protected LocalDate date;
     protected double amount;
@@ -59,8 +59,12 @@ public abstract class Entry {
         this.amount = amount;
     }
 
-    public abstract Enum getCategory();
+    public Enum getCategory() {
+        return null;
+    }
 
-    public abstract boolean equals(Object object);
+    public boolean equals(Object object) {
+        return false;
+    }
 
 }
