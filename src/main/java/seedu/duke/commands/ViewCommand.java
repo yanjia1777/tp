@@ -7,6 +7,7 @@ import seedu.duke.RecurringExpenseList;
 import seedu.duke.Type;
 import seedu.duke.Sorter;
 import seedu.duke.Ui;
+import seedu.duke.EntryList;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

@@ -76,7 +76,7 @@ public class Ui {
     public static void viewGivenListAndTotal(ArrayList<Entry> list, double totalAmount) {
         System.out.println("Here is the list of your entries:");
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(INDENT + (i + 1) + "  " + list.get(i).viewToString());
+            System.out.println(INDENT + (i + 1) + "  " + list.get(i).toString());
         }
         System.out.println(LINE);
         System.out.println(INDENT + "Total: " + totalAmount);

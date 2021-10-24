@@ -1,18 +1,10 @@
 package seedu.duke.parser;
 
-import seedu.duke.ExpenseCategory;
-import seedu.duke.IncomeCategory;
-import seedu.duke.MintException;
-import seedu.duke.Interval;
+import seedu.duke.*;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.EditCommand;
 import seedu.duke.commands.ViewCommand;
-import seedu.duke.Entry;
-import seedu.duke.Expense;
-import seedu.duke.Income;
-import seedu.duke.RecurringExpenseList;
-import seedu.duke.Ui;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -308,7 +300,7 @@ public class Parser {
         return new Entry(name, date, amount);
     }
 
-    public int executeCommand(String userInput, ArrayList<Entry> entryList,
+    public int executeCommand(String userInput, EntryList entryList,
                               RecurringExpenseList recurringExpenseList) throws MintException {
         ArrayList<String> validTags;
         Expense expense;

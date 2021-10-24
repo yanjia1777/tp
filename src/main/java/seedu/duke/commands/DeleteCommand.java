@@ -11,11 +11,9 @@ import java.util.Scanner;
 
 public class DeleteCommand extends Command {
 
-    public void deleteByKeywords(ArrayList<String> tags, Entry entry,
-                                        ArrayList<Entry> entryList) throws MintException {
+    public void deleteByKeywords(ArrayList<String> tags, Entry entry, EntryList entryList) throws MintException {
         try {
-            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, entry,
-                    entryList);
+            Entry finalEntry = entryList.chooseEntryByKeywords(tags, true, entry);
             if (finalEntry != null) {
                 delete(finalEntry, entryList);
             }
@@ -24,23 +22,12 @@ public class DeleteCommand extends Command {
         }
     }
 
-    //    public void deleteExpense(Expense expense) throws MintException {
-    //        deleteExpense(expense.getName(), expense.getDate().toString(),
-    //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
-    //    }
-
-    public void delete(Entry entry, ArrayList<Entry> entryList) throws MintException {
-        //        Expense expense = new Expense(name, date, amount, catNum);
-        if (entryList.contains(entry)) {
-            //            logger.log(Level.INFO, "User deleted expense: " + expense);
+    public void delete(Entry entry, EntryList entryList) throws MintException {
+            //logger.log(Level.INFO, "User deleted expense: " + entry);
             System.out.println("I have deleted: " + entry);
-            entryList.remove(entry);
+            entryList.deleteEntry(entry);
             String stringToDelete = EntryList.overWriteString(entry);
-            //            if (isCurrentMonthExpense(expense)) {
-            //                CategoryList.deleteSpending(expense);
-            //            }
             EntryListDataManager.deleteLineInTextFile(stringToDelete);
-        }
     }
 
     public void deleteAll(ArrayList<Entry> entryList) {

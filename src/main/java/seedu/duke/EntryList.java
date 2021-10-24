@@ -19,13 +19,15 @@ public class EntryList {
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String BLANK = "";
-    //    public ArrayList<Expense> expenseList = new ArrayList<>();
+    protected static ArrayList<Entry> entryList = new ArrayList<>();
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
+    public void deleteEntry(Entry entry) {
+        entryList.remove(entry);
+    }
 
-    public static ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry entry,
-                                                      ArrayList<Entry> entryList) throws MintException {
+    public static ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry entry) throws MintException {
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
             switch (tag) {
@@ -50,9 +52,9 @@ public class EntryList {
     }
 
     // Common method
-    public static Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query,
-                                           ArrayList<Entry> entryList) throws MintException {
-        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query, entryList);
+    public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete,
+                                              Entry query) throws MintException {
+        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
         Entry entry = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);

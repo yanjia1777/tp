@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static seedu.duke.Duke.entryList;
+import static seedu.duke.EntryList.entryList;
 
 public class EntryListDataManager extends DataManagerActions {
 

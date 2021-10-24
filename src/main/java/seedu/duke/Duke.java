@@ -4,7 +4,6 @@ import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -17,11 +16,12 @@ public class Duke {
 
     private Ui ui;
     private Parser parser;
-    public static ArrayList<Entry> entryList = new ArrayList<>();
+    private EntryList entryList;
 
     public Duke() {
         this.ui = new Ui();
         this.parser = new Parser();
+        this.entryList = new EntryList();
     }
 
     /**
@@ -38,7 +38,7 @@ public class Duke {
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        dataManagerActions.printPreviousFileContents(entryList);
+        dataManagerActions.printPreviousFileContents(EntryList.entryList);
         while (true) {
             try {
                 String userInput = ui.readUserInput();
