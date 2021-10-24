@@ -1,28 +1,13 @@
 package seedu.duke;
 
-import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
-public class EntryList {
-    public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
-    public static final String NAME_SEPARATOR = "n/";
-    public static final String DATE_SEPARATOR = "d/";
-    public static final String AMOUNT_SEPARATOR = "a/";
-    public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
-    public static final int LENGTH_OF_SEPARATOR = 2;
-    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
-    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
-    public static final String CATEGORY_SEPARATOR = "c/";
-    public static final String BLANK = "";
-    //    public ArrayList<Expense> expenseList = new ArrayList<>();
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
+public class FinancialManager {
+    public ArrayList<Entry> entryList;
 
+    public FinancialManager() {
+        this.entryList = new ArrayList<>();
+    }
 
     public static ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry entry,
                                                       ArrayList<Entry> entryList) throws MintException {

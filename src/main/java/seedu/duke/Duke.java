@@ -4,7 +4,6 @@ import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -17,18 +16,12 @@ public class Duke {
 
     private Ui ui;
     private Parser parser;
-    public static ArrayList<Entry> entryList = new ArrayList<>();
+    private FinancialManager financialManager;
 
     public Duke() {
         this.ui = new Ui();
         this.parser = new Parser();
-    }
-
-    /**
-     * Main entry-point for the java.duke.Duke application.
-     */
-    public static void main(String[] args) {
-        new Duke().run();
+        this.financialManager = new FinancialManager();
     }
 
     public void run() {
@@ -38,11 +31,11 @@ public class Duke {
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        dataManagerActions.printPreviousFileContents(entryList);
+        dataManagerActions.printPreviousFileContents(financialManager.entryList);
         while (true) {
             try {
                 String userInput = ui.readUserInput();
-                if (parser.executeCommand(userInput, entryList, recurringExpenseList) == -1) {
+                if (parser.executeCommand(userInput, financialManager.entryList, recurringExpenseList) == -1) {
                     break;
                 }
             } catch (MintException e) {
@@ -52,5 +45,12 @@ public class Duke {
             }
         }
         logger.log(Level.INFO, "User exited Mint");
+    }
+
+    /**
+     * Main entry-point for the java.duke.Duke application.
+     */
+    public static void main(String[] args) {
+        new Duke().run();
     }
 }

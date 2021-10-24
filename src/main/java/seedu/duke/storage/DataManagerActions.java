@@ -1,6 +1,7 @@
 package seedu.duke.storage;
 
 import seedu.duke.Entry;
+import seedu.duke.FinancialManager;
 import seedu.duke.Ui;
 
 import java.io.File;
@@ -31,15 +32,15 @@ public class DataManagerActions {
         }
     }
 
-    public void printPreviousFileContents(ArrayList<Entry> entryList) {
-        try {
-            EntryListDataManager.loadEntryListContents(entryList);
-            CategoryListDataManager.loadCategoryFileContents();
-        } catch (FileNotFoundException e) {
-            Ui.printMissingFileMessage();
-            createDirectory();
-            createFiles();
-        }
+    public void printPreviousFileContents(ArrayList<Entry> arrayList) {
+//        try {
+//            EntryListDataManager.loadEntryListContents(arrayList);
+//            CategoryListDataManager.loadCategoryFileContents();
+//        } catch (FileNotFoundException e) {
+//            Ui.printMissingFileMessage();
+//            createDirectory();
+//            createFiles();
+//        }
     }
 
     public void createDirectory() {

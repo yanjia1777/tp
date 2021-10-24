@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static seedu.duke.Duke.entryList;
-
 public class EntryListDataManager extends DataManagerActions {
 
     public static final String TEXT_DELIMITER = "|";
@@ -88,13 +86,13 @@ public class EntryListDataManager extends DataManagerActions {
             String date = params[1];
             String name = params[2];
             String amount = params[3];
-            loadEntry(name, date, amount, catNum);
+            loadEntry(name, date, amount, catNum, entryList);
         }
     }
 
 
-    public static void loadEntry(String name, String dateStr, String amountStr, String catNumStr) {
-        ArrayList<Entry> loadedEntryList = entryList;
+    public static void loadEntry(String name, String dateStr, String amountStr,
+                                 String catNumStr, ArrayList<Entry> entryList) {
         //should check type before loading
         //Entry entry = new Entry(name, date, amount, catNum);
         LocalDate date = LocalDate.parse(dateStr);
@@ -102,6 +100,6 @@ public class EntryListDataManager extends DataManagerActions {
         int index = Integer.parseInt(catNumStr);
         ExpenseCategory category = ExpenseCategory.values()[index];
         Expense expense = new Expense(name, date, amount, category);
-        loadedEntryList.add(expense);
+        entryList.add(expense);
     }
 }

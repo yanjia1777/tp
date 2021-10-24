@@ -3,7 +3,7 @@ package seedu.duke.commands;
 import seedu.duke.ExpenseCategory;
 import seedu.duke.Expense;
 import seedu.duke.Entry;
-import seedu.duke.EntryList;
+import seedu.duke.FinancialManager;
 import seedu.duke.MintException;
 import seedu.duke.Ui;
 import seedu.duke.parser.ValidityChecker;
@@ -34,7 +34,7 @@ public class EditCommand extends Command {
     public void editByKeywords(ArrayList<String> tags, Entry entry,
                                ArrayList<Entry> entryList) throws MintException {
         try {
-            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, entry,
+            Entry finalEntry = FinancialManager.chooseEntryByKeywords(tags, true, entry,
                     entryList);
             if (finalEntry != null) {
                 edit(finalEntry, entryList);
@@ -57,7 +57,7 @@ public class EditCommand extends Command {
         boolean exceptionThrown = false;
         try {
             final String originalEntryStr = entry.toString();
-            final String stringToOverwrite = EntryList.overWriteString(entry);
+            final String stringToOverwrite = FinancialManager.overWriteString(entry);
             if (entryList.contains(entry)) {
                 indexToBeChanged = entryList.indexOf(entry);
                 choice = scanFieldsToUpdate();
@@ -68,7 +68,7 @@ public class EditCommand extends Command {
             editSpecifiedEntry(choice, indexToBeChanged, entry, entryList);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr, entryList);
-            String stringToUpdate = EntryList.overWriteString(entryList.get(indexToBeChanged));
+            String stringToUpdate = FinancialManager.overWriteString(entryList.get(indexToBeChanged));
             final Entry newEntry = entryList.get(indexToBeChanged);
             EntryListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
