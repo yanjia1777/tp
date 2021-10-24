@@ -198,7 +198,7 @@ Expected Output:
 - `Bye! Thanks for using Mint. See you soon :D`
 
 
-## <a name="Commannd Summary"></a>Exit the program: `command-summary`
+## <a name="Commannd Summary"></a>Command Summary
 | action | Format,Examples |
 | -----| -----|
 |Add |add `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g., `add n/burger a/5 d/2021-10-20 c/0` |
