@@ -128,14 +128,15 @@ public class RecurringFinanceManager extends FinanceManager {
         return !originalExpense.equals(newExpense);
     }
 
-    public void amendEntry(int index, ArrayList<String> choice, RecurringEntry entry) throws MintException {
+    public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
-            String name = entry.getName();
-            LocalDate date = entry.getDate();
-            double amount = entry.getAmount();
-            LocalDate endDate = entry.getEndDate();
-            Interval interval = entry.getInterval();
-            Enum category = entry.getCategory();
+            RecurringEntry recurringEntry = (RecurringEntry) entry;
+            String name = recurringEntry.getName();
+            LocalDate date = recurringEntry.getDate();
+            double amount = recurringEntry.getAmount();
+            LocalDate endDate = recurringEntry.getEndDate();
+            Interval interval = recurringEntry.getInterval();
+            Enum category = recurringEntry.getCategory();
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
@@ -163,7 +164,7 @@ public class RecurringFinanceManager extends FinanceManager {
                     interval = Interval.determineInterval(intervalStr);
                 }
             }
-            if (entry.getType() == Type.Expense) {
+            if (recurringEntry.getType() == Type.Expense) {
                 recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,
                         interval, endDate));
             } else {
@@ -332,11 +333,5 @@ public class RecurringFinanceManager extends FinanceManager {
             }
         }
         viewRecurringExpenseBetweenTwoDates(expenseList, earliestDate, LocalDate.now());
-    }
-
-    public void viewRecurringExpense() throws MintException {
-        for (Entry entry : recurringEntryList) {
-            System.out.println(entry.toString());
-        }
     }
 }
