@@ -213,6 +213,14 @@ public class Ui {
         }
         return itemWithIndent;
     }
+
+    public void printExpensesAdded(Expense expense) {
+        System.out.println("I've added :" + expense);
+    }
+
+    public void printInvalidCommand(String message) {
+        System.out.println(message);
+    }
 }
 
 
