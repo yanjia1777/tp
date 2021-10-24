@@ -122,7 +122,6 @@ public class ViewCommand extends Command {
         calculateTotal();
 
         Ui.printView(outputArray, fromDate, endDate, total);
-
     }
 
     public void sort() throws MintException {

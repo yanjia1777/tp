@@ -5,6 +5,7 @@ import seedu.duke.EntryList;
 import seedu.duke.MintException;
 import seedu.duke.storage.EntryListDataManager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DeleteCommand extends Command {
@@ -12,11 +13,7 @@ public class DeleteCommand extends Command {
     public void deleteByKeywords(ArrayList<String> tags, Entry entry,
                                         ArrayList<Entry> entryList) throws MintException {
         try {
-            String name = entry.getName();
-            String date = entry.getDate().toString();
-            String amount = Double.toString(entry.getAmount());
-            String catNum = Integer.toString(entry.getCatNum());
-            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, name, date, amount, catNum,
+            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, entry,
                     entryList);
             if (finalEntry != null) {
                 delete(finalEntry, entryList);
