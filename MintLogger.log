@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-23T19:19:49.336452400Z</date>
+  <millis>1635016789336</millis>
+  <nanos>452400</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.MintLogger</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>Start logging</message>
+</record>
+<record>
+  <date>2021-10-23T19:19:49.348420500Z</date>
+  <millis>1635016789348</millis>
+  <nanos>420500</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.Duke</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>User started Mint</message>
+</record>

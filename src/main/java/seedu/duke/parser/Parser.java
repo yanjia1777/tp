@@ -1,14 +1,16 @@
 package seedu.duke.parser;
 
-import seedu.duke.Entry;
+import seedu.duke.Expense;
+import seedu.duke.ExpenseCategory;
 import seedu.duke.MintException;
-import seedu.duke.RecurringExpenseList;
-import seedu.duke.Ui;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.EditCommand;
 import seedu.duke.commands.ViewCommand;
-import seedu.duke.CategoryList;
+import seedu.duke.Interval;
+import seedu.duke.Entry;
+import seedu.duke.RecurringExpenseList;
+import seedu.duke.Ui;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -36,9 +38,12 @@ public class Parser {
     public static final String CAT_NUM_OTHERS = "7";
     protected String command;
     protected String name;
-    protected String date;
-    protected String amount;
-    protected String catNum;
+    protected String dateStr;
+    protected LocalDate date;
+    protected String amountStr;
+    protected double amount;
+    protected String catNumStr;
+    protected ExpenseCategory category;
     protected String interval;
     protected String endDate;
     protected boolean isRecurring = false;
@@ -94,7 +99,41 @@ public class Parser {
     }
 
     private void setAmount(String param) {
-        amount = param.trim();
+        amountStr = param.trim();
+    }
+
+    private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
+        switch (catNum) {
+        case "0":
+            return ExpenseCategory.FOOD;
+        case "1":
+            return ExpenseCategory.ENTERTAINMENT;
+        case "2":
+            return ExpenseCategory.TRANSPORTATION;
+        case "3":
+            return ExpenseCategory.HOUSEHOLD;
+        case "4":
+            return ExpenseCategory.APPAREL;
+        case "5":
+            return ExpenseCategory.BEAUTY;
+        case "6":
+            return ExpenseCategory.GIFT;
+        case "7":
+            return ExpenseCategory.OTHERS;
+        default:
+            throw new MintException("Invalid category");
+        }
+    }
+
+    private Interval setIntervalViaString(String interval) throws MintException {
+        switch (interval) {
+        case "MONTHLY":
+            return Interval.MONTH;
+        case "YEARLY":
+            return Interval.YEAR;
+        default:
+            throw new MintException("Invalid interval");
+        }
     }
 
     private void setFieldsByTag(String description, String tagType) throws MintException {
@@ -103,19 +142,18 @@ public class Parser {
             this.name = description;
             break;
         case "d":
-            this.date = description;
+            this.dateStr = description;
             break;
         case "a":
-            this.amount = description;
+            this.amountStr = description;
             break;
         case "c":
-            this.catNum = description;
+            this.catNumStr = description;
+            this.category = setCategoryViaCatNum(catNumStr);
             break;
         case "i":
             if (isRecurring) {
                 this.interval = description;
-            } else {
-                throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
             }
             break;
         default:
@@ -124,11 +162,11 @@ public class Parser {
     }
 
     private void initDate() {
-        this.date = LocalDate.now().toString();
+        this.dateStr = LocalDate.now().toString();
     }
 
     private void initCatNum() {
-        this.catNum = CAT_NUM_OTHERS;
+        this.catNumStr = CAT_NUM_OTHERS;
     }
 
     private void initEndDate() {
@@ -160,6 +198,7 @@ public class Parser {
         if (command.equals("add")) {
             initDate();
             initCatNum();
+
         } else if (command.equals("addR")) {
             initDate();
             initCatNum();
@@ -187,30 +226,32 @@ public class Parser {
     }
 
     private void extractCatNumFromTag(String param) {
-        catNum = String.valueOf(param.trim().charAt(2));
+        catNumStr = String.valueOf(param.trim().charAt(2));
     }
 
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
     }
 
+    private Expense createExpenseObject() {
+        date = LocalDate.parse(dateStr);
+        amount = Double.parseDouble(amountStr);
+        int catNum = Integer.parseInt(catNumStr);
+        category = ExpenseCategory.values()[catNum];
+        return new Expense(name, date, amount, category);
+    }
+
     public int executeCommand(String userInput, ArrayList<Entry> entryList,
                               RecurringExpenseList recurringExpenseList) throws MintException {
         ArrayList<String> validTags;
-        userInput = userInput.trim(); //get rid of whitespaces
+        Expense expense;
         this.command = parserExtractCommand(userInput);
         try {
             switch (command) {
             case "help":
                 Ui.help();
                 break;
-            case "cat":
-                //fallthrough
-            case "category":
-                //fallthrough
-            case "categories":
-                CategoryList.viewCategories();
-                break;
+            // case cat
             case "list":
                 //fallthrough
             case "view":
@@ -219,63 +260,49 @@ public class Parser {
                 ViewCommand viewCommand = new ViewCommand();
                 viewCommand.view(argumentsArray, recurringExpenseList, entryList);
                 break;
-            case "limit":
-                parseInputByArguments(userInput);
-                parserSetLimit(argumentsArray);
-                ValidityChecker.checkInvalidAmount(this);
-                ValidityChecker.checkInvalidCatNum(this);
-                CategoryList.setLimit(catNum, amount);
-                Ui.setLimitMessage(catNum, amount);
-                break;
-            case "spending":
-                //fallthrough
-            case "breakdown":
-                CategoryList.viewMonthlyLimit();
-                break;
+            //case limit, breakdown
             case "add":
                 parseInputByTags(userInput);
-                assert name != null : "Name should not be empty";
-                assert amount != null : "Amount should not be empty";
-                Entry entry = new Entry(name, date, amount, catNum);
-                //                expenseList.addExpense(name, date, amount, catNum);
+                expense = createExpenseObject();
                 AddCommand addCommand = new AddCommand();
-                addCommand.add(entry, entryList);
+                addCommand.add(expense, entryList);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                //                expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
-                //                Expense expense = new Expense(name, date, amount, catNum);
-                entry = new Entry(name, date, amount, catNum);
+                expense = createExpenseObject();
                 DeleteCommand deleteCommand = new DeleteCommand();
-                deleteCommand.deleteByKeywords(validTags, entry, entryList);
+                deleteCommand.deleteByKeywords(validTags, expense, entryList);
                 break;
             case "edit":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
                 //                expenseList.editExpenseByKeywords(validTags, expense, expenseList);
                 EditCommand editCommand = new EditCommand();
-                entry = new Entry(name, date, amount, catNum);
-                editCommand.editByKeywords(validTags, entry, entryList);
+                expense = createExpenseObject();
+                editCommand.editByKeywords(validTags, expense, entryList);
                 break;
             case "addR":
                 isRecurring = true;
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
-                assert amount != null : "Amount should not be empty";
-                recurringExpenseList.addRecurringExpense(name, date, amount, catNum, interval, endDate);
+                assert amountStr != null : "Amount should not be empty";
+                recurringExpenseList.addRecurringExpense(name, dateStr, amountStr,
+                        category, Interval.valueOf(interval), endDate);
                 break;
             case "deleteR":
                 isRecurring = true;
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, name, date, amount, catNum, interval);
+                expense = createExpenseObject();
+                recurringExpenseList.deleteRecurringExpenseByKeywords(validTags, expense, interval);
                 break;
             case "editR":
                 isRecurring = true;
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                recurringExpenseList.editRecurringExpenseByKeywords(validTags, name, date, amount, catNum, interval);
+                expense = createExpenseObject();
+                recurringExpenseList.editRecurringExpenseByKeywords(validTags, expense, interval);
                 break;
             case "bye":
                 //fallthrough

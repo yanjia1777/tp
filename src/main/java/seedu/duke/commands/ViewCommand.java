@@ -110,7 +110,7 @@ public class ViewCommand extends Command {
         }
 
         for (Entry entry : outputArray) {
-            System.out.println(entry.viewToString());
+            System.out.println(entry);
         }
     }
 

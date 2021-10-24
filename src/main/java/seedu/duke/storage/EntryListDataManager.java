@@ -1,9 +1,10 @@
 package seedu.duke.storage;
 
-import seedu.duke.CategoryList;
-import seedu.duke.Entry;
+
 import seedu.duke.Expense;
-import seedu.duke.EntryList;
+import seedu.duke.ExpenseCategory;
+import seedu.duke.Entry;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,8 +31,10 @@ public class EntryListDataManager extends DataManagerActions {
     public static void appendToEntryListTextFile(String filePath, Entry entry) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, true);
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
-        fileWriter.write(entry.getCatNum() + TEXT_DELIMITER + entry.getDate()
+
+        fileWriter.write(entry.getCategory() + TEXT_DELIMITER + entry.getDate()
                 + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER + entry.getAmount() + System.lineSeparator());
+
         fileWriter.close();
     }
 
@@ -89,17 +92,16 @@ public class EntryListDataManager extends DataManagerActions {
         }
     }
 
-    private static boolean isCurrentMonthEntry(Entry entry) {
-        return entry.getDate().getMonthValue() == LocalDate.now().getMonthValue()
-                && entry.getDate().getYear() == LocalDate.now().getYear();
-    }
 
-    public static void loadEntry(String name, String date, String amount, String catNum) {
+    public static void loadEntry(String name, String dateStr, String amountStr, String catNumStr) {
         ArrayList<Entry> loadedEntryList = entryList;
-        Entry entry = new Entry(name, date, amount, catNum);
-        if (isCurrentMonthEntry(entry)) {
-            CategoryList.addSpending(entry);
-        }
-        loadedEntryList.add(entry);
+        //should check type before loading
+        //Entry entry = new Entry(name, date, amount, catNum);
+        LocalDate date = LocalDate.parse(dateStr);
+        double amount = Double.parseDouble(amountStr);
+        int index = Integer.parseInt(catNumStr);
+        ExpenseCategory category = ExpenseCategory.values()[index];
+        Expense expense = new Expense(name, date, amount, category);
+        loadedEntryList.add(expense);
     }
 }

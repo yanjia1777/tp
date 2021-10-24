@@ -1,14 +1,16 @@
 package seedu.duke.commands;
 
-
+import seedu.duke.ExpenseCategory;
+import seedu.duke.Expense;
 import seedu.duke.Entry;
-import seedu.duke.CategoryList;
-import seedu.duke.Ui;
 import seedu.duke.EntryList;
 import seedu.duke.MintException;
+import seedu.duke.Ui;
+import seedu.duke.parser.ValidityChecker;
 import seedu.duke.storage.EntryListDataManager;
 import seedu.duke.parser.Parser;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,11 +34,7 @@ public class EditCommand extends Command {
     public void editByKeywords(ArrayList<String> tags, Entry entry,
                                ArrayList<Entry> entryList) throws MintException {
         try {
-            String name = entry.getName();
-            String date = entry.getDate().toString();
-            String amount = Double.toString(entry.getAmount());
-            String catNum = Integer.toString(entry.getCatNum());
-            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, name, date, amount, catNum,
+            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, entry,
                     entryList);
             if (finalEntry != null) {
                 edit(finalEntry, entryList);
@@ -47,7 +45,7 @@ public class EditCommand extends Command {
     }
 
 
-    //    public void editExpense(Expense expense) throws MintException {
+    //          public void editExpense(Expense expense) throws MintException {
     //        editExpense(expense.getName(), expense.getDate().toString(),
     //                Double.toString(expense.getAmount()), Integer.toString(expense.getCatNum()));
     //    }
@@ -58,28 +56,21 @@ public class EditCommand extends Command {
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         try {
-            String name = entry.getName();
-            String date = entry.getDate().toString();
-            String amount = Double.toString(entry.getAmount());
-            String catNum = Integer.toString(entry.getCatNum());
-            Entry originalEntry = new Entry(name, date, amount, catNum);
-            final String originalEntryStr = originalEntry.toString();
-            final String stringToOverwrite = EntryList.overWriteString(originalEntry);
-            if (entryList.contains(originalEntry)) {
-                indexToBeChanged = entryList.indexOf(originalEntry);
+            final String originalEntryStr = entry.toString();
+            final String stringToOverwrite = EntryList.overWriteString(entry);
+            if (entryList.contains(entry)) {
+                indexToBeChanged = entryList.indexOf(entry);
                 choice = scanFieldsToUpdate();
             } else {
                 //                logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
-            editSpecifiedEntry(choice, indexToBeChanged, originalEntry, entryList);
+            editSpecifiedEntry(choice, indexToBeChanged, entry, entryList);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr, entryList);
             String stringToUpdate = EntryList.overWriteString(entryList.get(indexToBeChanged));
             final Entry newEntry = entryList.get(indexToBeChanged);
-            CategoryList.editSpending(originalEntry, newEntry);
             EntryListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
-
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -135,26 +126,30 @@ public class EditCommand extends Command {
     private void amendEntry(int index, ArrayList<String> choice, Entry entry,
                               ArrayList<Entry> entryList) throws MintException {
         String name = entry.getName();
-        String date = entry.getDate().toString();
-        String amount = Double.toString(entry.getAmount());
-        String catNum = Integer.toString(entry.getCatNum());
+        LocalDate date = entry.getDate();
+        double amount = entry.getAmount();
+        Enum category = entry.getCategory();
         for (String word : choice) {
             assert (word != null);
             if (word.contains(NAME_SEPARATOR)) {
                 name = nonEmptyNewDescription(word);
             }
             if (word.contains(DATE_SEPARATOR)) {
-                date = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
             }
             if (word.contains(AMOUNT_SEPARATOR)) {
-                amount = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                amount = Double.parseDouble(amountStr);
             }
             if (word.contains(CATEGORY_SEPARATOR)) {
-                catNum = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                CategoryList.checkValidCatNum(catNum);
+                String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                int pos = Integer.parseInt(catNumStr);
+                category = ExpenseCategory.values()[pos];
             }
         }
-        entryList.set(index, new Entry(name, date, amount, catNum));
+        entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
+
     }
 
     private String nonEmptyNewDescription(String word) throws MintException {

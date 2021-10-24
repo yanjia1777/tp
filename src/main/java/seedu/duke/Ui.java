@@ -6,6 +6,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
+    private Scanner in;
+
+    public Ui() {
+        this.in = new Scanner(System.in);
+    }
+
+    public String readUserInput() {
+        return in.nextLine().trim();
+    }
+
     protected static final String INDENT = "    ";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
     public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
@@ -17,7 +27,7 @@ public class Ui {
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
     public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
 
-    public static void startup() {
+    public void printGreetings() {
         System.out.println("Hello! I'm Mint");
         System.out.println("What can I do for you?");
     }
@@ -57,7 +67,7 @@ public class Ui {
     public static void viewGivenList(ArrayList<Entry> list) {
         System.out.println("Here is the list of items containing the keyword.");
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(INDENT + (i + 1) + "  " + list.get(i).viewToString());
+            System.out.println(INDENT + (i + 1) + "  " + list.get(i).toString());
         }
     }
 
@@ -130,10 +140,10 @@ public class Ui {
         System.out.println(MISSING_FILE_MESSAGE);
     }
 
-    public static void setLimitMessage(String catNumString, String amount) {
-        int catNumInt = Integer.parseInt(catNumString);
-        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
-    }
+    //    public static void setLimitMessage(String catNumString, String amount) {
+    //        int catNumInt = Integer.parseInt(catNumString);
+    //        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
+    //    }
 
     public static StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
         int index = 1;

@@ -5,33 +5,57 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Income extends Entry {
-    public static DateTimeFormatter dateFormatter
-            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
-            + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
-            + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
-    public static final int CAT_NUM_OTHERS = 7;
-    private int catNum;
-    private String name;
-    private LocalDate date;
-    private double amount;
+    protected ExpenseCategory category;
 
-    public Income() {
-        catNum = CAT_NUM_OTHERS; //others
-        date = LocalDate.of(2021, 1, 1);
-        amount = 0;
+    public Income(String name, double amount, ExpenseCategory category) {
+        this.name = name;
+        this.amount = amount;
+        this.date = LocalDate.now();
+        this.category = category;
     }
 
-    public Income(String name, String date, String amount, String catNum) {
-        this.catNum = Integer.parseInt(catNum);
+    public Income(String name, LocalDate date, Double amount, ExpenseCategory category) {
         this.name = name;
-        this.date = LocalDate.parse(date, dateFormatter);
-        this.amount = Double.parseDouble(amount);
+        this.date = date;
+        this.amount = amount;
+        this.category = category;
     }
 
-    public Income(String name, String date, String amount) {
-        this.catNum = CAT_NUM_OTHERS;
-        this.name = name;
-        this.date = LocalDate.parse(date, dateFormatter);
-        this.amount = Double.parseDouble(amount);
+    public void setCategory(ExpenseCategory category) {
+        this.category = category;
+    }
+
+    @Override
+    public ExpenseCategory getCategory() {
+        return category;
+    }
+
+    @Override
+    public String toString() {
+        return getCategory() + " | " + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount());
+    }
+
+    //@@author nipafx-reusedS
+    //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
+    //with minor modifications
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null) {
+            return false;
+        }
+        if (getClass() != object.getClass()) {
+            return false;
+        }
+
+        Income income = (Income) object;
+        boolean isNameEqual = Objects.equals(name, income.name);
+        boolean isDateEqual = Objects.equals(date, income.date);
+        boolean isAmountEqual = Objects.equals(amount, income.amount);
+        boolean isCategoryEqual = Objects.equals(category, income.category);
+        return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
 }
