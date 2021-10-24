@@ -307,8 +307,7 @@ public class Parser {
         return new Entry(name, date, amount);
     }
 
-    public Command parseCommand(String userInput, ArrayList<Entry> entryList,
-                                RecurringExpenseList recurringExpenseList) {
+    public Command parseCommand(String userInput) {
         ArrayList<String> validTags;
         Expense expense;
         this.command = parserExtractCommand(userInput);
