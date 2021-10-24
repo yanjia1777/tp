@@ -108,7 +108,8 @@ public class EntryListDataManager extends DataManagerActions {
     }
 
 
-    public static void loadEntry(String type, String name, String dateStr, String amountStr, String catNumStr, ArrayList<Entry> entryList) {
+    public static void loadEntry(String type, String name, String dateStr, String amountStr,
+                                 String catNumStr, ArrayList<Entry> entryList) {
         //should check type before loading
         Entry entry;
         LocalDate date = LocalDate.parse(dateStr);
@@ -121,6 +122,6 @@ public class EntryListDataManager extends DataManagerActions {
             IncomeCategory category = IncomeCategory.values()[index];
             entry = new Income(name, date, amount, category);
         }
-       entryList.add(entry);
+        entryList.add(entry);
     }
 }
