@@ -140,16 +140,8 @@ public class RecurringExpenseList {
         }
     }
 
-    public void viewRecurringExpense(String[] argumentArrayInput) throws MintException {
-        String sortType;
-        LocalDate fromDate;
-        LocalDate endDate;
-        Month month;
-        String year = null;
-        ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
-        ArrayList<Expense> outputArray = new ArrayList<Expense>(recurringExpenseList);
-
-        for (Expense expense : outputArray) {
+    public void viewRecurringExpense() throws MintException {
+        for (Expense expense : recurringExpenseList) {
             System.out.println(expense.viewToString());
         }
     }
@@ -265,6 +257,17 @@ public class RecurringExpenseList {
             }
         }
     }
+
+    public void viewAllRecurringExpense(ArrayList<Entry> expenseList) {
+        LocalDate earliestDate = LocalDate.now();
+        for (Entry recurringExpense : recurringExpenseList) {
+            if (recurringExpense.getDate().isBefore(earliestDate)) {
+                earliestDate = recurringExpense.getDate();
+            }
+        }
+        viewRecurringExpenseBetweenTwoDates(expenseList, earliestDate, LocalDate.now());
+    }
+
 
     public void sort(ArrayList<Expense> outputArray, String sortType) throws MintException {
         assert sortType != null : "sortType should have a command";

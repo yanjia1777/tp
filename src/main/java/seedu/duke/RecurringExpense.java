@@ -42,9 +42,6 @@ public class RecurringExpense extends Expense {
 
     public void setInterval(String interval) throws MintException {
         switch (interval.toUpperCase()) {
-        case "WEEK":
-            this.interval = RecurringInterval.WEEK;
-            break;
         case "MONTH":
             this.interval = RecurringInterval.MONTH;
             break;
@@ -65,13 +62,13 @@ public class RecurringExpense extends Expense {
     }
 
     public String toString() {
-        return getCat() + " | " + getInterval().label + " | " + getDate() + " | "
-                + getName() + " | $" + String.format("%,.2f", getAmount());
+        return getCat() + " | " + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount()) + " | " + getInterval().label;
     }
 
     public String viewToString() {
-        return getCatIndent() + "| " + getInterval().label + " | " + getDate() + " | "
-                + getName() + " | $" + String.format("%,.2f", getAmount());
+        return getCatIndent()  + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount()) + "| " + getInterval().label + " | ";
     }
 
     //@@author nipafx-reusedS
