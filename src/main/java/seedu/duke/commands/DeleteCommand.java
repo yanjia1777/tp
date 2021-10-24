@@ -13,6 +13,7 @@
 //
 //    public void deleteByKeywords(ArrayList<String> tags, Entry entry,
 //                                        ArrayList<Entry> entryList) throws MintException {
+//
 //        try {
 //            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, entry,
 //                    entryList);

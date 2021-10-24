@@ -4,10 +4,7 @@ import seedu.duke.ExpenseCategory;
 import seedu.duke.IncomeCategory;
 import seedu.duke.MintException;
 import seedu.duke.Interval;
-import seedu.duke.commands.AddExpenseCommand;
-import seedu.duke.commands.Command;
-import seedu.duke.commands.ExitCommand;
-import seedu.duke.commands.InvalidCommand;
+import seedu.duke.commands.*;
 import seedu.duke.Entry;
 import seedu.duke.Expense;
 import seedu.duke.Income;
@@ -306,6 +303,10 @@ public class Parser {
                 parseInputByTags(userInput);
                 expense = createExpenseObject();
                 return new AddExpenseCommand(expense);
+            case "delete":
+                validTags = parseInputByTags(userInput);
+                expense = createExpenseObject();
+                return new DeleteExpenseCommand(validTags, expense);
             case "exit":
                 return new ExitCommand();
             default:
