@@ -8,6 +8,12 @@ import java.util.Objects;
 public class Expense extends Entry {
     protected ExpenseCategory category;
 
+    public Expense(Expense expense) {
+        super(expense);
+        this.category = expense.getCategory();
+        this.type = Type.Expense;
+    }
+
     public Expense(String name, LocalDate date, double amount, ExpenseCategory category) {
         super(name, date, amount);
         this.category = category;
@@ -18,19 +24,6 @@ public class Expense extends Entry {
         return category;
     }
 
-    public String getCategoryIndented() {
-        double length = getCategory().toString().length();
-        int leftIndent = (int) Math.floor((16 - length) / 2);
-        int rightIndent = (int) Math.ceil((16 - length) / 2);
-        if (leftIndent < 0) {
-            leftIndent = 0;
-        }
-        if (rightIndent < 0) {
-            rightIndent = 0;
-        }
-        return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
-    }
-
     public void setCategory(ExpenseCategory category) {
         this.category = category;
     }
@@ -39,5 +32,28 @@ public class Expense extends Entry {
         return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
                 + getNameIndented() + " |-$" + String.format("%,.2f", getAmount());
 
+    }
+
+    //@@author nipafx-reusedS
+    //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
+    //with minor modifications
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null) {
+            return false;
+        }
+        if (getClass() != object.getClass()) {
+            return false;
+        }
+
+        Expense expense = (Expense) object;
+        boolean isNameEqual = Objects.equals(getName(), expense.getName());
+        boolean isDateEqual = Objects.equals(getDate(), expense.getDate());
+        boolean isAmountEqual = Objects.equals(getAmount(), expense.getAmount());
+        boolean isCategoryEqual = Objects.equals(getCategory(), expense.getCategory());
+        return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
 }
