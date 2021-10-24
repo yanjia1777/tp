@@ -11,6 +11,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,7 +53,7 @@ public class ValidityChecker {
 
     static void checkInvalidEndDate(Parser parser) throws MintException {
         try {
-            LocalDate parsedEndDate = LocalDate.parse(parser.endDate, dateFormatter);
+            LocalDate parsedEndDate = LocalDate.parse(parser.endDateStr, dateFormatter);
             LocalDate parsedDate = LocalDate.parse(parser.dateStr, dateFormatter);
             if (parsedEndDate.isBefore(parsedDate)) {
                 throw new MintException("End date must be after start date.");
@@ -79,7 +80,7 @@ public class ValidityChecker {
 
     private static void checkInvalidInterval(Parser parser) throws MintException {
         try {
-            Interval.valueOf(parser.interval);
+            Interval.valueOf(parser.intervalStr.toUpperCase());
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
             throw new MintException("Please enter valid interval: MONTH, YEAR");

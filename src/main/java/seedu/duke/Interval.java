@@ -1,7 +1,6 @@
 package seedu.duke;
 
 public enum Interval {
-    WEEK("WEEK"),
     MONTH("MONTH"),
     YEAR("YEAR");
 
@@ -9,6 +8,17 @@ public enum Interval {
 
     Interval(String label) {
         this.label = label;
+    }
+
+    public static Interval determineInterval(String interval) throws MintException {
+        switch (interval.toUpperCase()) {
+        case "MONTH":
+            return MONTH;
+        case "YEAR":
+            return YEAR;
+        default:
+            throw new MintException("You entered invalid interval");
+        }
     }
 }
 

@@ -13,7 +13,7 @@ public class Ui {
         this.in = new Scanner(System.in);
     }
 
-    public static void printError(MintException e) {
+    public void printError(MintException e) {
         System.out.println(e.getMessage());
     }
 
@@ -47,7 +47,7 @@ public class Ui {
         System.out.println("The following tags are available: n/ d/ a/");
     }
 
-    public static void help() {
+    public void help() {
         System.out.println("Available tags: n/name d/date a/amount c/category_number\n"
                 + "Order of tags does not matter.\n"
                 + "List of commands available.\n"
@@ -198,13 +198,13 @@ public class Ui {
     }
 
     public static void printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
-        System.out.println("Here is the list of your expenses:");
+        System.out.println("Here is the list of your entries:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
         System.out.println("  Type  |     Category     |    Date    |       Name       | Amount");
         for (Entry entry : outputArray) {
-            System.out.println(entry.toString());
+            System.out.println(entry);
         }
         System.out.print("                                                Net Total: |");
         if (total < 0) {
@@ -214,6 +214,13 @@ public class Ui {
             System.out.print(" $" + String.format("%,.2f", total));
         }
         System.out.println();
+    }
+
+    public static void printViewRecurring(ArrayList<Entry> entryList) {
+        System.out.println("Here is the information about your recurring entries:");
+        for (Entry entry : entryList) {
+            System.out.println(entry);
+        }
     }
 
     public static StringBuilder getIndent(int leftIndent, int rightIndent, String item) {
@@ -232,16 +239,16 @@ public class Ui {
         return itemWithIndent;
     }
 
-    public void printExpensesAdded(Expense expense) {
-        System.out.println("I've added :" + expense);
+    public void printEntryAdded(Entry entry) {
+        System.out.println("I've added :" + entry);
     }
 
     public void printInvalidCommand(String message) {
         System.out.println(message);
     }
 
-    public void printExpensesDeleted(Expense expense) {
-        System.out.println("I have deleted: " + expense);
+    public void printEntryDeleted(Entry entry) {
+        System.out.println("I have deleted: " + entry);
     }
 }
 
