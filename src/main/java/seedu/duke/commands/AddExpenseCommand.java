@@ -13,10 +13,6 @@ public class AddCommand extends Command {
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
     public void add(Entry entry, ArrayList<Entry> entryList) {
-        //        if (isCurrentMonthExpense(expense)) {
-        //            CategoryList.addSpending(expense);
-        //        }
-        //        logger.log(Level.INFO, "User added expense: " + expense);
         System.out.println("I have added: " + entry);
         entryList.add(entry);
         try {

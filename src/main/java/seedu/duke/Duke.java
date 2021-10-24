@@ -1,9 +1,11 @@
 package seedu.duke;
 
+import seedu.duke.commands.Command;
 import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
+import java.lang.reflect.Executable;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -26,25 +28,21 @@ public class Duke {
 
     public void run() {
         ui.printGreetings();
-        Scanner in = new Scanner(System.in);
-        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
         dataManagerActions.printPreviousFileContents(financialManager.entryList);
         while (true) {
-            try {
-                String userInput = ui.readUserInput();
-                if (parser.executeCommand(userInput, financialManager.entryList, recurringExpenseList) == -1) {
-                    break;
-                }
-            } catch (MintException e) {
-                System.out.println(e.getMessage());
-            } catch (NoSuchElementException e) {
-                System.out.println("No new line entered");
+            String userInput = ui.readUserInput();
+            Command command = parser.parseCommand(userInput, financialManager);
+            command.execute(financialManager, ui);
+            if (command.isExit()) {
+                break;
             }
         }
+        //insert storing here
         logger.log(Level.INFO, "User exited Mint");
+        ui.printGoodbye();
     }
 
     /**
