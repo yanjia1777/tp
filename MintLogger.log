@@ -393,3 +393,97 @@
   <message>User exited Mint</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-24T10:44:42.621482100Z</date>
+  <millis>1635072282621</millis>
+  <nanos>482100</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.MintLogger</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>Start logging</message>
+</record>
+<record>
+  <date>2021-10-24T10:44:42.621482100Z</date>
+  <millis>1635072282621</millis>
+  <nanos>482100</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.Duke</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>User started Mint</message>
+</record>
+<record>
+  <date>2021-10-24T10:47:19.821648700Z</date>
+  <millis>1635072439821</millis>
+  <nanos>648700</nanos>
+  <sequence>2</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.Duke</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>User exited Mint</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-24T10:48:36.948909900Z</date>
+  <millis>1635072516948</millis>
+  <nanos>909900</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.MintLogger</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>Start logging</message>
+</record>
+<record>
+  <date>2021-10-24T10:48:36.952899400Z</date>
+  <millis>1635072516952</millis>
+  <nanos>899400</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.Duke</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>User started Mint</message>
+</record>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-24T10:55:43.870263200Z</date>
+  <millis>1635072943870</millis>
+  <nanos>263200</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.MintLogger</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>Start logging</message>
+</record>
+<record>
+  <date>2021-10-24T10:55:43.870263200Z</date>
+  <millis>1635072943870</millis>
+  <nanos>263200</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>seedu.duke.Duke</class>
+  <method>run</method>
+  <thread>1</thread>
+  <message>User started Mint</message>
+</record>
