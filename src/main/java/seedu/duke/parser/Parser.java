@@ -1,20 +1,15 @@
 package seedu.duke.parser;
 
-import seedu.duke.Entry;
-import seedu.duke.Expense;
-import seedu.duke.Income;
-import seedu.duke.MintException;
+import seedu.duke.*;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.EditCommand;
 import seedu.duke.commands.ViewCommand;
-import seedu.duke.Interval;
 import seedu.duke.Entry;
-import seedu.duke.RecurringExpenseList;
-import seedu.duke.Ui;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -45,13 +40,18 @@ public class Parser {
     protected String amountStr;
     protected double amount;
     protected String catNumStr;
-    protected ExpenseCategory category;
+    protected ExpenseCategory expenseCategory;
+    protected IncomeCategory incomeCategory;
     protected String interval;
     protected String endDate;
     protected boolean isRecurring = false;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
+    public static DateTimeFormatter dateFormatter
+            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
+            + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
+            + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
 
     public Parser() {
     }
@@ -104,7 +104,7 @@ public class Parser {
         amountStr = param.trim();
     }
 
-    private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
+    private ExpenseCategory setExpenseCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
         case "0":
             return ExpenseCategory.FOOD;
@@ -122,6 +122,29 @@ public class Parser {
             return ExpenseCategory.GIFT;
         case "7":
             return ExpenseCategory.OTHERS;
+        default:
+            throw new MintException("Invalid category");
+        }
+    }
+
+    private IncomeCategory setIncomeCategoryViaCatNum(String catNum) throws MintException {
+        switch (catNum) {
+        case "0":
+            return IncomeCategory.FOOD;
+        case "1":
+            return IncomeCategory.ENTERTAINMENT;
+        case "2":
+            return IncomeCategory.TRANSPORTATION;
+        case "3":
+            return IncomeCategory.HOUSEHOLD;
+        case "4":
+            return IncomeCategory.APPAREL;
+        case "5":
+            return IncomeCategory.BEAUTY;
+        case "6":
+            return IncomeCategory.GIFT;
+        case "7":
+            return IncomeCategory.OTHERS;
         default:
             throw new MintException("Invalid category");
         }
@@ -151,7 +174,8 @@ public class Parser {
             break;
         case "c":
             this.catNumStr = description;
-            this.category = setCategoryViaCatNum(catNumStr);
+            this.expenseCategory = setExpenseCategoryViaCatNum(catNumStr);
+            this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
         case "i":
             if (isRecurring) {
@@ -233,9 +257,9 @@ public class Parser {
 
     public Entry checkType (String[] argumentsArray) {
         if(Objects.equals(argumentsArray[1], "income")) {
-            return new Income(name, date, amount, catNum);
+            return createIncomeObject();
         } else {
-            return new Expense(name, date, amount, catNum);
+            return createExpenseObject();
         }
     }
 
@@ -247,8 +271,16 @@ public class Parser {
         date = LocalDate.parse(dateStr);
         amount = Double.parseDouble(amountStr);
         int catNum = Integer.parseInt(catNumStr);
-        category = ExpenseCategory.values()[catNum];
-        return new Expense(name, date, amount, category);
+        expenseCategory = ExpenseCategory.values()[catNum];
+        return new Expense(name, date, amount, expenseCategory);
+    }
+
+    private Income createIncomeObject() {
+        date = LocalDate.parse(dateStr);
+        amount = Double.parseDouble(amountStr);
+        int catNum = Integer.parseInt(catNumStr);
+        incomeCategory = IncomeCategory.values()[catNum];
+        return new Income(name, date, amount, incomeCategory);
     }
 
     public int executeCommand(String userInput, ArrayList<Entry> entryList,
@@ -266,7 +298,6 @@ public class Parser {
                 //fallthrough
             case "view":
                 parseInputByArguments(userInput);
-                //                expenseList.viewExpense(argumentsArray, recurringExpenseList);
                 ViewCommand viewCommand = new ViewCommand();
                 viewCommand.view(argumentsArray, recurringExpenseList, entryList);
                 break;
@@ -275,11 +306,10 @@ public class Parser {
                 parseInputByArguments(userInput);
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
-                assert amount != null : "Amount should not be empty";
+                assert amountStr != null : "Amount should not be empty";
                 AddCommand addCommand = new AddCommand();
                 addCommand.add(checkType(argumentsArray), entryList);
                 //expense = createExpenseObject();
-                //AddCommand addCommand = new AddCommand();
                 //addCommand.add(expense, entryList);
                 break;
             case "delete":
@@ -303,7 +333,7 @@ public class Parser {
                 assert name != null : "Name should not be empty";
                 assert amountStr != null : "Amount should not be empty";
                 recurringExpenseList.addRecurringExpense(name, dateStr, amountStr,
-                        category, Interval.valueOf(interval), endDate);
+                        expenseCategory, Interval.valueOf(interval), endDate);
                 break;
             case "deleteR":
                 isRecurring = true;

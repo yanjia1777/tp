@@ -6,14 +6,13 @@ public abstract class Entry {
     protected String name;
     protected LocalDate date;
     protected double amount;
-    public static DateTimeFormatter dateFormatter
-            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
-            + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
-            + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
-    //public static final int CAT_NUM_OTHERS = 7;
-    //private int catNum;
     protected Type type;
 
+    public Entry(String name, LocalDate date, double amount) {
+        this.name = name;
+        this.date = date;
+        this.amount = amount;
+    }
 
     public String getName() {
         return name;
@@ -52,25 +51,12 @@ public abstract class Entry {
         return Double.toString(amount);
     }
 
-    public String getCat() {
-        return CategoryList.getCatName(this.catNum);
-    }
-
-    public String getCatIndent() {
-        return CategoryList.getCatNameIndented(this.catNum);
-    }
-
     public Type getType() {
         return type;
     }
 
     public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public String toString() {
-        return getType() + " | " + getCatIndent() + " | " + getDate() + " | "
-                + getNameIndented() + " | $" + String.format("%,.2f", getAmount());
     }
 
     public abstract Enum getCategory();
