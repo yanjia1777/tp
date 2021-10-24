@@ -13,6 +13,10 @@ public class Ui {
         this.in = new Scanner(System.in);
     }
 
+    public static void printError(MintException e) {
+        System.out.println(e.getMessage());
+    }
+
     public String readUserInput() {
         return in.nextLine().trim();
     }
@@ -220,6 +224,10 @@ public class Ui {
 
     public void printInvalidCommand(String message) {
         System.out.println(message);
+    }
+
+    public void printExpensesDeleted(Expense expense) {
+        System.out.println("I have deleted: " + expense);
     }
 }
 

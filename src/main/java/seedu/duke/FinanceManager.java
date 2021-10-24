@@ -20,16 +20,60 @@ public class FinanceManager {
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String BLANK = "";
 
-    public ArrayList<Entry> entryList;
+
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
+    public ArrayList<Entry> entryList;
     public FinanceManager() {
         this.entryList = new ArrayList<>();
     }
 
     public void addExpense(Expense expense) {
         entryList.add(expense);
+    }
+
+    public void deleteExpense(Expense expense) {
+        if (entryList.contains(expense)) {
+            entryList.remove(expense);
+        }
+    }
+    public void deleteExpenseByKeywords(ArrayList<String> tags, Expense query) {
+        try {
+            Expense expense = chooseEntryByKeywords(tags, true, query);
+            if (expense != null) {
+                deleteExpense(expense);
+            }
+        } catch (MintException e) {
+            Ui.printError(e);
+        }
+    }
+
+    // Common method
+    public Expense chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete,
+                                           Entry entry) throws MintException {
+        ArrayList<Expense> filteredList = filterEntryByKeywords(tags, query);
+        Expense expense = null;
+        if (filteredList.size() == 0) {
+            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
+        } else if (filteredList.size() == 1) {
+            Expense onlyExpense = filteredList.get(0);
+            if (Ui.isConfirmedToDeleteOrEdit(onlyExpense, isDelete)) {
+                expense = onlyExpense;
+            }
+            return expense;
+        }
+
+        Ui.viewGivenList(filteredList);
+        try {
+            int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
+            if (index >= 0) {
+                expense = filteredList.get(index);
+            }
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
+        }
+        return expense;
     }
 
     public static ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry entry,
