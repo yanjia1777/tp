@@ -12,6 +12,7 @@ public class Income extends Entry {
         this.type = Type.Income;
     }
 
+
     public IncomeCategory getCategory () {
         return category;
     }
