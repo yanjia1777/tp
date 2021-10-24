@@ -1,2 +1,36 @@
-package seedu.duke;public class RecurringEntry {
+package seedu.duke;
+
+import java.time.LocalDate;
+
+public class RecurringEntry extends Entry {
+    private Interval interval;
+    private LocalDate endDate;
+
+    RecurringEntry(RecurringEntry entry) {
+        super(entry);
+        this.interval = entry.getInterval();
+        this.endDate = entry.getEndDate();
+    }
+
+    RecurringEntry(String name, LocalDate date, double amount, Interval interval, LocalDate endDate) {
+        super(name, date, amount);
+        this.interval = interval;
+        this.endDate = endDate;
+    }
+
+    public Interval getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Interval interval) {
+        this.interval = interval;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }

@@ -3,54 +3,48 @@ package seedu.duke;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class RecurringExpense extends Expense {
-    private Interval interval;
-    private LocalDate endDate;
+public class RecurringExpense extends RecurringEntry {
+    private ExpenseCategory category;
 
-    public RecurringExpense(Expense expense) {
-        super(expense.getName(), expense.getDate(), expense.getAmount(), expense.getCategory());
+    RecurringExpense(RecurringExpense expense) {
+        super(expense);
+        this.category = expense.getCategory();
+        this.type = Type.Expense;
     }
 
     public RecurringExpense(String name, LocalDate date, Double amount, ExpenseCategory category,
                             Interval interval, LocalDate endDate) {
-        super(name, date, amount, category);
-        this.interval = interval;
-        this.endDate = endDate;
+        super(name, date, amount, interval, endDate);
+        this.category = category;
+        this.type = Type.Expense;
     }
 
-    public Interval getInterval() {
-        return interval;
+    public ExpenseCategory getCategory() {
+        return category;
     }
 
-    public void setInterval(Interval interval) {
-        this.interval = interval;
-    }
-
-    public void setInterval(String interval) throws MintException {
-        switch (interval.toUpperCase()) {
-        case "MONTH":
-            this.interval = Interval.MONTH;
-            break;
-        case "YEAR":
-            this.interval = Interval.YEAR;
-            break;
-        default:
-            throw new MintException("You entered invalid interval");
+    public String getCategoryIndented() {
+        double length = getCategory().toString().length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
         }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public void setCategory(ExpenseCategory category) {
+        this.category = category;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 
     @Override
     public String toString() {
-        return getCategory() + " | " + getInterval().label + " | " + getDate() + " | "
-                + getName() + " | $" + String.format("%,.2f", getAmount());
+        return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
+                + getNameIndented() + " |-$" + String.format("%,.2f", getAmount()) + " | " + getInterval().label;
     }
 
     //@@author nipafx-reusedS
@@ -73,7 +67,8 @@ public class RecurringExpense extends Expense {
         boolean isDateEqual = Objects.equals(getDate(), recurringExpense.getDate());
         boolean isAmountEqual = Objects.equals(getAmount(), recurringExpense.getAmount());
         boolean isCategoryEqual = Objects.equals(getCategory(), recurringExpense.getCategory());
-        boolean isIntervalEqual = Objects.equals(interval, recurringExpense.interval);
-        return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual && isIntervalEqual;
+        boolean isIntervalEqual = Objects.equals(getInterval(), recurringExpense.getInterval());
+        boolean isEndDateEqual = Objects.equals(getEndDate(), recurringExpense.getEndDate());
+        return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual && isIntervalEqual && isEndDateEqual;
     }
 }
