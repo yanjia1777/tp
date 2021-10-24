@@ -1,50 +1,26 @@
 package seedu.duke.commands;
 
-import seedu.duke.Entry;
-import seedu.duke.EntryList;
-import seedu.duke.MintException;
-import seedu.duke.storage.EntryListDataManager;
+import seedu.duke.*;
 
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class DeleteCommand extends Command {
+    private final Entry query;
+    private final ArrayList<String> tags;
 
-    public void deleteByKeywords(ArrayList<String> tags, Entry entry, EntryList entryList) throws MintException {
+    public DeleteCommand(ArrayList<String> tags, Entry query) {
+        this.query = query;
+        this.tags = tags;
+    }
+
+    @Override
+    public void execute(NormalFinanceManager normalFinanceManager,
+                        RecurringFinanceManager recurringFinanceManager, Ui ui) {
         try {
-            Entry finalEntry = entryList.chooseEntryByKeywords(tags, true, entry);
-            if (finalEntry != null) {
-                delete(finalEntry, entryList);
-            }
+            Entry deletedEntry = normalFinanceManager.deleteEntryByKeywords(tags, query);
+            ui.printEntryDeleted(deletedEntry);
         } catch (MintException e) {
-            throw new MintException(e.getMessage());
+            ui.printError(e);
         }
-    }
-
-    public void delete(Entry entry, EntryList entryList) throws MintException {
-            //logger.log(Level.INFO, "User deleted expense: " + entry);
-            System.out.println("I have deleted: " + entry);
-            entryList.deleteEntry(entry);
-            String stringToDelete = EntryList.overWriteString(entry);
-            EntryListDataManager.deleteLineInTextFile(stringToDelete);
-    }
-
-    public void deleteAll(ArrayList<Entry> entryList) {
-        if (Objects.equals(deleteConfirmations(), "yes")) {
-            entryList.clear();
-            EntryListDataManager.removeAll();
-            System.out.println("Successfully deleted all entries.");
-        } else {
-            System.out.println("Delete cancelled.");
-        }
-    }
-
-    private String deleteConfirmations() {
-        String choice;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Are you sure you want to delete all entries?");
-        choice = scan.nextLine();
-        return choice;
     }
 }
