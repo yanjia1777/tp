@@ -124,7 +124,7 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 - `NAME` can be any string of characters
 - `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
-- `CATEGORY_NUMBER` is any integer from 0 to 7.
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
 
 Examples:
 
@@ -160,9 +160,9 @@ Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
       a list for the user to choose from. The user would then have to confirm if </br>
       they wish to edit the entry.
 - `NAME` can be any string of characters
-- `DATE` can be any of the acceptable date formats.
+- `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
-- `CATEGORY_NUMBER` is any integer from 0 to 7.
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList). </br>
 
 Examples and expected output:
 
