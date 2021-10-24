@@ -8,9 +8,9 @@
 //
 //public class ExpenseConstructorTest {
 //    /**
-//     * Create a valid Expense object.
+//     * Create a valid seedu.duke.models.Expense object.
 //     *
-//     * @result getters for Expense object should tally.
+//     * @result getters for seedu.duke.models.Expense object should tally.
 //     */
 //    @Test
 //    void createExpense_allFieldsValid_success() {
@@ -19,7 +19,7 @@
 //        String amount = "7.50";
 //        String catNum = "0";
 //        CategoryList.initialiseCategories();
-//        Expense expense = new Expense(name, date, amount, catNum);
+//        seedu.duke.models.Expense expense = new seedu.duke.models.Expense(name, date, amount, catNum);
 //        assertEquals("Food | 2021-10-12 | Samurai Burger | $7.50", expense.toString());
 //    }
 //}

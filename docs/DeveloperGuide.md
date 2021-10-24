@@ -44,7 +44,7 @@ Mint comprises five main components, namely:
 
 - `Ui`: Command Line User Interface of Mint.
 - `Parser`: Parser to parser user inputs from `Ui` for `ExpenseList`.
-- `ExpenseList`: Data structure to store `Expense`s while running Mint.
+- `ExpenseList`: Data structure to store `seedu.duke.models.Expense`s while running Mint.
 - `CategoryList`: Data structure to store `Category`s while running Mint.
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
@@ -75,7 +75,7 @@ The `Storage` component:
 2. Has three different classes. `DataManagerActions` comprises the common components used by the other two classes,
    `CategoryListDataManager` and `ExpenseListDataManager`. 
    Both of these classes inherit from the `DataManagerActions` class.
-3. Depends on the `ExpenseList`, `Expense` and `CategoryList` class as its job is to save/retreive objects that belong 
+3. Depends on the `ExpenseList`, `seedu.duke.models.Expense` and `CategoryList` class as its job is to save/retreive objects that belong 
    to the aforementioned classes.
    
 ## <a name="implementation"></a>Implementation
@@ -107,7 +107,7 @@ A simple way to keep track of your expenses
 |v1.0|user|view past expenses|keep track of my spending|
 |v2.0|user|set spending limit|cut down on unnecessary spending|
 |v2.0|user|sort spending by amount|see which expenditure is taking up the budget
-|v2.0|user|find a particular Expense by name|locate an Expense without having to go through the entire list|
+|v2.0|user|find a particular seedu.duke.models.Expense by name|locate an seedu.duke.models.Expense without having to go through the entire list|
 
 {More to be added}
 
