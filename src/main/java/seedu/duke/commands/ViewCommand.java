@@ -1,11 +1,9 @@
 package seedu.duke.commands;
 
 
-import seedu.duke.Entry;
-import seedu.duke.RecurringExpenseList;
-import seedu.duke.Sorter;
-import seedu.duke.MintException;
+import seedu.duke.*;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeParseException;
@@ -15,29 +13,40 @@ import java.util.Collections;
 
 public class ViewCommand extends Command {
 
+    String sortType;
+    LocalDate fromDate;
+    LocalDate endDate;
+    Month month = null;
+    String year = null;
+    boolean isViewFrom = false;
+    boolean isViewAll = true;
+    ArrayList<String> argumentArray;
+    ArrayList<Entry> outputArray;
+    double total = 0;
+
     public void view(String[] argumentArrayInput, RecurringExpenseList recurringExpenseList,
                             ArrayList<Entry> entryList) throws MintException {
-        String sortType;
-        LocalDate fromDate;
-        LocalDate endDate;
-        Month month = null;
-        String year = null;
-        boolean isViewFrom = false;
-        boolean isViewAll = true;
-        ArrayList<String> argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
-        ArrayList<Entry> outputArray = new ArrayList<>(entryList);
+
+        argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
+        outputArray = new ArrayList<>(entryList);
+
+        if (argumentArray.contains("expense")) {
+            outputArray.removeIf(entry -> entry.getType() != Type.Expense);
+        }
+
+        if (argumentArray.contains("income")) {
+            outputArray.removeIf(entry -> entry.getType() != Type.Income);
+        }
 
         if (argumentArray.contains("by")) {
             try {
                 sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
-                sort(outputArray, sortType);
+                sort();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println(MintException.ERROR_INVALID_SORTTYPE);
                 return;
             }
         }
-
-        System.out.println("Here is the list of your expenses:");
 
         if (argumentArray.contains("year")) {
             try {
@@ -57,6 +66,9 @@ public class ViewCommand extends Command {
                     year = Integer.toString(LocalDate.now().getYear());
                     Sorter.trimByYear(outputArray, year);
                 }
+            } catch (DateTimeException e) {
+                System.out.println(MintException.ERROR_INVALID_DATE);
+                return;
             } catch (IndexOutOfBoundsException e) {
                 month = LocalDate.now().getMonth();
             }
@@ -74,18 +86,15 @@ public class ViewCommand extends Command {
                 } catch (IndexOutOfBoundsException | DateTimeParseException ignored) {
                     endDate = null;
                 }
-                System.out.print("Since " + fromDate);
                 Sorter.trimFrom(outputArray, fromDate);
                 if (endDate != null) {
                     Sorter.trimEnd(outputArray, endDate);
-                    System.out.print(" to " + endDate);
                 } else {
                     endDate = LocalDate.now();
                 }
-                System.out.println();
 
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                System.out.println(MintException.ERROR_INVALID_SORTDATE);
+                System.out.println(MintException.ERROR_INVALID_DATE);
                 return;
             }
             recurringExpenseList.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
@@ -103,18 +112,20 @@ public class ViewCommand extends Command {
                 recurringExpenseList.viewRecurringExpenseByMonth(outputArray, month.getValue(), Integer.parseInt(year));
             }
         }
+
         outputArray.sort(Sorter.compareByDate);
 
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
             Collections.reverse(outputArray);
         }
 
-        for (Entry entry : outputArray) {
-            System.out.println(entry.viewToString());
-        }
+        calculateTotal();
+
+        Ui.printView(outputArray, fromDate, endDate, total);
+
     }
 
-    public void sort(ArrayList<Entry> outputArray, String sortType) throws MintException {
+    public void sort() throws MintException {
         assert sortType != null : "sortType should have a command";
         switch (sortType) {
         case "name":
@@ -131,6 +142,16 @@ public class ViewCommand extends Command {
             break;
         default:
             throw new MintException(MintException.ERROR_INVALID_COMMAND); // Link to MintException
+        }
+    }
+
+    public void calculateTotal() {
+        for (Entry entry: outputArray) {
+            if (entry.getType() == Type.Expense) {
+                total -= entry.getAmount();
+            } else {
+                total += entry.getAmount();
+            }
         }
     }
 

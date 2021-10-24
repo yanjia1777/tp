@@ -10,28 +10,24 @@ public class Income extends Entry {
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
     public static final int CAT_NUM_OTHERS = 7;
-    private int catNum;
-    private String name;
-    private LocalDate date;
-    private double amount;
 
     public Income() {
-        catNum = CAT_NUM_OTHERS; //others
-        date = LocalDate.of(2021, 1, 1);
-        amount = 0;
+        super();
+        this.type = Type.Income;
     }
 
     public Income(String name, String date, String amount, String catNum) {
-        this.catNum = Integer.parseInt(catNum);
-        this.name = name;
-        this.date = LocalDate.parse(date, dateFormatter);
-        this.amount = Double.parseDouble(amount);
+        super(name, date, amount, catNum);
+        this.type = Type.Income;
     }
 
     public Income(String name, String date, String amount) {
-        this.catNum = CAT_NUM_OTHERS;
-        this.name = name;
-        this.date = LocalDate.parse(date, dateFormatter);
-        this.amount = Double.parseDouble(amount);
+        super(name, date, amount);
+        this.type = Type.Income;
+    }
+
+    public String toString() {
+        return getType() + "  | " + getCatIndent() + " | " + getDate() + " | "
+                + getNameIndented() + " | $" + String.format("%,.2f", getAmount());
     }
 }

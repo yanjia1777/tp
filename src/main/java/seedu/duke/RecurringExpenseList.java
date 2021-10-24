@@ -150,7 +150,7 @@ public class RecurringExpenseList {
         ArrayList<Expense> outputArray = new ArrayList<Expense>(recurringExpenseList);
 
         for (Expense expense : outputArray) {
-            System.out.println(expense.viewToString());
+            System.out.println(expense.toString());
         }
     }
 

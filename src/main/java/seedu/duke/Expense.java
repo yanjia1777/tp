@@ -13,13 +13,21 @@ public class Expense extends Entry {
 
     public Expense() {
         super();
+        this.type = Type.Expense;
     }
 
     public Expense(String name, String date, String amount, String catNum) {
         super(name, date, amount, catNum);
+        this.type = Type.Expense;
     }
 
     public Expense(String name, String date, String amount) {
         super(name, date, amount);
+        this.type = Type.Expense;
+    }
+
+    public String toString() {
+        return getType() + " | " + getCatIndent() + " | " + getDate() + " | "
+                + getNameIndented() + " |-$" + String.format("%,.2f", getAmount());
     }
 }

@@ -1,6 +1,8 @@
 package seedu.duke.parser;
 
 import seedu.duke.Entry;
+import seedu.duke.Expense;
+import seedu.duke.Income;
 import seedu.duke.MintException;
 import seedu.duke.RecurringExpenseList;
 import seedu.duke.Ui;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -190,6 +193,14 @@ public class Parser {
         catNum = String.valueOf(param.trim().charAt(2));
     }
 
+    public Entry checkType (String[] argumentsArray) {
+        if(Objects.equals(argumentsArray[1], "income")) {
+            return new Income(name, date, amount, catNum);
+        } else {
+            return new Expense(name, date, amount, catNum);
+        }
+    }
+
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
     }
@@ -233,20 +244,19 @@ public class Parser {
                 CategoryList.viewMonthlyLimit();
                 break;
             case "add":
+                parseInputByArguments(userInput);
                 parseInputByTags(userInput);
                 assert name != null : "Name should not be empty";
                 assert amount != null : "Amount should not be empty";
-                Entry entry = new Entry(name, date, amount, catNum);
-                //                expenseList.addExpense(name, date, amount, catNum);
                 AddCommand addCommand = new AddCommand();
-                addCommand.add(entry, entryList);
+                addCommand.add(checkType(argumentsArray), entryList);
                 break;
             case "delete":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
                 //                expenseList.deleteExpenseByKeywords(validTags, name, date, amount, catNum);
                 //                Expense expense = new Expense(name, date, amount, catNum);
-                entry = new Entry(name, date, amount, catNum);
+                Entry entry = new Entry(name, date, amount, catNum);
                 DeleteCommand deleteCommand = new DeleteCommand();
                 deleteCommand.deleteByKeywords(validTags, entry, entryList);
                 break;

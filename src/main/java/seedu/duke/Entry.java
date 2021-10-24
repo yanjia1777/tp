@@ -14,6 +14,7 @@ public class Entry {
     private String name;
     private LocalDate date;
     private double amount;
+    protected Type type;
 
     public Entry() {
         catNum = CAT_NUM_OTHERS; //others
@@ -37,6 +38,19 @@ public class Entry {
 
     public String getName() {
         return name;
+    }
+
+    public String getNameIndented() {
+        double length = name.length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(leftIndent, rightIndent, name).toString();
     }
 
     public void setDescription(String name) {
@@ -75,19 +89,23 @@ public class Entry {
         return CategoryList.getCatNameIndented(this.catNum);
     }
 
+    public Type getType() {
+        return type;
+    }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
     public String toString() {
-        return getCat() + " | " + getDate() + " | "
-                + getName() + " | $" + String.format("%,.2f", getAmount());
+        return getType() + " | " + getCatIndent() + " | " + getDate() + " | "
+                + getNameIndented() + " | $" + String.format("%,.2f", getAmount());
     }
 
-    public String viewToString() {
-        return getCatIndent() + "| " + getDate() + " | "
-                + getName() + " | $" + String.format("%,.2f", getAmount());
-    }
+    //public String viewToString() {
+    //    return getCatIndent() + "| " + getDate() + " | "
+    //            + getName() + " | $" + String.format("%,.2f", getAmount());
+    //}
 
     //@@author nipafx-reusedS
     //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
