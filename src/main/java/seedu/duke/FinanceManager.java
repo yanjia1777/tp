@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class EntryList {
+public class FinanceManager {
     public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
     public static final String NAME_SEPARATOR = "n/";
     public static final String DATE_SEPARATOR = "d/";
@@ -25,6 +25,13 @@ public class EntryList {
 
     public void deleteEntry(Entry entry) {
         entryList.remove(entry);
+    }
+    public FinanceManager() {
+        this.entryList = new ArrayList<>();
+    }
+
+    public void addExpense(Expense expense) {
+        entryList.add(expense);
     }
 
     public static ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry entry) throws MintException {

@@ -4,6 +4,7 @@ import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -16,12 +17,12 @@ public class Duke {
 
     private Ui ui;
     private Parser parser;
-    private EntryList entryList;
+    private FinanceManager financeManager;
 
     public Duke() {
         this.ui = new Ui();
         this.parser = new Parser();
-        this.entryList = new EntryList();
+        this.financeManager = new FinanceManager();
     }
 
     /**
@@ -38,18 +39,17 @@ public class Duke {
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        dataManagerActions.printPreviousFileContents(EntryList.entryList);
+        //call financeManager instead
+        //dataManagerActions.printPreviousFileContents(entryList);
+
         while (true) {
-            try {
-                String userInput = ui.readUserInput();
-                if (parser.executeCommand(userInput, entryList, recurringExpenseList) == -1) {
-                    break;
-                }
-            } catch (MintException e) {
-                System.out.println(e.getMessage());
-            } catch (NoSuchElementException e) {
-                System.out.println("No new line entered");
+            String userInput = ui.readUserInput();
+            Command command = parser.parseCommand(userInput, financeManager.entryList, recurringExpenseList);
+            command.execute(financeManager, ui);
+            if (command.isExit()) {
+                break;
             }
+            //store
         }
         logger.log(Level.INFO, "User exited Mint");
     }
