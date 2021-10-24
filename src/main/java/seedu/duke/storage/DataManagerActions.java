@@ -1,6 +1,7 @@
 package seedu.duke.storage;
 
 import seedu.duke.Entry;
+import seedu.duke.ExpenseCategory;
 import seedu.duke.FinancialManager;
 import seedu.duke.Ui;
 
