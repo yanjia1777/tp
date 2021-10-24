@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class EntryList {
+public class FinanceManager {
     public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
     public static final String NAME_SEPARATOR = "n/";
     public static final String DATE_SEPARATOR = "d/";
@@ -19,10 +19,14 @@ public class EntryList {
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String BLANK = "";
-    public ArrayList<Entry> entryList = new ArrayList<>();
+
+    public ArrayList<Entry> entryList;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
+    public FinanceManager() {
+        this.entryList = new ArrayList<>();
+    }
 
     public void addExpense(Expense expense) {
         entryList.add(expense);
