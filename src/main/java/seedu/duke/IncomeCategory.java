@@ -1,4 +1,12 @@
 package seedu.duke;
 
-public class IncomeCategory {
+public enum IncomeCategory {
+    FOOD,
+    ENTERTAINMENT,
+    TRANSPORTATION,
+    HOUSEHOLD,
+    APPAREL,
+    BEAUTY,
+    GIFT,
+    OTHERS;
 }
