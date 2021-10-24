@@ -12,6 +12,7 @@ public class Ui {
         this.in = new Scanner(System.in);
     }
 
+
     public String readUserInput() {
         return in.nextLine().trim();
     }
@@ -32,8 +33,12 @@ public class Ui {
         System.out.println("What can I do for you?");
     }
 
-    public static void shutdown() {
+    public void printGoodbye() {
         System.out.println("Goodbye! Hope to see you again soon!");
+    }
+
+    public static void printError(MintException e) {
+        System.out.println(e.getMessage());
     }
 
     public static void printInvalidTagError() {
@@ -62,6 +67,18 @@ public class Ui {
                 + INDENT + "View breakdown on current month's expenses\n"
                 + "- exit\n"
         );
+    }
+
+    public void printExpensesAdded(Expense expense) {
+        System.out.println("You have added " + expense);
+    }
+
+    public void printExpensesDeleted(Expense expense) {
+        System.out.println("I have deleted: " + expense);
+    }
+
+    public void printInvalidCommand(String message) {
+        System.out.println(message);
     }
 
     public static void viewGivenList(ArrayList<Entry> list) {
@@ -177,6 +194,8 @@ public class Ui {
         }
         return missingFieldsErrorMessage;
     }
+
+
 }
 
 
