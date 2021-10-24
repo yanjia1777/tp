@@ -262,7 +262,7 @@ public class Parser {
         catNumStr = String.valueOf(param.trim().charAt(2));
     }
 
-    public Entry checkType (String[] argumentsArray) {
+    public Entry checkType(String[] argumentsArray) {
         if (Objects.equals(argumentsArray[1], "income")) {
             return createIncomeObject();
         } else {
@@ -288,6 +288,12 @@ public class Parser {
         int catNum = Integer.parseInt(catNumStr);
         incomeCategory = IncomeCategory.values()[catNum];
         return new Income(name, date, amount, incomeCategory);
+    }
+
+    private Entry createEntryObject() {
+        date = LocalDate.parse(dateStr);
+        amount = Double.parseDouble(amountStr);
+        return new Entry(name, date, amount);
     }
 
     public int executeCommand(String userInput, ArrayList<Entry> entryList,
@@ -322,17 +328,17 @@ public class Parser {
             case "delete":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
-                expense = createExpenseObject();
+                Entry entry = createEntryObject();
                 DeleteCommand deleteCommand = new DeleteCommand();
-                deleteCommand.deleteByKeywords(validTags, expense, entryList);
+                deleteCommand.deleteByKeywords(validTags, entry, entryList);
                 break;
             case "edit":
                 validTags = parseInputByTags(userInput);
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
                 //                expenseList.editExpenseByKeywords(validTags, expense, expenseList);
                 EditCommand editCommand = new EditCommand();
-                expense = createExpenseObject();
-                editCommand.editByKeywords(validTags, expense, entryList);
+                entry = createEntryObject();
+                editCommand.editByKeywords(validTags, entry, entryList);
                 break;
             case "addR":
                 isRecurring = true;
@@ -355,6 +361,10 @@ public class Parser {
                 assert validTags.size() >= 1 : "There should be at least one valid tag";
                 expense = createExpenseObject();
                 recurringExpenseList.editRecurringExpenseByKeywords(validTags, expense, interval);
+                break;
+            case "deleteall":
+                deleteCommand = new DeleteCommand();
+                deleteCommand.deleteAll(entryList);
                 break;
             case "bye":
                 //fallthrough

@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Duke {
+    //comment for commit
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
