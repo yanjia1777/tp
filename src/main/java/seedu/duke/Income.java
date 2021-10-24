@@ -5,33 +5,37 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Income extends Entry {
-    public static DateTimeFormatter dateFormatter
-            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
-            + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
-            + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
-    public static final int CAT_NUM_OTHERS = 7;
-    private int catNum;
-    private String name;
-    private LocalDate date;
-    private double amount;
+    protected IncomeCategory category;
 
-    public Income() {
-        catNum = CAT_NUM_OTHERS; //others
-        date = LocalDate.of(2021, 1, 1);
-        amount = 0;
+    public Income(String name, LocalDate date, double amount, IncomeCategory category) {
+        super(name, date, amount);
+        this.category = category;
+        this.type = Type.Income;
     }
 
-    public Income(String name, String date, String amount, String catNum) {
-        this.catNum = Integer.parseInt(catNum);
-        this.name = name;
-        this.date = LocalDate.parse(date, dateFormatter);
-        this.amount = Double.parseDouble(amount);
+    public IncomeCategory getCategory() {
+        return category;
     }
 
-    public Income(String name, String date, String amount) {
-        this.catNum = CAT_NUM_OTHERS;
-        this.name = name;
-        this.date = LocalDate.parse(date, dateFormatter);
-        this.amount = Double.parseDouble(amount);
+    public String getCategoryIndented() {
+        double length = getCategory().toString().length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
+    }
+
+    public void setCategory(IncomeCategory category) {
+        this.category = category;
+    }
+
+    public String toString() {
+        return getType() + "  | " + getCategoryIndented() + " | " + getDate() + " | "
+                + getNameIndented() + " | $" + String.format("%,.2f", getAmount());
     }
 }

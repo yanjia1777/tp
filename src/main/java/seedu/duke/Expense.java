@@ -1,25 +1,43 @@
 package seedu.duke;
 
+
 import java.time.LocalDate; // import the LocalDate class
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Expense extends Entry {
-    public static DateTimeFormatter dateFormatter
-            = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
-            + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
-            + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
-    public static final int CAT_NUM_OTHERS = 7;
+    protected ExpenseCategory category;
 
-    public Expense() {
-        super();
-    }
-
-    public Expense(String name, String date, String amount, String catNum) {
-        super(name, date, amount, catNum);
-    }
-
-    public Expense(String name, String date, String amount) {
+    public Expense(String name, LocalDate date, double amount, ExpenseCategory category) {
         super(name, date, amount);
+        this.category = category;
+        this.type = Type.Expense;
+    }
+
+    public ExpenseCategory getCategory() {
+        return category;
+    }
+
+    public String getCategoryIndented() {
+        double length = getCategory().toString().length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
+    }
+
+    public void setCategory(ExpenseCategory category) {
+        this.category = category;
+    }
+
+    public String toString() {
+        return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
+                + getNameIndented() + " |-$" + String.format("%,.2f", getAmount());
+
     }
 }

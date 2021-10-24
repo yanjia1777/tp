@@ -6,17 +6,15 @@ import seedu.duke.MintException;
 import seedu.duke.storage.EntryListDataManager;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class DeleteCommand extends Command {
 
     public void deleteByKeywords(ArrayList<String> tags, Entry entry,
                                         ArrayList<Entry> entryList) throws MintException {
         try {
-            String name = entry.getName();
-            String date = entry.getDate().toString();
-            String amount = Double.toString(entry.getAmount());
-            String catNum = Integer.toString(entry.getCatNum());
-            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, name, date, amount, catNum,
+            Entry finalEntry = EntryList.chooseEntryByKeywords(tags, true, entry,
                     entryList);
             if (finalEntry != null) {
                 delete(finalEntry, entryList);
@@ -43,5 +41,23 @@ public class DeleteCommand extends Command {
             //            }
             EntryListDataManager.deleteLineInTextFile(stringToDelete);
         }
+    }
+
+    public void deleteAll(ArrayList<Entry> entryList) {
+        if (Objects.equals(deleteConfirmations(), "yes")) {
+            entryList.clear();
+            EntryListDataManager.removeAll();
+            System.out.println("Successfully deleted all entries.");
+        } else {
+            System.out.println("Delete cancelled.");
+        }
+    }
+
+    private String deleteConfirmations() {
+        String choice;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Are you sure you want to delete all entries?");
+        choice = scan.nextLine();
+        return choice;
     }
 }
