@@ -72,7 +72,7 @@ Shows a list of possible user commands
 
 Format: `help`
 
-## <a name="help"></a>Adding expenses: `add`
+## <a name="add"></a>Adding expenses: `add`
 
 Adds an expense to your expense tracker
 
@@ -99,7 +99,7 @@ add n/Cheese burger a?4.2 d/2021-04-20 c/0
 I have added: Food | 2021-04-20 | Cheese Burger | $4.20
 ```
 
-## <a name="help"></a>Viewing all expenses: `view`
+## <a name="view"></a>Viewing all expenses: `view`
 
 Shows a list of all the expenses, each with the associated `NAME`, `DATE`, and `AMOUNT`. Format: `view`
 Expected Output:
@@ -108,7 +108,7 @@ Expected Output:
 {INSERT EXPECTED OUTPUT}
 ```
 
-## <a name="help"></a>Deleting an expense: `delete`
+## <a name="delete"></a>Deleting an expense: `delete`
 
 Deletes an existing expense. </br>
 Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
@@ -124,7 +124,7 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 - `NAME` can be any string of characters
 - `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
-- `CATEGORY_NUMBER` is any integer from 0 to 7.
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
 
 Examples:
 
@@ -145,7 +145,7 @@ Examples and expected output:
 {INSERT delete more than 1 expense}
 ```
 
-## <a name="help"></a>Editing an expense: `edit`
+## <a name="edit"></a>Editing an expense: `edit`
 
 Edits an existing expense </br>
 Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
@@ -160,9 +160,9 @@ Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
       a list for the user to choose from. The user would then have to confirm if </br>
       they wish to edit the entry.
 - `NAME` can be any string of characters
-- `DATE` can be any of the acceptable date formats.
+- `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
-- `CATEGORY_NUMBER` is any integer from 0 to 7.
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList). </br>
 
 Examples and expected output:
 
@@ -178,7 +178,7 @@ Examples and expected output:
 {INSERT edit more than 1 expense}
 ```
 
-## <a name="help"></a>View available categories: `cat`
+## <a name="cat"></a>View available categories: `cat`
 
 Shows a list of all available categories and its corresponding tag number</br>
 Format: `cat`
@@ -188,7 +188,7 @@ Expected Output:
 {INSERT cat expected output}
 ```
 
-## <a name="help"></a>Exit the program: `exit`
+## <a name="exit"></a>Exit the program: `exit`
 
 Exits the Mint program.
 
@@ -198,7 +198,7 @@ Expected Output:
 - `Bye! Thanks for using Mint. See you soon :D`
 
 
-## <a name="Commannd Summary"></a>Exit the program: `command-summary`
+## <a name="Commannd Summary"></a>Command Summary
 | action | Format,Examples |
 | -----| -----|
 |Add |add `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g., `add n/burger a/5 d/2021-10-20 c/0` |
