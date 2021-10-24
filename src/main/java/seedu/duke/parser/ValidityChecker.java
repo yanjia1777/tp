@@ -44,6 +44,21 @@ public class ValidityChecker {
         }
     }
 
+    static void checkInvalidEndDate(Parser parser) throws MintException {
+        try {
+            LocalDate parsedEndDate = LocalDate.parse(parser.endDate, Expense.dateFormatter);
+            LocalDate parsedDate = LocalDate.parse(parser.date, Expense.dateFormatter);
+            if (parsedEndDate.isBefore(parsedDate)) {
+                throw new MintException("End date must be after start date.");
+            }
+        } catch (DateTimeParseException e) {
+            logger.log(Level.INFO, "User entered invalid date");
+            throw new MintException(MintException.ERROR_INVALID_DATE);
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
+        }
+    }
+
     static void checkInvalidCatNum(Parser parser) throws MintException {
         try {
             int catNumInt = Integer.parseInt(parser.catNum);
@@ -70,7 +85,7 @@ public class ValidityChecker {
                                                String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/"}
+        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
@@ -92,6 +107,9 @@ public class ValidityChecker {
                         break;
                     case "i/":
                         checkInvalidInterval(parser);
+                        break;
+                    case "e/":
+                        checkInvalidEndDate(parser);
                         break;
                     default:
                         throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);

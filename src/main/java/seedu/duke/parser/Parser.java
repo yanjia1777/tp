@@ -30,6 +30,7 @@ public class Parser {
     public static final String STRING_AMOUNT = "Amount of purchase\n";
     public static final String STRING_CATNUM = "Category number of item\n";
     public static final String STRING_INTERVAL = "Interval of item\n";
+    public static final String STRING_END_DATE = "Interval of item\n";
     public static final int CAT_NUM_FOOD_INT = 0;
     public static final int CAT_NUM_OTHERS_INT = 7;
     public static final String CAT_NUM_FOOD = "0";
@@ -118,6 +119,13 @@ public class Parser {
                 throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
             }
             break;
+        case "e":
+            if (isRecurring) {
+                this.endDate = description;
+            } else {
+                throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
+            }
+            break;
         default:
             throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
         }
@@ -157,17 +165,20 @@ public class Parser {
 
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
-        if (command.equals("add")) {
-            initDate();
-            initCatNum();
-        } else if (command.equals("addR")) {
-            initDate();
-            initCatNum();
-            initEndDate();
+        try {
+            if (command.equals("add")) {
+                initDate();
+                initCatNum();
+            } else if (command.equals("addR")) {
+                initDate();
+                initCatNum();
+                initEndDate();
+            }
+            parseInputByTagsLoop(userInput);
+            return ValidityChecker.checkExistenceAndValidityOfTags(this, userInput);
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
         }
-
-        parseInputByTagsLoop(userInput);
-        return ValidityChecker.checkExistenceAndValidityOfTags(this, userInput);
     }
 
     public void parserSetLimit(String[] userInput) throws MintException {
