@@ -17,7 +17,7 @@
 //        LocalDate date = LocalDate.now();
 //        ExpenseList expenseList = new ExpenseList();
 //        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
-//        seedu.duke.models.Expense expense = new seedu.duke.models.Expense("burger", "2021-10-10", "10");
+//        Expense expense = new Expense("burger", "2021-10-10", "10");
 //        String expenseName = expense.getName();
 //        String expenseDate = expense.getDate().toString();
 //        String expenseAmount = Double.toString(expense.getAmount());
@@ -38,8 +38,8 @@
 //        LocalDate date = LocalDate.now();
 //        ExpenseList expenseList = new ExpenseList();
 //        CategoryList.initialiseCategories();
-//        seedu.duke.models.Expense expenseFood = new seedu.duke.models.Expense("burger", "2021-10-10", "10", "1");
-//        seedu.duke.models.Expense expenseEntertainment = new seedu.duke.models.Expense("movie", "2021-10-10", "13", "2");
+//        Expense expenseFood = new Expense("burger", "2021-10-10", "10", "1");
+//        Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13", "2");
 //        String foodExpenseName = expenseFood.getName();
 //        String foodExpenseDate = expenseFood.getDate().toString();
 //        String foodExpenseAmount = Double.toString(expenseFood.getAmount());

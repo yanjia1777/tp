@@ -17,7 +17,7 @@
 //        String amount = "15.5";
 //        String catNum = "0";
 //
-//        expenseList.expenseList.add(new seedu.duke.models.Expense(name, date, amount, catNum));
+//        expenseList.expenseList.add(new Expense(name, date, amount, catNum));
 //        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 //        System.setOut(new PrintStream(outContent));
 //
@@ -73,8 +73,8 @@
 //    public void viewExpense_twoExpenses_success() throws MintException {
 //        CategoryList.initialiseCategories();
 //        ExpenseList expenseList = new ExpenseList();
-//        expenseList.expenseList.add(new seedu.duke.models.Expense("Cheese burger", "2021-12-23", "15.5"));
-//        expenseList.expenseList.add(new seedu.duke.models.Expense("book", "2022-12-23", "9"));
+//        expenseList.expenseList.add(new Expense("Cheese burger", "2021-12-23", "15.5"));
+//        expenseList.expenseList.add(new Expense("book", "2022-12-23", "9"));
 //        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 //        System.setOut(new PrintStream(outContent));
 //        String[] emptyArray = {"view"};
