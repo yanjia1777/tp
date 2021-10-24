@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,8 +20,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-
-import static seedu.duke.Duke.entryList;
 
 public class EntryListDataManager extends DataManagerActions {
 
@@ -104,13 +103,12 @@ public class EntryListDataManager extends DataManagerActions {
             String date = params[2];
             String name = params[3];
             String amount = params[4];
-            loadEntry(type, name, date, amount, catNum);
+            loadEntry(type, name, date, amount, catNum, entryList);
         }
     }
 
 
-    public static void loadEntry(String type, String name, String dateStr, String amountStr, String catNumStr) {
-        ArrayList<Entry> loadedEntryList = entryList;
+    public static void loadEntry(String type, String name, String dateStr, String amountStr, String catNumStr, ArrayList<Entry> entryList) {
         //should check type before loading
         Entry entry;
         LocalDate date = LocalDate.parse(dateStr);
@@ -123,6 +121,6 @@ public class EntryListDataManager extends DataManagerActions {
             IncomeCategory category = IncomeCategory.values()[index];
             entry = new Income(name, date, amount, category);
         }
-        loadedEntryList.add(entry);
+       entryList.add(entry);
     }
 }
