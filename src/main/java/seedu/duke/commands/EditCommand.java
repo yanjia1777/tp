@@ -32,10 +32,10 @@ public class EditCommand extends Command {
 
 
     public void editByKeywords(ArrayList<String> tags, Entry entry,
-                               ArrayList<Entry> entryList) throws MintException {
+                               FinancialManager financialManager) throws MintException {
+        ArrayList<Entry> entryList = financialManager.entryList;
         try {
-            Entry finalEntry = FinancialManager.chooseEntryByKeywords(tags, true, entry,
-                    entryList);
+            Entry finalEntry = financialManager.chooseEntryByKeywords(tags, true, entry);
             if (finalEntry != null) {
                 edit(finalEntry, entryList);
             }
@@ -161,5 +161,9 @@ public class EditCommand extends Command {
             throw new MintException(ERROR_INVALID_DESCRIPTION);
         }
         return description;
+    }
+    @Override
+    public void execute(FinancialManager financialManager, Ui ui) {
+
     }
 }

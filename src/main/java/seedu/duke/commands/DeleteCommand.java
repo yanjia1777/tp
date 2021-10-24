@@ -3,19 +3,19 @@ package seedu.duke.commands;
 import seedu.duke.Entry;
 import seedu.duke.FinancialManager;
 import seedu.duke.MintException;
+import seedu.duke.Ui;
 import seedu.duke.storage.EntryListDataManager;
 
 import java.util.ArrayList;
 
 public class DeleteCommand extends Command {
 
-    public void deleteByKeywords(ArrayList<String> tags, Entry entry,
-                                        ArrayList<Entry> entryList) throws MintException {
+
+    public void deleteByKeywords(ArrayList<String> tags, Entry entry, FinancialManager financialManager) throws MintException {
         try {
-            Entry finalEntry = FinancialManager.chooseEntryByKeywords(tags, true, entry,
-                    entryList);
+            Entry finalEntry = financialManager.chooseEntryByKeywords(tags, true, entry);
             if (finalEntry != null) {
-                delete(finalEntry, entryList);
+                delete(finalEntry, financialManager.entryList);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
@@ -39,5 +39,10 @@ public class DeleteCommand extends Command {
             //            }
             EntryListDataManager.deleteLineInTextFile(stringToDelete);
         }
+    }
+
+    @Override
+    public void execute(FinancialManager financialManager, Ui ui) {
+
     }
 }
