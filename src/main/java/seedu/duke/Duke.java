@@ -1,11 +1,10 @@
 package seedu.duke;
 
+import seedu.duke.commands.Command;
 import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,12 +16,14 @@ public class Duke {
 
     private Ui ui;
     private Parser parser;
-    private FinanceManager financeManager;
+    private NormalFinanceManager normalFinanceManager;
+    private RecurringFinanceManager recurringFinanceManager;
 
     public Duke() {
         this.ui = new Ui();
         this.parser = new Parser();
-        this.financeManager = new FinanceManager();
+        this.normalFinanceManager = new NormalFinanceManager();
+        this.recurringFinanceManager = new RecurringFinanceManager();
     }
 
     /**
@@ -35,7 +36,6 @@ public class Duke {
     public void run() {
         ui.printGreetings();
         Scanner in = new Scanner(System.in);
-        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
@@ -44,8 +44,8 @@ public class Duke {
 
         while (true) {
             String userInput = ui.readUserInput();
-            Command command = parser.parseCommand(userInput, financeManager.entryList, recurringExpenseList);
-            command.execute(financeManager, ui);
+            Command command = parser.parseCommand(userInput);
+            command.execute(normalFinanceManager, recurringFinanceManager, ui);
             if (command.isExit()) {
                 break;
             }
