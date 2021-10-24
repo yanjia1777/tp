@@ -14,7 +14,15 @@ public class Duke {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String CATEGORY_FILE_PATH = "data" + File.separator + "MintCategory.txt";
+
+    private Ui ui;
+    private Parser parser;
     public static ArrayList<Entry> entryList = new ArrayList<>();
+
+    public Duke() {
+        this.ui = new Ui();
+        this.parser = new Parser();
+    }
 
     /**
      * Main entry-point for the java.duke.Duke application.
@@ -24,18 +32,16 @@ public class Duke {
     }
 
     public void run() {
-        Ui.startup();
+        ui.printGreetings();
         Scanner in = new Scanner(System.in);
-        //        ExpenseList expenseList = new ExpenseList();
         RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
-        Parser parser = new Parser();
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
         dataManagerActions.printPreviousFileContents(entryList);
         while (true) {
             try {
-                String userInput = in.nextLine();
+                String userInput = ui.readUserInput();
                 if (parser.executeCommand(userInput, entryList, recurringExpenseList) == -1) {
                     break;
                 }

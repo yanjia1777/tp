@@ -245,7 +245,6 @@ public class Parser {
                               RecurringExpenseList recurringExpenseList) throws MintException {
         ArrayList<String> validTags;
         Expense expense;
-        userInput = userInput.trim(); //get rid of whitespaces
         this.command = parserExtractCommand(userInput);
         try {
             switch (command) {

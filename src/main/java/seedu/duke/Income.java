@@ -51,11 +51,11 @@ public class Income extends Entry {
             return false;
         }
 
-        Expense expense = (Expense) object;
-        boolean isNameEqual = Objects.equals(name, expense.name);
-        boolean isDateEqual = Objects.equals(date, expense.date);
-        boolean isAmountEqual = Objects.equals(amount, expense.amount);
-        boolean isCategoryEqual = Objects.equals(category, expense.category);
+        Income income = (Income) object;
+        boolean isNameEqual = Objects.equals(name, income.name);
+        boolean isDateEqual = Objects.equals(date, income.date);
+        boolean isAmountEqual = Objects.equals(amount, income.amount);
+        boolean isCategoryEqual = Objects.equals(category, income.category);
         return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
 }
