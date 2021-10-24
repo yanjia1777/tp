@@ -118,6 +118,7 @@ public class RecurringExpenseList {
     }
 
     public void deleteRecurringExpense(RecurringExpense expense) throws MintException {
+
         deleteRecurringExpense(expense.getName(), expense.getDate().toString(),
                 Double.toString(expense.getAmount()), expense.getCategory(),
                 expense.getInterval(), expense.getEndDate().toString());

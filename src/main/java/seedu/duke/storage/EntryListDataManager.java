@@ -32,7 +32,7 @@ public class EntryListDataManager extends DataManagerActions {
         FileWriter fileWriter = new FileWriter(filePath, true);
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
 
-        fileWriter.write(entry.getCategory() + TEXT_DELIMITER + entry.getDate()
+        fileWriter.write(entry.getCategory().ordinal() + TEXT_DELIMITER + entry.getDate()
                 + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER + entry.getAmount() + System.lineSeparator());
 
         fileWriter.close();
