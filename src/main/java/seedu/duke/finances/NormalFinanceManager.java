@@ -1,7 +1,15 @@
-package seedu.duke;
+package seedu.duke.finances;
 
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Expense;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.Type;
+import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.storage.EntryListDataManager;
+import seedu.duke.utility.Filter;
+import seedu.duke.utility.Sorter;
+import seedu.duke.utility.Ui;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -264,7 +272,7 @@ public class NormalFinanceManager extends FinanceManager {
 
         Ui.printView(outputArray, fromDate, endDate, total);
         if (isViewAll) {
-            Ui.printViewRecurring(outputArray);
+            Ui.printViewRecurring(recurringFinanceManager.recurringEntryList);
         }
     }
 

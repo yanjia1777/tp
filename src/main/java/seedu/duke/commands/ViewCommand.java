@@ -1,10 +1,10 @@
 package seedu.duke.commands;
 
 
-import seedu.duke.NormalFinanceManager;
-import seedu.duke.MintException;
-import seedu.duke.Ui;
-import seedu.duke.RecurringFinanceManager;
+import seedu.duke.finances.NormalFinanceManager;
+import seedu.duke.exception.MintException;
+import seedu.duke.utility.Ui;
+import seedu.duke.finances.RecurringFinanceManager;
 
 public class ViewCommand extends Command {
     private String[] argumentArrayInput;

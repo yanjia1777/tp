@@ -1,7 +1,11 @@
 package seedu.duke.commands;
 
 
-import seedu.duke.*;
+import seedu.duke.entries.Entry;
+import seedu.duke.exception.MintException;
+import seedu.duke.finances.NormalFinanceManager;
+import seedu.duke.finances.RecurringFinanceManager;
+import seedu.duke.utility.Ui;
 
 
 public class AddCommand extends Command {

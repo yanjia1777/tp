@@ -1,5 +1,7 @@
-package seedu.duke;
+package seedu.duke.utility;
 
+import seedu.duke.entries.Entry;
+import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 
 import java.time.LocalDate;

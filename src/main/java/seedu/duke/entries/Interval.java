@@ -1,4 +1,6 @@
-package seedu.duke;
+package seedu.duke.entries;
+
+import seedu.duke.exception.MintException;
 
 public enum Interval {
     MONTH("MONTH"),

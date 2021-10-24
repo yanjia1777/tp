@@ -1,5 +1,8 @@
-package seedu.duke;
+package seedu.duke.finances;
 
+import seedu.duke.exception.MintException;
+import seedu.duke.entries.Type;
+import seedu.duke.entries.Entry;
 import seedu.duke.parser.Parser;
 
 import java.io.File;

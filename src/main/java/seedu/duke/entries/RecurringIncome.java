@@ -1,10 +1,10 @@
-package seedu.duke;
+package seedu.duke.entries;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class RecurringIncome extends RecurringEntry {
-    private IncomeCategory category;
+    protected IncomeCategory category;
 
     public RecurringIncome(RecurringIncome income) {
         super(income);
@@ -13,7 +13,7 @@ public class RecurringIncome extends RecurringEntry {
     }
 
     public RecurringIncome(String name, LocalDate date, Double amount, IncomeCategory category,
-                            Interval interval, LocalDate endDate) {
+                           Interval interval, LocalDate endDate) {
         super(name, date, amount, interval, endDate);
         this.category = category;
         this.type = Type.Income;

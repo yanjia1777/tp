@@ -1,8 +1,12 @@
-package seedu.duke;
+package seedu.duke.duke;
 
 import seedu.duke.commands.Command;
+import seedu.duke.finances.NormalFinanceManager;
+import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
+import seedu.duke.utility.MintLogger;
+import seedu.duke.utility.Ui;
 
 import java.io.File;
 import java.util.Scanner;

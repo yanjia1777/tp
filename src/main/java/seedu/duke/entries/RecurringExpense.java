@@ -1,4 +1,6 @@
-package seedu.duke;
+package seedu.duke.entries;
+
+import seedu.duke.utility.Ui;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -6,7 +8,7 @@ import java.util.Objects;
 public class RecurringExpense extends RecurringEntry {
     private ExpenseCategory category;
 
-    RecurringExpense(RecurringExpense expense) {
+    public RecurringExpense(RecurringExpense expense) {
         super(expense);
         this.category = expense.getCategory();
         this.type = Type.Expense;
