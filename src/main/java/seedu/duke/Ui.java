@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Ui {
     protected static final String INDENT = "    ";
+    public static final String LINE = "    ____________________________________________________________";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
     public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
             + "I was unable to perform any edits! "
@@ -59,6 +60,15 @@ public class Ui {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(INDENT + (i + 1) + "  " + list.get(i).viewToString());
         }
+    }
+
+    public static void viewGivenListAndTotal(ArrayList<Entry> list, double totalAmount) {
+        System.out.println("Here is the list of your entries:");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(INDENT + (i + 1) + "  " + list.get(i).viewToString());
+        }
+        System.out.println(LINE);
+        System.out.println(INDENT + "Total: " + totalAmount);
     }
 
     public static int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) throws MintException {
@@ -159,6 +169,10 @@ public class Ui {
                 break;
             case "i/":
                 missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_INTERVAL);
+                index++;
+                break;
+            case "e/":
+                missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_END_DATE);
                 index++;
                 break;
             default:
