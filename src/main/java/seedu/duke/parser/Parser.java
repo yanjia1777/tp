@@ -1,11 +1,18 @@
 package seedu.duke.parser;
 
-import seedu.duke.*;
+import seedu.duke.ExpenseCategory;
+import seedu.duke.IncomeCategory;
+import seedu.duke.MintException;
+import seedu.duke.Interval;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.EditCommand;
 import seedu.duke.commands.ViewCommand;
 import seedu.duke.Entry;
+import seedu.duke.Expense;
+import seedu.duke.Income;
+import seedu.duke.RecurringExpenseList;
+import seedu.duke.Ui;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -256,7 +263,7 @@ public class Parser {
     }
 
     public Entry checkType (String[] argumentsArray) {
-        if(Objects.equals(argumentsArray[1], "income")) {
+        if (Objects.equals(argumentsArray[1], "income")) {
             return createIncomeObject();
         } else {
             return createExpenseObject();

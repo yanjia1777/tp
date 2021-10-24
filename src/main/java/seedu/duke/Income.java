@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Income extends Entry {
     protected IncomeCategory category;
+
     public Income(String name, LocalDate date, double amount, IncomeCategory category) {
         super(name, date, amount);
         this.category = category;
@@ -29,17 +30,17 @@ public class Income extends Entry {
         return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
     }
 
-    public void setCategory(IncomeCategory category) {
+    public void setCategory (IncomeCategory category) {
         this.category = category;
     }
 
-    public String toString() {
+    public String toString () {
         return getType() + "  | " + getCategoryIndented() + " | " + getDate() + " | "
                 + getNameIndented() + " | $" + String.format("%,.2f", getAmount());
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals (Object object) {
         return false;
     }
 }
