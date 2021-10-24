@@ -1,10 +1,8 @@
 package seedu.duke;
 
-import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.storage.EntryListDataManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -13,29 +11,12 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Scanner;
-import java.util.logging.Logger;
 
-public class FinanceManager {
-    public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
-    public static final String NAME_SEPARATOR = "n/";
-    public static final String DATE_SEPARATOR = "d/";
-    public static final String AMOUNT_SEPARATOR = "a/";
-    public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
-    public static final int LENGTH_OF_SEPARATOR = 2;
-    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
-    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
-    public static final String CATEGORY_SEPARATOR = "c/";
-    public static final String BLANK = "";
+public class NormalFinanceManager extends FinanceManager {
 
     public ArrayList<Entry> entryList;
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
-    public FinanceManager() {
+    public NormalFinanceManager() {
         this.entryList = new ArrayList<>();
     }
 
@@ -48,29 +29,7 @@ public class FinanceManager {
         }
     }
 
-    public Entry deleteEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
-        try {
-            Entry entry = chooseEntryByKeywords(tags, true, query);
-            if (entry != null) {
-                deleteEntry(entry);
-            }
-            return entry;
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-    }
-
-    public void editEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
-        try {
-            Entry entry = chooseEntryByKeywords(tags, true, query);
-            if (entry != null) {
-                editEntry(query);
-            }
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-    }
-
+    @Override
     public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
         ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
         Entry entry = null;
@@ -111,7 +70,6 @@ public class FinanceManager {
                 break;
             case "c/":
                 filteredList = Filter.filterEntryByCategory(query.getCategory(), filteredList);
-
                 break;
             default:
                 throw new MintException("Unable to locate tag");
@@ -120,6 +78,7 @@ public class FinanceManager {
         return filteredList;
     }
 
+    @Override
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
         entryList.remove(entry);
@@ -127,6 +86,7 @@ public class FinanceManager {
         EntryListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
+    @Override
     public void editEntry(Entry query) throws MintException {
         String choice;
         int indexToBeChanged;
@@ -158,52 +118,13 @@ public class FinanceManager {
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
     }
 
-    private void editSpecifiedEntry(String userInput, int indexToBeChanged, Entry entry) throws MintException {
-        Parser parser = new Parser();
-        ArrayList<String> splitChoice = new ArrayList<>();
-        String choice = " " + userInput;
-        while (choice.matches(userTagRaw)) {
-            int currentIndex = parser.getCurrentTagIndex(choice);
-            int nextIndex = choice.length();
-
-            if (parser.hasNextTag(choice, currentIndex)) {
-                nextIndex = parser.getNextTagIndex(choice, currentIndex);
-            }
-            choice = remainingString(splitChoice, choice, currentIndex, nextIndex);
-        }
-        try {
-            amendEntry(indexToBeChanged, splitChoice, entry);
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-    }
-
-    private String remainingString(ArrayList<String> splitChoice, String choice, int currentIndex, int nextIndex) {
-        String description;
-        description = choice.substring(currentIndex, nextIndex).trim();
-        extractFieldsToAmend(splitChoice, description);
-        choice = choice.substring(nextIndex);
-        return choice;
-    }
-
-    private void extractFieldsToAmend(ArrayList<String> splitChoice, String description) {
-        splitChoice.add(description);
-    }
-
-    private String scanFieldsToUpdate() {
-        String choice;
-        Scanner scan = new Scanner(System.in);
-        System.out.println(STRING_PROMPT_EDIT);
-        choice = scan.nextLine();
-        return choice;
-    }
-
-    private Boolean isEditSuccessful(int indexToBeChanged, String originalEntry) {
+    protected Boolean isEditSuccessful(int indexToBeChanged, String originalEntry) {
         String newEntry = entryList.get(indexToBeChanged).toString();
         return !originalEntry.equals(newEntry);
     }
 
-    private void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
+    @Override
+    public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
             String name = entry.getName();
             LocalDate date = entry.getDate();
@@ -232,17 +153,6 @@ public class FinanceManager {
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
-    }
-
-    private String nonEmptyNewDescription(String word) throws MintException {
-        String description;
-        String newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR);
-        if (!newDescription.trim().equalsIgnoreCase(BLANK)) {
-            description = newDescription.trim();
-        } else {
-            throw new MintException(ERROR_INVALID_DESCRIPTION);
-        }
-        return description;
     }
 
     public void view(String[] argumentArrayInput, RecurringFinanceManager recurringFinanceManager) throws MintException {
@@ -332,15 +242,16 @@ public class FinanceManager {
                     endDate);
             isViewAll = false;
         }
-
-        if (!isViewAll && !isViewFrom) {
+        if (isViewAll) {
+            recurringFinanceManager.viewAllRecurringExpense(outputArray);
+        } else if (!isViewAll && !isViewFrom) {
             if (year == null) {
                 year = Integer.toString(LocalDate.now().getYear());
             }
             if (month == null) {
                 recurringFinanceManager.viewRecurringExpenseByYear(outputArray, Integer.parseInt(year));
             } else {
-                recurringFinanceManager.viewRecurringExpenseByMonth(outputArray, month.getValue(), Integer.parseInt(year));
+                recurringFinanceManager.viewRecurringEntryByMonth(outputArray, month.getValue(), Integer.parseInt(year));
             }
         }
 
@@ -352,6 +263,9 @@ public class FinanceManager {
         calculateTotal(outputArray);
 
         Ui.printView(outputArray, fromDate, endDate, total);
+        if (isViewAll) {
+            Ui.printViewRecurring(outputArray);
+        }
     }
 
     public void sort(String sortType, ArrayList<Entry> outputArray) throws MintException {
@@ -371,17 +285,6 @@ public class FinanceManager {
             break;
         default:
             throw new MintException(MintException.ERROR_INVALID_COMMAND); // Link to MintException
-        }
-    }
-
-    public void calculateTotal(ArrayList<Entry> list) {
-        double total = 0;
-        for (Entry entry: list) {
-            if (entry.getType() == Type.Expense) {
-                total -= entry.getAmount();
-            } else {
-                total += entry.getAmount();
-            }
         }
     }
 
