@@ -36,7 +36,9 @@ public class ValidityChecker {
             throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
 
         }
-    }static void checkPositiveAmount(String amountStr) throws MintException {
+    }
+
+    static void checkPositiveAmount(String amountStr) throws MintException {
         double amount = Double.parseDouble(amountStr);
         if (amount < 0) {
             throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
