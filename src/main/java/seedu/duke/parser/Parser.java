@@ -31,7 +31,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -46,8 +45,8 @@ public class Parser {
     public static final String STRING_INCLUDE = "Please include the following in your command or make them valid: \n";
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
-    public static final String STRING_AMOUNT = "Amount of purchase\n";
-    public static final String STRING_CATNUM = "Category number of item\n";
+    public static final String STRING_AMOUNT = "Amount\n";
+    public static final String STRING_CATNUM = "Category number\n";
     public static final String STRING_INTERVAL = "Interval of item\n";
     public static final String STRING_END_DATE = "Interval of item\n";
     public static final int CAT_NUM_FOOD_INT = 0;
@@ -65,6 +64,8 @@ public class Parser {
     public static final String VIEW_BUDGET = "budget";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
+    private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
+    private static final String ERROR_FIRST_TAG = "Invalid tags entered";
     protected String command;
     protected String name;
     protected String dateStr;
@@ -136,14 +137,11 @@ public class Parser {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
-    private void setAmountFromTag(String param) throws MintException {
-        amountStr = param.trim().substring(2);
-        ValidityChecker.checkInvalidAmount(this);
-        ValidityChecker.checkPositiveAmount(this);
-        amount = Double.parseDouble(amountStr);
+    private void setAmountViaAmountStr(String amountStr) {
+        this.amount = Double.parseDouble(amountStr);
     }
 
-    private ExpenseCategory setExpenseCategoryViaCatNum(String catNum) throws MintException {
+    private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
         case "0":
             return ExpenseCategory.FOOD;
@@ -213,7 +211,7 @@ public class Parser {
             break;
         case "c":
             this.catNumStr = description;
-            this.expenseCategory = setExpenseCategoryViaCatNum(catNumStr);
+            this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
         case "i":
@@ -288,24 +286,16 @@ public class Parser {
         }
     }
 
-    public void parseType(String userInput) {
+    public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);
+        if (argumentsArray.length <= 1) {
+            throw new MintException(ERROR_MISSING_PARAMS);
+        }
         if (Objects.equals(argumentsArray[1], "income")) {
             type = Type.Income;
         } else {
             type = Type.Expense;
         }
-    }
-
-    private String[] getParamsWithoutCommand(String[] userInput) {
-        return Arrays.copyOfRange(userInput, 1, userInput.length);
-    }
-
-    private void setCategoryFromTag(String param) throws MintException {
-        catNumStr = param.trim().substring(2);
-        ValidityChecker.checkInvalidCatNum(this);
-        int catNum = Integer.parseInt(catNumStr);
-        expenseCategory = ExpenseCategory.values()[catNum];
     }
 
     public Entry checkType() {
@@ -322,7 +312,7 @@ public class Parser {
 
 
     private Expense createExpenseObject() {
-        date = LocalDate.parse(dateStr);
+        date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         expenseCategory = ExpenseCategory.values()[catNum];
@@ -330,7 +320,7 @@ public class Parser {
     }
 
     private Income createIncomeObject() {
-        date = LocalDate.parse(dateStr);
+        date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         incomeCategory = IncomeCategory.values()[catNum];
@@ -339,12 +329,12 @@ public class Parser {
 
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
-            date = LocalDate.parse(dateStr);
+            date = LocalDate.parse(dateStr, dateFormatter);
             amount = Double.parseDouble(amountStr);
             int catNum = Integer.parseInt(catNumStr);
             expenseCategory = ExpenseCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
-            endDate = LocalDate.parse(endDateStr);
+            endDate = LocalDate.parse(endDateStr, dateFormatter);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -353,12 +343,12 @@ public class Parser {
 
     private RecurringIncome createRecurringIncomeObject() throws MintException {
         try {
-            date = LocalDate.parse(dateStr);
+            date = LocalDate.parse(dateStr, dateFormatter);
             amount = Double.parseDouble(amountStr);
             int catNum = Integer.parseInt(catNumStr);
-            expenseCategory = ExpenseCategory.values()[catNum];
+            incomeCategory = IncomeCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
-            endDate = LocalDate.parse(endDateStr);
+            endDate = LocalDate.parse(endDateStr, dateFormatter);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -366,7 +356,7 @@ public class Parser {
     }
 
     private Entry createEntryObject() {
-        date = LocalDate.parse(dateStr);
+        date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
         return new Entry(name, date, amount);
     }
@@ -472,21 +462,16 @@ public class Parser {
 
     private Command prepareSetBudget(String userInput) {
         try {
-            parseInputByArguments(userInput);
-            String[] params = getParamsWithoutCommand(argumentsArray);
-            ValidityChecker.checkSetFormat(params);
-            for (String param : params) {
-                if (param.startsWith("c/")) {
-                    setCategoryFromTag(param);
-                } else {
-                    setAmountFromTag(param);
-                }
-            }
-            return new SetBudgetCommand(expenseCategory, amount);
+            parseInputByTags(userInput);
+            ValidityChecker.checkPositiveAmount(amountStr);
+            setCategoryViaCatNum(catNumStr);
+            setAmountViaAmountStr(amountStr);
+            return new SetBudgetCommand(this.expenseCategory, this.amount);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
     }
+
 
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);

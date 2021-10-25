@@ -9,6 +9,8 @@ import seedu.duke.parser.Parser;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Ui {
     private Scanner in;
@@ -19,6 +21,12 @@ public class Ui {
 
     public void printError(MintException e) {
         System.out.println(e.getMessage());
+    }
+
+    public boolean hasUnsafeCharacters(String text) {
+        Pattern pattern = Pattern.compile("[$&+,:;=\\\\?@#|'<>^*()%!]");
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find();
     }
 
     public String readUserInput() {
@@ -204,7 +212,7 @@ public class Ui {
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
-        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount");
+        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount | Every | Until");
         for (Entry entry : outputArray) {
             System.out.println(entry);
         }
@@ -280,6 +288,10 @@ public class Ui {
             rightIndent = 0;
         }
         return getIndent(leftIndent, rightIndent, category.name());
+    }
+
+    public void printUnsafeCharacters() {
+        System.out.println("Please do not use special characters. Only '.', '/', '-' are allowed ");
     }
 }
 

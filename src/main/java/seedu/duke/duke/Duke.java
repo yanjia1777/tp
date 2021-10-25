@@ -52,7 +52,6 @@ public class Duke {
 
     public void run() {
         ui.printGreetings();
-        Scanner in = new Scanner(System.in);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
         //call financeManager instead
@@ -61,6 +60,10 @@ public class Duke {
         budgetDataManager.loadFromTextFile(budgetManager.getBudgetList());
         while (true) {
             String userInput = ui.readUserInput();
+            if (ui.hasUnsafeCharacters(userInput)) {
+                ui.printUnsafeCharacters();
+                continue;
+            }
             Command command = parser.parseCommand(userInput);
             command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
                     dataManagerActions, recurringListDataManager, budgetDataManager, ui);

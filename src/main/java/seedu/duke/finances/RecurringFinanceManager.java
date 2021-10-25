@@ -40,51 +40,56 @@ public class RecurringFinanceManager extends FinanceManager {
     public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete,
                                        Entry query) throws MintException {
         ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
-        RecurringExpense expense = null;
+        RecurringEntry entry = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
         } else if (filteredList.size() == 1) {
-            RecurringExpense onlyExpense = (RecurringExpense) filteredList.get(0);
+            RecurringEntry onlyExpense = (RecurringEntry) filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyExpense, isDelete)) {
-                expense = onlyExpense;
+                entry = onlyExpense;
             } else {
                 throw new MintException("Ok. I have cancelled the process.");
             }
-            return expense;
+            return entry;
         }
 
         Ui.viewGivenList(filteredList);
         try {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
             if (index >= 0) {
-                expense = (RecurringExpense) filteredList.get(index);
+                entry = (RecurringEntry) filteredList.get(index);
             } else {
                 throw new MintException("Ok. I have cancelled the process.");
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
-        return expense;
+        return entry;
     }
 
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags,
                                                   Entry query) throws MintException {
         ArrayList<Entry> filteredList = new ArrayList<>(recurringEntryList);
+        RecurringEntry queryToSearch = (RecurringEntry) query;
         for (String tag : tags) {
             switch (tag) {
             case "n/":
-                filteredList = Filter.filterEntryByName(query.getName(), filteredList);
+                filteredList = Filter.filterEntryByName(queryToSearch.getName(), filteredList);
                 break;
             case "d/":
-                filteredList = Filter.filterEntryByDate(query.getDate(), filteredList);
+                filteredList = Filter.filterEntryByDate(queryToSearch.getDate(), filteredList);
                 break;
             case "a/":
-                filteredList = Filter.filterEntryByAmount(query.getAmount(), filteredList);
+                filteredList = Filter.filterEntryByAmount(queryToSearch.getAmount(), filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterEntryByCategory(query.getCategory(), filteredList);
+                filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory(), filteredList);
                 break;
             case "i/":
+                filteredList = Filter.filterEntryByInterval(queryToSearch.getInterval().label, filteredList);
+                break;
+            case "e/":
+                filteredList = Filter.filterEntryByEndDate(queryToSearch.getEndDate(), filteredList);
                 break;
             default:
                 throw new MintException("Unable to locate tag");
