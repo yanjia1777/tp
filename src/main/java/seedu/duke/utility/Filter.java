@@ -1,6 +1,6 @@
-package seedu.duke;
+package seedu.duke.utility;
 
-import seedu.duke.parser.ValidityChecker;
+import seedu.duke.entries.Entry;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

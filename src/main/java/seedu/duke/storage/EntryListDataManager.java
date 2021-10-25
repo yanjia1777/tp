@@ -1,18 +1,17 @@
 package seedu.duke.storage;
 
 
-import seedu.duke.Expense;
-import seedu.duke.ExpenseCategory;
-import seedu.duke.Entry;
-import seedu.duke.Income;
-import seedu.duke.IncomeCategory;
+import seedu.duke.entries.Expense;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Income;
+import seedu.duke.entries.IncomeCategory;
 
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;

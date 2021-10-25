@@ -8,12 +8,11 @@ import seedu.duke.utility.Ui;
 
 import java.util.ArrayList;
 
-public class EditCommand extends Command {
-    private Entry query;
-    ArrayList<String> tags;
+public class DeleteRecurringCommand extends Command {
+    private final Entry query;
+    private final ArrayList<String> tags;
 
-
-    public EditCommand(ArrayList<String> tags, Entry query) {
+    public DeleteRecurringCommand(ArrayList<String> tags, Entry query) {
         this.query = query;
         this.tags = tags;
     }
@@ -22,7 +21,8 @@ public class EditCommand extends Command {
     public void execute(NormalFinanceManager normalFinanceManager,
                         RecurringFinanceManager recurringFinanceManager, Ui ui) {
         try {
-            normalFinanceManager.editEntryByKeywords(tags, query);
+            Entry deletedEntry = recurringFinanceManager.deleteEntryByKeywords(tags, query);
+            ui.printEntryDeleted(deletedEntry);
         } catch (MintException e) {
             ui.printError(e);
         }

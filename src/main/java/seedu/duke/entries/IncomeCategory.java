@@ -1,6 +1,6 @@
-package seedu.duke;
+package seedu.duke.entries;
 
-public enum ExpenseCategory {
+public enum IncomeCategory {
     FOOD,
     ENTERTAINMENT,
     TRANSPORTATION,
