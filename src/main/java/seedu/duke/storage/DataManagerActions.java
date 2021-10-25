@@ -15,7 +15,7 @@ public class DataManagerActions {
     private final String path;
     public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
-
+    public static final String BUDGET_FILE_PATH = "data" + File.separator + "MintBudget.txt";
 
     public DataManagerActions(String path) {
         this.path = path;
@@ -32,7 +32,7 @@ public class DataManagerActions {
 
     public void createFiles() {
         try {
-            String[] filesToCreate = {RECURRING_FILE_PATH, NORMAL_FILE_PATH};
+            String[] filesToCreate = {RECURRING_FILE_PATH, NORMAL_FILE_PATH, BUDGET_FILE_PATH};
             createNewFiles(filesToCreate);
         } catch (IOException e) {
             System.out.println("An error occurred.");

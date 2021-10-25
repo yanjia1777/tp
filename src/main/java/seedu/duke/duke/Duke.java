@@ -1,5 +1,6 @@
 package seedu.duke.duke;
 
+import seedu.duke.budget.Budget;
 import seedu.duke.budget.BudgetManager;
 import seedu.duke.commands.Command;
 import seedu.duke.finances.NormalFinanceManager;
@@ -51,6 +52,7 @@ public class Duke {
         //call financeManager instead
         normalFinanceManager.loadPreviousFileContents();
         recurringFinanceManager.loadPreviousFileContents();
+//        budgetManager.loadPreviousFileContents();
         while (true) {
             String userInput = ui.readUserInput();
             Command command = parser.parseCommand(userInput);
