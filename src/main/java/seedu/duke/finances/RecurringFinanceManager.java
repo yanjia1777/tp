@@ -10,11 +10,15 @@ import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
-import seedu.duke.storage.EntryListDataManager;
+import seedu.duke.storage.DataManagerActions;
+import seedu.duke.storage.NormalListDataManager;
+import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -24,7 +28,8 @@ import java.util.ArrayList;
 public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
     public static final String INTERVAL_SEPARATOR = "i/";
-    protected ArrayList<Entry> recurringEntryList = new ArrayList<>();
+    public ArrayList<Entry> recurringEntryList = new ArrayList<>();
+    public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
     public void addEntry(Entry entry) throws MintException {
         recurringEntryList.add(entry);
@@ -41,6 +46,8 @@ public class RecurringFinanceManager extends FinanceManager {
             RecurringExpense onlyExpense = (RecurringExpense) filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyExpense, isDelete)) {
                 expense = onlyExpense;
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
             return expense;
         }
@@ -50,6 +57,8 @@ public class RecurringFinanceManager extends FinanceManager {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
             if (index >= 0) {
                 expense = (RecurringExpense) filteredList.get(index);
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
@@ -87,8 +96,6 @@ public class RecurringFinanceManager extends FinanceManager {
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
         recurringEntryList.remove(entry);
-        String stringToDelete = overWriteString((RecurringEntry) entry);
-        EntryListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
     @Override
@@ -99,7 +106,6 @@ public class RecurringFinanceManager extends FinanceManager {
         boolean exceptionThrown = false;
         try {
             final String originalEntryStr = query.toString();
-            final String stringToOverwrite = overWriteString((RecurringEntry) query);
             if (recurringEntryList.contains(query)) {
                 indexToBeChanged = recurringEntryList.indexOf(query);
                 choice = scanFieldsToUpdate();
@@ -110,9 +116,6 @@ public class RecurringFinanceManager extends FinanceManager {
             editSpecifiedEntry(choice, indexToBeChanged, query);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
-            String stringToUpdate = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
-            final Entry newEntry = recurringEntryList.get(indexToBeChanged);
-            EntryListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -176,6 +179,15 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    public String getStringToUpdate(int index) {
+        Entry entry = recurringEntryList.get(index);
+        RecurringEntry recurringEntry = (RecurringEntry) entry;
+        return recurringEntry.getType() + "|" + recurringEntry.getCategory().ordinal()
+                + "|" + recurringEntry.getDate() + "|" + recurringEntry.getName()
+                + "|" + recurringEntry.getAmount() + "|" + recurringEntry.getInterval()
+                + "|" + recurringEntry.getEndDate();
+    }
+
     public void sort(ArrayList<Entry> outputArray, String sortType) throws MintException {
         assert sortType != null : "sortType should have a command";
         switch (sortType) {
@@ -198,7 +210,7 @@ public class RecurringFinanceManager extends FinanceManager {
     }
 
     public static String overWriteString(RecurringEntry entry) {
-        return entry.getCategory() + "|" + entry.getDate() + "|" + entry.getName()
+        return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount() + "|" + entry.getInterval() + "|" + entry.getEndDate();
     }
 
