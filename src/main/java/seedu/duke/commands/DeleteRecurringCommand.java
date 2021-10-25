@@ -23,7 +23,9 @@ public class DeleteRecurringCommand extends Command {
                         RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager, Ui ui) {
         try {
             Entry deletedEntry = recurringFinanceManager.deleteEntryByKeywords(tags, query);
-            ui.printEntryDeleted(deletedEntry);
+            if (deletedEntry != null) {
+                ui.printEntryDeleted(deletedEntry);
+            }
         } catch (MintException e) {
             ui.printError(e);
         }
