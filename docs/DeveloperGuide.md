@@ -267,7 +267,9 @@ Ok. I have cancelled the process.
 
 **Expected**
 
-- The input fields of the selected entry are updated
+- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
+- The input fields of the selected entry are updated and there would be a message printed to notify the users that
+  the changes have been made
 
 **Example of usage and expected output:**
 
@@ -292,7 +294,9 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- The input fields of the selected entry are updated
+- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
+- The input fields of the selected entry are updated and there would be a message printed to notify the users that
+  the changes have been made
 
 **Example of usage and expected output:**
 
@@ -469,3 +473,86 @@ n
 --------------------------------------------------------------------
 Ok. I have cancelled the process.
 ```
+### :alarm_clock: :writing_hand: <a name="Adding"></a>Editing a recurring expense
+
+**Prerequisites**
+
+- The list must have been initialized.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity.
+
+**Test case 1: Editing an existing recurring expense with all fields specified.**
+
+**Usage:**
+
+- `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]` in any order
+
+**Expected**
+
+- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
+- The input fields of the selected entry are updated and there would be a message printed to notify the users that
+  the changes have been made
+
+**Example of usage and expected output:**
+
+```
+editR a/15 n/phone bills d/2021-12-03 c/0 i/MONTH e/2023-10-10
+--------------------------------------------------------------------
+Is this what you want to edit?
+    Expense |       FOOD       | 2021-12-03 |   phone bills    |-$15.00 | MONTH | 2023-10-10
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+a/40
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
+**Test case 2: Editing an existing recurring expense with some fields specified.**
+
+**Usage:**
+
+- `editR n/[description]` in any order.
+- `editR a/[amount] n/[description] c/[catNum]]` in any order.
+
+**Expected**
+
+- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit. 
+- The input fields of the selected entry are updated and there would be a message printed to notify the users that
+  the changes have been made
+
+**Example of usage and expected output:**
+
+```
+editR n/phone bills
+--------------------------------------------------------------------
+Here is the list of items containing the keyword.
+    1  Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+    2  Expense |       FOOD       | 2021-12-03 |   phone bills    |-$40.00 | MONTH | 2023-10-10
+Enter the index of the item you want to edit. To cancel, type "cancel"
+--------------------------------------------------------------------
+2
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+c/4
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
+```
+editR a/40 n/Netflix Subscription c/1
+--------------------------------------------------------------------
+Is this what you want to edit?
+    Expense |  ENTERTAINMENT   | 2021-10-26 | Netflix Subscription |-$40.00 | MONTH | 2023-04-10
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+a/20
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
+
