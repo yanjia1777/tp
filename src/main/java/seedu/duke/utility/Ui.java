@@ -103,7 +103,6 @@ public class Ui {
         while (!proceedToDelete) {
             String userInput = in.nextLine();
             if (userInput.trim().equals("cancel")) {
-                System.out.println("Delete process cancelled.");
                 return INDEX_CANCEL;
             }
             try {
@@ -135,7 +134,6 @@ public class Ui {
             case "y":
                 return true;
             case "n":
-                System.out.println("Ok. I have cancelled the delete process.");
                 return false;
             default:
                 System.out.println("Sorry I don't understand what that means. +"
@@ -206,7 +204,7 @@ public class Ui {
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
-        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount");
+        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount | Every | Until");
         for (Entry entry : outputArray) {
             System.out.println(entry);
         }
