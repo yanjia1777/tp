@@ -1,5 +1,6 @@
 package seedu.duke.duke;
 
+import seedu.duke.budget.BudgetManager;
 import seedu.duke.commands.Command;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
@@ -23,12 +24,14 @@ public class Duke {
     private Parser parser;
     private NormalFinanceManager normalFinanceManager;
     private RecurringFinanceManager recurringFinanceManager;
+    private BudgetManager budgetManager;
 
     public Duke() {
         this.ui = new Ui();
         this.parser = new Parser();
         this.normalFinanceManager = new NormalFinanceManager();
         this.recurringFinanceManager = new RecurringFinanceManager();
+        this.budgetManager = new BudgetManager();
     }
 
     /**
@@ -51,7 +54,7 @@ public class Duke {
         while (true) {
             String userInput = ui.readUserInput();
             Command command = parser.parseCommand(userInput);
-            command.execute(normalFinanceManager, recurringFinanceManager, ui);
+            command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, ui);
             if (command.isExit()) {
                 break;
             }

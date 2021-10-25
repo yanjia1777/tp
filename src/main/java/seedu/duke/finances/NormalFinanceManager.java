@@ -34,6 +34,10 @@ public class NormalFinanceManager extends FinanceManager {
         normalListDataManager.appendToEntryListTextFile(NORMAL_FILE_PATH, entry);
     }
 
+    public ArrayList<Entry> getEntryList() {
+        return entryList;
+    }
+
     @Override
     public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
         ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);

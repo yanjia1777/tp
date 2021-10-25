@@ -18,7 +18,9 @@ public class MintException extends Exception {
     public static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     public static final String ERROR_INVALID_DATE = "Please enter a valid date!";
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
-    public static final String ERROR_SET_FORMAT_WRONG = "Please follow format {set c/catNum limit}\n e.g. set c/0 100";
+    public static final String ERROR_SET_FORMAT_WRONG = "Please follow format {set c/catNum a/limit}\n"
+            + " e.g. set c/0 a/100";
+    public static final String ERROR_POSITIVE_NUMBER = "Amount cannot be negative";
 
     public MintException(String message) {
         super(message);

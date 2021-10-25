@@ -1,6 +1,8 @@
 package seedu.duke.utility;
 
+import seedu.duke.budget.Budget;
 import seedu.duke.entries.Entry;
+import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 
@@ -251,6 +253,35 @@ public class Ui {
 
     public void printEntryDeleted(Entry entry) {
         System.out.println("I have deleted: " + entry);
+    }
+
+    public void printSetBudget(ExpenseCategory category, double amount) {
+        System.out.printf("Budget for %s set to $%.2f\n", category, amount);
+    }
+
+    public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entryList) {
+        System.out.println("Here are the budget you've set aside for each category.");
+        for (Budget budget : budgetList) {
+            String categoryIndented = getCategoryIndented(budget.getCategory()).toString();
+            String limit = budget.getLimit() == 0 ? "Not set" : "$" + budget.getLimit();
+            System.out.printf("%s | $%.2f / %s\n",
+                    categoryIndented,
+                    budget.getMontlhySpending(entryList),
+                    limit);
+        }
+    }
+
+    public StringBuilder getCategoryIndented(ExpenseCategory category) {
+        double length = category.name().length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return getIndent(leftIndent, rightIndent, category.name());
     }
 }
 
