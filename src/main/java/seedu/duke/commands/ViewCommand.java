@@ -1,6 +1,7 @@
 package seedu.duke.commands;
 
 
+import seedu.duke.budget.BudgetManager;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.exception.MintException;
 import seedu.duke.utility.Ui;
@@ -15,7 +16,7 @@ public class ViewCommand extends Command {
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
-                        RecurringFinanceManager recurringFinanceManager, Ui ui) {
+                        RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager, Ui ui) {
         try {
             normalFinanceManager.view(argumentArrayInput, recurringFinanceManager);
         } catch (MintException e) {
