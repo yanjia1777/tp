@@ -214,3 +214,115 @@ y
 --------------------------------------------------------------------
 I have deleted: Others | 2021-10-19 | Movie | $12.00
 ```
+### :heavy_plus_sign: <a name="Adding"></a>Adding an expense
+
+**Prerequisites**
+
+- The list must have been initialized.
+- Some fields such as `n/[description] a/[amount]` must be specified.
+
+**Test case 1: Adding an existing expense with all fields specified.**
+
+**Usage:**
+
+- `add a/[amount] n/[description] d/[date] c/[categoryNumber]` in any order
+
+**Expected**
+
+- Program would print a message to notify the user that the item has been added.
+- An expense would then be added to the list
+
+**Example of usage and expected output:**
+
+```
+add a/15 d/2021-12-03 n/Textbook c/0
+--------------------------------------------------------------------
+I've added :Expense |       FOOD       | 2021-12-03 |     Textbook     |-$15.00
+```
+**Test case 2: Adding an existing expense with some fields specified.**
+
+**Usage:**
+
+- `add a/[amount] n/[description] d/[date]` in any order
+- `add a/[amount] n/[description] c/[catNum]` in any order
+- `add a/[amount] n/[description` in any order
+
+**Expected**
+
+- Program would print a message to notify the user that the item has been added.
+- An expense would then be added to the list
+- Optional fields that are missing would be set to the default pre-determined by the programme
+
+**Example of usage and expected output:**
+
+```
+add a/15 d/2021-12-03 n/Textbook
+--------------------------------------------------------------------
+I've added :Expense |       FOOD       | 2021-12-03 |     Textbook     |-$15.00
+```
+```
+add a/5 n/Chicken Rice c/0
+--------------------------------------------------------------------
+I've added :Expense |       FOOD       | 2021-10-26 |   Chicken Rice   |-$5.00
+```
+```
+add n/Cheese Burger a/23.5
+--------------------------------------------------------------------
+I've added :Expense |      OTHERS      | 2021-10-26 |  Cheese Burger   |-$23.50
+```
+### :alarm_clock::heavy_plus_sign: <a name="Add recurring expense"></a>Adding a Recurring Expense
+
+**Prerequisites**
+
+- The list must have been initialized.
+- Some fields such as `n/[description] a/[amount] i/[interval]` must be specified.
+
+**Test case 1: Adding an existing expense with all fields specified.**
+
+**Usage:**
+
+- `addR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval] e/[endDate]` in any order
+
+**Expected**
+
+- Program would print a message to notify the user that the item has been added.
+- An expense would then be added to the list
+
+**Example of usage and expected output:**
+
+```
+addR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
+--------------------------------------------------------------------
+I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
+```
+**Test case 2: Adding an existing expense with some fields specified.**
+
+**Usage:**
+
+- `addR a/[amount] n/[description] I/[interval]` in any order
+- `addR a/[amount] n/[description] I/[interval] c/[catNum]` in any order
+- `addR a/[amount] n/[description] I/[interval] d/[date]` in any order
+
+**Expected**
+
+- Program would print a message to notify the user that the item has been added.
+- An expense would then be added to the list
+- Optional fields that are missing would be set to the default pre-determined by the programme
+
+**Example of usage and expected output:**
+
+```
+addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
+--------------------------------------------------------------------
+I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2200-12-31
+```
+```
+addR a/5 n/phone bills c/4 i/MONTH
+--------------------------------------------------------------------
+I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | MONTH | 2200-12-31
+```
+```
+addR a/5 n/phone bills d/2021-10-10 i/MONTH
+--------------------------------------------------------------------
+I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | 2200-12-31
+```
