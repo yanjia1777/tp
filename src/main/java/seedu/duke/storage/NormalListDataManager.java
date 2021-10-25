@@ -2,6 +2,7 @@ package seedu.duke.storage;
 
 
 import seedu.duke.entries.*;
+import seedu.duke.utility.Ui;
 
 
 import java.io.File;
@@ -19,16 +20,14 @@ import java.util.Scanner;
 public class NormalListDataManager extends DataManagerActions {
 
     public static final String TEXT_DELIMITER = "|";
+    public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
 
-    public NormalListDataManager(String path) {
-        super(path);
-    }
 
-    public void appendToEntryListTextFile(String filePath, Entry entry) {
+    public void appendToEntryListTextFile(Entry entry) {
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
         FileWriter fileWriter = null;
         try {
-            fileWriter = new FileWriter(filePath, true);
+            fileWriter = new FileWriter(NORMAL_FILE_PATH, true);
             fileWriter.write(entry.getType().toString() + TEXT_DELIMITER + entry.getCategory().ordinal() + TEXT_DELIMITER
                     + entry.getDate() + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER + entry.getAmount()
                     + System.lineSeparator());
@@ -79,9 +78,7 @@ public class NormalListDataManager extends DataManagerActions {
     }
 
     protected void editTextFile(ArrayList<String> fileContent) throws IOException {
-        if (!fileContent.isEmpty()) {
         Files.write(Path.of(NORMAL_FILE_PATH), fileContent, StandardCharsets.UTF_8);
-        }
     }
 
     public void removeAll() {
@@ -127,4 +124,15 @@ public class NormalListDataManager extends DataManagerActions {
         }
         entryList.add(entry);
     }
+
+    public void loadPreviousFileContents(ArrayList<Entry> entryList) {
+        try {
+            loadEntryListContents(entryList);
+        } catch (FileNotFoundException e) {
+            Ui.printMissingFileMessage();
+            createDirectory();
+            createFiles();
+        }
+    }
+
 }

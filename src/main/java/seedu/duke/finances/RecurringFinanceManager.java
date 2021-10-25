@@ -28,13 +28,11 @@ import java.util.ArrayList;
 public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
     public static final String INTERVAL_SEPARATOR = "i/";
-    protected ArrayList<Entry> recurringEntryList = new ArrayList<>();
+    public ArrayList<Entry> recurringEntryList = new ArrayList<>();
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
     public void addEntry(Entry entry) throws MintException {
-        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
         recurringEntryList.add(entry);
-        recurringListDataManager.appendToMintRecurringListTextFile(RECURRING_FILE_PATH, entry);
     }
 
     @Override
@@ -93,10 +91,7 @@ public class RecurringFinanceManager extends FinanceManager {
     @Override
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
-        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
         recurringEntryList.remove(entry);
-        String stringToDelete = overWriteString((RecurringEntry) entry);
-        recurringListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
     @Override
@@ -105,11 +100,8 @@ public class RecurringFinanceManager extends FinanceManager {
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
-        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
-
         try {
             final String originalEntryStr = query.toString();
-            final String stringToOverwrite = overWriteString((RecurringEntry) query);
             if (recurringEntryList.contains(query)) {
                 indexToBeChanged = recurringEntryList.indexOf(query);
                 choice = scanFieldsToUpdate();
@@ -120,9 +112,6 @@ public class RecurringFinanceManager extends FinanceManager {
             editSpecifiedEntry(choice, indexToBeChanged, query);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
-            String stringToUpdate = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
-            final Entry newEntry = recurringEntryList.get(indexToBeChanged);
-            recurringListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -184,6 +173,15 @@ public class RecurringFinanceManager extends FinanceManager {
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
+    }
+
+    public String getStringToUpdate(int index) {
+        Entry entry = recurringEntryList.get(index);
+        RecurringEntry recurringEntry = (RecurringEntry) entry;
+        return recurringEntry.getType() + "|" + recurringEntry.getCategory().ordinal()
+                + "|" + recurringEntry.getDate() + "|" + recurringEntry.getName()
+                + "|" + recurringEntry.getAmount() + "|" + recurringEntry.getInterval()
+                + "|" + recurringEntry.getEndDate();
     }
 
     public void sort(ArrayList<Entry> outputArray, String sortType) throws MintException {
@@ -343,17 +341,5 @@ public class RecurringFinanceManager extends FinanceManager {
             }
         }
         viewRecurringExpenseBetweenTwoDates(expenseList, earliestDate, LocalDate.now());
-    }
-
-    public void loadPreviousFileContents() {
-        DataManagerActions dataManagerActions = new DataManagerActions(RECURRING_FILE_PATH);
-        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
-        try {
-            recurringListDataManager.loadEntryListContents(recurringEntryList);
-        } catch (FileNotFoundException e) {
-            Ui.printMissingFileMessage();
-            dataManagerActions.createDirectory();
-            dataManagerActions.createFiles();
-        }
     }
 }

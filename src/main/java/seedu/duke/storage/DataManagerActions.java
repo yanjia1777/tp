@@ -12,17 +12,12 @@ public class DataManagerActions {
     public static final int NUMBER_OF_CATEGORIES = 8;
     public static final String REGEX_TO_REPLACE = "[\\p{Alpha}, [\\p{Punct}&&[^.]]+]";
     public static final String TEXT_DELIMITER = "|";
-    private final String path;
     public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
     public static final String BUDGET_FILE_PATH = "data" + File.separator + "MintBudget.txt";
 
-    public DataManagerActions(String path) {
-        this.path = path;
-    }
-
     public void createDirectory() {
-        Path path = Paths.get(this.path);
+        Path path = Paths.get("data" + File.separator + "Mint.txt");
         try {
             Files.createDirectories(path.getParent());
         } catch (IOException e) {

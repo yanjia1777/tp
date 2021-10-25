@@ -22,16 +22,13 @@ import java.util.Collections;
 public class NormalFinanceManager extends FinanceManager {
 
     public ArrayList<Entry> entryList;
-    public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
 
     public NormalFinanceManager() {
         this.entryList = new ArrayList<>();
     }
 
     public void addEntry(Entry entry) throws MintException {
-        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
         entryList.add(entry);
-        normalListDataManager.appendToEntryListTextFile(NORMAL_FILE_PATH, entry);
     }
 
     public ArrayList<Entry> getEntryList() {
@@ -90,10 +87,7 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
-        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
         entryList.remove(entry);
-        String stringToDelete = overWriteString(entry);
-        normalListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
     @Override
@@ -102,10 +96,8 @@ public class NormalFinanceManager extends FinanceManager {
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
-        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
         try {
             final String originalEntryStr = query.toString();
-            final String stringToOverwrite = overWriteString(query);
             if (entryList.contains(query)) {
                 indexToBeChanged = entryList.indexOf(query);
                 choice = scanFieldsToUpdate();
@@ -116,9 +108,6 @@ public class NormalFinanceManager extends FinanceManager {
             editSpecifiedEntry(choice, indexToBeChanged, query);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
-            String stringToUpdate = overWriteString(entryList.get(indexToBeChanged));
-            final Entry newEntry = entryList.get(indexToBeChanged);
-            normalListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -311,16 +300,10 @@ public class NormalFinanceManager extends FinanceManager {
                 + "|" + entry.getAmount();
     }
 
-    public void loadPreviousFileContents() {
-        DataManagerActions dataManagerActions = new DataManagerActions(NORMAL_FILE_PATH);
-        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
-        try {
-            normalListDataManager.loadEntryListContents(entryList);
-        } catch (FileNotFoundException e) {
-            Ui.printMissingFileMessage();
-            dataManagerActions.createDirectory();
-            dataManagerActions.createFiles();
-        }
+    public String getStringToUpdate(int index) {
+        return entryList.get(index).getType() + "|" + entryList.get(index).getCategory().ordinal() + "|"
+                + entryList.get(index).getDate() + "|" + entryList.get(index).getName()
+                + "|" + entryList.get(index).getAmount();
     }
 
 }

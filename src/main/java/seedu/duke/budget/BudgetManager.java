@@ -36,7 +36,6 @@ public class BudgetManager {
     public void setBudget(ExpenseCategory category, double amount) {
         Budget budget = getBudgetFromCategory(category);
         budget.setLimit(amount);
-        writeToTextFile();
     }
 
     public ArrayList<Budget> getBudgetList() {
@@ -63,19 +62,4 @@ public class BudgetManager {
             return othersBudget;
         }
     }
-
-    public void writeToTextFile() {
-        BudgetDataManager budgetDataManager = new BudgetDataManager(BUDGET_FILE_PATH);
-        budgetDataManager.writeToBudgetTextFile(budgetList);
-    }
-
-    public void loadFromTextFile() {
-        BudgetDataManager budgetDataManager = new BudgetDataManager(BUDGET_FILE_PATH);
-        try {
-            budgetDataManager.loadBudgetListContents(budgetList);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

@@ -17,12 +17,7 @@ import java.util.Scanner;
 
 public class BudgetDataManager extends DataManagerActions {
 
-    public static final String BUDGET_FILE_PATH = "data" + File.separator + "MintBudget.txt.txt";
-    public static final String CATEGORY_TAG = "c/";
-
-    public BudgetDataManager(String path) {
-        super(path);
-    }
+    public static final String BUDGET_FILE_PATH = "data" + File.separator + "MintBudget.txt";
 
     public void writeToBudgetTextFile(ArrayList<Budget> budgetList) {
         FileWriter fileWriter = null;
@@ -56,5 +51,19 @@ public class BudgetDataManager extends DataManagerActions {
     public void loadBudget(int catNum, double amount, ArrayList<Budget> budgetList) {
         Budget budget = budgetList.get(catNum);
         budget.setLimit(amount);
+    }
+
+    public void writeToTextFile(ArrayList<Budget> budgetList) {
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        budgetDataManager.writeToBudgetTextFile(budgetList);
+    }
+
+    public void loadFromTextFile(ArrayList<Budget> budgetList) {
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        try {
+            budgetDataManager.loadBudgetListContents(budgetList);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

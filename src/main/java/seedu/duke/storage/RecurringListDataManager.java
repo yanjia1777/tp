@@ -2,6 +2,7 @@ package seedu.duke.storage;
 
 import seedu.duke.entries.*;
 import seedu.duke.exception.MintException;
+import seedu.duke.utility.Ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,17 +17,14 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class RecurringListDataManager extends DataManagerActions{
+    public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
-    public RecurringListDataManager(String path) {
-        super(path);
-    }
-
-    public void appendToMintRecurringListTextFile(String filePath, Entry entry) {
+    public void appendToMintRecurringListTextFile(Entry entry) {
         // Format of MintRecurring.txt file: Expense|7|2021-10-25|SALARY|10000.0|MONTH
         FileWriter fileWriter = null;
         try {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
-            fileWriter = new FileWriter(filePath, true);
+            fileWriter = new FileWriter(RECURRING_FILE_PATH, true);
             fileWriter.write(entry.getType().toString() + TEXT_DELIMITER + entry.getCategory().ordinal()
                     + TEXT_DELIMITER + entry.getDate() + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER
                     + entry.getAmount() + TEXT_DELIMITER + recurringEntry.getInterval() + TEXT_DELIMITER
@@ -100,9 +98,7 @@ public class RecurringListDataManager extends DataManagerActions{
     }
 
     protected void editTextFile(ArrayList<String> fileContent) throws IOException {
-        if (!fileContent.isEmpty()) {
-            Files.write(Path.of(RECURRING_FILE_PATH), fileContent, StandardCharsets.UTF_8);
-        }
+        Files.write(Path.of(RECURRING_FILE_PATH), fileContent, StandardCharsets.UTF_8);
     }
 
     public void editEntryListTextFile(String originalString, String newString) {
@@ -122,6 +118,16 @@ public class RecurringListDataManager extends DataManagerActions{
                 fileContent.set(i, newString);
                 break;
             }
+        }
+    }
+
+    public void loadPreviousFileContents(ArrayList<Entry> recurringEntryList) {
+        try {
+            loadEntryListContents(recurringEntryList);
+        } catch (FileNotFoundException e) {
+            Ui.printMissingFileMessage();
+            createDirectory();
+            createFiles();
         }
     }
 }
