@@ -103,6 +103,42 @@ add income n/Sales a/34 d/2021-02-19 c/1
 I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
 ```
 
+## <a name="add"></a>Adding Recurring Entries: `addR`
+
+Adds an expense or income to your tracker
+
+Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] i/INTERVAL [e/END_DATE]`
+
+- Adds an entry of the specified `NAME`, `DATE`, `AMOUNT`, `INTERVAL`, `END_DATE` and `CATEGORY_NUMBER`
+- If `income` is included after `add`, entry will be an income entry, else it will be an expense entry.
+- `NAME` can be any string of characters
+- `AMOUNT` is any number up to 2 decimal points.
+- `DATE(optional)` can be any of the [acceptable date formats](#dateFormat). </br>
+  If the date is not specified, the default date set would be the date of expense entry.
+- `CATEGORY_NUMBER(optional)` - Please refer to the [available categories](#categoryList). </br>
+  If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be C/7 which is `others`.
+  </br>
+- `INTERVAL` can be either `MONTH` or `YEAR` depending on how often one receives the `INCOME` or has to pay for the
+    expenditure.
+- `END_DATE` can be any of the [acceptable date formats](#dateFormat). </br>
+   If the date is not specified, the default date set would be forever.
+   
+Examples:
+- `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH`
+- `addR a/5 n/phone bills c/4 i/MONTH`
+- `addR a/5 n/phone bills d/2021-10-10 i/MONTH`
+
+Examples and expected Output
+
+```
+addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
+I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2200-12-31
+addR a/5 n/phone bills c/4 i/MONTH
+I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | MONTH | 2200-12-31
+addR a/5 n/phone bills d/2021-10-10 i/MONTH
+I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | 2200-12-31
+```
+
 ## <a name="view"></a>Viewing all entries: `view`
 
 Shows a list of all the expenses, each with the associated `NAME`, `DATE`, and `AMOUNT`. 
