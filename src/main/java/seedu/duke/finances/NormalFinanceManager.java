@@ -62,7 +62,7 @@ public class NormalFinanceManager extends FinanceManager {
     }
 
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
-        ArrayList<Entry> filteredList = new ArrayList<>(entryList);
+        ArrayList <Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
             switch (tag) {
             case "n/":
