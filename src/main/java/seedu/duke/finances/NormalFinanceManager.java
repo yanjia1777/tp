@@ -37,6 +37,10 @@ public class NormalFinanceManager extends FinanceManager {
         }
     }
 
+    public ArrayList<Entry> getEntryList() {
+        return entryList;
+    }
+
     @Override
     public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
         ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
