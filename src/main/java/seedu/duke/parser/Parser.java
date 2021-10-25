@@ -1,16 +1,6 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.Command;
-import seedu.duke.commands.EditCommand;
-import seedu.duke.commands.InvalidCommand;
-import seedu.duke.commands.ViewCommand;
-import seedu.duke.commands.AddCommand;
-import seedu.duke.commands.AddRecurringCommand;
-import seedu.duke.commands.DeleteCommand;
-import seedu.duke.commands.DeleteRecurringCommand;
-import seedu.duke.commands.ExitCommand;
-import seedu.duke.commands.EditRecurringCommand;
-import seedu.duke.commands.HelpCommand;
+import seedu.duke.commands.*;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.entries.Interval;
@@ -58,6 +48,7 @@ public class Parser {
     public static final String EDIT_ENTRY = "edit";
     public static final String VIEW = "view";
     public static final String EDIT_RECURRING = "editR";
+    public static final String SET_BUDGET = "set";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     protected String command;
@@ -131,8 +122,11 @@ public class Parser {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
-    private void setAmount(String param) {
-        amountStr = param.trim();
+    private void setAmountFromTag(String param) throws MintException {
+        amountStr = param.trim().substring(2);
+        ValidityChecker.checkInvalidAmount(this);
+        ValidityChecker.checkPositiveAmount(this);
+        amount = Double.parseDouble(amountStr);
     }
 
     private ExpenseCategory setExpenseCategoryViaCatNum(String catNum) throws MintException {
@@ -289,24 +283,15 @@ public class Parser {
         }
     }
 
-    public void parserSetLimit(String[] userInput) throws MintException {
-        ValidityChecker.checkSetFormat(userInput);
-        String[] parameters = getParamsWithoutCommand(userInput);
-        for (String param : parameters) {
-            if (param.contains("c/")) {
-                extractCatNumFromTag(param);
-            } else {
-                setAmount(param);
-            }
-        }
-    }
-
     private String[] getParamsWithoutCommand(String[] userInput) {
         return Arrays.copyOfRange(userInput, 1, userInput.length);
     }
 
-    private void extractCatNumFromTag(String param) {
-        catNumStr = String.valueOf(param.trim().charAt(2));
+    private void setCategoryFromTag(String param) throws MintException {
+        catNumStr = param.trim().substring(2);
+        ValidityChecker.checkInvalidCatNum(this);
+        int catNum = Integer.parseInt(catNumStr);
+        expenseCategory = ExpenseCategory.values()[catNum];
     }
 
     public Entry checkType() {
@@ -320,6 +305,7 @@ public class Parser {
     public void parseInputByArguments(String userInput) {
         argumentsArray = userInput.split(" ");
     }
+
 
     private Expense createExpenseObject() {
         date = LocalDate.parse(dateStr);
@@ -445,6 +431,25 @@ public class Parser {
         }
     }
 
+    private Command prepareSetBudget(String userInput) {
+        try {
+            parseInputByArguments(userInput);
+            String[] params = getParamsWithoutCommand(argumentsArray);
+            ValidityChecker.checkSetFormat(params);
+            for (String param : params) {
+                if (param.startsWith("c/")) {
+                    setCategoryFromTag(param);
+                } else {
+                    setAmountFromTag(param);
+                }
+            }
+            return new SetBudgetCommand(expenseCategory, amount);
+        } catch (MintException e) {
+            return new InvalidCommand(e.getMessage());
+        }
+    }
+
+
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
         switch (command) {
@@ -460,6 +465,8 @@ public class Parser {
             return prepareDeleteRecurringEntry(userInput);
         case EDIT_RECURRING:
             return prepareEditRecurringEntry(userInput);
+        case SET_BUDGET:
+            return prepareSetBudget(userInput);
         case VIEW:
             return prepareView(userInput);
         case HELP:
