@@ -1,17 +1,17 @@
 package seedu.duke.finances;
 
+import seedu.duke.entries.Income;
+import seedu.duke.entries.IncomeCategory;
 import seedu.duke.entries.Entry;
 import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
+import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
-import seedu.duke.storage.EntryListDataManager;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
-
-import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -30,11 +30,6 @@ public class NormalFinanceManager extends FinanceManager {
 
     public void addEntry(Entry entry) throws MintException {
         entryList.add(entry);
-        try {
-            EntryListDataManager.appendToEntryListTextFile(FILE_PATH, entry);
-        } catch (IOException e) {
-            throw new MintException("Error trying to update external file!");
-        }
     }
 
     public ArrayList<Entry> getEntryList() {
@@ -47,6 +42,7 @@ public class NormalFinanceManager extends FinanceManager {
         Entry entry = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
+
         } else if (filteredList.size() == 1) {
             Entry onlyEntry = filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
@@ -98,32 +94,28 @@ public class NormalFinanceManager extends FinanceManager {
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
         entryList.remove(entry);
-        String stringToDelete = overWriteString(entry);
-        EntryListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
     @Override
-    public void editEntry(Entry query) throws MintException {
+    public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged;
+        int indexToBeChanged = 0;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
+        String originalEntryStr = "";
+        Parser parser = new Parser();
         try {
-            final String originalEntryStr = query.toString();
-            final String stringToOverwrite = overWriteString(query);
-            if (entryList.contains(query)) {
-                indexToBeChanged = entryList.indexOf(query);
+            originalEntryStr = overWriteString(entry);
+            if (entryList.contains(entry)) {
+                indexToBeChanged = entryList.indexOf(entry);
                 choice = scanFieldsToUpdate();
             } else {
                 //                logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
-            editSpecifiedEntry(choice, indexToBeChanged, query);
+            editSpecifiedEntry(choice, indexToBeChanged, entry);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
-            String stringToUpdate = overWriteString(entryList.get(indexToBeChanged));
-            final Entry newEntry = entryList.get(indexToBeChanged);
-            EntryListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -131,7 +123,9 @@ public class NormalFinanceManager extends FinanceManager {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_DATE);
         }
+        String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+        return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
     }
 
     protected Boolean isEditSuccessful(int indexToBeChanged, String originalEntry) {
@@ -146,26 +140,38 @@ public class NormalFinanceManager extends FinanceManager {
             LocalDate date = entry.getDate();
             double amount = entry.getAmount();
             Enum category = entry.getCategory();
+            int count = 0;
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
+                    count++;
                     name = nonEmptyNewDescription(word);
                 }
                 if (word.contains(DATE_SEPARATOR)) {
+                    count++;
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
+                    count++;
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     amount = Double.parseDouble(amountStr);
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
+                    count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
                     category = ExpenseCategory.values()[pos];
                 }
             }
-            entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
+            if (count == 0) {
+                throw new MintException("No valid fields entered!");
+            }
+            if (entry.getType() == Type.Expense) {
+                entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
+            } else {
+                entryList.set(index, new Income(name, date, amount, (IncomeCategory) category));
+            }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -307,8 +313,7 @@ public class NormalFinanceManager extends FinanceManager {
 
     // common method
     public static String overWriteString(Entry entry) {
-        return entry.getCategory() + "|" + entry.getDate() + "|" + entry.getName()
+        return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount();
     }
-
 }

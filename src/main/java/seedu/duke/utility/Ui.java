@@ -258,7 +258,7 @@ public class Ui {
     }
 
     public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entryList) {
-        System.out.println("Here are the budget you've set aside for each category.");
+        System.out.println("Here is the budget for the month.");
         for (Budget budget : budgetList) {
             String categoryIndented = getCategoryIndented(budget.getCategory()).toString();
             String limit = budget.getLimit() == 0 ? "Not set" : "$" + budget.getLimit();

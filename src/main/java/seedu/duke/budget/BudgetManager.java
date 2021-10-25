@@ -1,7 +1,10 @@
 package seedu.duke.budget;
 
 import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.storage.BudgetDataManager;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class BudgetManager {
@@ -14,6 +17,9 @@ public class BudgetManager {
     BeautyBudget beautyBudget = new BeautyBudget(0);
     GiftBudget giftBudget = new GiftBudget(0);
     OthersBudget othersBudget = new OthersBudget(0);
+    public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
+    public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
+    public static final String BUDGET_FILE_PATH = "data" + File.separator + "MintBudget.txt";
 
     public BudgetManager() {
         budgetList = new ArrayList<>();
@@ -56,5 +62,4 @@ public class BudgetManager {
             return othersBudget;
         }
     }
-
 }

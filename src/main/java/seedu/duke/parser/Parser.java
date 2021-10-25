@@ -525,6 +525,5 @@ public class Parser {
     default:
         isRecurring = false;
         throw new MintException(MintException.ERROR_INVALID_COMMAND);
-
      */
 }
