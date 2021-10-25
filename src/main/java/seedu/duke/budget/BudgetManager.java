@@ -12,7 +12,8 @@ public class BudgetManager {
     GiftBudget giftBudget = new GiftBudget(0);
     OthersBudget othersBudget = new OthersBudget(0);
 
-    public BudgetManager() {}
+    public BudgetManager() {
+    }
 
     public void setBudget(ExpenseCategory category, double amount) {
         Budget budget = getBudgetFromCategory(category);

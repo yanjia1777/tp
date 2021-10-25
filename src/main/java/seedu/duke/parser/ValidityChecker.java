@@ -168,11 +168,5 @@ public class ValidityChecker {
         if (userInput.length != 2) {
             throw new MintException(MintException.ERROR_SET_FORMAT_WRONG);
         }
-//        for (String param : userInput) {
-//            param = param.trim();
-//            if (!(param.startsWith("c/")) || !(param.startsWith("a/"))) {
-//                throw new MintException(MintException.ERROR_SET_FORMAT_WRONG);
-//            }
-//        }
     }
 }
