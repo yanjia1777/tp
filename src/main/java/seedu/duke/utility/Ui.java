@@ -212,7 +212,7 @@ public class Ui {
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
-        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount");
+        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount | Every | Until");
         for (Entry entry : outputArray) {
             System.out.println(entry);
         }
