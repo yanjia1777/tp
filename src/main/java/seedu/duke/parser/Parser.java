@@ -210,7 +210,7 @@ public class Parser {
             break;
         case "c":
             this.catNumStr = description;
-            this.expenseCategory = setExpenseCategoryViaCatNum(catNumStr);
+            this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
         case "i":
@@ -308,7 +308,7 @@ public class Parser {
 
 
     private Expense createExpenseObject() {
-        date = LocalDate.parse(dateStr);
+        date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         expenseCategory = ExpenseCategory.values()[catNum];
@@ -316,7 +316,7 @@ public class Parser {
     }
 
     private Income createIncomeObject() {
-        date = LocalDate.parse(dateStr);
+        date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         incomeCategory = IncomeCategory.values()[catNum];
@@ -325,12 +325,12 @@ public class Parser {
 
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
-            date = LocalDate.parse(dateStr);
+            date = LocalDate.parse(dateStr, dateFormatter);
             amount = Double.parseDouble(amountStr);
             int catNum = Integer.parseInt(catNumStr);
             expenseCategory = ExpenseCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
-            endDate = LocalDate.parse(endDateStr);
+            endDate = LocalDate.parse(endDateStr, dateFormatter);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -339,12 +339,12 @@ public class Parser {
 
     private RecurringIncome createRecurringIncomeObject() throws MintException {
         try {
-            date = LocalDate.parse(dateStr);
+            date = LocalDate.parse(dateStr, dateFormatter);
             amount = Double.parseDouble(amountStr);
             int catNum = Integer.parseInt(catNumStr);
             expenseCategory = ExpenseCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
-            endDate = LocalDate.parse(endDateStr);
+            endDate = LocalDate.parse(endDateStr, dateFormatter);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
@@ -352,7 +352,7 @@ public class Parser {
     }
 
     private Entry createEntryObject() {
-        date = LocalDate.parse(dateStr);
+        date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
         return new Entry(name, date, amount);
     }
