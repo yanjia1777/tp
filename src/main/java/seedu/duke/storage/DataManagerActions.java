@@ -21,12 +21,6 @@ public class DataManagerActions {
         this.path = path;
     }
 
-    protected void editTextFile(ArrayList<String> fileContent, String filepath) throws IOException {
-//        if (!fileContent.isEmpty()) {
-            Files.write(Path.of(filepath), fileContent, StandardCharsets.UTF_8);
-//        }
-    }
-
     public void createDirectory() {
         Path path = Paths.get(this.path);
         try {

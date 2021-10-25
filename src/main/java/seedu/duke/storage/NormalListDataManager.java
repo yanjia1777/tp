@@ -43,7 +43,7 @@ public class NormalListDataManager extends DataManagerActions {
         try {
             fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH), StandardCharsets.UTF_8));
             setContentToBeChanged(originalString, newString, fileContent);
-            editTextFile(fileContent, NORMAL_FILE_PATH);
+            editTextFile(fileContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class NormalListDataManager extends DataManagerActions {
         try {
             fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH), StandardCharsets.UTF_8));
             lineRemoval(originalString, fileContent);
-            editTextFile(fileContent, NORMAL_FILE_PATH);
+            editTextFile(fileContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,12 +78,18 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    protected void editTextFile(ArrayList<String> fileContent) throws IOException {
+        if (!fileContent.isEmpty()) {
+        Files.write(Path.of(NORMAL_FILE_PATH), fileContent, StandardCharsets.UTF_8);
+        }
+    }
+
     public void removeAll() {
         try {
             ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH),
                     StandardCharsets.UTF_8));
             fileContent.clear();
-            editTextFile(fileContent, NORMAL_FILE_PATH);
+            editTextFile(fileContent);
         } catch (IOException e) {
             e.printStackTrace();
         }

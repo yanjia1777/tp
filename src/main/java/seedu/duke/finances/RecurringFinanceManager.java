@@ -93,10 +93,10 @@ public class RecurringFinanceManager extends FinanceManager {
     @Override
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
-//        NormalListDataManager normalListDataManager = new NormalListDataManager(RECURRING_FILE_PATH);
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
         recurringEntryList.remove(entry);
         String stringToDelete = overWriteString((RecurringEntry) entry);
-//        normalListDataManager.deleteLineInTextFile(stringToDelete);
+        recurringListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
     @Override
@@ -105,7 +105,8 @@ public class RecurringFinanceManager extends FinanceManager {
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
-//        NormalListDataManager normalListDataManager = new NormalListDataManager(RECURRING_FILE_PATH);
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
+
         try {
             final String originalEntryStr = query.toString();
             final String stringToOverwrite = overWriteString((RecurringEntry) query);
@@ -121,7 +122,7 @@ public class RecurringFinanceManager extends FinanceManager {
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
             String stringToUpdate = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
             final Entry newEntry = recurringEntryList.get(indexToBeChanged);
-//            normalListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
+            recurringListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -207,7 +208,7 @@ public class RecurringFinanceManager extends FinanceManager {
     }
 
     public static String overWriteString(RecurringEntry entry) {
-        return entry.getCategory() + "|" + entry.getDate() + "|" + entry.getName()
+        return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount() + "|" + entry.getInterval() + "|" + entry.getEndDate();
     }
 

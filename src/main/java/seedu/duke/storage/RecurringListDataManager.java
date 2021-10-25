@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -74,5 +77,51 @@ public class RecurringListDataManager extends DataManagerActions{
             recurringEntry = new RecurringIncome(name, date, amount, category, interval, endDate);
         }
         recurringList.add(recurringEntry);
+    }
+
+    public void deleteLineInTextFile(String originalString) {
+        ArrayList<String> fileContent;
+        try {
+            fileContent = new ArrayList<>(Files.readAllLines(Path.of(RECURRING_FILE_PATH), StandardCharsets.UTF_8));
+            lineRemoval(originalString, fileContent);
+            editTextFile(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void lineRemoval(String originalString, ArrayList<String> fileContent) {
+        for (int i = 0; i < fileContent.size(); i++) {
+            if (fileContent.get(i).equals(originalString)) {
+                fileContent.remove(i);
+                break;
+            }
+        }
+    }
+
+    protected void editTextFile(ArrayList<String> fileContent) throws IOException {
+        if (!fileContent.isEmpty()) {
+            Files.write(Path.of(RECURRING_FILE_PATH), fileContent, StandardCharsets.UTF_8);
+        }
+    }
+
+    public void editEntryListTextFile(String originalString, String newString) {
+        ArrayList<String> fileContent;
+        try {
+            fileContent = new ArrayList<>(Files.readAllLines(Path.of(RECURRING_FILE_PATH), StandardCharsets.UTF_8));
+            setContentToBeChanged(originalString, newString, fileContent);
+            editTextFile(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setContentToBeChanged(String originalString, String newString, ArrayList<String> fileContent) {
+        for (int i = 0; i < fileContent.size(); i++) {
+            if (fileContent.get(i).equals(originalString)) {
+                fileContent.set(i, newString);
+                break;
+            }
+        }
     }
 }
