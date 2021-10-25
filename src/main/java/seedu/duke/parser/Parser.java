@@ -65,6 +65,7 @@ public class Parser {
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
+    private static final String ERROR_FIRST_TAG = "Invalid tags entered";
     protected String command;
     protected String name;
     protected String dateStr;
@@ -272,8 +273,15 @@ public class Parser {
         }
     }
 
+    private void checkNoInvalidInputBeforeFirstTag(String userInput) throws MintException{
+        if  ((command.length() != getCurrentTagIndex(userInput))) {
+            throw new MintException(ERROR_FIRST_TAG);
+        };
+    }
+
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
+        checkNoInvalidInputBeforeFirstTag(userInput);
         try {
             parseType(userInput);
             parseInputByTagsLoop(userInput);
@@ -285,7 +293,7 @@ public class Parser {
         }
     }
 
-    public void parseType(String userInput) throws MintException{
+    public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);
         if (argumentsArray.length <= 1) {
             throw new MintException(ERROR_MISSING_PARAMS);
@@ -470,7 +478,6 @@ public class Parser {
             return new InvalidCommand(e.getMessage());
         }
     }
-
 
 
     public Command parseCommand(String userInput) {
