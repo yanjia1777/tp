@@ -1,11 +1,14 @@
-package seedu.duke;
+package seedu.duke.duke;
 
+import seedu.duke.commands.Command;
+import seedu.duke.finances.NormalFinanceManager;
+import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
+import seedu.duke.utility.MintLogger;
+import seedu.duke.utility.Ui;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,11 +20,14 @@ public class Duke {
 
     private Ui ui;
     private Parser parser;
-    public static ArrayList<Entry> entryList = new ArrayList<>();
+    private NormalFinanceManager normalFinanceManager;
+    private RecurringFinanceManager recurringFinanceManager;
 
     public Duke() {
         this.ui = new Ui();
         this.parser = new Parser();
+        this.normalFinanceManager = new NormalFinanceManager();
+        this.recurringFinanceManager = new RecurringFinanceManager();
     }
 
     /**
@@ -34,22 +40,20 @@ public class Duke {
     public void run() {
         ui.printGreetings();
         Scanner in = new Scanner(System.in);
-        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
         DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
-        dataManagerActions.printPreviousFileContents(entryList);
+        //call financeManager instead
+        //dataManagerActions.printPreviousFileContents(entryList);
+
         while (true) {
-            try {
-                String userInput = ui.readUserInput();
-                if (parser.executeCommand(userInput, entryList, recurringExpenseList) == -1) {
-                    break;
-                }
-            } catch (MintException e) {
-                System.out.println(e.getMessage());
-            } catch (NoSuchElementException e) {
-                System.out.println("No new line entered");
+            String userInput = ui.readUserInput();
+            Command command = parser.parseCommand(userInput);
+            command.execute(normalFinanceManager, recurringFinanceManager, ui);
+            if (command.isExit()) {
+                break;
             }
+            //store
         }
         logger.log(Level.INFO, "User exited Mint");
     }

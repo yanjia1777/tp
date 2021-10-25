@@ -1,11 +1,18 @@
-package seedu.duke;
+package seedu.duke.entries;
+
+import seedu.duke.utility.Ui;
 
 import java.time.LocalDate; // import the LocalDate class
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+
 
 public class Income extends Entry {
     protected IncomeCategory category;
+
+    public Income(Income income) {
+        super(income);
+        this.category = income.getCategory();
+        this.type = Type.Income;
+    }
 
     public Income(String name, LocalDate date, double amount, IncomeCategory category) {
         super(name, date, amount);
@@ -13,11 +20,11 @@ public class Income extends Entry {
         this.type = Type.Income;
     }
 
-    public IncomeCategory getCategory () {
+    public IncomeCategory getCategory() {
         return category;
     }
 
-    public String getCategoryIndented () {
+    public String getCategoryIndented() {
         double length = getCategory().toString().length();
         int leftIndent = (int) Math.floor((16 - length) / 2);
         int rightIndent = (int) Math.ceil((16 - length) / 2);
@@ -30,17 +37,12 @@ public class Income extends Entry {
         return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
     }
 
-    public void setCategory (IncomeCategory category) {
+    public void setCategory(IncomeCategory category) {
         this.category = category;
     }
 
-    public String toString () {
+    public String toString() {
         return getType() + "  | " + getCategoryIndented() + " | " + getDate() + " | "
                 + getNameIndented() + " | $" + String.format("%,.2f", getAmount());
-    }
-
-    @Override
-    public boolean equals (Object object) {
-        return false;
     }
 }

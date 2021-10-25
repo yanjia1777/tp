@@ -1,7 +1,7 @@
 package seedu.duke.storage;
 
-import seedu.duke.Entry;
-import seedu.duke.Ui;
+import seedu.duke.entries.Entry;
+import seedu.duke.utility.Ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;

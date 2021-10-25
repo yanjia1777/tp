@@ -1,5 +1,7 @@
-package seedu.duke;
+package seedu.duke.utility;
 
+import seedu.duke.entries.Entry;
+import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 
 import java.time.LocalDate;
@@ -13,11 +15,16 @@ public class Ui {
         this.in = new Scanner(System.in);
     }
 
+    public void printError(MintException e) {
+        System.out.println(e.getMessage());
+    }
+
     public String readUserInput() {
         return in.nextLine().trim();
     }
 
     protected static final String INDENT = "    ";
+    public static final String LINE = "    ____________________________________________________________";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
     public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
             + "I was unable to perform any edits! "
@@ -42,7 +49,7 @@ public class Ui {
         System.out.println("The following tags are available: n/ d/ a/");
     }
 
-    public static void help() {
+    public void help() {
         System.out.println("Available tags: n/name d/date a/amount c/category_number\n"
                 + "Order of tags does not matter.\n"
                 + "List of commands available.\n"
@@ -70,6 +77,15 @@ public class Ui {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(INDENT + (i + 1) + "  " + list.get(i).toString());
         }
+    }
+
+    public static void viewGivenListAndTotal(ArrayList<Entry> list, double totalAmount) {
+        System.out.println("Here is the list of your entries:");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(INDENT + (i + 1) + "  " + list.get(i).toString());
+        }
+        System.out.println(LINE);
+        System.out.println(INDENT + "Total: " + totalAmount);
     }
 
     public static int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) throws MintException {
@@ -172,6 +188,10 @@ public class Ui {
                 missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_INTERVAL);
                 index++;
                 break;
+            case "e/":
+                missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_END_DATE);
+                index++;
+                break;
             default:
                 throw new MintException(MintException.ERROR_INVALID_COMMAND);
             }
@@ -179,14 +199,14 @@ public class Ui {
         return missingFieldsErrorMessage;
     }
 
-    public static void printView (ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
-        System.out.println("Here is the list of your expenses:");
+    public static void printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
+        System.out.println("Here is the list of your entries:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
         System.out.println("  Type  |     Category     |    Date    |       Name       | Amount");
         for (Entry entry : outputArray) {
-            System.out.println(entry.toString());
+            System.out.println(entry);
         }
         System.out.print("                                                Net Total: |");
         if (total < 0) {
@@ -196,6 +216,13 @@ public class Ui {
             System.out.print(" $" + String.format("%,.2f", total));
         }
         System.out.println();
+    }
+
+    public static void printViewRecurring(ArrayList<Entry> entryList) {
+        System.out.println("Here is the information about your recurring entries:");
+        for (Entry entry : entryList) {
+            System.out.println(entry);
+        }
     }
 
     public static StringBuilder getIndent(int leftIndent, int rightIndent, String item) {
@@ -212,6 +239,18 @@ public class Ui {
             rightIndent--;
         }
         return itemWithIndent;
+    }
+
+    public void printEntryAdded(Entry entry) {
+        System.out.println("I've added :" + entry);
+    }
+
+    public void printInvalidCommand(String message) {
+        System.out.println(message);
+    }
+
+    public void printEntryDeleted(Entry entry) {
+        System.out.println("I have deleted: " + entry);
     }
 }
 

@@ -1,12 +1,21 @@
-package seedu.duke;
+package seedu.duke.entries;
+
+import seedu.duke.utility.Ui;
 
 import java.time.LocalDate; // import the LocalDate class
 
-public abstract class Entry {
+public class Entry {
     protected String name;
     protected LocalDate date;
     protected double amount;
     protected Type type;
+
+    public Entry(Entry entry) {
+        this.name = entry.getName();
+        this.date = entry.getDate();
+        this.amount = entry.getAmount();
+        this.type = null;
+    }
 
     public Entry(String name, LocalDate date, double amount) {
         this.name = name;
@@ -59,8 +68,20 @@ public abstract class Entry {
         this.amount = amount;
     }
 
-    public abstract Enum getCategory();
+    public Enum getCategory() {
+        return null;
+    }
 
-    public abstract boolean equals(Object object);
-
+    public String getCategoryIndented() {
+        double length = getCategory().toString().length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
+    }
 }
