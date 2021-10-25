@@ -51,6 +51,8 @@ public class NormalFinanceManager extends FinanceManager {
             Entry onlyEntry = filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
                 entry = onlyEntry;
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
             return entry;
         }
@@ -60,6 +62,8 @@ public class NormalFinanceManager extends FinanceManager {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
             if (index >= 0) {
                 entry = filteredList.get(index);
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
@@ -273,8 +277,7 @@ public class NormalFinanceManager extends FinanceManager {
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
             Collections.reverse(outputArray);
         }
-        double total = 0;
-        calculateTotal(outputArray);
+        double total = calculateTotal(outputArray);
 
         Ui.printView(outputArray, fromDate, endDate, total);
         if (isViewAll) {
