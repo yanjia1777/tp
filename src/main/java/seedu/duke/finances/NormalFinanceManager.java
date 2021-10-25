@@ -144,21 +144,21 @@ public class NormalFinanceManager extends FinanceManager {
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
-                    count ++;
+                    count++;
                     name = nonEmptyNewDescription(word);
                 }
                 if (word.contains(DATE_SEPARATOR)) {
-                    count ++;
+                    count++;
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
-                    count ++;
+                    count++;
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     amount = Double.parseDouble(amountStr);
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
-                    count ++;
+                    count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
                     category = ExpenseCategory.values()[pos];

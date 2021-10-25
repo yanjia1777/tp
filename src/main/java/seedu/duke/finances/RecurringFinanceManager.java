@@ -149,33 +149,33 @@ public class RecurringFinanceManager extends FinanceManager {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
                     name = nonEmptyNewDescription(word);
-                    count ++;
+                    count++;
                 }
                 if (word.contains(DATE_SEPARATOR)) {
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-                    count ++;
+                    count++;
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     amount = Double.parseDouble(amountStr);
-                    count ++;
+                    count++;
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
                     category = ExpenseCategory.values()[pos];
-                    count ++;
+                    count++;
                 }
                 if (word.contains(END_DATE_SEPARATOR)) {
                     String endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
-                    count ++;
+                    count++;
                 }
                 if (word.contains(INTERVAL_SEPARATOR)) {
                     String intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     interval = Interval.determineInterval(intervalStr);
-                    count ++;
+                    count++;
                 }
             }
             if (count == 0) {
