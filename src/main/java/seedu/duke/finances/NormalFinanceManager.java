@@ -7,6 +7,7 @@ import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
+import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
@@ -96,21 +97,23 @@ public class NormalFinanceManager extends FinanceManager {
     }
 
     @Override
-    public void editEntry(Entry query) throws MintException {
+    public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged;
+        int indexToBeChanged = 0;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
+        String originalEntryStr = "";
+        Parser parser = new Parser();
         try {
-            final String originalEntryStr = query.toString();
-            if (entryList.contains(query)) {
-                indexToBeChanged = entryList.indexOf(query);
+            originalEntryStr = overWriteString(entry);
+            if (entryList.contains(entry)) {
+                indexToBeChanged = entryList.indexOf(entry);
                 choice = scanFieldsToUpdate();
             } else {
                 //                logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
-            editSpecifiedEntry(choice, indexToBeChanged, query);
+            editSpecifiedEntry(choice, indexToBeChanged, entry);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
         } catch (NumberFormatException e) {
@@ -120,7 +123,9 @@ public class NormalFinanceManager extends FinanceManager {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_DATE);
         }
+        String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+        return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
     }
 
     protected Boolean isEditSuccessful(int indexToBeChanged, String originalEntry) {
@@ -135,24 +140,32 @@ public class NormalFinanceManager extends FinanceManager {
             LocalDate date = entry.getDate();
             double amount = entry.getAmount();
             Enum category = entry.getCategory();
+            int count = 0;
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
+                    count++;
                     name = nonEmptyNewDescription(word);
                 }
                 if (word.contains(DATE_SEPARATOR)) {
+                    count++;
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
+                    count++;
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     amount = Double.parseDouble(amountStr);
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
+                    count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
                     category = ExpenseCategory.values()[pos];
                 }
+            }
+            if (count == 0) {
+                throw new MintException("No valid fields entered!");
             }
             if (entry.getType() == Type.Expense) {
                 entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
@@ -304,11 +317,4 @@ public class NormalFinanceManager extends FinanceManager {
         return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount();
     }
-
-    public String getStringToUpdate(int index) {
-        return entryList.get(index).getType() + "|" + entryList.get(index).getCategory().ordinal() + "|"
-                + entryList.get(index).getDate() + "|" + entryList.get(index).getName()
-                + "|" + entryList.get(index).getAmount();
-    }
-
 }
