@@ -235,15 +235,23 @@ public class Parser {
         }
     }
 
-    private void initDate() {
+    private void initDateStr() {
         this.dateStr = LocalDate.now().toString();
     }
 
-    private void initCatNum() {
+    private void initAmountStr() {
+        this.amountStr = "0";
+    }
+
+    private void initIntervalStr() {
+        this.intervalStr = "MONTH";
+    }
+
+    private void initCatNumStr() {
         this.catNumStr = CAT_NUM_OTHERS;
     }
 
-    private void initEndDate() {
+    private void initEndDateStr() {
         this.endDateStr = "2200-12-31";
     }
 
@@ -270,14 +278,6 @@ public class Parser {
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         try {
-            if (command.equals("add")) {
-                initDate();
-                initCatNum();
-            } else if (command.equals("addR")) {
-                initDate();
-                initCatNum();
-                initEndDate();
-            }
             parseType(userInput);
             parseInputByTagsLoop(userInput);
             ArrayList<String> validTags = ValidityChecker.checkExistenceAndValidityOfTags(this, userInput);
@@ -373,6 +373,8 @@ public class Parser {
 
     private Command prepareAddEntry(String userInput) {
         try {
+            initDateStr();
+            initCatNumStr();
             parseInputByTags(userInput);
             Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
             return new AddCommand(entry);
@@ -383,6 +385,11 @@ public class Parser {
 
     private Command prepareDeleteEntry(String userInput) {
         try {
+            initDateStr();
+            initCatNumStr();
+            initAmountStr();
+            initIntervalStr();
+            initEndDateStr();
             ArrayList<String> validTags = parseInputByTags(userInput);
             Entry expense = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
             assert validTags.size() >= 1 : "There should be at least one valid tag";
@@ -399,6 +406,11 @@ public class Parser {
 
     private Command prepareEditEntry(String userInput) {
         try {
+            initDateStr();
+            initCatNumStr();
+            initAmountStr();
+            initIntervalStr();
+            initEndDateStr();
             ArrayList<String> validTags = parseInputByTags(userInput);
             Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
             assert validTags.size() >= 1 : "There should be at least one valid tag";
@@ -410,6 +422,9 @@ public class Parser {
 
     private Command prepareAddRecurringEntry(String userInput) {
         try {
+            initDateStr();
+            initCatNumStr();
+            initEndDateStr();
             isRecurring = true;
             parseInputByTags(userInput);
             RecurringEntry entry = (type == Type.Income)
@@ -422,6 +437,11 @@ public class Parser {
 
     private Command prepareDeleteRecurringEntry(String userInput) {
         try {
+            initDateStr();
+            initCatNumStr();
+            initAmountStr();
+            initIntervalStr();
+            initEndDateStr();
             isRecurring = true;
             ArrayList<String> validTags = parseInputByTags(userInput);
             RecurringEntry entry = (type == Type.Income)
@@ -434,6 +454,11 @@ public class Parser {
 
     private Command prepareEditRecurringEntry(String userInput) {
         try {
+            initDateStr();
+            initCatNumStr();
+            initAmountStr();
+            initIntervalStr();
+            initEndDateStr();
             isRecurring = true;
             ArrayList<String> validTags = parseInputByTags(userInput);
             assert validTags.size() >= 1 : "There should be at least one valid tag";
