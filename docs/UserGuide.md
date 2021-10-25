@@ -7,10 +7,10 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 
 - [Features](#features)
     - [Viewing help](#help)
-    - [Adding expenses](#add)
-    - [View expenses](#view)
-    - [Deleting expenses](#delete)
-    - [Editing expenses](#edit)
+    - [Adding entries](#add)
+    - [Viewing entries](#view)
+    - [Deleting entries](#delete)
+    - [Editing entries](#edit)
     - [Viewing categories](#cat)
     - [Exiting the program](#exit)
 - [Available date formats](#dateFormat)
@@ -25,7 +25,7 @@ Notes about the following list of commands:
 
 - Items in square brackets are optional.</br>
   e.g n/NAME [d/DATE] can be used as n/burger d/2021-10-20 or as n/burger
-- Parameters can be in any order.</br>
+- Parameters with tags or optional modifiers can be in any order.</br>
   e.g. if the command specifies n/NAME a/AMOUNT, a/AMOUNT n/NAME is also acceptable.
 - If a parameter is expected only once in the command but if you specify it multiple times, only the last occurrence of
   the parameter will be taken.</br>
@@ -55,7 +55,7 @@ Example: 5th Jaunary 2020
 
 ## <a name="categoryList"></a>Available categories
 
-|Category tag | Ctageory name |
+|Category tag | Category name |
 |--------|----------|
 | c/0 | Food |
 | c/1 | Entertainment
@@ -72,13 +72,14 @@ Shows a list of possible user commands
 
 Format: `help`
 
-## <a name="add"></a>Adding expenses: `add`
+## <a name="add"></a>Adding entries: `add`
 
-Adds an expense to your expense tracker
+Adds an expense or income to your tracker
 
-Format: `add n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
+Format: `add [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
 
-- Adds an expense of the specified `NAME`, `DATE`, `AMOUNT` and `CATEGORY_NUMBER`
+- Adds an entry of the specified `NAME`, `DATE`, `AMOUNT` and `CATEGORY_NUMBER`
+- If `income` is included after `add`, entry will be an income entry, else it will be an expense entry.
 - `NAME` can be any string of characters
 - `AMOUNT` is any number up to 2 decimal points.
 - `DATE(optional)` can be any of the [acceptable date formats](#dateFormat). </br>
@@ -89,28 +90,82 @@ Format: `add n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
   Examples:
 - `add n/Textbook a/15`
 - `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
+- `add income n/Sales a/34 d/2021-02-19 c/1`
 
 Examples and expected Output
 
 ```
 add n/Textbook a/15
-I have added: Others | 2021-10-21 | Textbook | $15.00
-add n/Cheese burger a?4.2 d/2021-04-20 c/0
-I have added: Food | 2021-04-20 | Cheese Burger | $4.20
+I've added: Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
+add n/Cheese burger a/4.2 d/2021-04-20 c/0
+I've added: Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
+add income n/Sales a/34 d/2021-02-19 c/1
+I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
 ```
 
-## <a name="view"></a>Viewing all expenses: `view`
+## <a name="view"></a>Viewing all entries: `view`
 
-Shows a list of all the expenses, each with the associated `NAME`, `DATE`, and `AMOUNT`. Format: `view`
-Expected Output:
+Shows a list of all the expenses, each with the associated `NAME`, `DATE`, and `AMOUNT`. 
+
+Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from STARTDATE [ENDDATE]] [up/ascending]`
+
+- Views all entries with the specified `MONTH`, `YEAR`, from `STARTDATE` to `ENDDATE`, sorted by `SORTTYPE`.
+- `[income](optional)` and `[expense](optional)` if appended, only shows the entries of the corresponding type.
+- `SORTTYPE` can be any of the following types: `name`, `date`, `amount`, `category`
+- `MONTH(optional)` can be any number from 1 to 12.
+- If `MONTH` is not specified, the default will be the current month.
+- `YEAR(optional)` can be any 4-digit number.
+- If `YEAR` is not specified, the default will be the current year.
+- `STARTDATE(optional)` and `ENDDATE(optional)` can be any of the [acceptable date formats](#dateFormat). </br>
+- If `STARTDATE` is specified but `ENDDATE` is not specified, the default `ENDDATE` set would be the current date.
+- `up(optional)` or `ascending(optional)` if appended with sort, will sort the list in ascending order, else the default will sort the list in descending order.
+
+Examples:
+- `view`
+- `view income`
+- `view month 4 year 2021`
+- `view from 2021-03-25 2022-01-02 by amount ascending`
+
+Examples and expected Output:
 
 ```
-{INSERT EXPECTED OUTPUT}
+view
+Here is the list of your entries:
+  Type  |     Category     |    Date    |       Name       | Amount
+Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
+Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
+Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
+                                                Net Total: | $14.80
+```
+```
+view income
+Here is the list of your entries:
+  Type  |     Category     |    Date    |       Name       | Amount
+Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
+                                                Net Total: | $0.00
+```
+```
+view month 4 year 2021
+For the year 2021:
+For the month of APRIL:
+Here is the list of your entries:
+  Type  |     Category     |    Date    |       Name       | Amount
+Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
+                                                Net Total: | $0.00
+```
+```
+view from 2021-03-25 2022-01-02 by amount ascending
+Here is the list of your entries:
+Since 2021-03-25 to 2022-01-02:
+  Type  |     Category     |    Date    |       Name       | Amount
+Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
+Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
+                                                Net Total: | $0.00
 ```
 
-## <a name="delete"></a>Deleting an expense: `delete`
+## <a name="delete"></a>Deleting an entry: `delete`
 
-Deletes an existing expense. </br>
+Deletes an existing entry. </br>
 Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided.
@@ -145,9 +200,9 @@ Examples and expected output:
 {INSERT delete more than 1 expense}
 ```
 
-## <a name="edit"></a>Editing an expense: `edit`
+## <a name="edit"></a>Editing an entry: `edit`
 
-Edits an existing expense </br>
+Edits an existing entry </br>
 Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided
