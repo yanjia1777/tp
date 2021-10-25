@@ -40,11 +40,11 @@ public class Duke {
     public void run() {
         ui.printGreetings();
         Scanner in = new Scanner(System.in);
-        DataManagerActions dataManagerActions = new DataManagerActions(FILE_PATH);
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
         //call financeManager instead
-        //dataManagerActions.printPreviousFileContents(entryList);
+        normalFinanceManager.loadPreviousFileContents();
 
         while (true) {
             String userInput = ui.readUserInput();

@@ -6,12 +6,14 @@ import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
-import seedu.duke.storage.EntryListDataManager;
+import seedu.duke.storage.DataManagerActions;
+import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -23,18 +25,16 @@ import java.util.Collections;
 public class NormalFinanceManager extends FinanceManager {
 
     public ArrayList<Entry> entryList;
+    public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
 
     public NormalFinanceManager() {
         this.entryList = new ArrayList<>();
     }
 
     public void addEntry(Entry entry) throws MintException {
+        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
         entryList.add(entry);
-        try {
-            EntryListDataManager.appendToEntryListTextFile(FILE_PATH, entry);
-        } catch (IOException e) {
-            throw new MintException("Error trying to update external file!");
-        }
+        normalListDataManager.appendToEntryListTextFile(NORMAL_FILE_PATH, entry);
     }
 
     @Override
@@ -89,9 +89,10 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
+        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
         entryList.remove(entry);
         String stringToDelete = overWriteString(entry);
-        EntryListDataManager.deleteLineInTextFile(stringToDelete);
+        normalListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
     @Override
@@ -100,6 +101,7 @@ public class NormalFinanceManager extends FinanceManager {
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
+        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
         try {
             final String originalEntryStr = query.toString();
             final String stringToOverwrite = overWriteString(query);
@@ -115,7 +117,7 @@ public class NormalFinanceManager extends FinanceManager {
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
             String stringToUpdate = overWriteString(entryList.get(indexToBeChanged));
             final Entry newEntry = entryList.get(indexToBeChanged);
-            EntryListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
+            normalListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -300,8 +302,21 @@ public class NormalFinanceManager extends FinanceManager {
 
     // common method
     public static String overWriteString(Entry entry) {
-        return entry.getCategory() + "|" + entry.getDate() + "|" + entry.getName()
+        return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount();
+    }
+
+    public void loadPreviousFileContents() {
+        DataManagerActions dataManagerActions = new DataManagerActions(NORMAL_FILE_PATH);
+        NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
+        try {
+            normalListDataManager.loadEntryListContents(entryList);
+//            CategoryListDataManager.loadCategoryFileContents();
+        } catch (FileNotFoundException e) {
+            Ui.printMissingFileMessage();
+            dataManagerActions.createDirectory();
+            dataManagerActions.createFiles();
+        }
     }
 
 }

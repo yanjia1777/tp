@@ -10,11 +10,12 @@ import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
-import seedu.duke.storage.EntryListDataManager;
+import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -25,9 +26,12 @@ public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
     public static final String INTERVAL_SEPARATOR = "i/";
     protected ArrayList<Entry> recurringEntryList = new ArrayList<>();
+    public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
     public void addEntry(Entry entry) throws MintException {
+        NormalListDataManager normalListDataManager = new NormalListDataManager(RECURRING_FILE_PATH);
         recurringEntryList.add(entry);
+        normalListDataManager.appendToEntryListTextFile(RECURRING_FILE_PATH, entry);
     }
 
     @Override
@@ -86,9 +90,10 @@ public class RecurringFinanceManager extends FinanceManager {
     @Override
     public void deleteEntry(Entry entry) {
         //logger.log(Level.INFO, "User deleted expense: " + entry);
+        NormalListDataManager normalListDataManager = new NormalListDataManager(RECURRING_FILE_PATH);
         recurringEntryList.remove(entry);
         String stringToDelete = overWriteString((RecurringEntry) entry);
-        EntryListDataManager.deleteLineInTextFile(stringToDelete);
+        normalListDataManager.deleteLineInTextFile(stringToDelete);
     }
 
     @Override
@@ -97,6 +102,7 @@ public class RecurringFinanceManager extends FinanceManager {
         int indexToBeChanged;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
+        NormalListDataManager normalListDataManager = new NormalListDataManager(RECURRING_FILE_PATH);
         try {
             final String originalEntryStr = query.toString();
             final String stringToOverwrite = overWriteString((RecurringEntry) query);
@@ -112,7 +118,7 @@ public class RecurringFinanceManager extends FinanceManager {
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
             String stringToUpdate = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
             final Entry newEntry = recurringEntryList.get(indexToBeChanged);
-            EntryListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
+            normalListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
