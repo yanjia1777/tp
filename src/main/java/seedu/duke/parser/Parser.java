@@ -237,14 +237,18 @@ public class Parser {
 
     private void initDate() {
         this.dateStr = LocalDate.now().toString();
+        this.date = LocalDate.now();
     }
 
-    private void initCatNum() {
+    private void initCat() {
         this.catNumStr = CAT_NUM_OTHERS;
+        this.incomeCategory = IncomeCategory.OTHERS;
+        this.expenseCategory = ExpenseCategory.OTHERS;
     }
 
     private void initEndDate() {
         this.endDateStr = "2200-12-31";
+        this.date = LocalDate.parse(endDateStr);
     }
 
     private void parseInputByTagsLoop(String userInput) throws MintException {
@@ -270,16 +274,13 @@ public class Parser {
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         try {
-            if (command.equals("add")) {
+            if (command.equals("addR") || command.equals("editR") || command.equals("deleteR")) { // added
                 initDate();
-                initCatNum();
-            } else if (command.equals("addR") || command.equals("editR") || command.equals("deleteR")) { // added
-                initDate();
-                initCatNum();
+                initCat();
                 initEndDate();
             } else {
                 initDate();
-                initCatNum();
+                initCat();
             }
             parseType(userInput);
             parseInputByTagsLoop(userInput);
