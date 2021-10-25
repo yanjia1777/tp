@@ -1,9 +1,6 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Type;
+import seedu.duke.entries.*;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.storage.DataManagerActions;
@@ -159,7 +156,11 @@ public class NormalFinanceManager extends FinanceManager {
                     category = ExpenseCategory.values()[pos];
                 }
             }
-            entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
+            if (entry.getType() == Type.Expense) {
+                entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
+            } else {
+                entryList.set(index, new Income(name, date, amount, (IncomeCategory) category));
+            }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }

@@ -55,7 +55,6 @@ public class Duke {
             if (command.isExit()) {
                 break;
             }
-            //store
         }
         logger.log(Level.INFO, "User exited Mint");
     }
