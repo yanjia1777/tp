@@ -142,7 +142,7 @@ view income
 Here is the list of your entries:
   Type  |     Category     |    Date    |       Name       | Amount
 Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
-                                                Net Total: | $0.00
+                                                Net Total: | $34.00
 ```
 ```
 view month 4 year 2021
@@ -151,7 +151,7 @@ For the month of APRIL:
 Here is the list of your entries:
   Type  |     Category     |    Date    |       Name       | Amount
 Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
-                                                Net Total: | $0.00
+                                                Net Total: |-$4.20
 ```
 ```
 view from 2021-03-25 2022-01-02 by amount ascending
@@ -160,7 +160,7 @@ Since 2021-03-25 to 2022-01-02:
   Type  |     Category     |    Date    |       Name       | Amount
 Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
 Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
-                                                Net Total: | $0.00
+                                                Net Total: |-$19.20
 ```
 
 ## <a name="delete"></a>Deleting an entry: `delete`
