@@ -29,7 +29,7 @@ public class DeleteCommand extends Command {
                         RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             Entry deletedEntry = normalFinanceManager.deleteEntryByKeywords(tags, query);
-            String stringToDelete = NormalFinanceManager.overWriteString(query);
+            String stringToDelete = NormalFinanceManager.overWriteString(deletedEntry);
             normalListDataManager.deleteLineInTextFile(stringToDelete);
             ui.printEntryDeleted(deletedEntry);
         } catch (MintException e) {

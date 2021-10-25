@@ -103,7 +103,6 @@ public class Ui {
         while (!proceedToDelete) {
             String userInput = in.nextLine();
             if (userInput.trim().equals("cancel")) {
-                System.out.println("Delete process cancelled.");
                 return INDEX_CANCEL;
             }
             try {
@@ -135,7 +134,6 @@ public class Ui {
             case "y":
                 return true;
             case "n":
-                System.out.println("Ok. I have cancelled the delete process.");
                 return false;
             default:
                 System.out.println("Sorry I don't understand what that means. +"

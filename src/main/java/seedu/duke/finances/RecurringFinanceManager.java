@@ -46,6 +46,8 @@ public class RecurringFinanceManager extends FinanceManager {
             RecurringExpense onlyExpense = (RecurringExpense) filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyExpense, isDelete)) {
                 expense = onlyExpense;
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
             return expense;
         }
@@ -55,6 +57,8 @@ public class RecurringFinanceManager extends FinanceManager {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
             if (index >= 0) {
                 expense = (RecurringExpense) filteredList.get(index);
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());

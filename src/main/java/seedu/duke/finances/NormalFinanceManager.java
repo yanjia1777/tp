@@ -46,6 +46,8 @@ public class NormalFinanceManager extends FinanceManager {
             Entry onlyEntry = filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
                 entry = onlyEntry;
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
             return entry;
         }
@@ -55,6 +57,8 @@ public class NormalFinanceManager extends FinanceManager {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
             if (index >= 0) {
                 entry = filteredList.get(index);
+            } else {
+                throw new MintException("Ok. I have cancelled the process.");
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
