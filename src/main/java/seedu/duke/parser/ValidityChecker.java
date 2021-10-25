@@ -31,9 +31,14 @@ public class ValidityChecker {
         }
     }
 
-    static void checkPositiveAmount(Parser parser) throws MintException {
-        double num = Double.parseDouble(parser.amountStr);
-        if (num < 0) {
+    static void checkPositiveAmount(double amount) throws MintException {
+        if (amount < 0) {
+            throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
+
+        }
+    }static void checkPositiveAmount(String amountStr) throws MintException {
+        double amount = Double.parseDouble(amountStr);
+        if (amount < 0) {
             throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
 
         }
@@ -154,6 +159,9 @@ public class ValidityChecker {
                 break;
             case "addR":
                 mandatoryTags = new String[]{"n/", "a/", "i/"};
+                break;
+            case "set":
+                mandatoryTags = new String[]{"c/", "a/"};
                 break;
             default:
                 mandatoryTags = new String[]{};
