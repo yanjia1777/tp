@@ -1,6 +1,19 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.*;
+
+import seedu.duke.commands.AddCommand;
+import seedu.duke.commands.AddRecurringCommand;
+import seedu.duke.commands.Command;
+import seedu.duke.commands.DeleteCommand;
+import seedu.duke.commands.DeleteRecurringCommand;
+import seedu.duke.commands.EditCommand;
+import seedu.duke.commands.EditRecurringCommand;
+import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.HelpCommand;
+import seedu.duke.commands.InvalidCommand;
+import seedu.duke.commands.SetBudgetCommand;
+import seedu.duke.commands.ViewBudgetCommand;
+import seedu.duke.commands.ViewCommand;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.entries.Interval;
