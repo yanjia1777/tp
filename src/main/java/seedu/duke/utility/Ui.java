@@ -111,7 +111,6 @@ public class Ui {
         while (!proceedToDelete) {
             String userInput = in.nextLine();
             if (userInput.trim().equals("cancel")) {
-                System.out.println("Delete process cancelled.");
                 return INDEX_CANCEL;
             }
             try {
@@ -143,7 +142,6 @@ public class Ui {
             case "y":
                 return true;
             case "n":
-                System.out.println("Ok. I have cancelled the delete process.");
                 return false;
             default:
                 System.out.println("Sorry I don't understand what that means. +"
@@ -268,7 +266,7 @@ public class Ui {
     }
 
     public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entryList) {
-        System.out.println("Here are the budget you've set aside for each category.");
+        System.out.println("Here is the budget for the month.");
         for (Budget budget : budgetList) {
             String categoryIndented = getCategoryIndented(budget.getCategory()).toString();
             String limit = budget.getLimit() == 0 ? "Not set" : "$" + budget.getLimit();
