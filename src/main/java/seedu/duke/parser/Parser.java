@@ -273,15 +273,8 @@ public class Parser {
         }
     }
 
-    private void checkNoInvalidInputBeforeFirstTag(String userInput) throws MintException{
-        if  ((command.length() != getCurrentTagIndex(userInput))) {
-            throw new MintException(ERROR_FIRST_TAG);
-        };
-    }
-
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
-        checkNoInvalidInputBeforeFirstTag(userInput);
         try {
             parseType(userInput);
             parseInputByTagsLoop(userInput);
