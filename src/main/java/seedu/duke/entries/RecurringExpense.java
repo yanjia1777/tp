@@ -46,7 +46,8 @@ public class RecurringExpense extends RecurringEntry {
     @Override
     public String toString() {
         return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
-                + getNameIndented() + " |-$" + String.format("%,.2f", getAmount()) + " | " + getInterval().label;
+                + getNameIndented() + " |-$" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
+                + " | " + getEndDate();
     }
 
     //@@author nipafx-reusedS
