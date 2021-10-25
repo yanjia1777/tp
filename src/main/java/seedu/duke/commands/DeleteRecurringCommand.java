@@ -30,7 +30,7 @@ public class DeleteRecurringCommand extends Command {
                         RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             Entry deletedEntry = recurringFinanceManager.deleteEntryByKeywords(tags, query);
-            String stringToDelete = recurringFinanceManager.overWriteString((RecurringEntry) query);
+            String stringToDelete = recurringFinanceManager.overWriteString((RecurringEntry) deletedEntry);
             recurringListDataManager.deleteLineInTextFile(stringToDelete);
             ui.printEntryDeleted(deletedEntry);
         } catch (MintException e) {
