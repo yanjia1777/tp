@@ -32,8 +32,8 @@ public abstract class FinanceManager {
 
     }
 
-    public void editEntry(Entry query) throws MintException {
-
+    public ArrayList<String> editEntry(Entry query) throws MintException {
+        return null;
     }
 
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
@@ -52,15 +52,16 @@ public abstract class FinanceManager {
         }
     }
 
-    public void editEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+    public ArrayList<String> editEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
         try {
             Entry entry = chooseEntryByKeywords(tags, false, query);
             if (entry != null) {
-                editEntry(entry);
+                return editEntry(entry);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
+        return null;
     }
 
     public void editSpecifiedEntry(String userInput, int indexToBeChanged, Entry entry) throws MintException {

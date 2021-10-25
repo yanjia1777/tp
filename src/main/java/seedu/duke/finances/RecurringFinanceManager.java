@@ -24,6 +24,7 @@ import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
@@ -99,21 +100,22 @@ public class RecurringFinanceManager extends FinanceManager {
     }
 
     @Override
-    public void editEntry(Entry query) throws MintException {
+    public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged;
+        int indexToBeChanged = 0;
         boolean printEditSuccess = false;
         boolean exceptionThrown = false;
+        String originalEntryStr = "";
         try {
-            final String originalEntryStr = query.toString();
-            if (recurringEntryList.contains(query)) {
-                indexToBeChanged = recurringEntryList.indexOf(query);
+            originalEntryStr = overWriteString((RecurringEntry) entry);
+            if (recurringEntryList.contains(entry)) {
+                indexToBeChanged = recurringEntryList.indexOf(entry);
                 choice = scanFieldsToUpdate();
             } else {
                 //                logger.log(Level.INFO, "User entered invalid entry");
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
-            editSpecifiedEntry(choice, indexToBeChanged, query);
+            editSpecifiedEntry(choice, indexToBeChanged, entry);
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
         } catch (NumberFormatException e) {
@@ -123,7 +125,9 @@ public class RecurringFinanceManager extends FinanceManager {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_DATE);
         }
+        String newEntryStr = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+        return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
     }
 
     private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
@@ -140,32 +144,42 @@ public class RecurringFinanceManager extends FinanceManager {
             LocalDate endDate = recurringEntry.getEndDate();
             Interval interval = recurringEntry.getInterval();
             Enum category = recurringEntry.getCategory();
+            int count = 0;
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
                     name = nonEmptyNewDescription(word);
+                    count ++;
                 }
                 if (word.contains(DATE_SEPARATOR)) {
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+                    count ++;
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     amount = Double.parseDouble(amountStr);
+                    count ++;
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
                     category = ExpenseCategory.values()[pos];
+                    count ++;
                 }
                 if (word.contains(END_DATE_SEPARATOR)) {
                     String endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+                    count ++;
                 }
                 if (word.contains(INTERVAL_SEPARATOR)) {
                     String intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     interval = Interval.determineInterval(intervalStr);
+                    count ++;
                 }
+            }
+            if (count == 0) {
+                throw new MintException("No Valid Fields Entered!");
             }
             if (recurringEntry.getType() == Type.Expense) {
                 recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,

@@ -29,10 +29,9 @@ public class EditCommand extends Command {
                         NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
                         RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
-            String stringToOverwrite = normalFinanceManager.overWriteString(query);
-            int index = normalFinanceManager.entryList.indexOf(query);
-            normalFinanceManager.editEntryByKeywords(tags, query);
-            String stringToUpdate = normalFinanceManager.getStringToUpdate(index);
+            ArrayList<String> list = normalFinanceManager.editEntryByKeywords(tags, query);
+            String stringToOverwrite = list.get(0);
+            String stringToUpdate = list.get(1);
             normalListDataManager.editEntryListTextFile(stringToOverwrite, stringToUpdate);
         } catch (MintException e) {
             ui.printError(e);
