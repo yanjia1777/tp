@@ -1,5 +1,6 @@
 package seedu.duke.commands;
 
+import seedu.duke.budget.BudgetManager;
 import seedu.duke.entries.Entry;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
@@ -15,7 +16,7 @@ public class AddRecurringCommand extends Command {
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
-                        RecurringFinanceManager recurringFinanceManager, Ui ui) {
+                        RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager, Ui ui) {
         try {
             recurringFinanceManager.addEntry(entry);
             ui.printEntryAdded(entry);

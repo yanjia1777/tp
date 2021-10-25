@@ -1,6 +1,7 @@
 package seedu.duke.utility;
 
 import seedu.duke.entries.Entry;
+import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 
@@ -251,6 +252,10 @@ public class Ui {
 
     public void printEntryDeleted(Entry entry) {
         System.out.println("I have deleted: " + entry);
+    }
+
+    public void printSetBudget(ExpenseCategory category, double amount) {
+        System.out.printf("Budget for %s set to $%.2f\n", category, amount);
     }
 }
 
