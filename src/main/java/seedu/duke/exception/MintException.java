@@ -10,8 +10,10 @@ public class MintException extends Exception {
     public static final String ERROR_NO_NAME = "Please add the description of the item!";
     public static final String ERROR_EXPENSE_NOT_IN_LIST = "Hmm.. That item is not in the list.";
     public static final String ERROR_INVALID_COMMAND = "Sorry I don't know what that means. :(";
-    public static final String ERROR_INVALID_TAG_ERROR = "Sorry, we are only able to process name, date and"
-            + " process for now" + LINE_SEPARATOR + "The following tags are available: n/ d/ a/";
+    public static final String ERROR_INVALID_TAG_ERROR = "Sorry, we are only able to process name, date, category, and"
+            + " amount for normal entries:" + LINE_SEPARATOR + "n/ d/ a/ c/" + LINE_SEPARATOR + "For recurring entries,"
+            + " name, date, category, amount, interval, and end date are available:" + LINE_SEPARATOR
+            + "n/ d/ a/ c/ i/ e/";
     public static final String ERROR_INDEX_INVALID_NUMBER = "Please enter a valid number.";
     public static final String ERROR_INDEX_OUT_OF_BOUND = "Please enter a number between "
             + "0 and total number of items listed.";
