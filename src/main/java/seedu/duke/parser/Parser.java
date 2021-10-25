@@ -356,7 +356,7 @@ public class Parser {
             date = LocalDate.parse(dateStr);
             amount = Double.parseDouble(amountStr);
             int catNum = Integer.parseInt(catNumStr);
-            expenseCategory = ExpenseCategory.values()[catNum];
+            incomeCategory = IncomeCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
             endDate = LocalDate.parse(endDateStr);
         } catch (MintException e) {
