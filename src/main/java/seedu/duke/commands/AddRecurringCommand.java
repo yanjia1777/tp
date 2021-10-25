@@ -6,23 +6,19 @@ import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.utility.Ui;
 
-import java.util.ArrayList;
+public class AddRecurringCommand extends Command {
+    private final Entry entry;
 
-public class EditCommand extends Command {
-    private Entry query;
-    ArrayList<String> tags;
-
-
-    public EditCommand(ArrayList<String> tags, Entry query) {
-        this.query = query;
-        this.tags = tags;
+    public AddRecurringCommand(Entry entry) {
+        this.entry = entry;
     }
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
                         RecurringFinanceManager recurringFinanceManager, Ui ui) {
         try {
-            normalFinanceManager.editEntryByKeywords(tags, query);
+            recurringFinanceManager.addEntry(entry);
+            ui.printEntryAdded(entry);
         } catch (MintException e) {
             ui.printError(e);
         }

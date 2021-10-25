@@ -1,11 +1,18 @@
-package seedu.duke;
+package seedu.duke.entries;
+
+import seedu.duke.utility.Ui;
 
 import java.time.LocalDate; // import the LocalDate class
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+
 
 public class Income extends Entry {
     protected IncomeCategory category;
+
+    public Income(Income income) {
+        super(income);
+        this.category = income.getCategory();
+        this.type = Type.Income;
+    }
 
     public Income(String name, LocalDate date, double amount, IncomeCategory category) {
         super(name, date, amount);

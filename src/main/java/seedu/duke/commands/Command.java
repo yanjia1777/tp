@@ -1,11 +1,12 @@
 package seedu.duke.commands;
 
-import seedu.duke.Entry;
-import seedu.duke.FinanceManager;
-import seedu.duke.Ui;
+import seedu.duke.finances.NormalFinanceManager;
+import seedu.duke.finances.RecurringFinanceManager;
+import seedu.duke.utility.Ui;
 
 public abstract class Command {
-    public abstract void execute(FinanceManager financeManager, Ui ui);
+    public abstract void execute(NormalFinanceManager normalFinanceManager,
+                                 RecurringFinanceManager recurringFinanceManager, Ui ui);
 
     public boolean isExit() {
         return false;

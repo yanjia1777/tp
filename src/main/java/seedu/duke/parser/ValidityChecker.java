@@ -1,8 +1,8 @@
 package seedu.duke.parser;
 
-import seedu.duke.Interval;
-import seedu.duke.MintException;
-import seedu.duke.Ui;
+import seedu.duke.entries.Interval;
+import seedu.duke.exception.MintException;
+import seedu.duke.utility.Ui;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -50,6 +50,21 @@ public class ValidityChecker {
     }
 
 
+    static void checkInvalidEndDate(Parser parser) throws MintException {
+        try {
+            LocalDate parsedEndDate = LocalDate.parse(parser.endDateStr, dateFormatter);
+            LocalDate parsedDate = LocalDate.parse(parser.dateStr, dateFormatter);
+            if (parsedEndDate.isBefore(parsedDate)) {
+                throw new MintException("End date must be after start date.");
+            }
+        } catch (DateTimeParseException e) {
+            logger.log(Level.INFO, "User entered invalid date");
+            throw new MintException(MintException.ERROR_INVALID_DATE);
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
+        }
+    }
+
     static void checkInvalidCatNum(Parser parser) throws MintException {
         try {
             int catNumInt = Integer.parseInt(parser.catNumStr);
@@ -64,7 +79,7 @@ public class ValidityChecker {
 
     private static void checkInvalidInterval(Parser parser) throws MintException {
         try {
-            Interval.valueOf(parser.interval);
+            Interval.valueOf(parser.intervalStr.toUpperCase());
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
             throw new MintException("Please enter valid interval: MONTH, YEAR");
@@ -75,7 +90,7 @@ public class ValidityChecker {
                                                String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/"}
+        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
@@ -98,6 +113,9 @@ public class ValidityChecker {
                     case "i/":
                         checkInvalidInterval(parser);
                         break;
+                    case "e/":
+                        checkInvalidEndDate(parser);
+                        break;
                     default:
                         throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
                     }
@@ -118,9 +136,6 @@ public class ValidityChecker {
         }
         return validTags;
     }
-
-
-
 
     static ArrayList<String> checkExistenceAndValidityOfTags(Parser parser, String userInput) throws MintException {
         try {

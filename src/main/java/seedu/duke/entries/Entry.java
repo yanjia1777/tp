@@ -1,4 +1,6 @@
-package seedu.duke;
+package seedu.duke.entries;
+
+import seedu.duke.utility.Ui;
 
 import java.time.LocalDate; // import the LocalDate class
 
@@ -7,6 +9,13 @@ public class Entry {
     protected LocalDate date;
     protected double amount;
     protected Type type;
+
+    public Entry(Entry entry) {
+        this.name = entry.getName();
+        this.date = entry.getDate();
+        this.amount = entry.getAmount();
+        this.type = null;
+    }
 
     public Entry(String name, LocalDate date, double amount) {
         this.name = name;
@@ -63,8 +72,16 @@ public class Entry {
         return null;
     }
 
-    public boolean equals(Object object) {
-        return false;
+    public String getCategoryIndented() {
+        double length = getCategory().toString().length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
     }
-
 }
