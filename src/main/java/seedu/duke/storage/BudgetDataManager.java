@@ -1,18 +1,11 @@
 package seedu.duke.storage;
 
 import seedu.duke.budget.Budget;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.entries.*;
-import seedu.duke.utility.Ui;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class BudgetDataManager extends DataManagerActions {
@@ -45,7 +38,6 @@ public class BudgetDataManager extends DataManagerActions {
             int catNum = Integer.parseInt(catNumStr);
             double amount = Double.parseDouble(amountStr);
             loadBudget(catNum, amount, budgetList);
-
         }
     }
     public void loadBudget(int catNum, double amount, ArrayList<Budget> budgetList) {

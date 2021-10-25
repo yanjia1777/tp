@@ -1,16 +1,16 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.*;
+import seedu.duke.entries.Income;
+import seedu.duke.entries.IncomeCategory;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Expense;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
-import seedu.duke.storage.DataManagerActions;
-import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;

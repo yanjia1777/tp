@@ -1,9 +1,14 @@
 package seedu.duke.storage;
 
-import seedu.duke.entries.*;
+import seedu.duke.entries.IncomeCategory;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.RecurringEntry;
+import seedu.duke.entries.RecurringExpense;
+import seedu.duke.entries.RecurringIncome;
+import seedu.duke.entries.Interval;
 import seedu.duke.exception.MintException;
 import seedu.duke.utility.Ui;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

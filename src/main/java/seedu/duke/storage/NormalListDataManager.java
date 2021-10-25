@@ -1,10 +1,12 @@
 package seedu.duke.storage;
 
 
-import seedu.duke.entries.*;
+import seedu.duke.entries.Income;
+import seedu.duke.entries.IncomeCategory;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Expense;
+import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.utility.Ui;
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -28,9 +30,9 @@ public class NormalListDataManager extends DataManagerActions {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(NORMAL_FILE_PATH, true);
-            fileWriter.write(entry.getType().toString() + TEXT_DELIMITER + entry.getCategory().ordinal() + TEXT_DELIMITER
-                    + entry.getDate() + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER + entry.getAmount()
-                    + System.lineSeparator());
+            fileWriter.write(entry.getType().toString() + TEXT_DELIMITER + entry.getCategory().ordinal()
+                    + TEXT_DELIMITER + entry.getDate() + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER
+                    + entry.getAmount() + System.lineSeparator());
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
