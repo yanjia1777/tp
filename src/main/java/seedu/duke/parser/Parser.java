@@ -136,14 +136,11 @@ public class Parser {
         return userString.substring(currentTagIndex + 3).matches(userTagRaw);
     }
 
-    private void setAmountFromTag(String param) throws MintException {
-        amountStr = param.trim().substring(2);
-        ValidityChecker.checkInvalidAmount(this);
-        ValidityChecker.checkPositiveAmount(this);
-        amount = Double.parseDouble(amountStr);
+    private void setAmountViaAmountStr(String amountStr) {
+        this.amount = Double.parseDouble(amountStr);
     }
 
-    private ExpenseCategory setExpenseCategoryViaCatNum(String catNum) throws MintException {
+    private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
         case "0":
             return ExpenseCategory.FOOD;
@@ -295,17 +292,6 @@ public class Parser {
         } else {
             type = Type.Expense;
         }
-    }
-
-    private String[] getParamsWithoutCommand(String[] userInput) {
-        return Arrays.copyOfRange(userInput, 1, userInput.length);
-    }
-
-    private void setCategoryFromTag(String param) throws MintException {
-        catNumStr = param.trim().substring(2);
-        ValidityChecker.checkInvalidCatNum(this);
-        int catNum = Integer.parseInt(catNumStr);
-        expenseCategory = ExpenseCategory.values()[catNum];
     }
 
     public Entry checkType() {
@@ -472,21 +458,17 @@ public class Parser {
 
     private Command prepareSetBudget(String userInput) {
         try {
-            parseInputByArguments(userInput);
-            String[] params = getParamsWithoutCommand(argumentsArray);
-            ValidityChecker.checkSetFormat(params);
-            for (String param : params) {
-                if (param.startsWith("c/")) {
-                    setCategoryFromTag(param);
-                } else {
-                    setAmountFromTag(param);
-                }
-            }
-            return new SetBudgetCommand(expenseCategory, amount);
+            parseInputByTags(userInput);
+            ValidityChecker.checkPositiveAmount(amountStr);
+            setCategoryViaCatNum(catNumStr);
+            setAmountViaAmountStr(amountStr);
+            return new SetBudgetCommand(this.expenseCategory, this.amount);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
     }
+
+
 
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
