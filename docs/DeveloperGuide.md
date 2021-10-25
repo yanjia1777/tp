@@ -128,99 +128,13 @@ A simple way to keep track of your expenses
 
 ## <a name="manual-test"></a>Instructions for manual testing
 
-### :writing_hand: <a name="edit"></a>Editing an expense
-
-**Prerequisites**
-
-- The list must have expenses that have already been added.
-
-**Test case 1: Editing all fields**
-
-**Usage:**
-
-- `edit [include all fields of expense you would like to edit]`
-- `a/[amount] n/[description] c/[catNum] d/[validDate]`
-
-**Expected**
-
-- The input fields of the selected entry are updated
-
-**Example of usage and expected output:**
-
-```
-edit a/20 d/2021-12-03 n/Movie c/2
---------------------------------------------------------------------
-What would you like to edit?
---------------------------------------------------------------------
-a/8 n/Chicken Rice c/0 d/2000-09-22
---------------------------------------------------------------------
-Got it! I will update the fields accordingly!
-```
-**Test case 2: Editing some fields**
-
-**Usage:**
-
-- `edit [include all fields of expense you would like to edit]`
-- Include the tags and things you would like to change in any order `tag/[input]`
-
-:bomb: **CAUTION**
-- Do not edit the same field multiple times in one command.
-
-**Expected**
-
-- The input fields of the selected entry are updated
-
-**Example of usage and expected output:**
-
-```
-edit a/20 d/2021-12-03 n/Movie c/2
---------------------------------------------------------------------
-What would you like to edit?
---------------------------------------------------------------------
-a/8 c/0 
---------------------------------------------------------------------
-Got it! I will update the fields accordingly!
-```
-
-
-
-### :x: <a name="delete"></a>Deleting an expense
-
-**Prerequisites**
-
-- The list must have expenses that have already been added.
-
-**Test case 1: Deleting an existing expense with some fields specified. Only one expense
-exists that matches all the fields specified.**
-
-**Usage:**
-
-- `delete [include some fields of the expense you would like to delete]`
-
-**Expected**
-
-- It asks user if the user wants to delete the found expense.
-- If user inputs y, it deletes. If user inputs n, it exits the delete process.
-
-**Example of usage and expected output:**
-
-```
-delete n/Movie c/7
---------------------------------------------------------------------
-Is this what you want to delete?
-    Others | 2021-10-19 | Movie | $12.00
-Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
-y
---------------------------------------------------------------------
-I have deleted: Others | 2021-10-19 | Movie | $12.00
-```
 ### :heavy_plus_sign: <a name="Adding"></a>Adding an expense
 
 **Prerequisites**
 
 - The list must have been initialized.
-- Some fields such as `n/[description] a/[amount]` must be specified.
+- Some fields such as `n/[description] a/[amount]` must be specified. If the user prefers,
+  additional tags can be added for greater specificity.
 
 **Test case 1: Adding an existing expense with all fields specified.**
 
@@ -271,12 +185,135 @@ add n/Cheese Burger a/23.5
 --------------------------------------------------------------------
 I've added :Expense |      OTHERS      | 2021-10-26 |  Cheese Burger   |-$23.50
 ```
+
+### :x: <a name="delete"></a>Deleting an expense
+
+**Prerequisites**
+
+- The list must have expenses that have already been added.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity.
+
+**Test case 1: Deleting an existing expense with some fields specified. Only one expense
+exists that matches all the fields specified.**
+
+**Usage:**
+
+- `delete [include some fields of the expense you would like to delete]`
+
+**Expected**
+
+- It asks user if the user wants to delete the found expense.
+- If user inputs y, it deletes. If user inputs n, it exits the delete process.
+
+**Example of usage and expected output:**
+
+```
+delete n/Movie c/7
+--------------------------------------------------------------------
+Is this what you want to delete?
+    Others | 2021-10-19 | Movie | $12.00
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
+--------------------------------------------------------------------
+I have deleted: Others | 2021-10-19 | Movie | $12.00
+```
+**Test case 2: Choosing not to delete an existing expense after entering the delete command.**
+
+**Usage:**
+
+- `delete a/[amount] n/[description]` in any order. If the user prefers,
+   additional tags can be added for greater specificity.
+- When prompted, input 'n' to cancel delete.
+
+**Expected**
+
+- It asks user if the user wants to delete the found expense.
+- When user inputs n, it exits the delete process.
+
+**Example of usage and expected output:**
+
+```
+delete a/90 d/2021-12-03 n/phone bills c/3 
+--------------------------------------------------------------------
+Is this what you want to delete?
+    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+n
+--------------------------------------------------------------------
+Ok. I have cancelled the process.
+--------------------------------------------------------------------
+n
+--------------------------------------------------------------------
+Ok. I have cancelled the process.
+```
+
+### :writing_hand: <a name="edit"></a>Editing an expense
+
+**Prerequisites**
+
+- The list must have expenses that have already been added.
+- At least the `n/[description]` must be specified. If the user prefers, additional tags can be added for greater 
+  specificity.
+
+**Test case 1: Editing all fields**
+
+**Usage:**
+
+- `edit [include all fields of expense you would like to edit]`
+- `a/[amount] n/[description] c/[catNum] d/[validDate]`
+
+**Expected**
+
+- The input fields of the selected entry are updated
+
+**Example of usage and expected output:**
+
+```
+edit a/20 d/2021-12-03 n/Movie c/2
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+a/8 n/Chicken Rice c/0 d/2000-09-22
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
+**Test case 2: Editing some fields**
+
+**Usage:**
+
+- `edit [include all fields of expense you would like to edit]`
+- Include the tags and things you would like to change in any order `tag/[input]`
+
+:bomb: **CAUTION**
+- Do not edit the same field multiple times in one command.
+
+**Expected**
+
+- The input fields of the selected entry are updated
+
+**Example of usage and expected output:**
+
+```
+edit a/20 d/2021-12-03 n/Movie c/2
+--------------------------------------------------------------------
+What would you like to edit?
+--------------------------------------------------------------------
+a/8 c/0 
+--------------------------------------------------------------------
+Got it! I will update the fields accordingly!
+```
+
 ### :alarm_clock: :heavy_plus_sign: <a name="Add recurring expense"></a>Adding a Recurring Expense
 
 **Prerequisites**
 
 - The list must have been initialized.
-- Some fields such as `n/[description] a/[amount] i/[interval]` must be specified.
+- Some fields such as `n/[description] a/[amount] i/[interval]` must be specified. If the user prefers, additional tags 
+  can be added for greater specificity.
+
 
 **Test case 1: Adding an existing recurring expense with all fields specified.**
 
@@ -296,7 +333,7 @@ addR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
 --------------------------------------------------------------------
 I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
 ```
-**Test case 2: Adding an existing expense with some fields specified.**
+**Test case 2: Adding an existing recurring expense with some fields specified.**
 
 **Usage:**
 
@@ -332,7 +369,8 @@ I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 |
 **Prerequisites**
 
 - The list must have been initialized.
-- At least one field must be specified.
+- At least one tag should be specified for greater accuracy. If the user prefers, additional tags can be 
+  added for greater specificity.
 
 **Test case 1: Deleting an existing recurring expense with all fields specified.**
 
@@ -343,44 +381,91 @@ I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 |
 **Expected**
 
 - It asks user if the user wants to delete the found expense.
-- If user inputs y, it deletes. If user inputs n, it exits the delete process.
+- When user inputs y, it deletes the expense
 
 **Example of usage and expected output:**
 
 ```
 deleteR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
 --------------------------------------------------------------------
-I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
+Is this what you want to delete?
+    Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
+--------------------------------------------------------------------
+I have deleted: Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15```
 ```
-**Test case 2: Adding an existing expense with some fields specified.**
+**Test case 2: Deleting an existing recurring expense with some fields specified.**
 
 **Usage:**
 
-- `addR a/[amount] n/[description] I/[interval]` in any order
-- `addR a/[amount] n/[description] I/[interval] c/[catNum]` in any order
-- `addR a/[amount] n/[description] I/[interval] d/[date]` in any order
+- `deleteR a/[amount] n/[description] I/[interval]` in any order
+- `deleteR a/[amount] n/[description] I/[interval] c/[catNum]` in any order
+- `deleteR a/[amount] n/[description] I/[interval] d/[date]` in any order
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list
-- Optional fields that are missing would be set to the default pre-determined by the programme
+- It asks user if the user wants to delete the found expense.
+- When user inputs y, it deletes the expense
 
 **Example of usage and expected output:**
 
 ```
-addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
+deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
 --------------------------------------------------------------------
-I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2200-12-31
-```
-```
-addR a/5 n/phone bills c/4 i/MONTH
+Is this what you want to delete?
+    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
-I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | MONTH | 2200-12-31
-```
-```
-addR a/5 n/phone bills d/2021-10-10 i/MONTH
+y
 --------------------------------------------------------------------
-I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | 2200-12-31
+I have deleted: Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D```
 ```
+```
+deleteR a/5 n/phone bills c/4 i/MONTH
+--------------------------------------------------------------------
+Is this what you want to delete?
+    Expense |     APPAREL      | 2021-10-26 |   phone bills    |-$5.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
+--------------------------------------------------------------------
+I have deleted: Expense |     APPAREL      | 2021-10-26 |   phone bills    |-$5.00 | MONTH | Forever :D
+```
+```
+deleteR a/5 n/phone bills d/2021-10-10 i/MONTH
+--------------------------------------------------------------------
+Is this what you want to delete?
+    Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
+--------------------------------------------------------------------
+I have deleted: Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+```
+**Test case 3: Choosing not to delete an existing expense after entering the delete command.**
 
+**Usage:**
+
+- `deleteR a/[amount] n/[description] I/[interval]` in any order
+- When prompted, input 'n' to cancel delete.
+
+**Expected**
+
+- It asks user if the user wants to delete the found expense.
+- When user inputs n, it exits the delete process.
+
+**Example of usage and expected output:**
+
+```
+deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
+--------------------------------------------------------------------
+Is this what you want to delete?
+    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+n
+--------------------------------------------------------------------
+Ok. I have cancelled the process.
+```
