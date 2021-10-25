@@ -31,7 +31,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -46,8 +45,8 @@ public class Parser {
     public static final String STRING_INCLUDE = "Please include the following in your command or make them valid: \n";
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase\n";
-    public static final String STRING_AMOUNT = "Amount of purchase\n";
-    public static final String STRING_CATNUM = "Category number of item\n";
+    public static final String STRING_AMOUNT = "Amount\n";
+    public static final String STRING_CATNUM = "Category number\n";
     public static final String STRING_INTERVAL = "Interval of item\n";
     public static final String STRING_END_DATE = "Interval of item\n";
     public static final int CAT_NUM_FOOD_INT = 0;
@@ -65,6 +64,7 @@ public class Parser {
     public static final String VIEW_BUDGET = "budget";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
+    private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
     protected String command;
     protected String name;
     protected String dateStr;
