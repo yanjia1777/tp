@@ -40,6 +40,7 @@ public class BudgetDataManager extends DataManagerActions {
             loadBudget(catNum, amount, budgetList);
         }
     }
+    
     public void loadBudget(int catNum, double amount, ArrayList<Budget> budgetList) {
         Budget budget = budgetList.get(catNum);
         budget.setLimit(amount);

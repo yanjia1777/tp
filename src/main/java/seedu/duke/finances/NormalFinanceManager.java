@@ -41,7 +41,7 @@ public class NormalFinanceManager extends FinanceManager {
         Entry entry = null;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
-            
+
         } else if (filteredList.size() == 1) {
             Entry onlyEntry = filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
