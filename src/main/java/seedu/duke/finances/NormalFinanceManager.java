@@ -283,8 +283,7 @@ public class NormalFinanceManager extends FinanceManager {
         if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
             Collections.reverse(outputArray);
         }
-        double total = 0;
-        calculateTotal(outputArray);
+        double total = calculateTotal(outputArray);
 
         Ui.printView(outputArray, fromDate, endDate, total);
         if (isViewAll) {

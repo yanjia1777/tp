@@ -45,6 +45,11 @@ public class RecurringExpense extends RecurringEntry {
 
     @Override
     public String toString() {
+        if (getEndDate().equals(LocalDate.parse("2200-12-31"))) {
+            return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
+                    + getNameIndented() + " |-$" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
+                    + " | " + "Forever :D";
+        }
         return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
                 + getNameIndented() + " |-$" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
                 + " | " + getEndDate();
