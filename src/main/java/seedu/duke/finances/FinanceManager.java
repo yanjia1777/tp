@@ -58,7 +58,7 @@ public abstract class FinanceManager {
         try {
             Entry entry = chooseEntryByKeywords(tags, false, query);
             if (entry != null) {
-                editEntry(query);
+                editEntry(entry);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
