@@ -1,17 +1,6 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.Command;
-import seedu.duke.commands.AddCommand;
-import seedu.duke.commands.DeleteCommand;
-import seedu.duke.commands.InvalidCommand;
-import seedu.duke.commands.ViewCommand;
-import seedu.duke.commands.EditCommand;
-import seedu.duke.commands.ExitCommand;
-import seedu.duke.commands.AddRecurringCommand;
-import seedu.duke.commands.DeleteRecurringCommand;
-import seedu.duke.commands.EditRecurringCommand;
-import seedu.duke.commands.SetBudgetCommand;
-import seedu.duke.commands.HelpCommand;
+import seedu.duke.commands.*;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.entries.Interval;
@@ -60,6 +49,7 @@ public class Parser {
     public static final String VIEW = "view";
     public static final String EDIT_RECURRING = "editR";
     public static final String SET_BUDGET = "set";
+    public static final String VIEW_BUDGET = "budget";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     protected String command;
@@ -460,7 +450,6 @@ public class Parser {
         }
     }
 
-
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
         switch (command) {
@@ -478,6 +467,8 @@ public class Parser {
             return prepareEditRecurringEntry(userInput);
         case SET_BUDGET:
             return prepareSetBudget(userInput);
+        case VIEW_BUDGET:
+            return new ViewBudgetCommand();
         case VIEW:
             return prepareView(userInput);
         case HELP:

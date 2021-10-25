@@ -10,20 +10,17 @@ import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.utility.Ui;
 
 
-public class SetBudgetCommand extends Command {
-    private final ExpenseCategory category;
-    private final double amount;
+public class ViewBudgetCommand extends Command {
 
-    public SetBudgetCommand(ExpenseCategory category, double amount) {
-        this.category = category;
-        this.amount = amount;
+
+    public ViewBudgetCommand() {
+
     }
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
                         RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager, Ui ui) {
-        budgetManager.setBudget(category, amount);
-        ui.printSetBudget(category, amount);
+        ui.printBudgetBreakdown(budgetManager.getBudgetList(), normalFinanceManager.getEntryList());
     }
 }
 
