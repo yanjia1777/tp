@@ -4,8 +4,6 @@ import seedu.duke.exception.MintException;
 import seedu.duke.entries.Type;
 import seedu.duke.entries.Entry;
 import seedu.duke.parser.Parser;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -24,7 +22,6 @@ public abstract class FinanceManager {
     public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String BLANK = "";
-    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
@@ -35,8 +32,8 @@ public abstract class FinanceManager {
 
     }
 
-    public void editEntry(Entry query) throws MintException {
-
+    public ArrayList<String> editEntry(Entry query) throws MintException {
+        return null;
     }
 
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
@@ -55,15 +52,16 @@ public abstract class FinanceManager {
         }
     }
 
-    public void editEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+    public ArrayList<String> editEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
         try {
             Entry entry = chooseEntryByKeywords(tags, false, query);
             if (entry != null) {
-                editEntry(query);
+                return editEntry(entry);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
+        return null;
     }
 
     public void editSpecifiedEntry(String userInput, int indexToBeChanged, Entry entry) throws MintException {
@@ -127,7 +125,5 @@ public abstract class FinanceManager {
             }
         }
     }
-
-
 
 }

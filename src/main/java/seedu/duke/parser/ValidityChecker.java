@@ -31,6 +31,14 @@ public class ValidityChecker {
         }
     }
 
+    static void checkPositiveAmount(Parser parser) throws MintException {
+        double num = Double.parseDouble(parser.amountStr);
+        if (num < 0) {
+            throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
+
+        }
+    }
+
     static void checkInvalidAmount(Parser parser) throws MintException {
         try {
             Double.parseDouble(parser.amountStr);
@@ -65,7 +73,7 @@ public class ValidityChecker {
         }
     }
 
-    static void checkInvalidCatNum(Parser parser) throws MintException {
+    public static void checkInvalidCatNum(Parser parser) throws MintException {
         try {
             int catNumInt = Integer.parseInt(parser.catNumStr);
             if (catNumInt < Parser.CAT_NUM_FOOD_INT || catNumInt > Parser.CAT_NUM_OTHERS_INT) {
@@ -157,7 +165,7 @@ public class ValidityChecker {
     }
 
     static void checkSetFormat(String[] userInput) throws MintException {
-        if (userInput.length != 3) {
+        if (userInput.length != 2) {
             throw new MintException(MintException.ERROR_SET_FORMAT_WRONG);
         }
     }
