@@ -33,19 +33,20 @@ original source as well}
 
 ### <a name="sys-arch"></a>System Architecture
 
-{add image}
+![](images/ArchitectureDiagram.png)
 
 The above **System Architecture** diagram shows the high-level design of Mint.
 
 On launch, the `Main` class initialises the app components in the correct sequence and links them up with each other, in
 the correct sequence.
 
-Mint comprises five main components, namely:
+Apart from `Main`, Mint comprises six main components, namely:
 
-- `Ui`: Command Line User Interface of Mint.
-- `Parser`: Parser to parser user inputs from `Ui` for `ExpenseList`.
-- `ExpenseList`: Data structure to store `Expense`s while running Mint.
-- `CategoryList`: Data structure to store `Category`s while running Mint.
+- `Ui`: The UI of the App
+- `Parser`: Extracts user command and relevant queries.
+- `Command`: Execute user command
+- `Finances`: Holds data of user's finances.
+- `Budget`: Holds data of user's budget.
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
 The four main components interact with each other, as shown in the sequence diagram below. { NEED SEQUENCE DIAGRAM }
@@ -58,7 +59,7 @@ The four main components interact with each other, as shown in the sequence diag
 
 ### <a name="storage"></a>DataManager
 
-![](Images/storage.png)
+![](images/storage.png)
 
 How the `Storage` component works:
 

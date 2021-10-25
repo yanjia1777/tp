@@ -45,7 +45,7 @@ public abstract class FinanceManager {
             Entry entry = chooseEntryByKeywords(tags, true, query);
             if (entry != null) {
                 deleteEntry(entry);
-            }
+            } 
             return entry;
         } catch (MintException e) {
             throw new MintException(e.getMessage());
@@ -115,7 +115,7 @@ public abstract class FinanceManager {
         return description;
     }
 
-    public void calculateTotal(ArrayList<Entry> list) {
+    public double calculateTotal(ArrayList<Entry> list) {
         double total = 0;
         for (Entry entry: list) {
             if (entry.getType() == Type.Expense) {
@@ -124,6 +124,7 @@ public abstract class FinanceManager {
                 total += entry.getAmount();
             }
         }
+        return total;
     }
 
 }
