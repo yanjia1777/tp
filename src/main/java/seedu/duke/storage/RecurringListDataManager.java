@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class RecurringListDataManager extends DataManagerActions{
+public class RecurringListDataManager extends DataManagerActions {
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
     public void appendToMintRecurringListTextFile(Entry entry) {
@@ -56,7 +56,6 @@ public class RecurringListDataManager extends DataManagerActions{
             loadEntry(type, name, date, amount, catNum, interval, endDate, entryList);
         }
     }
-
 
     public void loadEntry(String type, String name, String dateStr, String amountStr,
                           String catNumStr, String intervalStr, String endDateStr, ArrayList<Entry> recurringList) {
