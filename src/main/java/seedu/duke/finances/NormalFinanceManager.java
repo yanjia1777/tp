@@ -311,7 +311,6 @@ public class NormalFinanceManager extends FinanceManager {
         NormalListDataManager normalListDataManager = new NormalListDataManager(NORMAL_FILE_PATH);
         try {
             normalListDataManager.loadEntryListContents(entryList);
-//            CategoryListDataManager.loadCategoryFileContents();
         } catch (FileNotFoundException e) {
             Ui.printMissingFileMessage();
             dataManagerActions.createDirectory();

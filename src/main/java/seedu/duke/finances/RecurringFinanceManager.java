@@ -10,12 +10,15 @@ import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
+import seedu.duke.storage.DataManagerActions;
 import seedu.duke.storage.NormalListDataManager;
+import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -29,9 +32,9 @@ public class RecurringFinanceManager extends FinanceManager {
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
     public void addEntry(Entry entry) throws MintException {
-        NormalListDataManager normalListDataManager = new NormalListDataManager(RECURRING_FILE_PATH);
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
         recurringEntryList.add(entry);
-        normalListDataManager.appendToEntryListTextFile(RECURRING_FILE_PATH, entry);
+        recurringListDataManager.appendToMintRecurringListTextFile(RECURRING_FILE_PATH, entry);
     }
 
     @Override
@@ -339,5 +342,17 @@ public class RecurringFinanceManager extends FinanceManager {
             }
         }
         viewRecurringExpenseBetweenTwoDates(expenseList, earliestDate, LocalDate.now());
+    }
+
+    public void loadPreviousFileContents() {
+        DataManagerActions dataManagerActions = new DataManagerActions(RECURRING_FILE_PATH);
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager(RECURRING_FILE_PATH);
+        try {
+            recurringListDataManager.loadEntryListContents(recurringEntryList);
+        } catch (FileNotFoundException e) {
+            Ui.printMissingFileMessage();
+            dataManagerActions.createDirectory();
+            dataManagerActions.createFiles();
+        }
     }
 }

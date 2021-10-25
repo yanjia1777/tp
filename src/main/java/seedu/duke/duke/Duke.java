@@ -5,6 +5,7 @@ import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.parser.Parser;
 import seedu.duke.storage.DataManagerActions;
+import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.MintLogger;
 import seedu.duke.utility.Ui;
 
@@ -41,11 +42,12 @@ public class Duke {
         ui.printGreetings();
         Scanner in = new Scanner(System.in);
         NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
         MintLogger.run();
         logger.log(Level.INFO, "User started Mint");
         //call financeManager instead
         normalFinanceManager.loadPreviousFileContents();
-
+        recurringFinanceManager.loadPreviousFileContents();
         while (true) {
             String userInput = ui.readUserInput();
             Command command = parser.parseCommand(userInput);
