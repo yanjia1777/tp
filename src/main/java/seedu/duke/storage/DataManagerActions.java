@@ -22,9 +22,9 @@ public class DataManagerActions {
     }
 
     protected void editTextFile(ArrayList<String> fileContent, String filepath) throws IOException {
-        if (!fileContent.isEmpty()) {
+//        if (!fileContent.isEmpty()) {
             Files.write(Path.of(filepath), fileContent, StandardCharsets.UTF_8);
-        }
+//        }
     }
 
     public void createDirectory() {

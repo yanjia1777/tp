@@ -23,7 +23,7 @@ public class RecurringListDataManager extends DataManagerActions{
         FileWriter fileWriter = null;
         try {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
-            fileWriter = new FileWriter(filePath, false);
+            fileWriter = new FileWriter(filePath, true);
             fileWriter.write(entry.getType().toString() + TEXT_DELIMITER + entry.getCategory().ordinal()
                     + TEXT_DELIMITER + entry.getDate() + TEXT_DELIMITER + entry.getName() + TEXT_DELIMITER
                     + entry.getAmount() + TEXT_DELIMITER + recurringEntry.getInterval() + TEXT_DELIMITER

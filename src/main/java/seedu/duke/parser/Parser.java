@@ -265,10 +265,13 @@ public class Parser {
             if (command.equals("add")) {
                 initDate();
                 initCatNum();
-            } else if (command.equals("addR")) {
+            } else if (command.equals("addR") || command.equals("editR") || command.equals("deleteR")) { // added
                 initDate();
                 initCatNum();
                 initEndDate();
+            } else {
+                initDate();
+                initCatNum();
             }
             parseType(userInput);
             parseInputByTagsLoop(userInput);
