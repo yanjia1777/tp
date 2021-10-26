@@ -6,9 +6,12 @@
 - [Design](#design)
     - [System Architecture](#sys-arch)
     - [Ui](#text-ui)
-    - [Parser](#main-parser)
-    - [Command](#command)
-    - [ContactList](#contact-list)
+    - [Logic](#logic)
+      - [Command](#command)
+      - [Parser](#parser)
+    - [Model](#model)
+      - [Finance](#finance)
+      - [Budget](#budget)
     - [Storage](#storage)
 - [Implementation](#implementation)
 - [Product Scope](#scope)
@@ -49,35 +52,52 @@ Apart from `Main`, Mint comprises six main components, namely:
 - `Budget`: Holds data of user's budget.
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
-The four main components interact with each other, as shown in the sequence diagram below. { NEED SEQUENCE DIAGRAM }
-
+The components interact with each other, as shown in the sequence diagram below.
+![](images/ArchitectureSequenceDiagram.png)
 ### <a name="text-ui"></a>Ui
 
-### <a name="main-parser"></a>Parser
+### <a name="logic"></a>Logic
+![](images/Logic.png)
+### <a name="model"></a>Model
+##### <a name="finance"></a>Finance
+![](images/Finance.png)
+#### <a name="budget"></a>Budget
+
 
 ### <a name="contact-list"></a>ExpenseList
 
 ### <a name="storage"></a>DataManager
 
-![](images/storage.png)
+**How the `Storage` component works:**
 
-How the `Storage` component works:
+**1. Loading the lists from the stored files:**
 
-1. When the program is executed, the `DataManagerActions` object would be created 
-2. It would then load both the expense list, and the category list from the `ExpenseListDataManager` and the 
-   `CategoryListDataManager`. 
-3. The expense list, and the category list stores the user's previously recorded expenditure, and the spending limits 
-   set by the user respectively.
-4. Upon detection, missing text files would be created.
+![](images/StorageLoadFiles.png)
+> For ease of visualization, since the logic for all the different lists are the same, we have broken it down to show
+> one example using the diagram
 
-The `Storage` component: 
-1. Can save both the `categoryList`, and the `expenseList` in a text file. It is also able to read the data from the 
-   respective text files and read them back into the corresponding objects.
-2. Has three different classes. `DataManagerActions` comprises the common components used by the other two classes,
-   `CategoryListDataManager` and `ExpenseListDataManager`. 
-   Both of these classes inherit from the `DataManagerActions` class.
-3. Depends on the `ExpenseList`, `Expense` and `CategoryList` class as its job is to save/retreive objects that belong 
-   to the aforementioned classes.
+1. When the program is executed, all the objects including the `BudgetDataManager`, `DataManagerActions`, 
+   `NormalListDataManager` and `RecurringListDataManager` would be created. 
+2. The programme would then load all the stored content from the lists which records the user's previously recorded
+   normal expenditure, recurring expenditure, and the spending limits they set for each category.
+3. Upon detection, missing text files, and the required directory would be created.
+
+**2. General logic for each command:**
+
+![](images/Storage.png)
+
+1. After the command is extracted from the `Parser`, `Duke` would call the respective command class. In the case of
+   the add function, the `AddCommand` class would be called.
+2. In the `AddCommand` class, after the add command has been successfully performed, a method call to 
+   `appendToEntryListTextFile` would activate the `NormalListDataManager` class for which the added entry would be 
+   appended to an external text file.
+   
+**The `Storage` component:**
+1. Can save all the `recurringEntryList`, `budgetList` and the `entryList` in a text file. It is also able to read the 
+   data from the respective text files and read them back into the corresponding objects.
+2. Has four different classes. `DataManagerActions` comprises the common components used by the other two classes,
+   `BudgetListDataManager`, `RecurringListDataManager` and `NormalListDataManager`. All of these classes inherit from 
+   the `DataManagerActions` class.
    
 ## <a name="implementation"></a>Implementation
 
@@ -173,7 +193,7 @@ I've added :Expense |       FOOD       | 2021-12-03 |     Textbook     |-$15.00
 ```
 add a/15 d/2021-12-03 n/Textbook
 --------------------------------------------------------------------
-I've added :Expense |       FOOD       | 2021-12-03 |     Textbook     |-$15.00
+I've added :Expense |      OTHERS      | 2021-12-03 |     Textbook     |-$15.00
 ```
 ```
 add a/5 n/Chicken Rice c/0
@@ -555,4 +575,3 @@ a/20
 --------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
-
