@@ -43,10 +43,10 @@ public class ViewCommand extends Command {
 
             double total = normalFinanceManager.calculateTotal(outputArray);
 
-            Ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
+            ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
 
             if (viewOptions.isViewAll) {
-                Ui.printViewRecurring(recurringFinanceManager.recurringEntryList);
+                ui.printViewRecurring(recurringFinanceManager.recurringEntryList);
             }
         } catch (MintException e) {
             ui.printError(e);

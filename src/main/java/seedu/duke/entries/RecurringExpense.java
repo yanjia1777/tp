@@ -41,17 +41,6 @@ public class RecurringExpense extends RecurringEntry {
                 + " | " + getEndDate();
     }
 
-    public String toStringIndented() {
-        if (getEndDate().equals(LocalDate.parse("2200-12-31"))) {
-            return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
-                    + getNameIndented() + " |-$" + getAmountIndented() + " | " + getIntervalIndented()
-                    + " | " + "Forever :D";
-        }
-        return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
-                + getNameIndented() + " |-$" + getAmountIndented() + " | " + getIntervalIndented()
-                + " | " + getEndDate();
-    }
-
     //@@author nipafx-reusedS
     //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
     //with minor modifications

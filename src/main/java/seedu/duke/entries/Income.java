@@ -3,6 +3,7 @@ package seedu.duke.entries;
 import seedu.duke.utility.Ui;
 
 import java.time.LocalDate; // import the LocalDate class
+import java.util.Objects;
 
 
 public class Income extends Entry {
@@ -33,8 +34,26 @@ public class Income extends Entry {
                 + getName() + " | $" + String.format("%,.2f", getAmount());
     }
 
-    public String toStringIndented() {
-        return getType() + "  | " + getCategoryIndented() + " | " + getDate() + " | "
-                + getNameIndented() + " | $" + getAmountIndented();
+    //@@author nipafx-reusedS
+    //Reused from https://www.sitepoint.com/implement-javas-equals-method-correctly/
+    //with minor modifications
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null) {
+            return false;
+        }
+        if (getClass() != object.getClass()) {
+            return false;
+        }
+
+        Income income = (Income) object;
+        boolean isNameEqual = Objects.equals(getName(), income.getName());
+        boolean isDateEqual = Objects.equals(getDate(), income.getDate());
+        boolean isAmountEqual = Objects.equals(getAmount(), income.getAmount());
+        boolean isCategoryEqual = Objects.equals(getCategory(), income.getCategory());
+        return isNameEqual && isDateEqual && isAmountEqual && isCategoryEqual;
     }
 }

@@ -22,14 +22,6 @@ public class RecurringEntry extends Entry {
         return interval;
     }
 
-    public String getIntervalIndented() {
-        if (interval == Interval.YEAR) {
-            return "YEAR ";
-        } else {
-            return "MONTH";
-        }
-    }
-
     public void setInterval(Interval interval) {
         this.interval = interval;
     }

@@ -31,24 +31,13 @@ public class RecurringIncome extends RecurringEntry {
     @Override
     public String toString() {
         if (getEndDate().equals(LocalDate.parse("2200-12-31"))) {
-            return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
-                    + getNameIndented() + " | $" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
+            return getType() + "  | " + getCategory().toString() + " | " + getDate() + " | "
+                    + getName() + " | $" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
                     + " | " + "Forever :D";
         }
-        return getType() + " | " + getCategoryIndented() + " | " + getDate() + " | "
-                + getNameIndented() + " |+$" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
-                + " | " + getEndDate();
-    }
-
-    public String toStringIndented() {
-        if (getEndDate().equals(LocalDate.parse("2200-12-31"))) {
-            return getType() + "  | " + getCategoryIndented() + " | " + getDate() + " | "
-                    + getNameIndented() + " |-$" + getAmountIndented() + " | " + getIntervalIndented()
-                    + " | " + "Forever :D";
-        }
-        return getType() + "  | " + getCategoryIndented() + " | " + getDate() + " | "
-                + getNameIndented() + " | $" + getAmountIndented() + " | " + getIntervalIndented()
-                + " | " + getEndDate();
+        return getType() + "  | " + getCategory().toString() + " | " + getDate() + " | "
+                + getName() + " | $" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
+                + " | " + "Forever :D";
     }
 
     //@@author nipafx-reusedS
