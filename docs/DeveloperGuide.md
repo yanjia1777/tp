@@ -19,14 +19,14 @@
 - [Non-Function Requirements](#nf-req)
 - [Glossary](#glossary)
 - [Instructions for manual testing](#manual-test)
-    - [Adding an Item](#Add)
+    - [Adding an Item](#Adding)
     - [Deleting an Item](#delete)
     - [Editing an Item](#edit)
     - [Adding a Recurring Item](#Add-recurring-item)
     - [Deleting a Recurring Item](#Delete-recurring-item)
     - [Editing a recurring item](#Edit-recurring-item)
     - [Adding Spending Limits](#set)
-    - [Viewing Spending Limits](#budget)
+    - [Viewing Spending Limits](#View-spending-limits)
 
 ## <a name="acknowledgements"></a>Acknowledgements
 
@@ -777,7 +777,7 @@ Got it! I will update the fields accordingly!
 set c/0 a/100
 Budget for FOOD set to $100.00
 ```
-### <a name="budget"></a>Viewing Spending Limits
+### <a name="View-spending-limits"></a>Viewing Spending Limits
 
 **Prerequisites**
 
