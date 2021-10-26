@@ -20,7 +20,7 @@ public class MintException extends Exception {
     public static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     public static final String ERROR_INVALID_DATE = "Please enter a valid date!";
     public static final String ERROR_INVALID_CATNUM_INCOME= "Please enter a valid category number! c/0 to c/4";
-    public static final String ERROR_INVALID_CATNUM_EXPENSE = "Please enter a valid category number! c/0 to c/7";
+    public static final String ERROR_INVALID_CATNUM_EXPENSE = "Please enter a valid category number! c/0 to c/7 for expenses, c/0 to c/4 for income";
     public static final String ERROR_POSITIVE_NUMBER = "Amount cannot be negative";
 
     public MintException(String message) {
