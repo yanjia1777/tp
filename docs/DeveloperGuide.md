@@ -19,6 +19,14 @@
 - [Non-Function Requirements](#nf-req)
 - [Glossary](#glossary)
 - [Instructions for manual testing](#manual-test)
+    - [Adding an Item](#Adding)
+    - [Deleting an Item](#delete)
+    - [Editing an Item](#edit)
+    - [Adding a Recurring Item](#Add-recurring-item)
+    - [Deleting a Recurring Item](#Delete-recurring-item)
+    - [Editing a recurring item](#Edit-recurring-item)
+    - [Adding Spending Limits](#set)
+    - [Viewing Spending Limits](#View-spending-limits)
 
 ## <a name="acknowledgements"></a>Acknowledgements
 
@@ -96,7 +104,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 - `BudgetManager` stores a list of the seven `ExpenseCategory`'s.
 - Currently, `BudgetManager` only interacts in 2 ways
     - when user want to set budget for a specific category
-    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
+    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or 
+      `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
 
 ### <a name="contact-list"></a>ExpenseList
 
@@ -434,7 +443,7 @@ Got it! I will update the fields accordingly!
 ```
 
 
-### :alarm_clock: :heavy_plus_sign: <a name="Add recurring expense"></a>Adding a Recurring Expense
+### :alarm_clock: :heavy_plus_sign: <a name="Add-recurring-item"></a>Adding a Recurring Item
 
 **Prerequisites**
 
@@ -514,7 +523,7 @@ addR income a/90 n/Full-time job d/2021-10-10 i/MONTH
 I've added: Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | Forever :D
 ```
 
-### :alarm_clock: :x: <a name="Delete recurring expense"></a>Deleting a Recurring Expense
+### :alarm_clock: :x: <a name="Delete-recurring-item"></a>Deleting a Recurring Item
 
 **Prerequisites**
 
@@ -658,7 +667,7 @@ n
 Ok. I have cancelled the process.
 ```
 
-### :alarm_clock: :writing_hand: <a name="Adding"></a>Editing a recurring item
+### :alarm_clock: :writing_hand: <a name="Edit-recurring-item"></a>Editing a recurring item
 
 **Prerequisites**
 
@@ -746,3 +755,55 @@ What would you like to edit?
 n/part-time job
 Got it! I will update the fields accordingly!
 ```
+### :heavy_plus_sign: <a name="set"></a>Adding Spending Limits
+
+**Prerequisites**
+
+- The list must have expenses that have already been added.
+
+**Test case 1: Adding a spending limit.**
+
+**Usage:**
+
+- Add spending limit to desired category: `set c/[catNum] a/[amount]`
+- All fields must be specified
+
+**Expected**
+
+- If added correctly, a spending limit would be applied to the desired category.
+
+**Example of usage and expected output:**
+```
+set c/0 a/100
+Budget for FOOD set to $100.00
+```
+### <a name="View-spending-limits"></a>Viewing Spending Limits
+
+**Prerequisites**
+
+- The list must have expenses that have already been added.
+
+**Test case 1: Viewing a spending limit.**
+
+**Usage:**
+
+- View spending limits for each category: `budget`
+
+**Expected**
+
+- If the entire list with all the categories and spending limits for each category would be displayed.
+
+**Example of usage and expected output:**
+```
+budget
+Here is the budget for the month.
+      FOOD       | $5.00 / $100.0
+ ENTERTAINMENT   | $0.00 / Not set
+ TRANSPORTATION  | $0.00 / Not set
+   HOUSEHOLD     | $0.00 / Not set
+    APPAREL      | $0.00 / Not set
+     BEAUTY      | $0.00 / Not set
+      GIFT       | $0.00 / Not set
+     OTHERS      | $23.50 / Not set
+```
+
