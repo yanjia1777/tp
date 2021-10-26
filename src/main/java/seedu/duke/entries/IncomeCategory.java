@@ -7,6 +7,6 @@ public enum IncomeCategory {
     INTEREST,
     INVESTMENT,
     COMMISSION,
-    GIFTS,
+    GIFT,
     OTHERS
 }
