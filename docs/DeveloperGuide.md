@@ -153,40 +153,41 @@ A simple way to keep track of your expenses
 **Prerequisites**
 
 - The list must have been initialized.
-- Some fields such as `n/[description] a/[amount]` must be specified. If the user prefers,
-  additional tags can be added for greater specificity.
 
 **Test case 1: Adding an existing expense with all fields specified.**
 
 **Usage:**
 
-- `add a/[amount] n/[description] d/[date] c/[categoryNumber]` in any order
+- `add a/[amount] n/[description] d/[date] c/[categoryNumber]` 
+- Some fields such as `n/[description] a/[amount]` must be specified. If the user prefers,
+  additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list
+- An expense would then be added to the list.
+- Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **Example of usage and expected output:**
 
 ```
-add a/15 d/2021-12-03 n/Textbook c/0
+add a/15 d/2021-12-03 n/Textbook c/7
 --------------------------------------------------------------------
-I've added :Expense |       FOOD       | 2021-12-03 |     Textbook     |-$15.00
+I've added :Expense |       OTHERS       | 2021-12-03 |     Textbook     |-$15.00
 ```
 **Test case 2: Adding an existing expense with some fields specified.**
 
 **Usage:**
 
-- `add a/[amount] n/[description] d/[date]` in any order
-- `add a/[amount] n/[description] c/[catNum]` in any order
-- `add a/[amount] n/[description` in any order
+- `add [include some fields of the expense you would like to add]`
+- Some fields such as `n/[description] a/[amount]` must be specified. If the user prefers,
+  additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list
-- Optional fields that are missing would be set to the default pre-determined by the programme
+- An expense would then be added to the list.
+- Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **Example of usage and expected output:**
 
@@ -211,8 +212,6 @@ I've added :Expense |      OTHERS      | 2021-10-26 |  Cheese Burger   |-$23.50
 **Prerequisites**
 
 - The list must have expenses that have already been added.
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity.
 
 **Test case 1: Deleting an existing expense with some fields specified. Only one expense
 exists that matches all the fields specified.**
@@ -220,11 +219,13 @@ exists that matches all the fields specified.**
 **Usage:**
 
 - `delete [include some fields of the expense you would like to delete]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **Expected**
 
 - It asks user if the user wants to delete the found expense.
-- If user inputs y, it deletes. If user inputs n, it exits the delete process.
+- When user inputs y, it would delete the item.
 
 **Example of usage and expected output:**
 
@@ -243,9 +244,9 @@ I have deleted: Others | 2021-10-19 | Movie | $12.00
 
 **Usage:**
 
-- `delete a/[amount] n/[description]` in any order. If the user prefers,
-   additional tags can be added for greater specificity.
-- When prompted, input 'n' to cancel delete.
+- `delete [include some fields of the expense you would like to delete]` 
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **Expected**
 
@@ -276,20 +277,24 @@ Ok. I have cancelled the process.
 
 - The list must have expenses that have already been added.
 - At least the `n/[description]` must be specified. If the user prefers, additional tags can be added for greater 
-  specificity.
+  specificity. The fields can be specified in any order.
 
-**Test case 1: Editing all fields**
+**Test case 1: Editing all fields.**
 
 **Usage:**
 
 - `edit [include all fields of expense you would like to edit]`
-- `a/[amount] n/[description] c/[catNum] d/[validDate]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
+  
+:bomb: **CAUTION**
+- Do not edit the same field multiple times in one command.
 
 **Expected**
 
 - The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
-  the changes have been made
+  the changes have been made.
 
 **Example of usage and expected output:**
 
@@ -302,12 +307,13 @@ a/8 n/Chicken Rice c/0 d/2000-09-22
 --------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
-**Test case 2: Editing some fields**
+**Test case 2: Editing some fields.**
 
 **Usage:**
 
 - `edit [include all fields of expense you would like to edit]`
-- Include the tags and things you would like to change in any order `tag/[input]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 :bomb: **CAUTION**
 - Do not edit the same field multiple times in one command.
@@ -316,7 +322,7 @@ Got it! I will update the fields accordingly!
 
 - The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
-  the changes have been made
+  the changes have been made.
 
 **Example of usage and expected output:**
 
@@ -335,20 +341,20 @@ Got it! I will update the fields accordingly!
 **Prerequisites**
 
 - The list must have been initialized.
-- Some fields such as `n/[description] a/[amount] i/[interval]` must be specified. If the user prefers, additional tags 
-  can be added for greater specificity.
-
 
 **Test case 1: Adding an existing recurring expense with all fields specified.**
 
 **Usage:**
 
-- `addR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval] e/[endDate]` in any order
+- `addR a/[amount] n/[description] c/[category] i/[interval] e/[end date] d/[start date]`
+- Some fields such as `n/[description] a/[amount] i/[interval]` must be specified. If the user prefers,
+  additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list
+- An expense would then be added to the list.
+- Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **Example of usage and expected output:**
 
@@ -361,15 +367,13 @@ I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 
 
 **Usage:**
 
-- `addR a/[amount] n/[description] I/[interval]` in any order
-- `addR a/[amount] n/[description] I/[interval] c/[catNum]` in any order
-- `addR a/[amount] n/[description] I/[interval] d/[date]` in any order
+- `addR [include some fields of the expense you would like to add as recurring expense]`
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list
-- Optional fields that are missing would be set to the default pre-determined by the programme
+- An expense would then be added to the list.
+- Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **Example of usage and expected output:**
 
@@ -393,19 +397,19 @@ I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 |
 **Prerequisites**
 
 - The list must have been initialized.
-- At least one tag should be specified for greater accuracy. If the user prefers, additional tags can be 
-  added for greater specificity.
 
 **Test case 1: Deleting an existing recurring expense with all fields specified.**
 
 **Usage:**
 
-- `deleteR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval] e/[endDate]` in any order
-
+- `deleteR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval] e/[endDate]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater.
+  specificity. The fields can be specified in any order.
+  
 **Expected**
 
 - It asks user if the user wants to delete the found expense.
-- When user inputs y, it deletes the expense
+- When user inputs y, it deletes the expense.
 
 **Example of usage and expected output:**
 
@@ -424,14 +428,14 @@ I have deleted: Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90
 
 **Usage:**
 
-- `deleteR a/[amount] n/[description] I/[interval]` in any order
-- `deleteR a/[amount] n/[description] I/[interval] c/[catNum]` in any order
-- `deleteR a/[amount] n/[description] I/[interval] d/[date]` in any order
+- `deleteR [include some fields of the recurring expense you would like to delete]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **Expected**
 
 - It asks user if the user wants to delete the found expense.
-- When user inputs y, it deletes the expense
+- When user inputs y, it deletes the expense.
 
 **Example of usage and expected output:**
 
@@ -472,8 +476,9 @@ I have deleted: Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.
 
 **Usage:**
 
-- `deleteR a/[amount] n/[description] I/[interval]` in any order
-- When prompted, input 'n' to cancel delete.
+- `deleteR [include some fields of the recurring expense you would like to delete]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **Expected**
 
@@ -497,20 +502,23 @@ Ok. I have cancelled the process.
 
 **Prerequisites**
 
-- The list must have been initialized.
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity.
-
+- The list must have expenses that have already been added.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
+  
 **Test case 1: Editing an existing recurring expense with all fields specified.**
 
 **Usage:**
 
-- `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]` in any order
+- `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **Expected**
 
 - The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
-  the changes have been made
+  the changes have been made.
 
 **Example of usage and expected output:**
 
@@ -533,14 +541,15 @@ Got it! I will update the fields accordingly!
 
 **Usage:**
 
-- `editR n/[description]` in any order.
-- `editR a/[amount] n/[description] c/[catNum]]` in any order.
+- `editR [include some fields of the recurring expense you would like to edit]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater.
+  specificity. The fields can be specified in any order.
 
 **Expected**
 
 - The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit. 
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
-  the changes have been made
+  the changes have been made.
 
 **Example of usage and expected output:**
 
