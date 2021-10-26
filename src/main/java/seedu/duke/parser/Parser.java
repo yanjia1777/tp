@@ -310,7 +310,7 @@ public class Parser {
     }
 
     public void parseInputByArguments(String userInput) {
-        argumentsArray = userInput.split(" ");
+        argumentsArray = userInput.split("\\s+");
     }
 
 
