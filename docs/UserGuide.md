@@ -1,15 +1,15 @@
-# User Guide v2.0
-
+# Mint User Guide v2.0
 ## Introduction
 
-Mint is your smart money manager that help you track your daily expenses, set budgets
-and long term financial goals(coming soon). 
+Mint is an all-in-one money managing app that helps you track your daily expenses, set budgets
+and long term financial goals(coming soon). It is optimized for use via a Command Line Interface (CLI). 
 
-It is optimized for use via a Command Line Interface (CLI). 
+As our team comprises university students, we hope that we can help fellow young adults in keeping track of their finances.
 
 Using this guide, you will be able to navigate the app and use all of its functionalities through step-by-step-instructions.
+:bulb:
 
-##Table of Contents
+## Table of Contents
 - [Quick start](#quickStart)
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
@@ -22,6 +22,8 @@ Using this guide, you will be able to navigate the app and use all of its functi
     - [Deleting entries](#delete)
     - [Editing entries](#edit)
     - [Viewing categories](#cat)
+    - [Setting budget](#set)
+    - [View monthly budget ](#budget)
     - [Exiting the program](#exit)
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
@@ -33,14 +35,14 @@ Using this guide, you will be able to navigate the app and use all of its functi
 
 ### <a name="settingUp"></a>Setting Up
 
-1. Download the latest version of Mint.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
+1. Download the latest version of tp.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
 
-2. Copy the Mint.jar file to the folder you desire.
+2. Copy the tp.jar file to the folder you desire.
 
 ### <a name="runningTheProgramme"></a>Running the Programme
 1. Open your desired Command Line Interface and ensure that you are in the directory where you saved the folder.
    If you are new to git, click [here](#changingTheDirectory) to see how you can change the directory.
-2. Once you ensured you are in the correct directory, run the programme using the command `java -jar Mint.jar`. 
+2. Once you ensured you are in the correct directory, run the programme using the command `java -jar tp.jar`. 
 3. To test if the programme is working, type a command and press Enter to execute it. 
    e.g., typing `help` and pressing Enter will display the list of commands to help you use our application. 
 
@@ -55,8 +57,8 @@ Using this guide, you will be able to navigate the app and use all of its functi
 
 Refer to the [Features Section](#features) below for details of each comm
 
-### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your Mint.jar file
-1. Right-click on your Mint.jar file and select Properties. There would be a pop up with all the information.
+### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your tp.jar file
+1. Right-click on your tp.jar file and select Properties. There would be a pop up with all the information.
 2. Look for the Location and copy the entire string.
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
 4. Mint is now at your service!
@@ -133,17 +135,17 @@ Format: `add [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
   </br>
   
 Examples:
-- `add n/Textbook a/15`
-- `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
-- `add income n/Sales a/34 d/2021-02-19 c/1`
+- Adding a textbook that costs $15: `add n/textbook a/15`
+- Adding a cheeseburger that costs $4.20 that I had on 20th April 2021 and categorize it under "Food": `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
+- Adding the income I made from sales, amounting to $34 `add income n/Sales a/34 d/2021-02-19 c/1`
 
 Examples and expected Output
 
 ```
 add n/Textbook a/15
-I've added: Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
+I've added: Expense |      OTHERS      | 2021-10-25 |     textbook     |-$15.00
 add n/Cheese burger a/4.2 d/2021-04-20 c/0
-I've added: Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
+I've added: Expense |       FOOD       | 2021-04-20 |    cheeseurger   |-$4.20
 add income n/Sales a/34 d/2021-02-19 c/1
 I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
 ```
@@ -351,10 +353,47 @@ Got it! I will update the fields accordingly!
 
 Shows a list of all available categories and its corresponding tag number</br>
 Format: `cat`
+
 Expected Output:
 
 ```
-{INSERT cat expected output}
+Here are the categories and its tag number
+Expenses           | Income
+c/0 FOOD           | c/0 ALLOWANCE
+c/1 ENTERTAINMENT  | c/1 WAGES
+c/2 TRANSPORTATION | c/2 SALARY
+c/3 HOUSEHOLD      | c/3 INTERESTED
+c/4 APPAREL        | c/4 INVESTMENT
+c/5 BEAUTY         | c/5 COMMISSION
+c/6 GIFT           | c/6 GIFT
+c/7 OTHERS         | c/7 OTHERS
+```
+
+## <a name="set"></a>Setting budget: `set`
+
+Set budget for individual categories</br>
+Format: `set c/CATEGORY_NUMBER a/AMOUNT`
+- `set` takes in 2 mandatory fields, `c/CATEGORY_NUMBER` and `a/AMOUNT`
+- `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
+
+Example: If you want to set budget for "FOOD" to $100, type `set c/0 a/100`, as `c/0` correspond to "FOOD"
+
+Expected Output:
+```
+Budget for FOOD set to $100.00
+```
+
+## <a name="budget"></a>View monthly budget: `budget`
+
+view monthly spending and budget for current month</br>
+Format: `budget`
+
+- ``
+
+Expected Output:
+```
+Budget for FOOD set to $100.00
 ```
 
 ## <a name="exit"></a>Exit the program: `exit`
