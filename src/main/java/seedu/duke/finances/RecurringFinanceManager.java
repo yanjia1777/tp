@@ -85,7 +85,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 filteredList = Filter.filterEntryByAmount(queryToSearch.getAmount(), filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory(), filteredList);
+                filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory().ordinal(), filteredList);
                 break;
             case "i/":
                 filteredList = Filter.filterEntryByInterval(queryToSearch.getInterval().label, filteredList);
@@ -171,6 +171,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
+                    ValidityChecker.checkValidCatNum(pos);
                     category = ExpenseCategory.values()[pos];
                     count++;
                 }
@@ -209,30 +210,15 @@ public class RecurringFinanceManager extends FinanceManager {
                 + "|" + recurringEntry.getEndDate();
     }
 
-    public void sort(ArrayList<Entry> outputArray, String sortType) throws MintException {
-        assert sortType != null : "sortType should have a command";
-        switch (sortType) {
-        case "name":
-            outputArray.sort(Sorter.compareByName);
-            break;
-        case "date":
-            outputArray.sort(Sorter.compareByDate);
-            break;
-        case "amount":
-            outputArray.sort(Sorter.compareByAmount);
-            break;
-        case "category":
-            outputArray.sort(Sorter.compareByCategory);
-            break;
-        //add case for endDate
-        default:
-            throw new MintException(MintException.ERROR_INVALID_COMMAND);
-        }
-    }
-
     public static String overWriteString(RecurringEntry entry) {
         return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount() + "|" + entry.getInterval() + "|" + entry.getEndDate();
+    }
+
+    public ArrayList<Entry> getCopyOfRecurringEntryList() {
+        ArrayList<Entry> outputArray;
+        outputArray = new ArrayList<>(recurringEntryList);
+        return outputArray;
     }
 
     public RecurringEntry createRecurringEntryObject(RecurringEntry entry) {
