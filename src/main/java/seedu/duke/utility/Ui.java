@@ -165,13 +165,13 @@ public class Ui {
         System.out.println("Here are the categories and its tag number\n"
                         + "Expenses           | Income\n"
                         + "c/0 FOOD           | c/0 ALLOWANCE\n"
-                        + "c/1 ENTERTAINMENT  | c/1 SALARY\n"
-                        + "c/2 TRANSPORTATION | c/2 INVESTMENT\n"
-                        + "c/3 HOUSEHOLD      | c/3 COMMISSION\n"
-                        + "c/4 APPAREL        | c/4 OTHERS\n"
-                        + "c/5 BEAUTY\n"
-                        + "c/6 GIFT\n"
-                        + "c/7 OTHERS\n");
+                        + "c/1 ENTERTAINMENT  | c/1 WAGES\n"
+                        + "c/2 TRANSPORTATION | c/2 SALARY\n"
+                        + "c/3 HOUSEHOLD      | c/3 INTERESTED\n"
+                        + "c/4 APPAREL        | c/4 INVESTMENT\n"
+                        + "c/5 BEAUTY         | c/5 COMMISSION\n"
+                        + "c/6 GIFT           | c/6 GIFT\n"
+                        + "c/7 OTHERS         | c/7 OTHERS\n");
     }
 
     public static void printMissingFileMessage() {

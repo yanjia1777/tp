@@ -12,6 +12,7 @@ import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -136,6 +137,7 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
+            Type type = entry.getType();
             String name = entry.getName();
             LocalDate date = entry.getDate();
             double amount = entry.getAmount();
@@ -161,7 +163,7 @@ public class NormalFinanceManager extends FinanceManager {
                     count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
-                    category = ExpenseCategory.values()[pos];
+                    category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
                 }
             }
             if (count == 0) {

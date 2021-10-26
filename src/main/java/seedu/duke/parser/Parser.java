@@ -69,7 +69,6 @@ public class Parser {
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
-    private static final String ERROR_FIRST_TAG = "Invalid tags entered";
     protected String command;
     protected String name;
     protected String dateStr;
@@ -173,12 +172,18 @@ public class Parser {
         case "0":
             return IncomeCategory.ALLOWANCE;
         case "1":
-            return IncomeCategory.SALARY;
+            return IncomeCategory.WAGES;
         case "2":
-            return IncomeCategory.INVESTMENT;
+            return IncomeCategory.SALARY;
         case "3":
-            return IncomeCategory.COMMISSION;
+            return IncomeCategory.INTEREST;
         case "4":
+            return IncomeCategory.INVESTMENT;
+        case "5":
+            return IncomeCategory.COMMISSION;
+        case "6":
+            return IncomeCategory.GIFT;
+        case "7":
             return IncomeCategory.OTHERS;
         default:
             throw new MintException(ERROR_INVALID_CATNUM);
