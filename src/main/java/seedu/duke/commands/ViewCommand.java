@@ -43,10 +43,10 @@ public class ViewCommand extends Command {
 
             double total = normalFinanceManager.calculateTotal(outputArray);
 
-            ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
+            int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
 
             if (viewOptions.isViewAll) {
-                ui.printViewRecurring(recurringFinanceManager.recurringEntryList);
+                ui.printViewRecurring(recurringFinanceManager.recurringEntryList, indentations[0], indentations[1]);
             }
         } catch (MintException e) {
             ui.printError(e);
