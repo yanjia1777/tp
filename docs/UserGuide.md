@@ -13,6 +13,7 @@ Using this guide, you will be able to navigate the app and use all of its functi
 - [Quick start](#quickStart)
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
+    - [[For users new to CLI] Changing the Directory](#changingTheDirectory)
 - [Features](#features)
     - [Viewing help](#help)
     - [Adding entries](#add) 
@@ -38,7 +39,7 @@ Using this guide, you will be able to navigate the app and use all of its functi
 
 ### <a name="runningTheProgramme"></a>Running the Programme
 1. Open your desired Command Line Interface and ensure that you are in the directory where you saved the folder.
-   If you are new to git, click [here](changingTheDirectory) to see how you can change the directory.
+   If you are new to git, click [here](#changingTheDirectory) to see how you can change the directory.
 2. Once you ensured you are in the correct directory, run the programme using the command `java -jar Mint.jar`. 
 3. To test if the programme is working, type a command and press Enter to execute it. 
    e.g., typing `help` and pressing Enter will display the list of commands to help you use our application. 
@@ -54,7 +55,7 @@ Using this guide, you will be able to navigate the app and use all of its functi
 
 Refer to the [Features Section](#features) below for details of each comm
 
-### <a name="changingTheDirectory"></a>Changing the Directory to your Mint.jar file
+### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your Mint.jar file
 1. Right-click on your Mint.jar file and select Properties. There would be a pop up with all the information.
 2. Look for the Location and copy the entire string.
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
