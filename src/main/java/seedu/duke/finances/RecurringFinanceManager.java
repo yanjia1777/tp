@@ -85,7 +85,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 filteredList = Filter.filterEntryByAmount(queryToSearch.getAmount(), filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory(), filteredList);
+                filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory().ordinal(), filteredList);
                 break;
             case "i/":
                 filteredList = Filter.filterEntryByInterval(queryToSearch.getInterval().label, filteredList);
