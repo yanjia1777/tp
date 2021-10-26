@@ -2,9 +2,14 @@
 
 ## Introduction
 
-Mint is an all-in-one desktop app for young adults to manage your savings and expenses and set long term financial
-goals. It is optimized for use via a Command Line Interface (CLI).
+Mint is your smart money manager that help you track your daily expenses, set budgets
+and long term financial goals(coming soon). 
 
+It is optimized for use via a Command Line Interface (CLI). 
+
+Using this guide, you will be able to navigate the app and use all of its functionalities through step-by-step-instructions.
+
+##Table of Contents
 - [Quick start](#quickStart)
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
@@ -63,15 +68,15 @@ Refer to the [Features Section](#features) below for details of each comm
 Notes about the following list of commands:
 
 - Items in square brackets are optional.</br>
-  e.g n/NAME [d/DATE] can be used as n/burger d/2021-10-20 or as n/burger
+  e.g `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 - Parameters with tags or optional modifiers can be in any order.</br>
-  e.g. if the command specifies n/NAME a/AMOUNT, a/AMOUNT n/NAME is also acceptable.
+  e.g. if the command specifies `n/NAME` `a/AMOUNT`, `a/AMOUNT` `n/NAME` is also acceptable.
 - If a parameter is expected only once in the command but if you specify it multiple times, only the last occurrence of
   the parameter will be taken.</br>
-  e.g. if you specify a/10 a/15, only a/10 will be taken.
-- Extraneous parameters for commands that do not take in parameters (such as help, list, exit and clear)
+  e.g. if you specify `a/10 a/15`, only `a/10` will be taken.
+- Extraneous parameters for commands that do not take in parameters (such as `help`, `budget` and `exit`)
   will be ignored.</br>
-  e.g. if the command specifies help 123, it will be interpreted as help.
+  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 ---
 
