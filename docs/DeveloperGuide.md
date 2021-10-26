@@ -6,9 +6,12 @@
 - [Design](#design)
     - [System Architecture](#sys-arch)
     - [Ui](#text-ui)
-    - [Parser](#main-parser)
-    - [Command](#command)
-    - [ContactList](#contact-list)
+    - [Logic](#logic)
+      - [Command](#command)
+      - [Parser](#parser)
+    - [Model](#model)
+      - [Finance](#finance)
+      - [Budget](#budget)
     - [Storage](#storage)
 - [Implementation](#implementation)
 - [Product Scope](#scope)
@@ -53,7 +56,14 @@ The four main components interact with each other, as shown in the sequence diag
 
 ### <a name="text-ui"></a>Ui
 
-### <a name="main-parser"></a>Parser
+### <a name="logic"></a>Logic
+![](images/Logic.png)
+### <a name="model"></a>Model
+##### <a name="finance"></a>Finance
+![](images/Finance.png)
+#### <a name="budget"></a>Budget
+
+
 
 ### <a name="contact-list"></a>ExpenseList
 
