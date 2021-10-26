@@ -1,15 +1,15 @@
-# User Guide v2.0
-
+# Mint User Guide v2.0
 ## Introduction
 
-Mint is your smart money manager that help you track your daily expenses, set budgets
-and long term financial goals(coming soon). 
+Mint is an all-in-one money managing app that helps you track your daily expenses, set budgets
+and long term financial goals(coming soon). It is optimized for use via a Command Line Interface (CLI). 
 
-It is optimized for use via a Command Line Interface (CLI). 
+As our team comprises university students, we hope that we can help fellow young adults in keeping track of their finances.
 
 Using this guide, you will be able to navigate the app and use all of its functionalities through step-by-step-instructions.
+:bulb:
 
-##Table of Contents
+## Table of Contents
 - [Quick start](#quickStart)
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
@@ -22,6 +22,8 @@ Using this guide, you will be able to navigate the app and use all of its functi
     - [Deleting entries](#delete)
     - [Editing entries](#edit)
     - [Viewing categories](#cat)
+    - [Setting budget](#set)
+    - [View monthly budget ](#budget)
     - [Exiting the program](#exit)
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
@@ -351,10 +353,47 @@ Got it! I will update the fields accordingly!
 
 Shows a list of all available categories and its corresponding tag number</br>
 Format: `cat`
+
 Expected Output:
 
 ```
-{INSERT cat expected output}
+Here are the categories and its tag number
+Expenses           | Income
+c/0 FOOD           | c/0 ALLOWANCE
+c/1 ENTERTAINMENT  | c/1 WAGES
+c/2 TRANSPORTATION | c/2 SALARY
+c/3 HOUSEHOLD      | c/3 INTERESTED
+c/4 APPAREL        | c/4 INVESTMENT
+c/5 BEAUTY         | c/5 COMMISSION
+c/6 GIFT           | c/6 GIFT
+c/7 OTHERS         | c/7 OTHERS
+```
+
+## <a name="set"></a>Setting budget: `set`
+
+Set budget for individual categories</br>
+Format: `set c/CATEGORY_NUMBER a/AMOUNT`
+- `set` takes in 2 mandatory fields, `c/CATEGORY_NUMBER` and `a/AMOUNT`
+- `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
+
+Example: If you want to set budget for "FOOD" to $100, type `set c/0 a/100`, as `c/0` correspond to "FOOD"
+
+Expected Output:
+```
+Budget for FOOD set to $100.00
+```
+
+## <a name="budget"></a>View monthly budget: `budget`
+
+view monthly spending and budget for current month</br>
+Format: `budget`
+
+- ``
+
+Expected Output:
+```
+Budget for FOOD set to $100.00
 ```
 
 ## <a name="exit"></a>Exit the program: `exit`
