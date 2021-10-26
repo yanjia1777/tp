@@ -28,7 +28,7 @@ class XYZCommand
 Main --> "1" Parser
 Command <|-- XYZCommand
 Parser ..> ValidityChecker
-Parser ..> XYZCommand : creates >
+Parser ..> XYZCommand : returns >
 Main ..> Command : executes >
 
 Command ..> Ui

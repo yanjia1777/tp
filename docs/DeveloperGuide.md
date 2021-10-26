@@ -5,14 +5,12 @@
 - [Acknowledgements](#acknowledgements)
 - [Design](#design)
     - [System Architecture](#sys-arch)
-    - [Ui](#text-ui)
-    - [Logic](#logic)
-      - [Command](#command)
-      - [Parser](#parser)
-    - [Model](#model)
-      - [Finance](#finance)
-      - [Budget](#budget)
-    - [Storage](#storage)
+    - [Ui Component](#text-ui)
+    - [Logic Component](#logic)
+    - [Model Component](#model)
+      - [Finance Component](#finance)
+      - [Budget Component](#budget)
+    - [Storage Component](#storage)
 - [Implementation](#implementation)
 - [Product Scope](#scope)
     - [Target user profile](#target)
@@ -54,13 +52,41 @@ The components interact with each other, as shown in the sequence diagram below.
 
 ![](images/ArchitectureSequenceDiagram.png)
 
-### <a name="text-ui"></a>Ui
+### <a name="text-ui"></a>Ui Component
 
-### <a name="logic"></a>Logic
+### <a name="logic"></a>Logic Component
+Here's a (partial) class diagram of the `Logic` component.
+
 ![](images/Logic.png)
-### <a name="model"></a>Model
-##### <a name="finance"></a>Finance
+
+How the `Logic` component works:
+1. When `Logic` is called upon to parse a command, it uses `Parser` class to parse the user command.
+2. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its </br >
+subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying through `ValidityChecker` class.
+3. `Parser` encapsulates the details of the query as an `Entry` object from `Model`.
+4. `Parser` returns a `Command` object, which is executed by `Main`.
+5. The `Command` can communicate with the `Model` when it is executed </br>
+6. The `Command` saves the resulting data by using the `Storage`.
+7. The result is printed to the user by the `Ui`.
+   (e.g. to add a recurring entry)
+
+The Seuquence Diagram below illustrates the interactions within the `Logic` component for the</br>
+`parseCommand("delete a/12")` API call.
+![](images/LogicSequenceDiagram.png)
+### <a name="model"></a>Model Component
+The `Model` package consists of two components: `Finance` and `Budget`.
+##### <a name="finance"></a>Finance Component
 ![](images/Finance.png)
+
+The `Finance` component,
+- stores all the entry data i.e., all `Entry` objects (which are contained in `FinancialManager` object).
+  - `NormalFinanceManager` object stores all the `Income` and `Expense` objects
+  - `RecurringFinanceManager` stores all the `RecurringIncome` and `RecurringExpense` objects
+- performs action on the list of `Entry` objects (e.g., add, delete, etc.)
+- depends on Ui component as some action needs confirmation from the user (e.g. For delete, </br>
+if there are multiple entries that match the tags the user specified, the user needs to choose which one to delete.)
+#### <a name="budget"></a>Budget Component
+
 #### <a name="budget"></a>Budget
 ![](images/Budget.png)
 
@@ -74,7 +100,7 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 
 ### <a name="contact-list"></a>ExpenseList
 
-### <a name="storage"></a>DataManager
+### <a name="storage"></a>Storage Component
 
 **How the `Storage` component works:**
 
