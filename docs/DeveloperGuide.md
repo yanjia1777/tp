@@ -182,174 +182,220 @@ A smart and simple way to keep track of your expenses
 * <a name="local-storage"></a>**LocalStorage** - Refers to user's hard disk storage
 
 ## <a name="manual-test"></a>Instructions for manual testing
+> We define an 'item' as an expense/income
 
-### :heavy_plus_sign: <a name="Adding"></a>Adding an expense
+### :heavy_plus_sign: <a name="Adding"></a>Adding an Item
 
 **Prerequisites**
 
 - The list must have been initialized.
-  <br/>
-  
-**Test case 1: Adding an expense with all fields specified.**
+
+**Test case 1: Adding an item with all fields specified.**
 
 **Usage:**
 
-- `add a/[amount] n/[description] d/[date] c/[categoryNumber]` 
-- Some fields such as `n/[description] a/[amount]` must be specified. If the user prefers,
+- Add an Expense: `add a/[amount] n/[description] d/[date] c/[categoryNumber]`
+- Add an Income: `add income a/[amount] n/[description] d/[date] c/[categoryNumber]`
+- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list.
-- Optional fields that are missing would be set to the default pre-determined by the program.
+- An item would then be added to the list.
+- Optional fields that are missing would be set to the default pre-determined by the programme.
 
-**Example of usage and expected output:**
+**[EXPENSE] Example of usage and expected output:**
 
 ```
 add a/15 d/2021-12-03 n/Textbook c/7
---------------------------------------------------------------------
 I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
-<br/>
 
-**Test case 2: Adding an expense with some fields specified.**
+**[INCOME] Example of usage and expected output:**
+
+```
+add income a/15 d/2021-12-03 n/Selling Textbooks c/7
+I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
+```
+**Test case 2: Adding an item with some fields specified.**
 
 **Usage:**
 
-- `add [include some fields of the expense you would like to add]`
-- Some fields such as `n/[description] a/[amount]` must be specified. If the user prefers,
+- Add an Expense: `add [include some fields of the expense you would like to add]`
+- Add an Income: `add income [include some fields of the income you would like to add]`
+- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list.
+- An item would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
-**Example of usage and expected output:**
-
+**[EXPENSE] Example of usage and expected output:**
 ```
 add a/15 d/2021-12-03 n/Textbook
---------------------------------------------------------------------
 I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
 ```
 add a/5 n/Chicken Rice c/0
---------------------------------------------------------------------
 I've added: Expense  | FOOD | 2021-10-27 | Chicken Rice | $5.00
 ```
 ```
 add n/Cheese Burger a/23.5
---------------------------------------------------------------------
 I've added: Expense  | OTHERS | 2021-10-27 | Cheese Burger | $23.50
 ```
+**[INCOME] Example of usage and expected output:**
 
-### :x: <a name="delete"></a>Deleting an expense
+```
+add income a/15 d/2021-12-03 n/Selling Textbooks
+I've added: Expense  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
+```
+```
+add income a/5 n/Selling Textbooks c/0
+I've added: Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
+```
+```
+add income n/Selling Textbooks a/23.5
+I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
+```
+
+### :x: <a name="delete"></a>Deleting an Item
 
 **Prerequisites**
 
-- The list must have expenses that have already been added.
+- The list must have items that have already been added.
 
-**Test case 1: Deleting an existing expense with some fields specified. Only one expense
+**Test case 1: Deleting an existing item with some fields specified. Only one item
 exists that matches all the fields specified.**
 
 **Usage:**
 
-- `delete [include some fields of the expense you would like to delete]`
+- Delete an Expense: `delete [include some fields of the expense you would like to delete]`
+- Delete an Income: `delete income [include some fields of the income you would like to delete]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
 **Expected**
 
-- It asks user if the user wants to delete the found expense.
+- It asks user if the user wants to delete the found item.
 - When user inputs y, it would delete the item.
 
-**Example of usage and expected output:**
+**[EXPENSE] Example of usage and expected output:**
 
 ```
-delete n/Movie c/7
---------------------------------------------------------------------
+delete n/Movie c/1
 Is this what you want to delete?
-    Others | 2021-10-19 | Movie | $12.00
+    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 y
---------------------------------------------------------------------
-I have deleted: Others | 2021-10-19 | Movie | $12.00
+I have deleted: Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
 ```
-**Test case 2: Choosing not to delete an existing expense after entering the delete command.**
+**[INCOME] Example of usage and expected output:**
+
+```
+delete income n/Selling Textbooks c/0
+Is this what you want to delete?
+    Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
+```
+
+**Test case 2: Choosing not to delete an existing item after entering the delete command.**
 
 **Usage:**
 
-- `delete [include some fields of the expense you would like to delete]` 
+- Delete an Expense: `delete [include some fields of the expense you would like to delete]`
+- Delete an Income: `delete income [include some fields of the income you would like to delete]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
 **Expected**
 
-- It asks user if the user wants to delete the found expense.
+- It asks user if the user wants to delete the found item.
 - When user inputs n, it exits the delete process.
 
-**Example of usage and expected output:**
+**[EXPENSE] Example of usage and expected output:**
 
 ```
 delete a/90 d/2021-12-03 n/phone bills c/3 
---------------------------------------------------------------------
 Is this what you want to delete?
     Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 n
---------------------------------------------------------------------
 Ok. I have cancelled the process.
---------------------------------------------------------------------
+```
+**[INCOME] Example of usage and expected output:**
+
+```
+delete income a/90 d/2021-12-03 n/collecting phone bills c/3 
+Is this what you want to delete?
+    Income  | INTEREST | 2021-12-03 | collecting phone bills | $90.00
+Type "y" if yes. Type "n" if not.
 n
---------------------------------------------------------------------
 Ok. I have cancelled the process.
 ```
 
-### :writing_hand: <a name="edit"></a>Editing an expense
+
+### :writing_hand: <a name="edit"></a>Editing an Item
 
 **Prerequisites**
 
-- The list must have expenses that have already been added.
-- At least the `n/[description]` must be specified. If the user prefers, additional tags can be added for greater 
+- The list must have items that have already been added.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
 **Test case 1: Editing all fields.**
 
 **Usage:**
 
-- `edit [include all fields of expense you would like to edit]`
+- Editing an Expense: `edit [include all fields of expense you would like to edit]`
+- Editing an Income: `edit [include all fields of income you would like to edit]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
-  
+
 :bomb: **CAUTION**
 - Do not edit the same field multiple times in one command.
 
 **Expected**
 
-- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
+- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
   the changes have been made.
 
-**Example of usage and expected output:**
+**[EXPENSE] Example of usage and expected output:**
 
 ```
-edit a/20 d/2021-12-03 n/Movie c/2
---------------------------------------------------------------------
+edit a/20 d/2021-12-03 n/Movie c/1
+Is this what you want to edit?
+    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+Type "y" if yes. Type "n" if not.
+y
 What would you like to edit?
---------------------------------------------------------------------
 a/8 n/Chicken Rice c/0 d/2000-09-22
---------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
+**[INCOME] Example of usage and expected output:**
+
+```
+edit income a/20 d/2021-12-03 n/Full-time job c/1
+Is this what you want to edit?
+    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+Type "y" if yes. Type "n" if not.
+y
+What would you like to edit?
+n/part-time job
+Got it! I will update the fields accordingly!
+```
+
 **Test case 2: Editing some fields.**
 
 **Usage:**
 
-- `edit [include all fields of expense you would like to edit]`
+- Editing an Expense: `edit [include all fields of expense you would like to edit]`
+- Editing an Income: `edit income [include all fields of income you would like to edit]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
@@ -358,21 +404,35 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
+- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
   the changes have been made.
 
-**Example of usage and expected output:**
+**[EXPENSE] Example of usage and expected output:**
 
 ```
 edit a/20 d/2021-12-03 n/Movie c/2
---------------------------------------------------------------------
+Is this what you want to edit?
+    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+Type "y" if yes. Type "n" if not.
+y
 What would you like to edit?
---------------------------------------------------------------------
 a/8 c/0 
---------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
+**[INCOME] Example of usage and expected output:**
+
+```
+edit income n/Full-time job
+Is this what you want to edit?
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00
+Type "y" if yes. Type "n" if not.
+y
+What would you like to edit?
+n/Part-time job
+Got it! I will update the fields accordingly!
+```
+
 
 ### :alarm_clock: :heavy_plus_sign: <a name="Add recurring expense"></a>Adding a Recurring Expense
 
@@ -380,245 +440,309 @@ Got it! I will update the fields accordingly!
 
 - The list must have been initialized.
 
-**Test case 1: Adding an existing recurring expense with all fields specified.**
+**Test case 1: Adding an existing recurring item with all fields specified.**
 
 **Usage:**
 
-- `addR a/[amount] n/[description] c/[category] i/[interval] e/[end date] d/[start date]`
-- Some fields such as `n/[description] a/[amount] i/[interval]` must be specified. If the user prefers,
+- Adding a Recurring Expense:`addR a/[amount] n/[description] c/[category] i/[interval] e/[end date] d/[start date]`
+- Adding a Recurring Income:`addR income a/[amount] n/[description] c/[category] i/[interval] e/[end date]
+  d/[start date]`
+- Some fields such as `n/[description]`, `a/[amount]` and `i/[interval]` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list.
+- An item would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
-**Example of usage and expected output:**
+**[EXPENSE] Example of usage and expected output:**
 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH e/2023-04-15
---------------------------------------------------------------------
 I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
-**Test case 2: Adding an existing recurring expense with some fields specified.**
+**[INCOME] Example of usage and expected output:**
+
+```
+addR income a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-04-15
+I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+```
+
+**Test case 2: Adding an existing recurring item with some fields specified.**
 
 **Usage:**
 
-- `addR [include some fields of the expense you would like to add as recurring expense]`
+- Adding a Recurring Expense:`addR [include some fields of the expense you would like to add as recurring expense]`
+- Adding a Recurring Income:`addR income [include some fields of the expense you would like to add as
+  recurring expense]`
+- Some fields such as `n/[description]`, `a/[amount]` and `i/[interval]` must be specified. If the user prefers,
+  additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
-- An expense would then be added to the list.
+- An item would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
-**Example of usage and expected output:**
+**[EXPENSE] Example of usage and expected output:**
 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
---------------------------------------------------------------------
 I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 ```
 ```
 addR a/5 n/phone bills c/3 i/MONTH
---------------------------------------------------------------------
-I've added: Expense | HOUSEHOLD| 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
+I've added: Expense | HOUSEHOLD | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 ```
 addR a/5 n/phone bills d/2021-10-10 i/MONTH
---------------------------------------------------------------------
 I've added: Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
 ```
+**[INCOME] Example of usage and expected output:**
+
+```
+addR income a/90 d/2021-12-03 n/Full-time job c/1 i/MONTH
+I've added: Income  | WAGES | 2021-12-03 | Full-time job | $90.00 | MONTH | Forever :D
+```
+```
+addR income a/90 n/Full-time job c/1 i/MONTH
+I've added: Income  | WAGES | 2021-10-27 | Full-time job | $90.00 | MONTH | Forever :D
+```
+```
+addR income a/90 n/Full-time job d/2021-10-10 i/MONTH
+I've added: Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | Forever :D
+```
+
 ### :alarm_clock: :x: <a name="Delete recurring expense"></a>Deleting a Recurring Expense
 
 **Prerequisites**
 
 - The list must have been initialized.
 
-**Test case 1: Deleting an existing recurring expense with all fields specified.**
+**Test case 1: Deleting an existing recurring item with all fields specified.**
 
 **Usage:**
 
-- `deleteR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval] e/[endDate]`
+- Deleting a Recurring Expense: `deleteR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval]
+  e/[endDate]`
+- Deleting a Recurring Income: `deleteR income a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval]
+  e/[endDate]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater.
   specificity. The fields can be specified in any order.
-  
+- For the delete function, we can delete both the expense and income using the same command `deleteR`
+
 **Expected**
 
-- It asks user if the user wants to delete the found expense.
-- When user inputs y, it deletes the expense.
+- It asks user if the user wants to delete the found item.
+- When user inputs y, it deletes the item.
 
-**Example of usage and expected output:**
+**[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
-deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH e/2023-04-15
---------------------------------------------------------------------
+deleteR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
 Is this what you want to delete?
-    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
+    Expense | APPAREL | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 y
---------------------------------------------------------------------
 I have deleted: Expense | APPAREL | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
-**Test case 2: Deleting an existing recurring expense with some fields specified.**
+```
+deleteR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-04-15
+Is this what you want to delete?
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+```
+
+**Test case 2: Deleting an existing recurring item with some fields specified.**
 
 **Usage:**
 
-- `deleteR [include some fields of the recurring expense you would like to delete]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
+- Deleting a Recurring Expense: `deleteR [include some fields of the recurring expense you would like to delete]`
+- Deleting a Recurring Income: `deleteR income [include some fields of the recurring Income you would like to delete]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater.
   specificity. The fields can be specified in any order.
+- For the delete function, we can delete both the expense and income using the same command `deleteR`
+
 
 **Expected**
 
-- It asks user if the user wants to delete the found expense.
-- When user inputs y, it deletes the expense.
+- It asks user if the user wants to delete the found item.
+- When user inputs y, it deletes the item.
 
-**Example of usage and expected output:**
+**[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
 deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
---------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 y
---------------------------------------------------------------------
 I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 ```
 ```
 deleteR a/5 n/phone bills c/4 i/MONTH
---------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |     APPAREL      | 2021-10-26 |   phone bills    |-$5.00 | MONTH | Forever :D
+    Expense | APPAREL | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 y
---------------------------------------------------------------------
-I have deleted: Expense |     APPAREL      | 2021-10-26 |   phone bills    |-$5.00 | MONTH | Forever :D
+I have deleted: Expense | APPAREL | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 ```
 deleteR a/5 n/phone bills d/2021-10-10 i/MONTH
---------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+    Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 y
---------------------------------------------------------------------
-I have deleted: Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+I have deleted: Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
 ```
+```
+deleteR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH
+Is this what you want to delete?
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+```
+```
+deleteR a/20 n/Full-time job c/1 i/MONTH
+Is this what you want to delete?
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+```
+```
+deleteR a/20 n/Full-time job d/2021-10-10 i/MONTH
+Is this what you want to delete?
+    Income  | OTHERS | 2021-10-10 | Full-time job | $20.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Income  | OTHERS | 2021-10-10 | Full-time job | $20.00 | MONTH | Forever :D
+```
+
 **Test case 3: Choosing not to delete an existing expense after entering the delete command.**
 
 **Usage:**
 
-- `deleteR [include some fields of the recurring expense you would like to delete]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
+- Deleting a Recurring Expense: `deleteR [include some fields of the recurring expense you would like to delete]`
+- Deleting a Recurring Income: `deleteR income [include some fields of the recurring Income you would like to delete]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater.
   specificity. The fields can be specified in any order.
+- For the delete function, we can delete both the expense and income using the same command `deleteR`
+
 
 **Expected**
 
-- It asks user if the user wants to delete the found expense.
+- It asks user if the user wants to delete the found item.
 - When user inputs n, it exits the delete process.
 
-**Example of usage and expected output:**
+**[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
 deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
---------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 n
---------------------------------------------------------------------
 Ok. I have cancelled the process.
 ```
-### :alarm_clock: :writing_hand: <a name="Adding"></a>Editing a recurring expense
+```
+deleteR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH
+Is this what you want to delete?
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+n
+Ok. I have cancelled the process.
+```
+
+### :alarm_clock: :writing_hand: <a name="Adding"></a>Editing a recurring item
 
 **Prerequisites**
 
 - The list must have expenses that have already been added.
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
-  
-**Test case 1: Editing an existing recurring expense with all fields specified.**
+
+**Test case 1: Editing an existing recurring item with all fields specified.**
 
 **Usage:**
 
-- `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]`
+- Editing a Recurring item: `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
+- For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
-- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit.
-- The input fields of the selected entry are updated and there would be a message printed to notify the users that
+- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
+- The input fields of the selected item are updated and there would be a message printed to notify the users that
   the changes have been made.
 
-**Example of usage and expected output:**
+**[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
 editR a/15 n/phone bills d/2021-12-03 c/0 i/MONTH e/2023-10-10
---------------------------------------------------------------------
 Is this what you want to edit?
-    Expense |       FOOD       | 2021-12-03 |   phone bills    |-$15.00 | MONTH | 2023-10-10
+    Expense | FOOD | 2021-12-03 | phone bills |-$15.00 | MONTH | 2023-10-10
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
 y
---------------------------------------------------------------------
 What would you like to edit?
---------------------------------------------------------------------
 a/40
---------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
-**Test case 2: Editing an existing recurring expense with some fields specified.**
+```
+editR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-10-10
+Is this what you want to edit?
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
+What would you like to edit?
+a/100
+Got it! I will update the fields accordingly!
+```
+**Test case 2: Editing an existing recurring item with some fields specified.**
 
 **Usage:**
 
-- `editR [include some fields of the recurring expense you would like to edit]`
+- Editing a Recurring Expense:`editR [include some fields of the recurring expense you would like to edit]`
+- Editing a Recurring Income:`editR [include some fields of the recurring income you would like to edit]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater.
   specificity. The fields can be specified in any order.
+- For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
-- The user would be prompted to choose their entry to edit if there are multiple entries or confirm their edit. 
-- The input fields of the selected entry are updated and there would be a message printed to notify the users that
+- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
+- The input fields of the selected items are updated and there would be a message printed to notify the users that
   the changes have been made.
 
-**Example of usage and expected output:**
+**[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
-editR n/phone bills
---------------------------------------------------------------------
-Here is the list of items containing the keyword.
-    1  Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
-    2  Expense |       FOOD       | 2021-12-03 |   phone bills    |-$40.00 | MONTH | 2023-10-10
-Enter the index of the item you want to edit. To cancel, type "cancel"
---------------------------------------------------------------------
-2
---------------------------------------------------------------------
+editR a/40 n/Netflix Subscription c/1 
+Is this what you want to edit?
+    Expense | ENTERTAINMENT | 2021-10-27 | Netflix Subscription |-$40.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
 What would you like to edit?
---------------------------------------------------------------------
-c/4
---------------------------------------------------------------------
+a/20
 Got it! I will update the fields accordingly!
 ```
 ```
-editR a/40 n/Netflix Subscription c/1
---------------------------------------------------------------------
-Is this what you want to edit?
-    Expense |  ENTERTAINMENT   | 2021-10-26 | Netflix Subscription |-$40.00 | MONTH | 2023-04-10
-Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
-y
---------------------------------------------------------------------
+editR n/Full-time job
+Here is the list of items containing the keyword.
+    1  Income  | WAGES | 2021-12-03 | Full-time job | $90.00 | MONTH | Forever :D
+    2  Expense | ENTERTAINMENT | 2021-10-27 | Full-time job |-$90.00 | MONTH | Forever :D
+    3  Income  | WAGES | 2021-10-27 | Full-time job | $90.00 | MONTH | Forever :D
+    4  Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | Forever :D
+    5  Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+    6  Income  | WAGES | 2021-12-03 | Full-time job | $100.00 | MONTH | Forever :D
+Enter the index of the item you want to edit. To cancel, type "cancel"
+1
 What would you like to edit?
---------------------------------------------------------------------
-a/20
---------------------------------------------------------------------
+n/part-time job
 Got it! I will update the fields accordingly!
 ```
