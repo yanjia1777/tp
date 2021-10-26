@@ -52,8 +52,8 @@ Apart from `Main`, Mint comprises six main components, namely:
 - `Budget`: Holds data of user's budget.
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
-The four main components interact with each other, as shown in the sequence diagram below. { NEED SEQUENCE DIAGRAM }
-
+The components interact with each other, as shown in the sequence diagram below.
+![](images/ArchitectureSequenceDiagram.png)
 ### <a name="text-ui"></a>Ui
 
 ### <a name="logic"></a>Logic
@@ -62,7 +62,6 @@ The four main components interact with each other, as shown in the sequence diag
 ##### <a name="finance"></a>Finance
 ![](images/Finance.png)
 #### <a name="budget"></a>Budget
-
 
 
 ### <a name="contact-list"></a>ExpenseList
