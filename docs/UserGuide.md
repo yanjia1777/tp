@@ -33,7 +33,7 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 
 ### <a name="runningTheProgramme"></a>Running the Programme
 1. Open your desired Command Line Interface and ensure that you are in the directory where you saved the folder.
-   If you are new to git, click [here](changingTheDirectory) to see how you can change the directory.
+   If you are new to git, click [here](#changingTheDirectory) to see how you can change the directory.
 2. Once you ensured you are in the correct directory, run the programme using the command `java -jar Mint.jar`. 
 3. To test if the programme is working, type a command and press Enter to execute it. 
    e.g., typing `help` and pressing Enter will display the list of commands to help you use our application. 
