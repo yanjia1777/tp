@@ -60,11 +60,8 @@ public class ViewOptions {
                 if (year == 0) {
                     year = LocalDate.now().getYear();
                 }
-            } catch (DateTimeException e) {
-                System.out.println(MintException.ERROR_INVALID_DATE);
-                return;
-            } catch (NumberFormatException e) {
-                System.out.println(MintException.ERROR_INVALID_MONTH);
+            } catch (DateTimeException | NumberFormatException e) {
+                throw new MintException(MintException.ERROR_INVALID_MONTH);
             } catch (IndexOutOfBoundsException e) {
                 month = LocalDate.now().getMonth();
             }
@@ -85,8 +82,7 @@ public class ViewOptions {
                 }
 
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                System.out.println(MintException.ERROR_INVALID_DATE);
-                return;
+                throw new MintException(MintException.ERROR_INVALID_DATE);
             }
             isViewAll = false;
         }
