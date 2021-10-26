@@ -2,12 +2,18 @@
 
 ## Introduction
 
-Mint is an all-in-one desktop app for young adults to manage your savings and expenses and set long term financial
-goals. It is optimized for use via a Command Line Interface (CLI).
+Mint is your smart money manager that help you track your daily expenses, set budgets
+and long term financial goals(coming soon). 
 
+It is optimized for use via a Command Line Interface (CLI). 
+
+Using this guide, you will be able to navigate the app and use all of its functionalities through step-by-step-instructions.
+
+##Table of Contents
 - [Quick start](#quickStart)
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
+    - [[For users new to CLI] Changing the Directory](#changingTheDirectory)
 - [Features](#features)
     - [Viewing help](#help)
     - [Adding entries](#add) 
@@ -27,14 +33,14 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 
 ### <a name="settingUp"></a>Setting Up
 
-1. Download the latest version of Mint.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
+1. Download the latest version of tp.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
 
-2. Copy the Mint.jar file to the folder you desire.
+2. Copy the tp.jar file to the folder you desire.
 
 ### <a name="runningTheProgramme"></a>Running the Programme
 1. Open your desired Command Line Interface and ensure that you are in the directory where you saved the folder.
    If you are new to git, click [here](#changingTheDirectory) to see how you can change the directory.
-2. Once you ensured you are in the correct directory, run the programme using the command `java -jar Mint.jar`. 
+2. Once you ensured you are in the correct directory, run the programme using the command `java -jar tp.jar`. 
 3. To test if the programme is working, type a command and press Enter to execute it. 
    e.g., typing `help` and pressing Enter will display the list of commands to help you use our application. 
 
@@ -49,8 +55,8 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 
 Refer to the [Features Section](#features) below for details of each comm
 
-### <a name="changingTheDirectory"></a>Changing the Directory to your Mint.jar file
-1. Right-click on your Mint.jar file and select Properties. There would be a pop up with all the information.
+### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your tp.jar file
+1. Right-click on your tp.jar file and select Properties. There would be a pop up with all the information.
 2. Look for the Location and copy the entire string.
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
 4. Mint is now at your service!
@@ -62,15 +68,15 @@ Refer to the [Features Section](#features) below for details of each comm
 Notes about the following list of commands:
 
 - Items in square brackets are optional.</br>
-  e.g n/NAME [d/DATE] can be used as n/burger d/2021-10-20 or as n/burger
+  e.g `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 - Parameters with tags or optional modifiers can be in any order.</br>
-  e.g. if the command specifies n/NAME a/AMOUNT, a/AMOUNT n/NAME is also acceptable.
+  e.g. if the command specifies `n/NAME` `a/AMOUNT`, `a/AMOUNT` `n/NAME` is also acceptable.
 - If a parameter is expected only once in the command but if you specify it multiple times, only the last occurrence of
   the parameter will be taken.</br>
-  e.g. if you specify a/10 a/15, only a/10 will be taken.
-- Extraneous parameters for commands that do not take in parameters (such as help, list, exit and clear)
+  e.g. if you specify `a/10 a/15`, only `a/10` will be taken.
+- Extraneous parameters for commands that do not take in parameters (such as `help`, `budget` and `exit`)
   will be ignored.</br>
-  e.g. if the command specifies help 123, it will be interpreted as help.
+  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 ---
 
