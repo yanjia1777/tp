@@ -171,6 +171,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
+                    ValidityChecker.checkValidCatNum(pos);
                     category = ExpenseCategory.values()[pos];
                     count++;
                 }
