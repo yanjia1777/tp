@@ -161,6 +161,19 @@ public class Ui {
         }
     }
 
+    public void printCategoryList() {
+        System.out.println("Here are the categories and its tag number\n"
+                        + "Expenses           | Income\n"
+                        + "c/0 FOOD           | c/0 ALLOWANCE\n"
+                        + "c/1 ENTERTAINMENT  | c/1 SALARY\n"
+                        + "c/2 TRANSPORTATION | c/2 INVESTMENT\n"
+                        + "c/3 HOUSEHOLD      | c/3 COMMISSION\n"
+                        + "c/4 APPAREL        | c/4 OTHERS\n"
+                        + "c/5 BEAUTY\n"
+                        + "c/6 GIFT\n"
+                        + "c/7 OTHERS\n");
+    }
+
     public static void printMissingFileMessage() {
         System.out.println(MISSING_FILE_MESSAGE);
     }
