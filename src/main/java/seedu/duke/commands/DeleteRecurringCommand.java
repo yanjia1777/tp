@@ -17,10 +17,12 @@ import java.util.ArrayList;
 public class DeleteRecurringCommand extends Command {
     private final Entry query;
     private final ArrayList<String> tags;
+    private final boolean isDeleteAll;
 
-    public DeleteRecurringCommand(ArrayList<String> tags, Entry query) {
+    public DeleteRecurringCommand(ArrayList<String> tags, Entry query, boolean isDeleteAll) {
         this.query = query;
         this.tags = tags;
+        this.isDeleteAll = isDeleteAll;
     }
 
     @Override
@@ -29,12 +31,26 @@ public class DeleteRecurringCommand extends Command {
                         NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
                         RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
+            if (isDeleteAll) {
+                deleteAll(normalFinanceManager, normalListDataManager);
+                return;
+            }
             Entry deletedEntry = recurringFinanceManager.deleteEntryByKeywords(tags, query);
-            String stringToDelete = recurringFinanceManager.overWriteString((RecurringEntry) deletedEntry);
+            String stringToDelete = RecurringFinanceManager.overWriteString((RecurringEntry) deletedEntry);
             recurringListDataManager.deleteLineInTextFile(stringToDelete);
             ui.printEntryDeleted(deletedEntry);
         } catch (MintException e) {
             ui.printError(e);
+        }
+    }
+
+    public void deleteAll(NormalFinanceManager normalFinanceManager, NormalListDataManager normalListDataManager) {
+        if (Ui.isConfirmDeleteAll()) {
+            normalFinanceManager.deleteAll();
+            normalListDataManager.deleteAll();
+            Ui.deleteAllConfirmation();
+        } else {
+            Ui.deleteAborted();
         }
     }
 }
