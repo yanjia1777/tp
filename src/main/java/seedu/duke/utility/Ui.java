@@ -225,8 +225,8 @@ public class Ui {
     }
 
     public int[] printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
-        int maxNameLength = 0;
-        int maxAmountLength = 0;
+        int maxNameLength = 4;
+        int maxAmountLength = 6;
         System.out.println("Here is the list of your entries:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
