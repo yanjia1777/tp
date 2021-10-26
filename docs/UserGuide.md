@@ -133,17 +133,17 @@ Format: `add [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
   </br>
   
 Examples:
-- `add n/Textbook a/15`
-- `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
-- `add income n/Sales a/34 d/2021-02-19 c/1`
+- Adding a textbook that costs $15: `add n/textbook a/15`
+- Adding a cheeseburger that costs $4.20 that I had on 20th April 2021 and categorize it under "Food": `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
+- Adding the income I made from sales, amounting to $34 `add income n/Sales a/34 d/2021-02-19 c/1`
 
 Examples and expected Output
 
 ```
 add n/Textbook a/15
-I've added: Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
+I've added: Expense |      OTHERS      | 2021-10-25 |     textbook     |-$15.00
 add n/Cheese burger a/4.2 d/2021-04-20 c/0
-I've added: Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
+I've added: Expense |       FOOD       | 2021-04-20 |    cheeseurger   |-$4.20
 add income n/Sales a/34 d/2021-02-19 c/1
 I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
 ```
