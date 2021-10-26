@@ -1,21 +1,67 @@
-# User Guide v2.0
-
+# Mint User Guide v2.0
 ## Introduction
 
-Mint is an all-in-one desktop app for young adults to manage your savings and expenses and set long term financial
-goals. It is optimized for use via a Command Line Interface (CLI).
+Mint is an all-in-one money managing app that helps you track your daily expenses, set budgets
+and long term financial goals(coming soon). It is optimized for use via a Command Line Interface (CLI). 
 
+As our team comprises university students, we hope that we can help fellow young adults in keeping track of their finances.
+
+Using this guide, you will be able to navigate the app and use all of its functionalities through step-by-step-instructions.
+:bulb:
+
+## Table of Contents
+- [Quick start](#quickStart)
+    - [Setting Up](#settingUp)
+    - [Running the Programme](#runningTheProgramme)
+    - [[For users new to CLI] Changing the Directory](#changingTheDirectory)
 - [Features](#features)
     - [Viewing help](#help)
-    - [Adding entries](#add)
+    - [Adding entries](#add) 
+    - [Adding recurring expenses](#addR) 
     - [Viewing entries](#view)
     - [Deleting entries](#delete)
     - [Editing entries](#edit)
     - [Viewing categories](#cat)
+    - [Setting budget](#set)
+    - [View monthly budget ](#budget)
     - [Exiting the program](#exit)
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
 - [Command Summary](#command-summary)
+
+## <a name="quickStart"></a>Quick Start
+> Before you get started, ensure that you have Java 11 or above installed in your Computer. Once that is done, follow
+> the steps below!
+
+### <a name="settingUp"></a>Setting Up
+
+1. Download the latest version of tp.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
+
+2. Copy the tp.jar file to the folder you desire.
+
+### <a name="runningTheProgramme"></a>Running the Programme
+1. Open your desired Command Line Interface and ensure that you are in the directory where you saved the folder.
+   If you are new to git, click [here](#changingTheDirectory) to see how you can change the directory.
+2. Once you ensured you are in the correct directory, run the programme using the command `java -jar tp.jar`. 
+3. To test if the programme is working, type a command and press Enter to execute it. 
+   e.g., typing `help` and pressing Enter will display the list of commands to help you use our application. 
+
+**Some example commands you can try:**
+
+1. Add an expense to your list: `add a/13 d/2021-12-03 n/Movie ticket c/1` 
+   > This command adds a Movie ticket that you have purchased for 13 dollars on December 3rd 2021 under the 
+   > Entertainment category
+   
+2. Exit the programme: `exit`
+   > This command terminates the program.
+
+Refer to the [Features Section](#features) below for details of each comm
+
+### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your tp.jar file
+1. Right-click on your tp.jar file and select Properties. There would be a pop up with all the information.
+2. Look for the Location and copy the entire string.
+3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
+4. Mint is now at your service!
 
 ## <a name="features"></a>Features
 
@@ -24,15 +70,15 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 Notes about the following list of commands:
 
 - Items in square brackets are optional.</br>
-  e.g n/NAME [d/DATE] can be used as n/burger d/2021-10-20 or as n/burger
+  e.g `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 - Parameters with tags or optional modifiers can be in any order.</br>
-  e.g. if the command specifies n/NAME a/AMOUNT, a/AMOUNT n/NAME is also acceptable.
+  e.g. if the command specifies `n/NAME` `a/AMOUNT`, `a/AMOUNT` `n/NAME` is also acceptable.
 - If a parameter is expected only once in the command but if you specify it multiple times, only the last occurrence of
   the parameter will be taken.</br>
-  e.g. if you specify a/10 a/15, only a/10 will be taken.
-- Extraneous parameters for commands that do not take in parameters (such as help, list, exit and clear)
+  e.g. if you specify `a/10 a/15`, only `a/10` will be taken.
+- Extraneous parameters for commands that do not take in parameters (such as `help`, `budget` and `exit`)
   will be ignored.</br>
-  e.g. if the command specifies help 123, it will be interpreted as help.
+  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 ---
 
@@ -87,23 +133,24 @@ Format: `add [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
 - `CATEGORY_NUMBER(optional)` - Please refer to the [available categories](#categoryList). </br>
   If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be C/7 which is `others`.
   </br>
-  Examples:
-- `add n/Textbook a/15`
-- `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
-- `add income n/Sales a/34 d/2021-02-19 c/1`
+  
+Examples:
+- Adding a textbook that costs $15: `add n/textbook a/15`
+- Adding a cheeseburger that costs $4.20 that I had on 20th April 2021 and categorize it under "Food": `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
+- Adding the income I made from sales, amounting to $34 `add income n/Sales a/34 d/2021-02-19 c/1`
 
 Examples and expected Output
 
 ```
 add n/Textbook a/15
-I've added: Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
+I've added: Expense |      OTHERS      | 2021-10-25 |     textbook     |-$15.00
 add n/Cheese burger a/4.2 d/2021-04-20 c/0
-I've added: Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
+I've added: Expense |       FOOD       | 2021-04-20 |    cheeseurger   |-$4.20
 add income n/Sales a/34 d/2021-02-19 c/1
 I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
 ```
 
-## <a name="add"></a>Adding Recurring Entries: `addR`
+## <a name="addR"></a>Adding Recurring Entries: `addR`
 
 Adds an expense or income to your tracker
 
@@ -154,8 +201,9 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
 - If `YEAR` is not specified, the default will be the current year.
 - `STARTDATE(optional)` and `ENDDATE(optional)` can be any of the [acceptable date formats](#dateFormat). </br>
 - If `STARTDATE` is specified but `ENDDATE` is not specified, the default `ENDDATE` set would be the current date.
-- `up(optional)` or `ascending(optional)` if appended with sort, will sort the list in ascending order, else the default will sort the list in descending order.
-
+- `up(optional)` or `ascending(optional)` if appended with sort, will sort the list in ascending 
+  , else the default will sort the list in descending order.
+  
 Examples:
 - `view`
 - `view income`
@@ -178,7 +226,7 @@ view income
 Here is the list of your entries:
   Type  |     Category     |    Date    |       Name       | Amount
 Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
-                                                Net Total: | $0.00
+                                                Net Total: | $34.00
 ```
 ```
 view month 4 year 2021
@@ -187,7 +235,7 @@ For the month of APRIL:
 Here is the list of your entries:
   Type  |     Category     |    Date    |       Name       | Amount
 Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
-                                                Net Total: | $0.00
+                                                Net Total: |-$4.20
 ```
 ```
 view from 2021-03-25 2022-01-02 by amount ascending
@@ -196,7 +244,7 @@ Since 2021-03-25 to 2022-01-02:
   Type  |     Category     |    Date    |       Name       | Amount
 Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
 Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
-                                                Net Total: | $0.00
+                                                Net Total: |-$19.20
 ```
 
 ## <a name="delete"></a>Deleting an entry: `delete`
@@ -206,12 +254,12 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided.
 - Our program searches the entry that matches the fields provided by the user.
-    - If there is more than 1 `Expense` matching the query, the program will </br>
+    - If there is more than 1 `Expense` or `Income` matching the query, the program will </br>
       return a list for the user to choose from. The user would then have to </br>
       confirm the deletion of the entry.
-    - If there is 1  `Expense` matching the query, the program will prompt the </br>
-      user to confirm the deletion of that  `Expense`.
-- Deletes an expense of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
+    - If there is 1  `Expense` or `Income` matching the query, the program will prompt the </br>
+      user to confirm the deletion of that  `Expense` or `Income` .
+- Deletes an entry of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
 - `NAME` can be any string of characters
 - `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
@@ -219,21 +267,32 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 
 Examples:
 
-- `delete n/Textbook d/120921 a/15`
-- `delete n/Cheese Burger d/010420 a/4.2`
+- `delete n/Textbook d/2012-09-21 a/15`
+- `delete n/Cheese Burger d/2020-04-20 a/4.2`
 
 Examples and expected output:
 
-- If user query only matches 1 `Expense` in the expense list
+- If user query only matches 1 `Expense` or `Income` in the expense list
 
 ```
-{INSERT delete 1 expense}
+delete n/Textbook d/2012-09-21
+Is this what you want to delete?
+    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
 ```
 
-- If user query matches more than 1 `Expense` in the list
+- If user query matches more than 1 `Expense` or `Income` in the list
 
 ```
-{INSERT delete more than 1 expense}
+delete n/Cheese Burger d/2020-04-20 a/4.2
+Here is the list of items containing the keyword.
+    1  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+    2  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
+Enter the index of the item you want to delete. To cancel, type "cancel"
+1
+I have deleted: Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
 ```
 
 ## <a name="edit"></a>Editing an entry: `edit`
@@ -242,12 +301,12 @@ Edits an existing entry </br>
 Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided
-- When editing fields, existing fields of the `Expense` indicated by the user will be </br>
+- When editing fields, existing fields of the `Expense` or `Income` indicated by the user will be </br>
   replaced.
 - Our program searches the entry that matches the fields provided by the user.
-    - If there is 1  `Expense` matching the query, the program will prompt the </br>
-      user to confirm if they wish to edit that Expense.
-    - If there is more than 1 Expense matching the query, the program will return </br>
+    - If there is 1 `Expense` or `Income` matching the query, the program will prompt the </br>
+      user to confirm if they wish to edit that entry.
+    - If there is more than 1 `Expense` or `Income` matching the query, the program will return </br>
       a list for the user to choose from. The user would then have to confirm if </br>
       they wish to edit the entry.
 - `NAME` can be any string of characters
@@ -255,28 +314,86 @@ Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
 - `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList). </br>
 
+Examples:
+
+- `edit n/Textbook d/2012-09-21 a/15`
+- `edit n/Cheese Burger d/2020-04-20 a/4.2`
+
 Examples and expected output:
 
-- If user query only matches 1 `Expense` in the expense list
+- If user query only matches 1 `Expense` or `Income` in the expense list
 
 ```
-{INSERT edit 1 expense}
+edit n/Textbook d/2012-09-21 a/15
+Is this what you want to edit?
+    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+Type "y" if yes. Type "n" if not.
+y
+What would you like to edit?
+a/14
+Got it! I will update the fields accordingly!
 ```
 
-- If user query matches more than 1 `Expense` in the list
+- If user query matches more than 1 `Expense` or `Income` in the list
 
 ```
-{INSERT edit more than 1 expense}
+edit n/Cheese Burger d/2020-04-20 a/4.2
+Here is the list of items containing the keyword.
+    1  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
+    2  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+Enter the index of the item you want to edit. To cancel, type "cancel"
+1
+What would you like to edit?
+c/0
+Got it! I will update the fields accordingly!
+
 ```
 
 ## <a name="cat"></a>View available categories: `cat`
 
 Shows a list of all available categories and its corresponding tag number</br>
 Format: `cat`
+
 Expected Output:
 
 ```
-{INSERT cat expected output}
+Here are the categories and its tag number
+Expenses           | Income
+c/0 FOOD           | c/0 ALLOWANCE
+c/1 ENTERTAINMENT  | c/1 WAGES
+c/2 TRANSPORTATION | c/2 SALARY
+c/3 HOUSEHOLD      | c/3 INTERESTED
+c/4 APPAREL        | c/4 INVESTMENT
+c/5 BEAUTY         | c/5 COMMISSION
+c/6 GIFT           | c/6 GIFT
+c/7 OTHERS         | c/7 OTHERS
+```
+
+## <a name="set"></a>Setting budget: `set`
+
+Set budget for individual categories</br>
+Format: `set c/CATEGORY_NUMBER a/AMOUNT`
+- `set` takes in 2 mandatory fields, `c/CATEGORY_NUMBER` and `a/AMOUNT`
+- `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
+
+Example: If you want to set budget for "FOOD" to $100, type `set c/0 a/100`, as `c/0` correspond to "FOOD"
+
+Expected Output:
+```
+Budget for FOOD set to $100.00
+```
+
+## <a name="budget"></a>View monthly budget: `budget`
+
+view monthly spending and budget for current month</br>
+Format: `budget`
+
+- ``
+
+Expected Output:
+```
+Budget for FOOD set to $100.00
 ```
 
 ## <a name="exit"></a>Exit the program: `exit`
@@ -290,12 +407,13 @@ Expected Output:
 
 
 ## <a name="Commannd Summary"></a>Command Summary
-| action | Format,Examples |
+| Command | Format,Examples |
 | -----| -----|
-|Add |add `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g., `add n/burger a/5 d/2021-10-20 c/0` |
-|Edit |edit `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g., `edit n/burger a/5 d/2021-10-20 c/0`|
-|Delete | delete `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> `e.g., delete n/Cheese Burger d/20-10-2021 a/4.2` |
-|View | {to be confirmed} |
+|Add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g. `add n/burger a/5 d/2021-10-20 c/0`|
+|AddR | `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]` </br> e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH`
+|Edit |`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `edit n/burger a/5 d/2021-10-20 c/0`|
+|Delete | `delete``[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `delete n/Cheese Burger d/20-10-2021 a/4.2` |
+|View |`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]` </br> e.g. `view from 2021-03-25 2022-01-02 by amount ascending`|
 |View categories | `cat` |
 |Help | `help` |
 |Exit | `exit` |

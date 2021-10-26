@@ -1,6 +1,7 @@
 package seedu.duke.parser;
 
 import seedu.duke.entries.Interval;
+import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
 import seedu.duke.utility.Ui;
 
@@ -15,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ValidityChecker {
+    public static final int MIN_CATNUM = 0;
+    public static final int MAX_CATNUM = 7;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
@@ -83,13 +86,14 @@ public class ValidityChecker {
     public static void checkInvalidCatNum(Parser parser) throws MintException {
         try {
             int catNumInt = Integer.parseInt(parser.catNumStr);
-            if (catNumInt < Parser.CAT_NUM_FOOD_INT || catNumInt > Parser.CAT_NUM_OTHERS_INT) {
+            if (!(catNumInt >= MIN_CATNUM && catNumInt <= MAX_CATNUM)) {
                 throw new MintException(MintException.ERROR_INVALID_CATNUM);
             }
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid category number");
             throw new MintException(MintException.ERROR_INVALID_CATNUM);
         }
+
     }
 
     private static void checkInvalidInterval(Parser parser) throws MintException {
@@ -174,9 +178,4 @@ public class ValidityChecker {
         }
     }
 
-    static void checkSetFormat(String[] userInput) throws MintException {
-        if (userInput.length != 2) {
-            throw new MintException(MintException.ERROR_SET_FORMAT_WRONG);
-        }
-    }
 }

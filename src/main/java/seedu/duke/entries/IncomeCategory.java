@@ -1,12 +1,12 @@
 package seedu.duke.entries;
 
 public enum IncomeCategory {
-    FOOD,
-    ENTERTAINMENT,
-    TRANSPORTATION,
-    HOUSEHOLD,
-    APPAREL,
-    BEAUTY,
+    ALLOWANCE,
+    WAGES,
+    SALARY,
+    INTEREST,
+    INVESTMENT,
+    COMMISSION,
     GIFT,
-    OTHERS;
+    OTHERS
 }
