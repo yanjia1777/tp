@@ -6,6 +6,8 @@ import seedu.duke.entries.IncomeCategory;
 import seedu.duke.entries.Entry;
 import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.exception.MintException;
+import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Ui;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -94,17 +96,22 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
-    public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException {
+    public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException, MintException,
+            ArrayIndexOutOfBoundsException {
         File mintEntryList = new File(NORMAL_FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintEntryList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
             String fieldsInTextFile = scanner.nextLine();
+            if (fieldsInTextFile.length() == 0) {
+                continue;
+            }
             String[] params = fieldsInTextFile.split("\\|");
             String type = params[0];
             String catNum = params[1];
             String date = params[2];
             String name = params[3];
             String amount = params[4];
+            ValidityChecker.checkValidityOfFieldsInNormalListTxt(type, name, date, amount, catNum);
             loadEntry(type, name, date, amount, catNum, entryList);
         }
     }
@@ -134,6 +141,10 @@ public class NormalListDataManager extends DataManagerActions {
             Ui.printMissingFileMessage();
             createDirectory();
             createFiles();
+        } catch (MintException e) {
+            System.out.println(e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Ui.printFieldsErrorMessage();
         }
     }
 

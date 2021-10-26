@@ -8,6 +8,7 @@ import seedu.duke.entries.RecurringExpense;
 import seedu.duke.entries.RecurringIncome;
 import seedu.duke.entries.Interval;
 import seedu.duke.exception.MintException;
+import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Ui;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,11 +41,15 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
-    public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException {
+    public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException, MintException,
+            ArrayIndexOutOfBoundsException {
         File mintEntryList = new File(RECURRING_FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintEntryList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
             String fieldsInTextFile = scanner.nextLine();
+            if (fieldsInTextFile.length() == 0) {
+                continue;
+            }
             String[] params = fieldsInTextFile.split("\\|");
             String type = params[0];
             String catNum = params[1];
@@ -53,6 +58,8 @@ public class RecurringListDataManager extends DataManagerActions {
             String amount = params[4];
             String interval = params[5];
             String endDate = params[6];
+            ValidityChecker.checkValidityOfFieldsInNormalListTxt(type, name, date, amount, catNum);
+            ValidityChecker.checkValidityOfFieldsInRecurringListTxt(interval, endDate);
             loadEntry(type, name, date, amount, catNum, interval, endDate, entryList);
         }
     }
@@ -132,6 +139,10 @@ public class RecurringListDataManager extends DataManagerActions {
             Ui.printMissingFileMessage();
             createDirectory();
             createFiles();
+        } catch (MintException e) {
+            System.out.println(e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Ui.printFieldsErrorMessage();
         }
     }
 }
