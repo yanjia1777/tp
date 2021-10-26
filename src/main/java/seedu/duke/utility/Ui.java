@@ -49,6 +49,8 @@ public class Ui {
     protected static final int INDEX_CANCEL = -1;
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
     public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
+    public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
+            + "Please delete the text files and try again!";
 
     public void printGreetings() {
         System.out.println("Hello! I'm Mint");
@@ -165,6 +167,15 @@ public class Ui {
         }
         System.out.println(INDENT + entry);
         System.out.println("Type \"y\" if yes. Type \"n\" if not.");
+        return isConfirmed();
+    }
+
+    public static boolean isConfirmDeleteAll() {
+        System.out.println("Are you sure you want to delete all entries?");
+        return isConfirmed();
+    }
+
+    public static boolean isConfirmed() {
         Scanner in = new Scanner(System.in);
         while (true) {
             String userInput = in.nextLine();
@@ -179,6 +190,14 @@ public class Ui {
                 break;
             }
         }
+    }
+
+    public static void deleteAllConfirmation() {
+        System.out.println("All entries successfully deleted.");
+    }
+
+    public static void deleteAborted() {
+        System.out.println("Delete aborted.");
     }
 
     public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {
@@ -206,6 +225,10 @@ public class Ui {
 
     public static void printMissingFileMessage() {
         System.out.println(MISSING_FILE_MESSAGE);
+    }
+
+    public static void printFieldsErrorMessage() {
+        System.out.println(MISSING_FIELDS_MESSAGE);
     }
 
     //    public static void setLimitMessage(String catNumString, String amount) {
