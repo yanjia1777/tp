@@ -8,6 +8,7 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 - [Quick start](#quickStart)
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
+    - [[For users new to CLI] Changing the Directory](#changingTheDirectory)
 - [Features](#features)
     - [Viewing help](#help)
     - [Adding entries](#add) 
@@ -49,7 +50,7 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 
 Refer to the [Features Section](#features) below for details of each comm
 
-### <a name="changingTheDirectory"></a>Changing the Directory to your Mint.jar file
+### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your Mint.jar file
 1. Right-click on your Mint.jar file and select Properties. There would be a pop up with all the information.
 2. Look for the Location and copy the entire string.
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
