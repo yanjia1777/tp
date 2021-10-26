@@ -56,8 +56,13 @@ public class Entry {
         return amount;
     }
 
-    public String getAmountString() {
-        return Double.toString(amount);
+    public String getAmountIndented() {
+        double length = Double.toString(getAmount()).length();
+        int rightIndent = (int)(8 - length);
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(0, rightIndent, String.format("%,.2f", getAmount())).toString();
     }
 
     public Type getType() {
@@ -83,5 +88,9 @@ public class Entry {
             rightIndent = 0;
         }
         return Ui.getIndent(leftIndent, rightIndent, getCategory().toString()).toString();
+    }
+
+    public String toStringIndented() {
+        return null;
     }
 }

@@ -10,6 +10,7 @@ import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
+import seedu.duke.parser.ViewOptions;
 import seedu.duke.storage.DataManagerActions;
 import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
@@ -25,6 +26,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
@@ -40,7 +42,7 @@ public class RecurringFinanceManager extends FinanceManager {
     public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete,
                                        Entry query) throws MintException {
         ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
-        RecurringEntry entry = null;
+        RecurringEntry entry;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
         } else if (filteredList.size() == 1) {
@@ -354,6 +356,24 @@ public class RecurringFinanceManager extends FinanceManager {
                 break;
             }
         }
+    }
+
+    public ArrayList<Entry> view(ViewOptions viewOptions, ArrayList<Entry> outputArray) {
+        if (viewOptions.fromDate != null) {
+            viewRecurringExpenseBetweenTwoDates(outputArray, viewOptions.fromDate,
+                    viewOptions.endDate);
+        }
+
+        if (viewOptions.isViewAll) {
+            viewAllRecurringExpense(outputArray);
+        } else if (!viewOptions.isViewFrom) {
+            if (viewOptions.month == null) {
+                viewRecurringExpenseByYear(outputArray, viewOptions.year);
+            } else {
+                viewRecurringEntryByMonth(outputArray, viewOptions.month.getValue(), viewOptions.year);
+            }
+        }
+        return outputArray;
     }
 
     public void viewAllRecurringExpense(ArrayList<Entry> expenseList) {

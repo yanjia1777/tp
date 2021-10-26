@@ -225,9 +225,9 @@ public class Ui {
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
-        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount | Every | Until");
+        System.out.println("  Type  |     Category     |    Date    |       Name       |   Amount   | Every |   Until");
         for (Entry entry : outputArray) {
-            System.out.println(entry);
+            System.out.println(entry.toStringIndented());
         }
         System.out.print("                                                Net Total: |");
         if (total < 0) {
@@ -242,7 +242,7 @@ public class Ui {
     public static void printViewRecurring(ArrayList<Entry> entryList) {
         System.out.println("Here is the information about your recurring entries:");
         for (Entry entry : entryList) {
-            System.out.println(entry);
+            System.out.println(entry.toStringIndented());
         }
     }
 
