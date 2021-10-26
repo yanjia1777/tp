@@ -19,14 +19,14 @@
 - [Non-Function Requirements](#nf-req)
 - [Glossary](#glossary)
 - [Instructions for manual testing](#manual-test)
-    -[Adding an Item](#Add)
-    -[Deleting an Item](#delete)
-    -[Editing an Item](#edit)
-    -[Adding a Recurring Item](#Add-recurring-item)
-    -[Deleting a Recurring Item](#Delete-recurring-item)
-    -[Editing a recurring item](#Edit-recurring-item)
-    -[Adding Spending Limits](#set)
-    -[Viewing Spending Limits](#budget)
+    - [Adding an Item](#Add)
+    - [Deleting an Item](#delete)
+    - [Editing an Item](#edit)
+    - [Adding a Recurring Item](#Add-recurring-item)
+    - [Deleting a Recurring Item](#Delete-recurring-item)
+    - [Editing a recurring item](#Edit-recurring-item)
+    - [Adding Spending Limits](#set)
+    - [Viewing Spending Limits](#budget)
 
 ## <a name="acknowledgements"></a>Acknowledgements
 
