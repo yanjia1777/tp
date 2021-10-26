@@ -28,14 +28,14 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 
 ### <a name="settingUp"></a>Setting Up
 
-1. Download the latest version of Mint.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
+1. Download the latest version of tp.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
 
-2. Copy the Mint.jar file to the folder you desire.
+2. Copy the tp.jar file to the folder you desire.
 
 ### <a name="runningTheProgramme"></a>Running the Programme
 1. Open your desired Command Line Interface and ensure that you are in the directory where you saved the folder.
    If you are new to git, click [here](#changingTheDirectory) to see how you can change the directory.
-2. Once you ensured you are in the correct directory, run the programme using the command `java -jar Mint.jar`. 
+2. Once you ensured you are in the correct directory, run the programme using the command `java -jar tp.jar`. 
 3. To test if the programme is working, type a command and press Enter to execute it. 
    e.g., typing `help` and pressing Enter will display the list of commands to help you use our application. 
 
@@ -50,8 +50,8 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 
 Refer to the [Features Section](#features) below for details of each comm
 
-### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your Mint.jar file
-1. Right-click on your Mint.jar file and select Properties. There would be a pop up with all the information.
+### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your tp.jar file
+1. Right-click on your tp.jar file and select Properties. There would be a pop up with all the information.
 2. Look for the Location and copy the entire string.
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
 4. Mint is now at your service!
