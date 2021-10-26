@@ -232,20 +232,14 @@ public class ValidityChecker {
         }
     }
 
-//    public static void checkValidityOfFieldsInBudgetListTxt(String interval, String endDate) throws MintException {
-//        try {
-//            LocalDate.parse(date, dateFormatter);
-//            Double.parseDouble(amount);
-//            checkValidCatNum(Integer.parseInt(catNum));
-//        } catch (DateTimeParseException e) {
-//            logger.log(Level.INFO, "User entered invalid date");
-//            throw new MintException("Unable to load text file! Invalid date detected! "
-//                    + "Did u accidentally edit the file?");
-//        } catch (NumberFormatException e) {
-//            logger.log(Level.INFO, "User entered invalid amount!");
-//            throw new MintException("Unable to load text file! Invalid amount detected! "
-//                    + "Did u accidentally edit the file?");
-//        }
-//    }
-//    }
+    public static void checkValidityOfFieldsInBudgetListTxt(String catNum, String amount) throws MintException {
+        try {
+            Double.parseDouble(amount);
+            checkValidCatNum(Integer.parseInt(catNum));
+        } catch (NumberFormatException e) {
+            logger.log(Level.INFO, "User entered invalid amount!");
+            throw new MintException("Unable to load text file! Invalid amount detected! "
+                    + "Did u accidentally edit the file?");
+        }
+    }
 }
