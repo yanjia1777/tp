@@ -225,8 +225,8 @@ public class Ui {
     }
 
     public int[] printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
-        int maxNameLength = 0;
-        int maxAmountLength = 0;
+        int maxNameLength = 4;
+        int maxAmountLength = 6;
         System.out.println("Here is the list of your entries:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
@@ -267,6 +267,7 @@ public class Ui {
             String interval = entry.getInterval() == Interval.MONTH ? entry.getInterval().toString()
                     : entry.getInterval() + " ";
             String until = entry.getEndDate().toString();
+            until = until.equals("2200-12-31") ? "Forever :D" : until;
             System.out.println(type + " | " + category + " | " + date + " | " + name + " |" + negativeSign + amount
                     + " | " + interval + " | " + until);
         } else {
