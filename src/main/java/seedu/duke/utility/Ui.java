@@ -231,20 +231,7 @@ public class Ui {
         }
         System.out.println("  Type  |     Category     |    Date    |       Name       |    Amount    | Every | Until");
         for (Entry entry : outputArray) {
-            String type = entry.getType() == Type.Expense ? entry.getType().toString() : entry.getType() + " ";
-            StringBuilder category = getCategoryIndented(entry.getCategory());
-            String date = entry.getDate().toString();
-            String name = getNameIndented(entry.getName());
-            String amount = String.format("$%.2f", entry.getAmount());
-            if (entry instanceof RecurringEntry) {
-                String until = entry.getEndDate().toString();
-                String interval = entry.getInterval().toString();
-                System.out.println(type + " | " + category + " | " + date + " | " + name + " | " + amount + " | "
-                        + until + " | " + interval);
-            } else {
-                System.out.println(type + " | " + category + " | " + date + " | " + name + " | " + amount);
-            }
-
+            printViewIndividualEntry(entry);
         }
         System.out.print("                                                Net Total: |");
         if (total < 0) {
@@ -256,10 +243,26 @@ public class Ui {
         System.out.println();
     }
 
+    private static void printViewIndividualEntry(Entry entry) {
+        String type = entry.getType() == Type.Expense ? entry.getType().toString() : entry.getType() + " ";
+        StringBuilder category = getCategoryIndented(entry.getCategory());
+        String date = entry.getDate().toString();
+        String name = getNameIndented(entry.getName());
+        String amount = String.format("$%.2f", entry.getAmount());
+        if (entry instanceof RecurringEntry) {
+            String until = entry.getEndDate().toString();
+            String interval = entry.getInterval().toString();
+            System.out.println(type + " | " + category + " | " + date + " | " + name + " | " + amount + " | "
+                    + until + " | " + interval);
+        } else {
+            System.out.println(type + " | " + category + " | " + date + " | " + name + " | " + amount);
+        }
+    }
+
     public static void printViewRecurring(ArrayList<Entry> entryList) {
         System.out.println("Here is the information about your recurring entries:");
         for (Entry entry : entryList) {
-            System.out.println(entry);
+            printViewIndividualEntry(entry);
         }
     }
 
