@@ -181,58 +181,10 @@ public class NormalFinanceManager extends FinanceManager {
         }
     }
 
-    public ArrayList<Entry> view(ViewOptions viewOptions) throws MintException {
+    public ArrayList<Entry> getCopyOfArray() {
         ArrayList<Entry> outputArray;
         outputArray = new ArrayList<>(entryList);
-
-        if (viewOptions.onlyExpense) {
-            outputArray.removeIf(entry -> entry.getType() != Type.Expense);
-        }
-
-        if (viewOptions.onlyIncome) {
-            outputArray.removeIf(entry -> entry.getType() != Type.Income);
-        }
-
-        if (viewOptions.year != 0) {
-            System.out.println("For the year " + viewOptions.year + ":");
-            Sorter.trimByYear(outputArray, viewOptions.year);
-        }
-
-        if (viewOptions.month != null) {
-            System.out.println("For the month of " + viewOptions.month + ":");
-            Sorter.trimByMonth(outputArray, viewOptions.month);
-        }
-
-        if (viewOptions.fromDate != null) {
-            assert viewOptions.endDate != null : "There should be a valid end date";
-            Sorter.trimFrom(outputArray, viewOptions.fromDate);
-            Sorter.trimEnd(outputArray, viewOptions.endDate);
-        }
-
         return outputArray;
-
-    }
-
-    public void sort(String sortType, ArrayList<Entry> outputArray) throws MintException {
-        assert sortType != null : "sortType should have a command";
-        switch (sortType) {
-        case "name":
-            outputArray.sort(Sorter.compareByName);
-            break;
-        case "date":
-            outputArray.sort(Sorter.compareByDate);
-            break;
-        case "amount":
-            outputArray.sort(Sorter.compareByAmount);
-            break;
-        case "cat":
-            //fallthrough
-        case "category":
-            outputArray.sort(Sorter.compareByCategory);
-            break;
-        default:
-            throw new MintException(MintException.ERROR_INVALID_COMMAND); // Link to MintException
-        }
     }
 
     // common method
