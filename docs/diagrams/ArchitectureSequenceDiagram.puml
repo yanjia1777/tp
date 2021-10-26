@@ -5,7 +5,7 @@ Participant ":Ui" as Ui
 Participant ":Parser" as Parser
 Participant ":DeleteCommand" as DeleteCommand
 Participant ":NormalFinanceManager" as NormalFinanceManager
-Participant ":NormalListDateManager" as NormalListDataManager
+Participant ":NormalListDataManager" as NormalListDataManager
 
 activate Duke
 Duke -> Ui: readUserInput()
