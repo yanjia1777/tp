@@ -213,7 +213,7 @@ public class Parser {
             this.amountStr = description;
             break;
         case "c":
-            this.catNumStr = description;
+            this.catNumStr = description.split(" ",2) [0];
             this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
