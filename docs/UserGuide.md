@@ -5,9 +5,13 @@
 Mint is an all-in-one desktop app for young adults to manage your savings and expenses and set long term financial
 goals. It is optimized for use via a Command Line Interface (CLI).
 
+- [Quick start](#quickStart)
+    - [Setting Up](#settingUp)
+    - [Running the Programme](#runningTheProgramme)
 - [Features](#features)
     - [Viewing help](#help)
-    - [Adding entries](#add)
+    - [Adding entries](#add) 
+    - [Adding recurring expenses](#addR) 
     - [Viewing entries](#view)
     - [Deleting entries](#delete)
     - [Editing entries](#edit)
@@ -16,6 +20,40 @@ goals. It is optimized for use via a Command Line Interface (CLI).
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
 - [Command Summary](#command-summary)
+
+## <a name="quickStart"></a>Quick Start
+> Before you get started, ensure that you have Java 11 or above installed in your Computer. Once that is done, follow
+> the steps below!
+
+### <a name="settingUp"></a>Setting Up
+
+1. Download the latest version of Mint.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v1.0).
+
+2. Copy the Mint.jar file to the folder you desire.
+
+### <a name="runningTheProgramme"></a>Running the Programme
+1. Open your desired Command Line Interface and ensure that you are in the directory where you saved the folder.
+   If you are new to git, click [here](changingTheDirectory) to see how you can change the directory.
+2. Once you ensured you are in the correct directory, run the programme using the command `java -jar Mint.jar`. 
+3. To test if the programme is working, type a command and press Enter to execute it. 
+   e.g., typing `help` and pressing Enter will display the list of commands to help you use our application. 
+
+**Some example commands you can try:**
+
+1. Add an expense to your list: `add a/13 d/2021-12-03 n/Movie ticket c/1` 
+   > This command adds a Movie ticket that you have purchased for 13 dollars on December 3rd 2021 under the 
+   > Entertainment category
+   
+2. Exit the programme: `exit`
+   > This command terminates the program.
+
+Refer to the [Features Section](#features) below for details of each comm
+
+### <a name="changingTheDirectory"></a>Changing the Directory to your Mint.jar file
+1. Right-click on your Mint.jar file and select Properties. There would be a pop up with all the information.
+2. Look for the Location and copy the entire string.
+3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
+4. Mint is now at your service!
 
 ## <a name="features"></a>Features
 
@@ -104,7 +142,7 @@ add income n/Sales a/34 d/2021-02-19 c/1
 I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
 ```
 
-## <a name="add"></a>Adding Recurring Entries: `addR`
+## <a name="addR"></a>Adding Recurring Entries: `addR`
 
 Adds an expense or income to your tracker
 
