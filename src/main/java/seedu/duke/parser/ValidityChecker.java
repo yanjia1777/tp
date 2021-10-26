@@ -180,7 +180,7 @@ public class ValidityChecker {
     }
 
     public static void checkValidCatNum(int catNum) throws MintException {
-        if(!((catNum > -1) && (catNum < 8))) {
+        if (!((catNum > -1) && (catNum < 8))) {
             throw new MintException(ERROR_INVALID_NUMBER);
         }
     }
