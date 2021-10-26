@@ -104,7 +104,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 - `BudgetManager` stores a list of the seven `ExpenseCategory`'s.
 - Currently, `BudgetManager` only interacts in 2 ways
     - when user want to set budget for a specific category
-    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
+    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or 
+      `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
 
 ### <a name="contact-list"></a>ExpenseList
 
