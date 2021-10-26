@@ -182,7 +182,7 @@ public class Parser {
         case "5":
             return IncomeCategory.COMMISSION;
         case "6":
-            return IncomeCategory.GIFTS;
+            return IncomeCategory.GIFT;
         case "7":
             return IncomeCategory.OTHERS;
         default:
