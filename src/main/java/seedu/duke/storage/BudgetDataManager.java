@@ -33,8 +33,8 @@ public class BudgetDataManager extends DataManagerActions {
         while (scanner.hasNext()) {
             String fieldsInTextFile = scanner.nextLine();
             String[] params = fieldsInTextFile.split("\\|");
-            assert(params[0] != null);
-            assert(params[1] != null);
+            assert (params[0] != null);
+            assert (params[1] != null);
             String catNumStr = params[0];
             String amountStr = params[1];
             int catNum = Integer.parseInt(catNumStr);

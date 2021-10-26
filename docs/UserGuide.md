@@ -216,7 +216,7 @@ view income
 Here is the list of your entries:
   Type  |     Category     |    Date    |       Name       | Amount
 Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
-                                                Net Total: | $0.00
+                                                Net Total: | $34.00
 ```
 ```
 view month 4 year 2021
@@ -225,7 +225,7 @@ For the month of APRIL:
 Here is the list of your entries:
   Type  |     Category     |    Date    |       Name       | Amount
 Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
-                                                Net Total: | $0.00
+                                                Net Total: |-$4.20
 ```
 ```
 view from 2021-03-25 2022-01-02 by amount ascending
@@ -234,7 +234,7 @@ Since 2021-03-25 to 2022-01-02:
   Type  |     Category     |    Date    |       Name       | Amount
 Expense |       FOOD       | 2021-04-20 |  Cheese Burger   |-$4.20
 Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
-                                                Net Total: | $0.00
+                                                Net Total: |-$19.20
 ```
 
 ## <a name="delete"></a>Deleting an entry: `delete`
@@ -244,12 +244,12 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided.
 - Our program searches the entry that matches the fields provided by the user.
-    - If there is more than 1 `Expense` matching the query, the program will </br>
+    - If there is more than 1 `Expense` or `Income` matching the query, the program will </br>
       return a list for the user to choose from. The user would then have to </br>
       confirm the deletion of the entry.
-    - If there is 1  `Expense` matching the query, the program will prompt the </br>
-      user to confirm the deletion of that  `Expense`.
-- Deletes an expense of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
+    - If there is 1  `Expense` or `Income` matching the query, the program will prompt the </br>
+      user to confirm the deletion of that  `Expense` or `Income` .
+- Deletes an entry of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
 - `NAME` can be any string of characters
 - `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
@@ -257,21 +257,32 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 
 Examples:
 
-- `delete n/Textbook d/120921 a/15`
-- `delete n/Cheese Burger d/010420 a/4.2`
+- `delete n/Textbook d/2012-09-21 a/15`
+- `delete n/Cheese Burger d/2020-04-20 a/4.2`
 
 Examples and expected output:
 
-- If user query only matches 1 `Expense` in the expense list
+- If user query only matches 1 `Expense` or `Income` in the expense list
 
 ```
-{INSERT delete 1 expense}
+delete n/Textbook d/2012-09-21
+Is this what you want to delete?
+    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
 ```
 
-- If user query matches more than 1 `Expense` in the list
+- If user query matches more than 1 `Expense` or `Income` in the list
 
 ```
-{INSERT delete more than 1 expense}
+delete n/Cheese Burger d/2020-04-20 a/4.2
+Here is the list of items containing the keyword.
+    1  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+    2  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
+Enter the index of the item you want to delete. To cancel, type "cancel"
+1
+I have deleted: Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
 ```
 
 ## <a name="edit"></a>Editing an entry: `edit`
@@ -280,12 +291,12 @@ Edits an existing entry </br>
 Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided
-- When editing fields, existing fields of the `Expense` indicated by the user will be </br>
+- When editing fields, existing fields of the `Expense` or `Income` indicated by the user will be </br>
   replaced.
 - Our program searches the entry that matches the fields provided by the user.
-    - If there is 1  `Expense` matching the query, the program will prompt the </br>
-      user to confirm if they wish to edit that Expense.
-    - If there is more than 1 Expense matching the query, the program will return </br>
+    - If there is 1 `Expense` or `Income` matching the query, the program will prompt the </br>
+      user to confirm if they wish to edit that entry.
+    - If there is more than 1 `Expense` or `Income` matching the query, the program will return </br>
       a list for the user to choose from. The user would then have to confirm if </br>
       they wish to edit the entry.
 - `NAME` can be any string of characters
@@ -293,18 +304,39 @@ Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
 - `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList). </br>
 
+Examples:
+
+- `edit n/Textbook d/2012-09-21 a/15`
+- `edit n/Cheese Burger d/2020-04-20 a/4.2`
+
 Examples and expected output:
 
-- If user query only matches 1 `Expense` in the expense list
+- If user query only matches 1 `Expense` or `Income` in the expense list
 
 ```
-{INSERT edit 1 expense}
+edit n/Textbook d/2012-09-21 a/15
+Is this what you want to edit?
+    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+Type "y" if yes. Type "n" if not.
+y
+What would you like to edit?
+a/14
+Got it! I will update the fields accordingly!
 ```
 
-- If user query matches more than 1 `Expense` in the list
+- If user query matches more than 1 `Expense` or `Income` in the list
 
 ```
-{INSERT edit more than 1 expense}
+edit n/Cheese Burger d/2020-04-20 a/4.2
+Here is the list of items containing the keyword.
+    1  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
+    2  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+Enter the index of the item you want to edit. To cancel, type "cancel"
+1
+What would you like to edit?
+c/0
+Got it! I will update the fields accordingly!
+
 ```
 
 ## <a name="cat"></a>View available categories: `cat`
@@ -328,12 +360,13 @@ Expected Output:
 
 
 ## <a name="Commannd Summary"></a>Command Summary
-| action | Format,Examples |
+| Command | Format,Examples |
 | -----| -----|
-|Add |add `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g., `add n/burger a/5 d/2021-10-20 c/0` |
-|Edit |edit `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g., `edit n/burger a/5 d/2021-10-20 c/0`|
-|Delete | delete `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> `e.g., delete n/Cheese Burger d/20-10-2021 a/4.2` |
-|View | {to be confirmed} |
+|Add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g. `add n/burger a/5 d/2021-10-20 c/0`|
+|AddR | `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]` </br> e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH`
+|Edit |`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `edit n/burger a/5 d/2021-10-20 c/0`|
+|Delete | `delete``[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `delete n/Cheese Burger d/20-10-2021 a/4.2` |
+|View |`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]` </br> e.g. `view from 2021-03-25 2022-01-02 by amount ascending`|
 |View categories | `cat` |
 |Help | `help` |
 |Exit | `exit` |
