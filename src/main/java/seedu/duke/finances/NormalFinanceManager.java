@@ -9,9 +9,12 @@ import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
+import seedu.duke.parser.ViewOptions;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
+import seedu.duke.parser.ViewOptions;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -39,7 +42,7 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
         ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
-        Entry entry = null;
+        Entry entry;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
 
@@ -136,6 +139,7 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
+            Type type = entry.getType();
             String name = entry.getName();
             LocalDate date = entry.getDate();
             double amount = entry.getAmount();
@@ -161,7 +165,7 @@ public class NormalFinanceManager extends FinanceManager {
                     count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
-                    category = ExpenseCategory.values()[pos];
+                    category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
                 }
             }
             if (count == 0) {
@@ -177,138 +181,10 @@ public class NormalFinanceManager extends FinanceManager {
         }
     }
 
-    public void view(String[] argumentArrayInput,
-                     RecurringFinanceManager recurringFinanceManager) throws MintException {
-        String sortType;
-        LocalDate fromDate = null;
-        LocalDate endDate = null;
-        Month month = null;
-        String year = null;
-        boolean isViewFrom = false;
-        boolean isViewAll = true;
-        ArrayList<String> argumentArray;
+    public ArrayList<Entry> getCopyOfArray() {
         ArrayList<Entry> outputArray;
-
-        argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
         outputArray = new ArrayList<>(entryList);
-
-        if (argumentArray.contains("expense")) {
-            outputArray.removeIf(entry -> entry.getType() != Type.Expense);
-        }
-
-        if (argumentArray.contains("income")) {
-            outputArray.removeIf(entry -> entry.getType() != Type.Income);
-        }
-
-        if (argumentArray.contains("by")) {
-            try {
-                sortType = argumentArray.get(argumentArray.indexOf("by") + 1);
-                sort(sortType, outputArray);
-            } catch (IndexOutOfBoundsException e) {
-                throw new MintException(MintException.ERROR_INVALID_SORTTYPE);
-            } catch (MintException e) {
-                throw new MintException(e.getMessage());
-            }
-        }
-
-        if (argumentArray.contains("year")) {
-            try {
-                year = argumentArray.get(argumentArray.indexOf("year") + 1);
-            } catch (IndexOutOfBoundsException e) {
-                year = Integer.toString(LocalDate.now().getYear());
-            }
-            System.out.println("For the year " + year + ":");
-            Sorter.trimByYear(outputArray, year);
-            isViewAll = false;
-        }
-
-        if (argumentArray.contains("month")) {
-            try {
-                month = Month.of(Integer.parseInt(argumentArray.get(argumentArray.indexOf("month") + 1)));
-                if (year == null) {
-                    year = Integer.toString(LocalDate.now().getYear());
-                    Sorter.trimByYear(outputArray, year);
-                }
-            } catch (DateTimeException e) {
-                System.out.println(MintException.ERROR_INVALID_DATE);
-                return;
-            } catch (IndexOutOfBoundsException e) {
-                month = LocalDate.now().getMonth();
-            }
-            System.out.println("For the month of " + month + ":");
-            Sorter.trimByMonth(outputArray, month);
-            isViewAll = false;
-        }
-
-        if (argumentArray.contains("from")) {
-            isViewFrom = true;
-            try {
-                fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
-                try {
-                    endDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 2));
-                } catch (IndexOutOfBoundsException | DateTimeParseException ignored) {
-                    endDate = null;
-                }
-                Sorter.trimFrom(outputArray, fromDate);
-                if (endDate != null) {
-                    Sorter.trimEnd(outputArray, endDate);
-                } else {
-                    endDate = LocalDate.now();
-                }
-
-            } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                System.out.println(MintException.ERROR_INVALID_DATE);
-                return;
-            }
-            recurringFinanceManager.viewRecurringExpenseBetweenTwoDates(outputArray, fromDate,
-                    endDate);
-            isViewAll = false;
-        }
-        if (isViewAll) {
-            recurringFinanceManager.viewAllRecurringExpense(outputArray);
-        } else if (!isViewAll && !isViewFrom) {
-            if (year == null) {
-                year = Integer.toString(LocalDate.now().getYear());
-            }
-            if (month == null) {
-                recurringFinanceManager.viewRecurringExpenseByYear(outputArray, Integer.parseInt(year));
-            } else {
-                recurringFinanceManager.viewRecurringEntryByMonth(outputArray, month.getValue(),
-                        Integer.parseInt(year));
-            }
-        }
-
-        outputArray.sort(Sorter.compareByDate);
-
-        if (argumentArray.contains("ascending") || argumentArray.contains("up")) {
-            Collections.reverse(outputArray);
-        }
-        double total = calculateTotal(outputArray);
-
-        Ui.printView(outputArray, fromDate, endDate, total);
-        if (isViewAll) {
-            Ui.printViewRecurring(recurringFinanceManager.recurringEntryList);
-        }
-    }
-
-    public void sort(String sortType, ArrayList<Entry> outputArray) throws MintException {
-        assert sortType != null : "sortType should have a command";
-        switch (sortType) {
-        case "name":
-            outputArray.sort(Sorter.compareByName);
-            break;
-        case "date":
-            outputArray.sort(Sorter.compareByDate);
-            break;
-        case "amount":
-            outputArray.sort(Sorter.compareByAmount);
-            break;
-        case "category":
-            outputArray.sort(Sorter.compareByCategory);
-            break;
-        default:
-            throw new MintException(MintException.ERROR_INVALID_COMMAND); // Link to MintException
-        }
+        return outputArray;
     }
 
     // common method

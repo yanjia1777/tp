@@ -37,6 +37,7 @@ public class DataManagerActions {
 
     private void createNewFiles(String[] filesToCreate) throws IOException {
         for (String file: filesToCreate) {
+            assert (file != null);
             File myObj = new File(file);
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());

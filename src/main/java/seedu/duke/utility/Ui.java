@@ -1,11 +1,15 @@
 package seedu.duke.utility;
 
 import seedu.duke.budget.Budget;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Type;
+import seedu.duke.entries.RecurringEntry;
+import seedu.duke.entries.Interval;
+import seedu.duke.entries.ExpenseCategory;
 
+import javax.security.sasl.RealmCallback;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -161,6 +165,19 @@ public class Ui {
         }
     }
 
+    public void printCategoryList() {
+        System.out.println("Here are the categories and its tag number\n"
+                + "Expenses           | Income\n"
+                + "c/0 FOOD           | c/0 ALLOWANCE\n"
+                + "c/1 ENTERTAINMENT  | c/1 WAGES\n"
+                + "c/2 TRANSPORTATION | c/2 SALARY\n"
+                + "c/3 HOUSEHOLD      | c/3 INTERESTED\n"
+                + "c/4 APPAREL        | c/4 INVESTMENT\n"
+                + "c/5 BEAUTY         | c/5 COMMISSION\n"
+                + "c/6 GIFT           | c/6 GIFT\n"
+                + "c/7 OTHERS         | c/7 OTHERS\n");
+    }
+
     public static void printMissingFileMessage() {
         System.out.println(MISSING_FILE_MESSAGE);
     }
@@ -207,16 +224,28 @@ public class Ui {
         return missingFieldsErrorMessage;
     }
 
-    public static void printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
+    public int[] printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
+        int maxNameLength = 4;
+        int maxAmountLength = 6;
         System.out.println("Here is the list of your entries:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
-        System.out.println("  Type  |     Category     |    Date    |       Name       | Amount | Every | Until");
         for (Entry entry : outputArray) {
-            System.out.println(entry);
+            if (entry.getName().length() > maxNameLength) {
+                maxNameLength = entry.getName().length();
+            }
+            if (String.format("%,.2f", entry.getAmount()).length() > maxAmountLength) {
+                maxAmountLength = String.format("%,.2f", entry.getAmount()).length();
+            }
         }
-        System.out.print("                                                Net Total: |");
+        System.out.println("  Type  |     Category     |    Date    | " + getNameIndented("Name", maxNameLength)
+                + " | " + getNameIndented("Amount", maxAmountLength + 1) + " | Every |   Until");
+        for (Entry entry : outputArray) {
+            printViewIndividualEntry(entry, maxNameLength, maxAmountLength);
+        }
+        System.out.print(getIndent(maxNameLength, 0,"")
+                + "                                Net Total: |");
         if (total < 0) {
             total = Math.abs(total);
             System.out.print("-$" + String.format("%,.2f", total));
@@ -224,12 +253,31 @@ public class Ui {
             System.out.print(" $" + String.format("%,.2f", total));
         }
         System.out.println();
+        return new int[]{maxNameLength, maxAmountLength};
     }
 
-    public static void printViewRecurring(ArrayList<Entry> entryList) {
+    private void printViewIndividualEntry(Entry entry, int maxNameLength, int maxAmountLength) {
+        String type = entry.getType() == Type.Expense ? entry.getType().toString() : entry.getType() + " ";
+        StringBuilder category = getCategoryIndented(entry.getCategory());
+        String date = entry.getDate().toString();
+        String name = getNameIndented(entry.getName(),maxNameLength);
+        String amount = getAmountIndented(String.format("%,.2f", entry.getAmount()), maxAmountLength);
+        String negativeSign = entry.getType() == Type.Expense ? "-$" : " $";
+        if (entry instanceof RecurringEntry) {
+            String interval = entry.getInterval() == Interval.MONTH ? entry.getInterval().toString()
+                    : entry.getInterval() + " ";
+            String until = entry.getEndDate().toString();
+            System.out.println(type + " | " + category + " | " + date + " | " + name + " |" + negativeSign + amount
+                    + " | " + interval + " | " + until);
+        } else {
+            System.out.println(type + " | " + category + " | " + date + " | " + name + " |" + negativeSign + amount);
+        }
+    }
+
+    public void printViewRecurring(ArrayList<Entry> entryList, int maxNameIndent, int maxAmountIndent) {
         System.out.println("Here is the information about your recurring entries:");
         for (Entry entry : entryList) {
-            System.out.println(entry);
+            printViewIndividualEntry(entry, maxNameIndent, maxAmountIndent);
         }
     }
 
@@ -249,8 +297,45 @@ public class Ui {
         return itemWithIndent;
     }
 
+    public static StringBuilder getCategoryIndented(Enum category) {
+        double length = category.name().length();
+        int leftIndent = (int) Math.floor((16 - length) / 2);
+        int rightIndent = (int) Math.ceil((16 - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return getIndent(leftIndent, rightIndent, category.name());
+    }
+
+    public static String getAmountIndented(String amount, int indent) {
+        double length = amount.length();
+        int rightIndent = (int)(indent - length);
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return getIndent(0, rightIndent, amount).toString();
+    }
+
+    public static String getNameIndented(String name, int indent) {
+        double length = name.length();
+        int leftIndent = (int) Math.floor((indent - length) / 2);
+        int rightIndent = (int) Math.ceil((indent - length) / 2);
+        if (leftIndent < 0) {
+            leftIndent = 0;
+        }
+        if (rightIndent < 0) {
+            rightIndent = 0;
+        }
+        return Ui.getIndent(leftIndent, rightIndent, name).toString();
+    }
+
+
+
     public void printEntryAdded(Entry entry) {
-        System.out.println("I've added :" + entry);
+        System.out.println("I've added: " + entry);
     }
 
     public void printInvalidCommand(String message) {
@@ -275,19 +360,6 @@ public class Ui {
                     budget.getMontlhySpending(entryList),
                     limit);
         }
-    }
-
-    public StringBuilder getCategoryIndented(ExpenseCategory category) {
-        double length = category.name().length();
-        int leftIndent = (int) Math.floor((16 - length) / 2);
-        int rightIndent = (int) Math.ceil((16 - length) / 2);
-        if (leftIndent < 0) {
-            leftIndent = 0;
-        }
-        if (rightIndent < 0) {
-            rightIndent = 0;
-        }
-        return getIndent(leftIndent, rightIndent, category.name());
     }
 
     public void printUnsafeCharacters() {

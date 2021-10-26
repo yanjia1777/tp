@@ -114,17 +114,4 @@ public abstract class FinanceManager {
         }
         return description;
     }
-
-    public double calculateTotal(ArrayList<Entry> list) {
-        double total = 0;
-        for (Entry entry: list) {
-            if (entry.getType() == Type.Expense) {
-                total -= entry.getAmount();
-            } else {
-                total += entry.getAmount();
-            }
-        }
-        return total;
-    }
-
 }
