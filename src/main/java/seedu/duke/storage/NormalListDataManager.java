@@ -101,7 +101,7 @@ public class NormalListDataManager extends DataManagerActions {
         Scanner scanner = new Scanner(mintEntryList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
             String fieldsInTextFile = scanner.nextLine();
-            if(fieldsInTextFile.length() == 0) {
+            if (fieldsInTextFile.length() == 0) {
                 continue;
             }
             String[] params = fieldsInTextFile.split("\\|");

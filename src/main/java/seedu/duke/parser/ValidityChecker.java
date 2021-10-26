@@ -201,12 +201,12 @@ public class ValidityChecker {
             checkValidCatNum(Integer.parseInt(catNum));
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
-            throw new MintException("Unable to load text file! Invalid date detected! " +
-                    "Did u accidentally edit the file?");
+            throw new MintException("Unable to load text file! Invalid date detected! "
+                    + "Did u accidentally edit the file?");
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid amount!");
-            throw new MintException("Unable to load text file! Invalid amount detected! " +
-                    "Did u accidentally edit the file?");
+            throw new MintException("Unable to load text file! Invalid amount detected! "
+                    + "Did u accidentally edit the file?");
         }
     }
 
@@ -215,20 +215,20 @@ public class ValidityChecker {
             LocalDate parsedEndDate = LocalDate.parse(endDate, dateFormatter);
             LocalDate parsedDate = LocalDate.parse(endDate, dateFormatter);
             if (parsedEndDate.isBefore(parsedDate)) {
-                throw new MintException("Unable to load text file! Invalid date detected! " +
-                        "Did u accidentally edit the file?");
+                throw new MintException("Unable to load text file! Invalid date detected! "
+                        + "Did u accidentally edit the file?");
             }
             Interval.valueOf(interval.toUpperCase());
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
-            throw new MintException("Unable to load text file! Invalid date detected! " +
-                    "Did u accidentally edit the file?");
+            throw new MintException("Unable to load text file! Invalid date detected! "
+                    + "Did u accidentally edit the file?");
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
-            throw new MintException("Unable to load text file! Invalid interval detected! " +
-                    "Did u accidentally edit the file?");
+            throw new MintException("Unable to load text file! Invalid interval detected! "
+                    + "Did u accidentally edit the file?");
         }
     }
 }
