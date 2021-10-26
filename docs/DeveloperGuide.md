@@ -56,6 +56,16 @@ The components interact with each other, as shown in the sequence diagram below.
 
 ### <a name="text-ui"></a>Ui Component
 
+![](images/Ui.png)
+
+The UI consists of a `Ui` class that represents the interface that the user interacts with.
+
+The Ui component,
+
+* takes in user inputs.
+* pass them either to the `Logic` component or `Storage` component.
+* outputs entries requested by the user.
+
 ### <a name="logic"></a>Logic Component
 Here's a (partial) class diagram of the `Logic` component.
 
@@ -608,4 +618,83 @@ What would you like to edit?
 a/20
 --------------------------------------------------------------------
 Got it! I will update the fields accordingly!
+```
+
+### :heavy_plus_sign: <a name="View"></a>Viewing entries
+
+**Prerequisites**
+
+- The list must have been initialized.
+
+**Test case 1: View with no fields specified.**
+
+**Usage:**
+
+- `view`
+
+**Expected**
+
+- Program would print a message to notify the user the viewing options that have been selected.
+- A table of entries that fulfill the viewing options will be printed out.
+
+**Example of usage and expected output:**
+
+```
+view
+--------------------------------------------------------------------
+Here is the list of your entries:
+  Type  |     Category     |    Date    |   Name   | Amount  | Every |   Until
+Expense |      OTHERS      | 2021-04-20 | Textbook |-$15.00 
+Expense |      OTHERS      | 2020-01-06 |  Burger  |-$4.20  
+Income  |    INVESTMENT    | 2021-10-27 |  Sales   | $32.00 
+                                        Net Total: | $12.80
+Here is the information about your recurring entries:
+```
+**Test case 2: View with some fields specified.**
+
+**Usage:**
+
+- `view income/expense by [Sort Type] month [month] year [year] from [Start Date] [End Date] up/ascending`
+- Any number of fields can be specified. If the user prefers, additional modifiers can be added for greater
+  specificity. The fields can be specified in any order other than `income/expense`, which has to be right after `view`.
+
+**Expected**
+
+- Program would print a message to notify the user the viewing options that have been selected.
+- A table of entries that fulfill the viewing options will be printed out.
+- Optional fields that are missing would be set to the default pre-determined by the programme.
+
+**Example of usage and expected output:**
+
+```
+view income
+--------------------------------------------------------------------
+Here is the list of your entries:
+  Type  |     Category     |    Date    | Name  | Amount  | Every |   Until
+Income  |    INVESTMENT    | 2021-10-27 | Sales | $32.00 
+                                     Net Total: | $32.00
+Here is the information about your recurring entries:
+```
+```
+view month 4 year 2021
+--------------------------------------------------------------------
+For the year 2021:
+For the month of APRIL:
+Here is the list of your entries:
+  Type  |     Category     |    Date    |   Name   | Amount  | Every |   Until
+Expense |      OTHERS      | 2021-04-20 | Textbook |-$15.00 
+                                        Net Total: |-$15.00
+For the year 2021:
+For the month of APRIL:
+Here is the information about your recurring entries:
+```
+```
+view from 2021-03-25 2022-01-02 by amount ascending
+--------------------------------------------------------------------
+Here is the list of your entries:
+Since 2021-03-25 to 2022-01-02:
+  Type  |     Category     |    Date    |   Name   | Amount  | Every |   Until
+Expense |      OTHERS      | 2021-04-20 | Textbook |-$15.00 
+Income  |    INVESTMENT    | 2021-10-27 |  Sales   | $32.00 
+                                        Net Total: | $17.00
 ```
