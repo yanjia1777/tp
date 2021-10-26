@@ -224,12 +224,12 @@ public class Ui {
         return missingFieldsErrorMessage;
     }
 
-    public static void printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
+    public void printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
         System.out.println("Here is the list of your entries:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
         }
-        System.out.println("  Type  |     Category     |    Date    |       Name       |    Amount    | Every | Until");
+        System.out.println("  Type  |     Category     |    Date    |       Name       |      Amount      | Every | Until");
         for (Entry entry : outputArray) {
             printViewIndividualEntry(entry);
         }
@@ -243,23 +243,23 @@ public class Ui {
         System.out.println();
     }
 
-    private static void printViewIndividualEntry(Entry entry) {
+    private void printViewIndividualEntry(Entry entry) {
         String type = entry.getType() == Type.Expense ? entry.getType().toString() : entry.getType() + " ";
         StringBuilder category = getCategoryIndented(entry.getCategory());
         String date = entry.getDate().toString();
         String name = getNameIndented(entry.getName());
-        String amount = String.format("$%.2f", entry.getAmount());
+        String amount = getNameIndented(String.format("$%.2f", entry.getAmount()));
         if (entry instanceof RecurringEntry) {
-            String until = entry.getEndDate().toString();
             String interval = entry.getInterval().toString();
+            String until = entry.getEndDate().toString();
             System.out.println(type + " | " + category + " | " + date + " | " + name + " | " + amount + " | "
-                    + until + " | " + interval);
+                    + interval + " | " + until);
         } else {
             System.out.println(type + " | " + category + " | " + date + " | " + name + " | " + amount);
         }
     }
 
-    public static void printViewRecurring(ArrayList<Entry> entryList) {
+    public void printViewRecurring(ArrayList<Entry> entryList) {
         System.out.println("Here is the information about your recurring entries:");
         for (Entry entry : entryList) {
             printViewIndividualEntry(entry);
