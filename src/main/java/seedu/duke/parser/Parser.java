@@ -355,12 +355,6 @@ public class Parser {
         return new RecurringIncome(name, date, amount, incomeCategory, interval, endDate);
     }
 
-    private Entry createEntryObject() {
-        date = LocalDate.parse(dateStr, dateFormatter);
-        amount = Double.parseDouble(amountStr);
-        return new Entry(name, date, amount);
-    }
-
     private Command prepareAddEntry(String userInput) {
         try {
             initDateStr();
@@ -390,8 +384,13 @@ public class Parser {
     }
 
     private Command prepareView(String userInput) {
-        parseInputByArguments(userInput);
-        return new ViewCommand(argumentsArray);
+        try {
+            parseInputByArguments(userInput);
+            ViewOptions viewOptions = new ViewOptions(argumentsArray);
+            return new ViewCommand(viewOptions);
+        } catch (MintException e) {
+            return new InvalidCommand(e.getMessage());
+        }
     }
 
     private Command prepareEditEntry(String userInput) {
