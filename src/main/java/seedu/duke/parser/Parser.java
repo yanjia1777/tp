@@ -50,7 +50,8 @@ public class Parser {
     public static final String STRING_CATNUM = "Category number\n";
     public static final String STRING_INTERVAL = "Interval of item\n";
     public static final String STRING_END_DATE = "Interval of item\n";
-    public static final String ERROR_INVALID_CATNUM= "Please enter a valid category number! c/0 to c/7 for expenses, c/0 to c/4 for income";
+    public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7 for expenses, "
+            + "c/0 to c/4 for income";
     public static final int CAT_NUM_FOOD_INT = 0;
     public static final int CAT_NUM_OTHERS_INT = 7;
     public static final String CAT_NUM_FOOD = "0";
