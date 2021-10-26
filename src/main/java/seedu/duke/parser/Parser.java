@@ -213,7 +213,7 @@ public class Parser {
             this.amountStr = description;
             break;
         case "c":
-            this.catNumStr = description;
+            this.catNumStr = description.split(" ",2) [0];
             this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
@@ -310,7 +310,7 @@ public class Parser {
     }
 
     public void parseInputByArguments(String userInput) {
-        argumentsArray = userInput.split(" ");
+        argumentsArray = userInput.split("\\s+");
     }
 
 
@@ -377,10 +377,21 @@ public class Parser {
             initAmountStr();
             initIntervalStr();
             initEndDateStr();
-            ArrayList<String> validTags = parseInputByTags(userInput);
+            boolean isDeleteAll = false;
+            parseInputByArguments(userInput);
+            ArrayList<String> validTags = null;
+            if (argumentsArray.length <= 1) {
+                throw new MintException(MintException.ERROR_NO_DELIMETER);
+            }
+            if (Objects.equals(argumentsArray[1], "all")) {
+                isDeleteAll = true;
+            } else {
+                validTags = parseInputByTags(userInput);
+            }
             Entry expense = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
-            assert validTags.size() >= 1 : "There should be at least one valid tag";
-            return new DeleteCommand(validTags, expense);
+            assert Objects.requireNonNull(validTags).size() >= 1 || isDeleteAll
+                    : "There should be at least one valid tag or is deleting all";
+            return new DeleteCommand(validTags, expense, isDeleteAll);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
@@ -435,10 +446,20 @@ public class Parser {
             initIntervalStr();
             initEndDateStr();
             isRecurring = true;
-            ArrayList<String> validTags = parseInputByTags(userInput);
+            boolean isDeleteAll = false;
+            parseInputByArguments(userInput);
+            ArrayList<String> validTags = null;
+            if (argumentsArray.length <= 1) {
+                throw new MintException(MintException.ERROR_NO_DELIMETER);
+            }
+            if (Objects.equals(argumentsArray[1], "all")) {
+                isDeleteAll = true;
+            } else {
+                validTags = parseInputByTags(userInput);
+            }
             RecurringEntry entry = (type == Type.Income)
                     ? createRecurringIncomeObject() : createRecurringExpenseObject();
-            return new DeleteRecurringCommand(validTags, entry);
+            return new DeleteRecurringCommand(validTags, entry, isDeleteAll);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }

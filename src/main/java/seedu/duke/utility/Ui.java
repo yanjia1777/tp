@@ -38,6 +38,7 @@ public class Ui {
     }
 
     protected static final String INDENT = "    ";
+    public static final String SOLID_LINE = "_______________________________________________________________________\n";
     public static final String LINE = "    ____________________________________________________________";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
     public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
@@ -48,6 +49,8 @@ public class Ui {
     protected static final int INDEX_CANCEL = -1;
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
     public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
+    public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
+            + "Please delete the text files and try again!";
 
     public void printGreetings() {
         System.out.println("Hello! I'm Mint");
@@ -64,25 +67,50 @@ public class Ui {
     }
 
     public void help() {
-        System.out.println("Available tags: n/name d/date a/amount c/category_number\n"
+        System.out.println("Available tags: n/name d/date a/AMOUNT c/CATEGORY_NUMBER i/interval e/endDate\n"
                 + "Order of tags does not matter.\n"
-                + "List of commands available.\n"
                 + "Square brackets \"[ ]\" identifies an optional argument.\n"
-                + " - view\n"
+                + "List of commands available.\n"
+                + SOLID_LINE
+                + "KEYING IN ENTRIES\n"
+                + "- add n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]\n"
+                + INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1\n"
+                + "- add income n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]\n"
+                + INDENT + "Add income. Example: add n/payday a/400 d/2021-10-10 c/1\n"
+                + "- delete [n/{keyword}] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
+                + INDENT + "Delete entries using keyword search. Needs at least 1 tag. Example: delete n/chicken\n"
+                + "- edit [n/{keyword}] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
+                + INDENT + "Edit entries using keyword search. Needs at least 1 tag. Example: edit n/chicken\n"
+                + SOLID_LINE
+                + "RECURRING EXPENSES AND INCOME\n"
+                + "Similar to keying in entries, but includes interval(mandatory for adding), endDate(optional)"
+                + "Commands requires a \"R\", \n"
+                + "e.g. addR, addR income, deleteR, editR\n\n"
+                + "- addR n/NAME a/AMOUNT i/INTERVAL [d/START_DATE] [e/END_DATE] [c/CATEGORY_NUMBER] \n"
+                + INDENT + "Add recurring expenses. Example: add n/spotify subscription a/10 i/MONTH d/2021-09-30 c/1\n"
+                + "- addR income n/NAME a/AMOUNT i/INTERVAL [d/START_DATE] [e/END_DATE] [c/CATEGORY_NUMBER]\n"
+                + INDENT + "Add recurring income. Example: add n/payday a/400 i/MONTH d/2021-10-10 c/1\n"
+                + "- deleteR [n/{keyword}] [i/INTERVAL] [d/START_DATE] [e/END_DATE] [c/CATEGORY_NUMBER]\n"
+                + INDENT + "Delete recurring entries using keyword search. Needs at least 1 tag. "
+                + "Example: deleteR n/spotify\n"
+                + "- editR [n/{keyword}] [a/AMOUNT] [d/DATE] [c/category number]\n"
+                + INDENT + "Edit recurring entries using keyword search. Needs at least 1 tag. "
+                + "Example: editR n/spotify\n"
+                + SOLID_LINE
+                + "BUDGETING\n"
+                + "- set c/category number a/AMOUNT\n"
+                + INDENT + "Set spending limit for individual category. Example: set c/0 100\n"
+                + "- budget\n"
+                + INDENT + "View current month's expenditure and budget\n"
+                + SOLID_LINE
+                + "UTILITIES\n"
+                + "- view\n"
                 + INDENT + "View expenses\n"
                 + "- cat\n"
-                + INDENT + " View categories and category number\n"
-                + "- add n/NAME a/amount [d/YYYY-MM-DD] [c/category_number]\n"
-                + INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1\n"
-                + "- delete [n/{keyword}] [a/amount] [d/YYYY-MM-DD] [c/category_number]\n"
-                + INDENT + "Delete expense using keyword search. Example: delete n/chicken\n"
-                + "- edit [n/{keyword}] [a/amount] [d/YYYY-MM-DD] [c/category number]\n"
-                + INDENT + "Edit expense using keyword search. Example: edit n/chicken\n"
-                + "- limit c/category number a/amount\n"
-                + INDENT + "Set spending limit for individual category. Example: limit c/0 100\n"
-                + "- breakdown\n"
-                + INDENT + "View breakdown on current month's expenses\n"
+                + INDENT + "View categories and category number\n"
                 + "- exit\n"
+                + INDENT + "Exits the app\n"
+                + SOLID_LINE
         );
     }
 
@@ -139,6 +167,15 @@ public class Ui {
         }
         System.out.println(INDENT + entry);
         System.out.println("Type \"y\" if yes. Type \"n\" if not.");
+        return isConfirmed();
+    }
+
+    public static boolean isConfirmDeleteAll() {
+        System.out.println("Are you sure you want to delete all entries?");
+        return isConfirmed();
+    }
+
+    public static boolean isConfirmed() {
         Scanner in = new Scanner(System.in);
         while (true) {
             String userInput = in.nextLine();
@@ -153,6 +190,14 @@ public class Ui {
                 break;
             }
         }
+    }
+
+    public static void deleteAllConfirmation() {
+        System.out.println("All entries successfully deleted.");
+    }
+
+    public static void deleteAborted() {
+        System.out.println("Delete aborted.");
     }
 
     public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {
@@ -180,6 +225,10 @@ public class Ui {
 
     public static void printMissingFileMessage() {
         System.out.println(MISSING_FILE_MESSAGE);
+    }
+
+    public static void printFieldsErrorMessage() {
+        System.out.println(MISSING_FIELDS_MESSAGE);
     }
 
     //    public static void setLimitMessage(String catNumString, String amount) {
@@ -244,7 +293,7 @@ public class Ui {
         for (Entry entry : outputArray) {
             printViewIndividualEntry(entry, maxNameLength, maxAmountLength);
         }
-        System.out.print(getIndent(maxNameLength, 0,"")
+        System.out.print(getIndent(maxNameLength, 0, "")
                 + "                                Net Total: |");
         if (total < 0) {
             total = Math.abs(total);
@@ -260,13 +309,14 @@ public class Ui {
         String type = entry.getType() == Type.Expense ? entry.getType().toString() : entry.getType() + " ";
         StringBuilder category = getCategoryIndented(entry.getCategory());
         String date = entry.getDate().toString();
-        String name = getNameIndented(entry.getName(),maxNameLength);
+        String name = getNameIndented(entry.getName(), maxNameLength);
         String amount = getAmountIndented(String.format("%,.2f", entry.getAmount()), maxAmountLength);
         String negativeSign = entry.getType() == Type.Expense ? "-$" : " $";
         if (entry instanceof RecurringEntry) {
             String interval = entry.getInterval() == Interval.MONTH ? entry.getInterval().toString()
                     : entry.getInterval() + " ";
             String until = entry.getEndDate().toString();
+            until = until.equals("2200-12-31") ? "Forever :D" : until;
             System.out.println(type + " | " + category + " | " + date + " | " + name + " |" + negativeSign + amount
                     + " | " + interval + " | " + until);
         } else {
@@ -312,7 +362,7 @@ public class Ui {
 
     public static String getAmountIndented(String amount, int indent) {
         double length = amount.length();
-        int rightIndent = (int)(indent - length);
+        int rightIndent = (int) (indent - length);
         if (rightIndent < 0) {
             rightIndent = 0;
         }
@@ -331,7 +381,6 @@ public class Ui {
         }
         return Ui.getIndent(leftIndent, rightIndent, name).toString();
     }
-
 
 
     public void printEntryAdded(Entry entry) {

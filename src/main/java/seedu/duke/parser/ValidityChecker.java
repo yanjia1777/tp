@@ -20,6 +20,7 @@ public class ValidityChecker {
     public static final int MAX_CATNUM = 7;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
+    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
 
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
@@ -178,4 +179,67 @@ public class ValidityChecker {
         }
     }
 
+    public static void checkValidCatNum(int catNum) throws MintException {
+        if (!((catNum > -1) && (catNum < 8))) {
+            throw new MintException(ERROR_INVALID_NUMBER);
+        }
+    }
+
+    public static void checkValidityOfFieldsInNormalListTxt(String type, String name, String date, String amount,
+                                                  String catNum) throws MintException {
+        if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
+            throw new MintException("Unable to load text file! Invalid type detected! "
+                    + "Did u accidentally edit the file?");
+        }
+        if (name.equals("")) {
+            throw new MintException("Unable to load text file! Empty description detected! "
+                    + "Did u accidentally edit the file?");
+        }
+        try {
+            LocalDate.parse(date, dateFormatter);
+            Double.parseDouble(amount);
+            checkValidCatNum(Integer.parseInt(catNum));
+        } catch (DateTimeParseException e) {
+            logger.log(Level.INFO, "User entered invalid date");
+            throw new MintException("Unable to load text file! Invalid date detected! "
+                    + "Did u accidentally edit the file?");
+        } catch (NumberFormatException e) {
+            logger.log(Level.INFO, "User entered invalid amount!");
+            throw new MintException("Unable to load text file! Invalid amount detected! "
+                    + "Did u accidentally edit the file?");
+        }
+    }
+
+    public static void checkValidityOfFieldsInRecurringListTxt(String interval, String endDate) throws MintException {
+        try {
+            LocalDate parsedEndDate = LocalDate.parse(endDate, dateFormatter);
+            LocalDate parsedDate = LocalDate.parse(endDate, dateFormatter);
+            if (parsedEndDate.isBefore(parsedDate)) {
+                throw new MintException("Unable to load text file! Invalid date detected! "
+                        + "Did u accidentally edit the file?");
+            }
+            Interval.valueOf(interval.toUpperCase());
+        } catch (DateTimeParseException e) {
+            logger.log(Level.INFO, "User entered invalid date");
+            throw new MintException("Unable to load text file! Invalid date detected! "
+                    + "Did u accidentally edit the file?");
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            logger.log(Level.INFO, "User entered invalid interval");
+            throw new MintException("Unable to load text file! Invalid interval detected! "
+                    + "Did u accidentally edit the file?");
+        }
+    }
+
+    public static void checkValidityOfFieldsInBudgetListTxt(String catNum, String amount) throws MintException {
+        try {
+            Double.parseDouble(amount);
+            checkValidCatNum(Integer.parseInt(catNum));
+        } catch (NumberFormatException e) {
+            logger.log(Level.INFO, "User entered invalid amount!");
+            throw new MintException("Unable to load text file! Invalid amount detected! "
+                    + "Did u accidentally edit the file?");
+        }
+    }
 }

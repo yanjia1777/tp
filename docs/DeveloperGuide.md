@@ -5,14 +5,12 @@
 - [Acknowledgements](#acknowledgements)
 - [Design](#design)
     - [System Architecture](#sys-arch)
-    - [Ui](#text-ui)
-    - [Logic](#logic)
-      - [Command](#command)
-      - [Parser](#parser)
-    - [Model](#model)
-      - [Finance](#finance)
-      - [Budget](#budget)
-    - [Storage](#storage)
+    - [Ui Component](#text-ui)
+    - [Logic Component](#logic)
+    - [Model Component](#model)
+      - [Finance Component](#finance)
+      - [Budget Component](#budget)
+    - [Storage Component](#storage)
 - [Implementation](#implementation)
 - [Product Scope](#scope)
     - [Target user profile](#target)
@@ -45,30 +43,64 @@ the correct sequence.
 
 Apart from `Main`, Mint comprises six main components, namely:
 
-- `Ui`: The UI of the App
-- `Parser`: Extracts user command and relevant queries.
-- `Command`: Execute user command
-- `Finances`: Holds data of user's finances.
-- `Budget`: Holds data of user's budget.
+- `Ui`: The UI of the App 
+- `Logic`: Make sense of user input and execute command
+- `Model`: Holds the data of the App
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
 The components interact with each other, as shown in the sequence diagram below.
 
 ![](images/ArchitectureSequenceDiagram.png)
 
-### <a name="text-ui"></a>Ui
+### <a name="text-ui"></a>Ui Component
 
-### <a name="logic"></a>Logic
+### <a name="logic"></a>Logic Component
+Here's a (partial) class diagram of the `Logic` component.
+
 ![](images/Logic.png)
-### <a name="model"></a>Model
-##### <a name="finance"></a>Finance
-![](images/Finance.png)
-#### <a name="budget"></a>Budget
 
+How the `Logic` component works:
+1. When `Logic` is called upon to parse a command, it uses `Parser` class to parse the user command.
+2. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its </br >
+subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying through `ValidityChecker` class.
+3. `Parser` encapsulates the details of the query as an `Entry` object from `Model`.
+4. `Parser` returns a `Command` object, which is executed by `Main`.
+5. The `Command` can communicate with the `Model` when it is executed </br>
+6. The `Command` saves the resulting data by using the `Storage`.
+7. The result is printed to the user by the `Ui`.
+   (e.g. to add a recurring entry)
+
+The Seuquence Diagram below illustrates the interactions within the `Logic` component for the</br>
+`parseCommand("delete a/12")` API call.
+![](images/LogicSequenceDiagram.png)
+### <a name="model"></a>Model Component
+The `Model` package consists of two components: `Finance` and `Budget`.
+##### <a name="finance"></a>Finance Component
+![](images/Finance.png)
+
+The `Finance` component,
+- stores all the entry data i.e., all `Entry` objects (which are contained in `FinancialManager` object).
+  - `NormalFinanceManager` object stores all the `Income` and `Expense` objects
+  - `RecurringFinanceManager` stores all the `RecurringIncome` and `RecurringExpense` objects
+- performs action on the list of `Entry` objects (e.g., add, delete, etc.)
+- depends on Ui component as some action needs confirmation from the user (e.g. For delete, </br>
+if there are multiple entries that match the tags the user specified, the user needs to choose which one to delete.)
+#### <a name="budget"></a>Budget Component
+
+#### <a name="budget"></a>Budget
+![](images/Budget.png)
+
+The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of the seven `ExpenseCategory`'s.
+- `Budget` is an abstract class
+- `XYZBudget`(`XYZ` is a placeholder for the specified budget e.g., `FoodBudget`), inherits `Budget` and its attributes.
+- `BudgetManager` stores a list of the seven `ExpenseCategory`'s.
+- Currently, `BudgetManager` only interacts in 2 ways
+    - when user want to set budget for a specific category
+    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
 
 ### <a name="contact-list"></a>ExpenseList
 
-### <a name="storage"></a>DataManager
+### <a name="storage"></a>Storage Component
 
 **How the `Storage` component works:**
 
@@ -110,13 +142,15 @@ The components interact with each other, as shown in the sequence diagram below.
 ## <a name="scope"></a>Product scope
 
 ### <a name="target"></a>Target user profile
-- wants to find things fast
+- has a need to track their expenses and savings
+- prefer desktop apps over other types
 - can type fast
+- prefers typing to mouse interactions
 - is reasonably comfortable using CLI apps
 
 ### <a name="value"></a>Value proposition
 
-A simple way to keep track of your expenses
+A smart and simple way to keep track of your expenses
 
 ## <a name="stories"></a>User Stories
 
@@ -160,7 +194,7 @@ A simple way to keep track of your expenses
 
 **Usage:**
 
-- Add an Expense: `add a/[amount] n/[description] d/[date] c/[categoryNumber]` 
+- Add an Expense: `add a/[amount] n/[description] d/[date] c/[categoryNumber]`
 - Add an Income: `add income a/[amount] n/[description] d/[date] c/[categoryNumber]`
 - Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
@@ -321,7 +355,7 @@ Ok. I have cancelled the process.
 - Editing an Income: `edit [include all fields of income you would like to edit]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
-  
+
 :bomb: **CAUTION**
 - Do not edit the same field multiple times in one command.
 
@@ -411,7 +445,7 @@ Got it! I will update the fields accordingly!
 **Usage:**
 
 - Adding a Recurring Expense:`addR a/[amount] n/[description] c/[category] i/[interval] e/[end date] d/[start date]`
-- Adding a Recurring Income:`addR income a/[amount] n/[description] c/[category] i/[interval] e/[end date] 
+- Adding a Recurring Income:`addR income a/[amount] n/[description] c/[category] i/[interval] e/[end date]
   d/[start date]`
 - Some fields such as `n/[description]`, `a/[amount]` and `i/[interval]` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
@@ -440,7 +474,7 @@ I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Fore
 **Usage:**
 
 - Adding a Recurring Expense:`addR [include some fields of the expense you would like to add as recurring expense]`
-- Adding a Recurring Income:`addR income [include some fields of the expense you would like to add as 
+- Adding a Recurring Income:`addR income [include some fields of the expense you would like to add as
   recurring expense]`
 - Some fields such as `n/[description]`, `a/[amount]` and `i/[interval]` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
@@ -490,9 +524,9 @@ I've added: Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | For
 
 **Usage:**
 
-- Deleting a Recurring Expense: `deleteR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval] 
+- Deleting a Recurring Expense: `deleteR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval]
   e/[endDate]`
-- Deleting a Recurring Income: `deleteR income a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval] 
+- Deleting a Recurring Income: `deleteR income a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval]
   e/[endDate]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater.
   specificity. The fields can be specified in any order.
@@ -631,7 +665,7 @@ Ok. I have cancelled the process.
 - The list must have expenses that have already been added.
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
-  
+
 **Test case 1: Editing an existing recurring item with all fields specified.**
 
 **Usage:**
@@ -681,10 +715,10 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit. 
+- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
 - The input fields of the selected items are updated and there would be a message printed to notify the users that
   the changes have been made.
-  
+
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```

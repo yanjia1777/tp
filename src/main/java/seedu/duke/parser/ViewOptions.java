@@ -51,7 +51,6 @@ public class ViewOptions {
             } catch (IndexOutOfBoundsException e) {
                 year = LocalDate.now().getYear();
             }
-            isViewAll = false;
         }
 
         if (argumentArray.contains("month")) {
@@ -65,7 +64,6 @@ public class ViewOptions {
             } catch (IndexOutOfBoundsException e) {
                 month = LocalDate.now().getMonth();
             }
-            isViewAll = false;
         }
 
         if (argumentArray.contains("from")) {
