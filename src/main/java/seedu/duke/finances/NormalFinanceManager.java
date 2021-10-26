@@ -84,7 +84,7 @@ public class NormalFinanceManager extends FinanceManager {
                 filteredList = Filter.filterEntryByAmount(query.getAmount(), filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterEntryByCategory(query.getCategory(), filteredList);
+                filteredList = Filter.filterEntryByCategory(query.getCategory().ordinal(), filteredList);
                 break;
             default:
                 throw new MintException("Unable to locate tag");
