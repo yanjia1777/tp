@@ -17,8 +17,7 @@ import java.util.logging.Logger;
 
 public class ValidityChecker {
     public static final int MIN_CATNUM = 0;
-    public static final int MAX_CATNUM_INCOME = 4;
-    public static final int MAX_CATNUM_EXPENSE = 7;
+    public static final int MAX_CATNUM = 7;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
 
@@ -87,16 +86,14 @@ public class ValidityChecker {
     public static void checkInvalidCatNum(Parser parser) throws MintException {
         try {
             int catNumInt = Integer.parseInt(parser.catNumStr);
-            if (parser.type == Type.Income && !(catNumInt >= MIN_CATNUM && catNumInt <= MAX_CATNUM_INCOME)) {
-                throw new MintException(MintException.ERROR_INVALID_CATNUM_INCOME);
-            }
-            if (parser.type == Type.Expense && !(catNumInt >= MIN_CATNUM && catNumInt <= MAX_CATNUM_EXPENSE)) {
-                throw new MintException(MintException.ERROR_INVALID_CATNUM_EXPENSE);
+            if (!(catNumInt >= MIN_CATNUM && catNumInt <= MAX_CATNUM)) {
+                throw new MintException(MintException.ERROR_INVALID_CATNUM);
             }
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid category number");
-            throw new MintException(MintException.ERROR_INVALID_CATNUM_EXPENSE);
+            throw new MintException(MintException.ERROR_INVALID_CATNUM);
         }
+
     }
 
     private static void checkInvalidInterval(Parser parser) throws MintException {
