@@ -17,10 +17,12 @@ Using this guide, you will be able to navigate the app and use all of its functi
 - [Features](#features)
     - [Viewing help](#help)
     - [Adding entries](#add) 
-    - [Adding recurring expenses](#addR) 
+    - [Adding recurring entries](#addR) 
     - [Viewing entries](#view)
     - [Deleting entries](#delete)
+    - [Deleting recurring entries](#deleteR)
     - [Editing entries](#edit)
+    - [Editing recurring entries](#editR)
     - [Viewing categories](#cat)
     - [Setting budget](#set)
     - [View monthly budget ](#budget)
@@ -154,7 +156,7 @@ I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
 
 Adds an expense or income to your tracker
 
-Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] i/INTERVAL [e/END_DATE]`
+Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
 
 - Adds an entry of the specified `NAME`, `DATE`, `AMOUNT`, `INTERVAL`, `END_DATE` and `CATEGORY_NUMBER`
 - If `income` is included after `add`, entry will be an income entry, else it will be an expense entry.
@@ -165,25 +167,25 @@ Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] i/INTERVAL [
 - `CATEGORY_NUMBER(optional)` - Please refer to the [available categories](#categoryList). </br>
   If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be C/7 which is `others`.
   </br>
-- `INTERVAL` can be either `MONTH` or `YEAR` depending on how often one receives the `INCOME` or has to pay for the
-    expenditure.
-- `END_DATE` can be any of the [acceptable date formats](#dateFormat). </br>
+- `INTERVAL` can be a string of either `MONTH` or `YEAR` depending on how often one receives the `INCOME` or has to pay for the
+    expenditure. The string is not case-sensitive.
+- `END_DATE(optional)` can be any of the [acceptable date formats](#dateFormat). </br>
    If the date is not specified, the default date set would be forever.
    
 Examples:
 - `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH`
-- `addR a/5 n/phone bills c/4 i/MONTH`
-- `addR a/5 n/phone bills d/2021-10-10 i/MONTH`
+- `addR a/5 n/phone bills c/4 i/year e/2023-10-26`
+- `addR a/5 n/phone bills d/2021-10-10 i/mOnTh`
 
 Examples and expected Output
 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
-I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2200-12-31
-addR a/5 n/phone bills c/4 i/MONTH
-I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | MONTH | 2200-12-31
-addR a/5 n/phone bills d/2021-10-10 i/MONTH
-I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | 2200-12-31
+I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+addR a/5 n/phone bills c/4 i/year
+I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | YEAR | 2023-10-26
+addR a/5 n/phone bills d/2021-10-10 i/mOnTh
+I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
 ```
 
 ## <a name="view"></a>Viewing all entries: `view`
@@ -295,6 +297,56 @@ Enter the index of the item you want to delete. To cancel, type "cancel"
 I have deleted: Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
 ```
 
+## <a name="deleteR"></a>Deleting a recurring entry: `deleteR`
+Deletes an existing recurring entry. </br>
+Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
+
+- At least one of the optional fields must be provided.
+- Our program searches the entry that matches the fields provided by the user.
+    - If there is more than 1 `RecurringExpense` or `RecurringIncome` matching the query,</br> the program will 
+      return a list for the user to choose from. The user would then have to </br>
+      confirm the deletion of the entry.
+    - If there is 1  `RecurringExpense` or `RecurringIncome` matching the query,</br> the program will prompt the 
+      user to confirm the deletion of that  `Expense` or `Income` .
+- Deletes an entry of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
+- `NAME` can be any string of characters
+- `DATE` can be any of the [acceptable date formats](#dateFormat).
+- `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
+- `INTERVAL` can be a string of either `MONTH` or `YEAR`. The string is not case-sensitive.
+- `END_DATE` can be any of the [acceptable date formats](#dateFormat).
+
+Examples:
+
+- `deleteR n/Netflix`
+- `deleteR i/mOnTh`
+
+Examples and expected output:
+
+- If user query only matches 1 `RecurringExpense` or `RecurringIncome` in the expense list
+
+```
+deleteR n/Netflix
+Is this what you want to delete?
+    Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
+I have deleted: Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15.00 | MONTH | Forever :D
+```
+
+- If user query matches more than 1 `RecurringExpense` or `RecurringIncome` in the list
+
+```
+deleteR i/mOnTh
+Here is the list of items containing the keyword.
+    1  Income  |      OTHERS      | 2020-04-20 |     Allowance    | $600.0 | MONTH | Forever :D
+    2  Expense |  TRANSPORTATION  | 2020-04-20 |  Consesion card  | -$4.20 | MONTH | 2023-12-12
+Enter the index of the item you want to delete. To cancel, type "cancel"
+1
+I have deleted: Income  |      OTHERS      | 2020-04-20 |     Allowance    | $600.0 | MONTH | Forever :D
+```
+
+
 ## <a name="edit"></a>Editing an entry: `edit`
 
 Edits an existing entry </br>
@@ -348,6 +400,7 @@ c/0
 Got it! I will update the fields accordingly!
 
 ```
+## <a name="editR"></a>Editing a recurring entry: `editR`
 
 ## <a name="cat"></a>View available categories: `cat`
 
