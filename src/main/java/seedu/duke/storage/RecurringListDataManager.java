@@ -26,7 +26,7 @@ public class RecurringListDataManager extends DataManagerActions {
 
     public void appendToMintRecurringListTextFile(Entry entry) {
         // Format of MintRecurring.txt file: Expense|7|2021-10-25|SALARY|10000.0|MONTH
-        FileWriter fileWriter = null;
+        FileWriter fileWriter;
         try {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
             fileWriter = new FileWriter(RECURRING_FILE_PATH, true);
@@ -88,6 +88,14 @@ public class RecurringListDataManager extends DataManagerActions {
             lineRemoval(originalString, fileContent);
             editTextFile(fileContent);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAll() {
+        try {
+            new FileWriter(RECURRING_FILE_PATH, false).close();
+        } catch (IOException e){
             e.printStackTrace();
         }
     }

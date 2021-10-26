@@ -192,4 +192,8 @@ public class NormalFinanceManager extends FinanceManager {
         return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount();
     }
+
+    public void deleteAll() {
+        entryList.clear();
+    }
 }

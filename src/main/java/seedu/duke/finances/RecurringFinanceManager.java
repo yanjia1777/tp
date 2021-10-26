@@ -370,4 +370,8 @@ public class RecurringFinanceManager extends FinanceManager {
         }
         viewRecurringExpenseBetweenTwoDates(expenseList, earliestDate, LocalDate.now());
     }
+
+    public void deleteAll() {
+        recurringEntryList.clear();
+    }
 }

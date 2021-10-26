@@ -139,6 +139,15 @@ public class Ui {
         }
         System.out.println(INDENT + entry);
         System.out.println("Type \"y\" if yes. Type \"n\" if not.");
+        return isConfirmed();
+    }
+
+    public static boolean isConfirmDeleteAll() {
+        System.out.println("Are you sure you want to delete all entries?");
+        return isConfirmed();
+    }
+
+    public static boolean isConfirmed() {
         Scanner in = new Scanner(System.in);
         while (true) {
             String userInput = in.nextLine();
@@ -153,6 +162,14 @@ public class Ui {
                 break;
             }
         }
+    }
+
+    public static void deleteAllConfirmation() {
+        System.out.println("All entries successfully deleted.");
+    }
+
+    public static void deleteAborted() {
+        System.out.println("Delete aborted.");
     }
 
     public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {

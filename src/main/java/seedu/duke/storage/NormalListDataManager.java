@@ -27,7 +27,7 @@ public class NormalListDataManager extends DataManagerActions {
 
     public void appendToEntryListTextFile(Entry entry) {
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
-        FileWriter fileWriter = null;
+        FileWriter fileWriter;
         try {
             fileWriter = new FileWriter(NORMAL_FILE_PATH, true);
             fileWriter.write(entry.getType().toString() + TEXT_DELIMITER + entry.getCategory().ordinal()
@@ -66,6 +66,14 @@ public class NormalListDataManager extends DataManagerActions {
             lineRemoval(originalString, fileContent);
             editTextFile(fileContent);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAll() {
+        try {
+            new FileWriter(NORMAL_FILE_PATH, false).close();
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
