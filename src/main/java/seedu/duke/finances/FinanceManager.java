@@ -114,10 +114,4 @@ public abstract class FinanceManager {
         }
         return description;
     }
-
-    protected void checkValidCatNum(int catNum) throws MintException {
-        if(!((catNum > -1) && (catNum < 8))) {
-            throw new MintException(ERROR_INVALID_NUMBER);
-        }
-    }
 }
