@@ -87,7 +87,8 @@ Format: `add [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
 - `CATEGORY_NUMBER(optional)` - Please refer to the [available categories](#categoryList). </br>
   If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be C/7 which is `others`.
   </br>
-  Examples:
+  
+Examples:
 - `add n/Textbook a/15`
 - `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
 - `add income n/Sales a/34 d/2021-02-19 c/1`
@@ -118,8 +119,9 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
 - If `YEAR` is not specified, the default will be the current year.
 - `STARTDATE(optional)` and `ENDDATE(optional)` can be any of the [acceptable date formats](#dateFormat). </br>
 - If `STARTDATE` is specified but `ENDDATE` is not specified, the default `ENDDATE` set would be the current date.
-- `up(optional)` or `ascending(optional)` if appended with sort, will sort the list in ascending order, else the default will sort the list in descending order.
-
+- `up(optional)` or `ascending(optional)` if appended with sort, will sort the list in ascending 
+  , else the default will sort the list in descending order.
+  
 Examples:
 - `view`
 - `view income`
