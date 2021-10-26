@@ -45,11 +45,9 @@ the correct sequence.
 
 Apart from `Main`, Mint comprises six main components, namely:
 
-- `Ui`: The UI of the App
-- `Parser`: Extracts user command and relevant queries.
-- `Command`: Execute user command
-- `Finances`: Holds data of user's finances.
-- `Budget`: Holds data of user's budget.
+- `Ui`: The UI of the App 
+- `Logic`: Make sense of user input and execute command
+- `Model`: Holds the data of the App
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
 The components interact with each other, as shown in the sequence diagram below.
@@ -64,7 +62,15 @@ The components interact with each other, as shown in the sequence diagram below.
 ##### <a name="finance"></a>Finance
 ![](images/Finance.png)
 #### <a name="budget"></a>Budget
+![](images/Budget.png)
 
+The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of the seven `ExpenseCategory`'s.
+- `Budget` is an abstract class
+- `XYZBudget`(`XYZ` is a placeholder for the specified budget e.g., `FoodBudget`), inherits `Budget` and its attributes.
+- `BudgetManager` stores a list of the seven `ExpenseCategory`'s.
+- Currently, `BudgetManager` only interacts in 2 ways
+    - when user want to set budget for a specific category
+    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
 
 ### <a name="contact-list"></a>ExpenseList
 
@@ -110,13 +116,15 @@ The components interact with each other, as shown in the sequence diagram below.
 ## <a name="scope"></a>Product scope
 
 ### <a name="target"></a>Target user profile
-- wants to find things fast
+- has a need to track their expenses and savings
+- prefer desktop apps over other types
 - can type fast
+- prefers typing to mouse interactions
 - is reasonably comfortable using CLI apps
 
 ### <a name="value"></a>Value proposition
 
-A simple way to keep track of your expenses
+A smart and simple way to keep track of your expenses
 
 ## <a name="stories"></a>User Stories
 
@@ -154,8 +162,9 @@ A simple way to keep track of your expenses
 **Prerequisites**
 
 - The list must have been initialized.
-
-**Test case 1: Adding an existing expense with all fields specified.**
+  <br/>
+  
+**Test case 1: Adding an expense with all fields specified.**
 
 **Usage:**
 
@@ -167,16 +176,18 @@ A simple way to keep track of your expenses
 
 - Program would print a message to notify the user that the item has been added.
 - An expense would then be added to the list.
-- Optional fields that are missing would be set to the default pre-determined by the programme.
+- Optional fields that are missing would be set to the default pre-determined by the program.
 
 **Example of usage and expected output:**
 
 ```
 add a/15 d/2021-12-03 n/Textbook c/7
 --------------------------------------------------------------------
-I've added :Expense |       OTHERS       | 2021-12-03 |     Textbook     |-$15.00
+I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
-**Test case 2: Adding an existing expense with some fields specified.**
+<br/>
+
+**Test case 2: Adding an expense with some fields specified.**
 
 **Usage:**
 
@@ -195,17 +206,17 @@ I've added :Expense |       OTHERS       | 2021-12-03 |     Textbook     |-$15.0
 ```
 add a/15 d/2021-12-03 n/Textbook
 --------------------------------------------------------------------
-I've added :Expense |      OTHERS      | 2021-12-03 |     Textbook     |-$15.00
+I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
 ```
 add a/5 n/Chicken Rice c/0
 --------------------------------------------------------------------
-I've added :Expense |       FOOD       | 2021-10-26 |   Chicken Rice   |-$5.00
+I've added: Expense  | FOOD | 2021-10-27 | Chicken Rice | $5.00
 ```
 ```
 add n/Cheese Burger a/23.5
 --------------------------------------------------------------------
-I've added :Expense |      OTHERS      | 2021-10-26 |  Cheese Burger   |-$23.50
+I've added: Expense  | OTHERS | 2021-10-27 | Cheese Burger | $23.50
 ```
 
 ### :x: <a name="delete"></a>Deleting an expense
@@ -360,9 +371,9 @@ Got it! I will update the fields accordingly!
 **Example of usage and expected output:**
 
 ```
-addR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
+addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH e/2023-04-15
 --------------------------------------------------------------------
-I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
+I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
 **Test case 2: Adding an existing recurring expense with some fields specified.**
 
@@ -381,17 +392,17 @@ I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
 --------------------------------------------------------------------
-I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2200-12-31
+I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 ```
 ```
-addR a/5 n/phone bills c/4 i/MONTH
+addR a/5 n/phone bills c/3 i/MONTH
 --------------------------------------------------------------------
-I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | MONTH | 2200-12-31
+I've added: Expense | HOUSEHOLD| 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 ```
 addR a/5 n/phone bills d/2021-10-10 i/MONTH
 --------------------------------------------------------------------
-I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | 2200-12-31
+I've added: Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 ### :alarm_clock: :x: <a name="Delete recurring expense"></a>Deleting a Recurring Expense
 
@@ -415,15 +426,15 @@ I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 |
 **Example of usage and expected output:**
 
 ```
-deleteR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
+deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH e/2023-04-15
 --------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
+    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
 --------------------------------------------------------------------
-I have deleted: Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15```
+I have deleted: Expense | APPAREL | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
 **Test case 2: Deleting an existing recurring expense with some fields specified.**
 
@@ -449,7 +460,7 @@ Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
 --------------------------------------------------------------------
-I have deleted: Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D```
+I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 ```
 ```
 deleteR a/5 n/phone bills c/4 i/MONTH
