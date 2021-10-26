@@ -13,6 +13,7 @@ import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.InvalidCommand;
 import seedu.duke.commands.SetBudgetCommand;
 import seedu.duke.commands.ViewBudgetCommand;
+import seedu.duke.commands.ViewCategoriesCommand;
 import seedu.duke.commands.ViewCommand;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
@@ -49,6 +50,8 @@ public class Parser {
     public static final String STRING_CATNUM = "Category number\n";
     public static final String STRING_INTERVAL = "Interval of item\n";
     public static final String STRING_END_DATE = "Interval of item\n";
+    public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7 for expenses, "
+            + "c/0 to c/4 for income";
     public static final int CAT_NUM_FOOD_INT = 0;
     public static final int CAT_NUM_OTHERS_INT = 7;
     public static final String CAT_NUM_FOOD = "0";
@@ -59,13 +62,13 @@ public class Parser {
     public static final String DELETE_RECURRING = "deleteR";
     public static final String EDIT_ENTRY = "edit";
     public static final String VIEW = "view";
+    public static final String VIEW_ALL_CATEGORIES = "cat";
     public static final String EDIT_RECURRING = "editR";
     public static final String SET_BUDGET = "set";
     public static final String VIEW_BUDGET = "budget";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
-    private static final String ERROR_FIRST_TAG = "Invalid tags entered";
     protected String command;
     protected String name;
     protected String dateStr;
@@ -160,30 +163,30 @@ public class Parser {
         case "7":
             return ExpenseCategory.OTHERS;
         default:
-            throw new MintException("Invalid category");
+            throw new MintException(ERROR_INVALID_CATNUM);
         }
     }
 
     private IncomeCategory setIncomeCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
         case "0":
-            return IncomeCategory.FOOD;
+            return IncomeCategory.ALLOWANCE;
         case "1":
-            return IncomeCategory.ENTERTAINMENT;
+            return IncomeCategory.WAGES;
         case "2":
-            return IncomeCategory.TRANSPORTATION;
+            return IncomeCategory.SALARY;
         case "3":
-            return IncomeCategory.HOUSEHOLD;
+            return IncomeCategory.INTEREST;
         case "4":
-            return IncomeCategory.APPAREL;
+            return IncomeCategory.INVESTMENT;
         case "5":
-            return IncomeCategory.BEAUTY;
+            return IncomeCategory.COMMISSION;
         case "6":
             return IncomeCategory.GIFT;
         case "7":
             return IncomeCategory.OTHERS;
         default:
-            throw new MintException("Invalid category");
+            throw new MintException(ERROR_INVALID_CATNUM);
         }
     }
 
@@ -494,6 +497,8 @@ public class Parser {
             return new ViewBudgetCommand();
         case VIEW:
             return prepareView(userInput);
+        case VIEW_ALL_CATEGORIES:
+            return new ViewCategoriesCommand();
         case HELP:
             return new HelpCommand();
         case EXIT:
