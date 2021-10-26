@@ -213,7 +213,7 @@ public class Parser {
             this.amountStr = description;
             break;
         case "c":
-            this.catNumStr = description;
+            this.catNumStr = description.split(" ",2) [0];
             this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
@@ -310,7 +310,7 @@ public class Parser {
     }
 
     public void parseInputByArguments(String userInput) {
-        argumentsArray = userInput.split(" ");
+        argumentsArray = userInput.split("\\s+");
     }
 
 
