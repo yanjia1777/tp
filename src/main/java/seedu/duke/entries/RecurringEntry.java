@@ -23,7 +23,7 @@ public class RecurringEntry extends Entry {
     }
 
     public String getIntervalIndented() {
-        if(interval == Interval.YEAR) {
+        if (interval == Interval.YEAR) {
             return "YEAR ";
         } else {
             return "MONTH";
