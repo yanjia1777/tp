@@ -167,20 +167,14 @@ public class Parser {
     private IncomeCategory setIncomeCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
         case "0":
-            return IncomeCategory.FOOD;
+            return IncomeCategory.ALLOWANCE;
         case "1":
-            return IncomeCategory.ENTERTAINMENT;
+            return IncomeCategory.SALARY;
         case "2":
-            return IncomeCategory.TRANSPORTATION;
+            return IncomeCategory.INVESTMENT;
         case "3":
-            return IncomeCategory.HOUSEHOLD;
+            return IncomeCategory.COMMISSION;
         case "4":
-            return IncomeCategory.APPAREL;
-        case "5":
-            return IncomeCategory.BEAUTY;
-        case "6":
-            return IncomeCategory.GIFT;
-        case "7":
             return IncomeCategory.OTHERS;
         default:
             throw new MintException("Invalid category");
