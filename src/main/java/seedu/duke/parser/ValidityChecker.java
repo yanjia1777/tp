@@ -188,12 +188,12 @@ public class ValidityChecker {
     public static void checkValidityOfFieldsInNormalListTxt(String type, String name, String date, String amount,
                                                   String catNum) throws MintException {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
-            throw new MintException("Unable to load text file! Invalid type detected! " +
-                    "Did u accidentally edit the file?");
+            throw new MintException("Unable to load text file! Invalid type detected! "
+                    + "Did u accidentally edit the file?");
         }
         if (name.equals("")) {
-            throw new MintException("Unable to load text file! Empty description detected! " +
-                    "Did u accidentally edit the file?");
+            throw new MintException("Unable to load text file! Empty description detected! "
+                    + "Did u accidentally edit the file?");
         }
         try {
             LocalDate.parse(date, dateFormatter);
@@ -231,4 +231,21 @@ public class ValidityChecker {
                     + "Did u accidentally edit the file?");
         }
     }
+
+//    public static void checkValidityOfFieldsInBudgetListTxt(String interval, String endDate) throws MintException {
+//        try {
+//            LocalDate.parse(date, dateFormatter);
+//            Double.parseDouble(amount);
+//            checkValidCatNum(Integer.parseInt(catNum));
+//        } catch (DateTimeParseException e) {
+//            logger.log(Level.INFO, "User entered invalid date");
+//            throw new MintException("Unable to load text file! Invalid date detected! "
+//                    + "Did u accidentally edit the file?");
+//        } catch (NumberFormatException e) {
+//            logger.log(Level.INFO, "User entered invalid amount!");
+//            throw new MintException("Unable to load text file! Invalid amount detected! "
+//                    + "Did u accidentally edit the file?");
+//        }
+//    }
+//    }
 }
