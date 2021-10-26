@@ -95,7 +95,7 @@ public class RecurringListDataManager extends DataManagerActions {
     public void deleteAll() {
         try {
             new FileWriter(RECURRING_FILE_PATH, false).close();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
