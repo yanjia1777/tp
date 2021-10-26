@@ -53,7 +53,9 @@ Apart from `Main`, Mint comprises six main components, namely:
 - `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
 
 The components interact with each other, as shown in the sequence diagram below.
+
 ![](images/ArchitectureSequenceDiagram.png)
+
 ### <a name="text-ui"></a>Ui
 
 ### <a name="logic"></a>Logic
@@ -118,19 +120,18 @@ A simple way to keep track of your expenses
 
 ## <a name="stories"></a>User Stories
 
-{UNCOMPLETED}
-
 |Version| As a ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
 |v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
-|v1.0|user|add expense
-|v1.0|user|delete expense|remove entries that I no longer need
+|v1.0|user|add expense|
+|v1.0|user|delete expense|remove entries that I no longer need|
 |v1.0|user|view past expenses|keep track of my spending|
+|v1.0|user|edit past expenses|avoid deleting the entire expense if I only made a small error while keying it in|
 |v2.0|user|set spending limit|cut down on unnecessary spending|
-|v2.0|user|sort spending by amount|see which expenditure is taking up the budget
+|v2.0|user|sort spending by amount|see which expenditure is taking up the budget|
 |v2.0|user|find a particular Expense by name|locate an Expense without having to go through the entire list|
-
-{More to be added}
+|v2.0|user|add recurring expenses|keep track of them and take them into account every month|
+|v2.0|user|add income|better estimate my spending capacity|
 
 ## <a name="nf-req"></a>Non-Functional Requirements
 

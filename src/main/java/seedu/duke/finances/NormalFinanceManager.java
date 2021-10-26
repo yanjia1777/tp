@@ -84,7 +84,7 @@ public class NormalFinanceManager extends FinanceManager {
                 filteredList = Filter.filterEntryByAmount(query.getAmount(), filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterEntryByCategory(query.getCategory(), filteredList);
+                filteredList = Filter.filterEntryByCategory(query.getCategory().ordinal(), filteredList);
                 break;
             default:
                 throw new MintException("Unable to locate tag");
@@ -165,6 +165,7 @@ public class NormalFinanceManager extends FinanceManager {
                     count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
+                    ValidityChecker.checkValidCatNum(pos);
                     category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
                 }
             }

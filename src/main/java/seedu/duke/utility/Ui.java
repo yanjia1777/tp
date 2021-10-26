@@ -267,6 +267,7 @@ public class Ui {
             String interval = entry.getInterval() == Interval.MONTH ? entry.getInterval().toString()
                     : entry.getInterval() + " ";
             String until = entry.getEndDate().toString();
+            until = until.equals("2200-12-31") ? "Forever :D" : until;
             System.out.println(type + " | " + category + " | " + date + " | " + name + " |" + negativeSign + amount
                     + " | " + interval + " | " + until);
         } else {

@@ -85,7 +85,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 filteredList = Filter.filterEntryByAmount(queryToSearch.getAmount(), filteredList);
                 break;
             case "c/":
-                filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory(), filteredList);
+                filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory().ordinal(), filteredList);
                 break;
             case "i/":
                 filteredList = Filter.filterEntryByInterval(queryToSearch.getInterval().label, filteredList);
@@ -171,6 +171,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     int pos = Integer.parseInt(catNumStr);
+                    ValidityChecker.checkValidCatNum(pos);
                     category = ExpenseCategory.values()[pos];
                     count++;
                 }
