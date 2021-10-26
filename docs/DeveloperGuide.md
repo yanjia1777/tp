@@ -57,7 +57,19 @@ The components interact with each other, as shown in the sequence diagram below.
 ### <a name="text-ui"></a>Ui
 
 ### <a name="logic"></a>Logic
+Here's a (partial) class diagram of the `Logic` component.
+
 ![](images/Logic.png)
+
+How the `Logic` component works:
+1. When `Logic` is called upon to parse a command, it uses `Parser` class to parse the user command.
+2. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its </br >
+subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying through `ValidityChecker` class.
+4. `Parser` returns a `Command` object, which is executed by `Main`.
+5. The `Command` can communicate with the `Model` when it is executed </br>
+6. The `Command` saves the resulting data by using the `Storage`.
+7. The result is printed to the user by the `Ui`.
+   (e.g. to add a recurring entry)
 ### <a name="model"></a>Model
 ##### <a name="finance"></a>Finance
 ![](images/Finance.png)
