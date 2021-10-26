@@ -32,7 +32,8 @@ public class BudgetDataManager extends DataManagerActions {
         }
     }
 
-    public void loadBudgetListContents(ArrayList<Budget> budgetList) throws FileNotFoundException, MintException {
+    public void loadBudgetListContents(ArrayList<Budget> budgetList) throws FileNotFoundException, MintException,
+            ArrayIndexOutOfBoundsException {
         File mintBudgetList = new File(BUDGET_FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintBudgetList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
@@ -72,6 +73,8 @@ public class BudgetDataManager extends DataManagerActions {
             createFiles();
         } catch (MintException e) {
             System.out.println(e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Ui.printFieldsErrorMessage();
         }
     }
 }

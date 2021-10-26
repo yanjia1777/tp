@@ -41,7 +41,8 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
-    public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException, MintException {
+    public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException, MintException,
+            ArrayIndexOutOfBoundsException {
         File mintEntryList = new File(RECURRING_FILE_PATH); // create a File for the given file path
         Scanner scanner = new Scanner(mintEntryList); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
@@ -140,6 +141,8 @@ public class RecurringListDataManager extends DataManagerActions {
             createFiles();
         } catch (MintException e) {
             System.out.println(e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Ui.printFieldsErrorMessage();
         }
     }
 }
