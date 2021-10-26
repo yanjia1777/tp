@@ -174,7 +174,7 @@ A simple way to keep track of your expenses
 ```
 add a/15 d/2021-12-03 n/Textbook c/7
 --------------------------------------------------------------------
-I've added :Expense |       OTHERS       | 2021-12-03 |     Textbook     |-$15.00
+I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
 **Test case 2: Adding an existing expense with some fields specified.**
 
@@ -195,17 +195,17 @@ I've added :Expense |       OTHERS       | 2021-12-03 |     Textbook     |-$15.0
 ```
 add a/15 d/2021-12-03 n/Textbook
 --------------------------------------------------------------------
-I've added :Expense |      OTHERS      | 2021-12-03 |     Textbook     |-$15.00
+I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
 ```
 add a/5 n/Chicken Rice c/0
 --------------------------------------------------------------------
-I've added :Expense |       FOOD       | 2021-10-26 |   Chicken Rice   |-$5.00
+I've added: Expense  | FOOD | 2021-10-27 | Chicken Rice | $5.00
 ```
 ```
 add n/Cheese Burger a/23.5
 --------------------------------------------------------------------
-I've added :Expense |      OTHERS      | 2021-10-26 |  Cheese Burger   |-$23.50
+I've added: Expense  | OTHERS | 2021-10-27 | Cheese Burger | $23.50
 ```
 
 ### :x: <a name="delete"></a>Deleting an expense
@@ -231,15 +231,15 @@ exists that matches all the fields specified.**
 **Example of usage and expected output:**
 
 ```
-delete n/Movie c/7
+delete n/Movie c/1
 --------------------------------------------------------------------
 Is this what you want to delete?
-    Others | 2021-10-19 | Movie | $12.00
+    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
 --------------------------------------------------------------------
-I have deleted: Others | 2021-10-19 | Movie | $12.00
+I have deleted: Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
 ```
 **Test case 2: Choosing not to delete an existing expense after entering the delete command.**
 
@@ -262,10 +262,6 @@ delete a/90 d/2021-12-03 n/phone bills c/3
 Is this what you want to delete?
     Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00
 Type "y" if yes. Type "n" if not.
---------------------------------------------------------------------
-n
---------------------------------------------------------------------
-Ok. I have cancelled the process.
 --------------------------------------------------------------------
 n
 --------------------------------------------------------------------
@@ -300,7 +296,13 @@ Ok. I have cancelled the process.
 **Example of usage and expected output:**
 
 ```
-edit a/20 d/2021-12-03 n/Movie c/2
+edit a/20 d/2021-12-03 n/Movie c/1
+--------------------------------------------------------------------
+Is this what you want to edit?
+    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
 --------------------------------------------------------------------
 What would you like to edit?
 --------------------------------------------------------------------
@@ -329,6 +331,12 @@ Got it! I will update the fields accordingly!
 
 ```
 edit a/20 d/2021-12-03 n/Movie c/2
+--------------------------------------------------------------------
+Is this what you want to edit?
+    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+Type "y" if yes. Type "n" if not.
+--------------------------------------------------------------------
+y
 --------------------------------------------------------------------
 What would you like to edit?
 --------------------------------------------------------------------
@@ -360,9 +368,9 @@ Got it! I will update the fields accordingly!
 **Example of usage and expected output:**
 
 ```
-addR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
+addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH e/2023-04-15
 --------------------------------------------------------------------
-I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
+I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
 **Test case 2: Adding an existing recurring expense with some fields specified.**
 
@@ -381,17 +389,17 @@ I've added :Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
 --------------------------------------------------------------------
-I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2200-12-31
+I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 ```
 ```
-addR a/5 n/phone bills c/4 i/MONTH
+addR a/5 n/phone bills c/3 i/MONTH
 --------------------------------------------------------------------
-I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | MONTH | 2200-12-31
+I've added: Expense | HOUSEHOLD | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 ```
 addR a/5 n/phone bills d/2021-10-10 i/MONTH
 --------------------------------------------------------------------
-I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | 2200-12-31
+I've added: Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 ### :alarm_clock: :x: <a name="Delete recurring expense"></a>Deleting a Recurring Expense
 
@@ -418,12 +426,12 @@ I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 |
 deleteR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
 --------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15
+    Expense | APPAREL | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
 --------------------------------------------------------------------
-I have deleted: Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90.00 | MONTH | 2023-04-15```
+I have deleted: Expense | APPAREL | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
 **Test case 2: Deleting an existing recurring expense with some fields specified.**
 
@@ -444,34 +452,34 @@ I have deleted: Expense |     APPAREL      | 2021-12-03 |   phone bills    |-$90
 deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
 --------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
 --------------------------------------------------------------------
-I have deleted: Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D```
+I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 ```
 ```
 deleteR a/5 n/phone bills c/4 i/MONTH
 --------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |     APPAREL      | 2021-10-26 |   phone bills    |-$5.00 | MONTH | Forever :D
+    Expense | APPAREL | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
 --------------------------------------------------------------------
-I have deleted: Expense |     APPAREL      | 2021-10-26 |   phone bills    |-$5.00 | MONTH | Forever :D
+I have deleted: Expense | APPAREL | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 ```
 deleteR a/5 n/phone bills d/2021-10-10 i/MONTH
 --------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+    Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
 --------------------------------------------------------------------
-I have deleted: Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+I have deleted: Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
 ```
 **Test case 3: Choosing not to delete an existing expense after entering the delete command.**
 
@@ -492,7 +500,7 @@ I have deleted: Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.
 deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
 --------------------------------------------------------------------
 Is this what you want to delete?
-    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 n
@@ -527,7 +535,7 @@ Ok. I have cancelled the process.
 editR a/15 n/phone bills d/2021-12-03 c/0 i/MONTH e/2023-10-10
 --------------------------------------------------------------------
 Is this what you want to edit?
-    Expense |       FOOD       | 2021-12-03 |   phone bills    |-$15.00 | MONTH | 2023-10-10
+    Expense | FOOD | 2021-12-03 | phone bills |-$15.00 | MONTH | 2023-10-10
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
@@ -558,23 +566,25 @@ Got it! I will update the fields accordingly!
 editR n/phone bills
 --------------------------------------------------------------------
 Here is the list of items containing the keyword.
-    1  Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
-    2  Expense |       FOOD       | 2021-12-03 |   phone bills    |-$40.00 | MONTH | 2023-10-10
+    1  Expense | HOUSEHOLD | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
+    2  Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
+    3  Expense | FOOD | 2021-12-03 | phone bills |-$40.00 | MONTH | 2023-10-10
+    4  Expense | FOOD | 2021-12-03 | phone bills |-$15.00 | MONTH | 2023-10-10
 Enter the index of the item you want to edit. To cancel, type "cancel"
 --------------------------------------------------------------------
 2
 --------------------------------------------------------------------
 What would you like to edit?
 --------------------------------------------------------------------
-c/4
+a/4
 --------------------------------------------------------------------
 Got it! I will update the fields accordingly!
 ```
 ```
-editR a/40 n/Netflix Subscription c/1
+editR a/40 n/Netflix Subscription c/1 
 --------------------------------------------------------------------
 Is this what you want to edit?
-    Expense |  ENTERTAINMENT   | 2021-10-26 | Netflix Subscription |-$40.00 | MONTH | 2023-04-10
+    Expense | ENTERTAINMENT | 2021-10-27 | Netflix Subscription |-$40.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
 --------------------------------------------------------------------
 y
