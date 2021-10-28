@@ -238,7 +238,7 @@ public class ValidityChecker {
             checkValidCatNum(Integer.parseInt(catNum));
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid amount!");
-            throw new MintException("Unable to load text file! Invalid amount detected! "
+            throw new MintException("Unable to load text file! Invalid number detected! "
                     + "Did u accidentally edit the file?");
         }
     }
