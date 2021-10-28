@@ -503,7 +503,15 @@ Format: `budget`
 
 Expected Output:
 ```
-Budget for FOOD set to $100.00
+Here is the budget for the month.
+      FOOD       | $5.00 / $100.0
+ ENTERTAINMENT   | $0.00 / Not set
+ TRANSPORTATION  | $0.00 / Not set
+   HOUSEHOLD     | $0.00 / Not set
+    APPAREL      | $0.00 / Not set
+     BEAUTY      | $0.00 / Not set
+      GIFT       | $0.00 / Not set
+     OTHERS      | $23.50 / Not set
 ```
 
 ## <a name="exit"></a>Exit the program: `exit`
