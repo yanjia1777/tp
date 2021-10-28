@@ -182,8 +182,8 @@ Examples and expected Output
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
 I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
-addR a/5 n/phone bills c/4 i/year
-I've added: Expense | APPAREL | 2021-10-28 | phone bills |-$5.00 | YEAR | Forever :D
+addR a/5 n/phone bills c/4 i/year e/2023-10-26
+I've added: Expense | APPAREL | 2021-10-29 | phone bills |-$5.00 | YEAR | 2023-10-26
 addR income a/10000 n/salary d/2021-10-10 i/mOnTh
 I've added: Income  | OTHERS | 2021-10-10 | salary | $10,000.00 | MONTH | Forever :D
 ```
