@@ -59,7 +59,7 @@ Using this guide, you will be able to navigate the app and use all of its functi
 
 Refer to the [Features Section](#features) below for details of each comm
 
-### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your tp.jar file
+### <a name="changingTheDirectory"></a>[For users new to CLI] Changing the Directory to your tp.jar file
 1. Right-click on your tp.jar file and select Properties. There would be a pop up with all the information.
 2. Look for the Location and copy the entire string.
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
@@ -145,11 +145,11 @@ Examples and expected Output
 
 ```
 add n/Textbook a/15
-I've added: Expense |      OTHERS      | 2021-10-25 |     textbook     |-$15.00
+I've added: Expense  | OTHERS | 2021-10-28 | Textbook | $15.00
 add n/Cheese burger a/4.2 d/2021-04-20 c/0
-I've added: Expense |       FOOD       | 2021-04-20 |    cheeseurger   |-$4.20
+I've added: Expense  | FOOD | 2021-04-20 | Cheese burger | $4.20
 add income n/Sales a/34 d/2021-02-19 c/1
-I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
+I've added: Income  | WAGES | 2021-02-19 | Sales | $34.00
 ```
 
 ## <a name="addR"></a>Adding Recurring Entries: `addR`
@@ -175,17 +175,17 @@ Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] [i/INTERVAL]
 Examples:
 - `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH`
 - `addR a/5 n/phone bills c/4 i/year e/2023-10-26`
-- `addR a/5 n/phone bills d/2021-10-10 i/mOnTh`
+- `addR income a/10000 n/salary d/2021-10-10 i/mOnTh`
 
 Examples and expected Output
 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
-I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 addR a/5 n/phone bills c/4 i/year
-I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | YEAR | 2023-10-26
-addR a/5 n/phone bills d/2021-10-10 i/mOnTh
-I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+I've added: Expense | APPAREL | 2021-10-28 | phone bills |-$5.00 | YEAR | Forever :D
+addR income a/10000 n/salary d/2021-10-10 i/mOnTh
+I've added: Income  | OTHERS | 2021-10-10 | salary | $10,000.00 | MONTH | Forever :D
 ```
 
 ## <a name="view"></a>Viewing all entries: `view`
@@ -252,6 +252,7 @@ Expense |      OTHERS      | 2021-10-25 |     Textbook     |-$15.00
 ## <a name="delete"></a>Deleting an entry: `delete`
 
 Deletes an existing entry. </br>
+
 Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided.
@@ -279,10 +280,10 @@ Examples and expected output:
 ```
 delete n/Textbook d/2012-09-21
 Is this what you want to delete?
-    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+    Expense  | OTHERS | 2012-09-21 | Textbook | $40.00
 Type "y" if yes. Type "n" if not.
 y
-I have deleted: Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+I have deleted: Expense  | OTHERS | 2012-09-21 | Textbook | $40.00
 ```
 
 - If user query matches more than 1 `Expense` or `Income` in the list
@@ -290,16 +291,17 @@ I have deleted: Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15
 ```
 delete n/Cheese Burger d/2020-04-20 a/4.2
 Here is the list of items containing the keyword.
-    1  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
-    2  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
+    1  Income  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
+    2  Expense  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 Enter the index of the item you want to delete. To cancel, type "cancel"
 1
-I have deleted: Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+I have deleted: Income  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 ```
 
 ## <a name="deleteR"></a>Deleting a recurring entry: `deleteR`
 Deletes an existing recurring entry. </br>
-Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
+
+Format: `deleteR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
 
 - At least one of the optional fields must be provided.
 - Our program searches the entry that matches the fields provided by the user.
@@ -328,10 +330,10 @@ Examples and expected output:
 ```
 deleteR n/Netflix
 Is this what you want to delete?
-    Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15.00 | MONTH | Forever :D
+    Expense | OTHERS | 2021-10-28 | Netflix |-$90.00 | YEAR | Forever :D
 Type "y" if yes. Type "n" if not.
 y
-I have deleted: Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15.00 | MONTH | Forever :D
+I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$90.00 | YEAR | Forever :D
 ```
 
 - If user query matches more than 1 `RecurringExpense` or `RecurringIncome` in the list
@@ -339,17 +341,18 @@ I have deleted: Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15
 ```
 deleteR i/mOnTh
 Here is the list of items containing the keyword.
-    1  Income  |      OTHERS      | 2020-04-20 |     Allowance    | $600.0 | MONTH | Forever :D
-    2  Expense |  TRANSPORTATION  | 2020-04-20 |  Consesion card  | -$4.20 | MONTH | 2023-12-12
+    1  Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forever :D
+    2  Expense | OTHERS | 2021-10-28 | Viu |-$30.00 | MONTH | Forever :D
 Enter the index of the item you want to delete. To cancel, type "cancel"
 1
-I have deleted: Income  |      OTHERS      | 2020-04-20 |     Allowance    | $600.0 | MONTH | Forever :D
+I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forever :D
 ```
 
 
 ## <a name="edit"></a>Editing an entry: `edit`
 
 Edits an existing entry </br>
+
 Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided
@@ -378,7 +381,7 @@ Examples and expected output:
 ```
 edit n/Textbook d/2012-09-21 a/15
 Is this what you want to edit?
-    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+    Expense  | OTHERS | 2012-09-21 | Textbook | $15.00
 Type "y" if yes. Type "n" if not.
 y
 What would you like to edit?
@@ -391,20 +394,74 @@ Got it! I will update the fields accordingly!
 ```
 edit n/Cheese Burger d/2020-04-20 a/4.2
 Here is the list of items containing the keyword.
-    1  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
-    2  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+    1  Expense  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
+    2  Expense  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 Enter the index of the item you want to edit. To cancel, type "cancel"
 1
 What would you like to edit?
-c/0
+c/7
 Got it! I will update the fields accordingly!
 
 ```
 ## <a name="editR"></a>Editing a recurring entry: `editR`
+Edits an existing recurring entry </br>
+
+Format: `editR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
+
+- At least one of the optional fields must be provided
+- When editing fields, existing fields of the `Expense` or `Income` indicated by the user will be </br>
+  replaced.
+- Our program searches the entry that matches the fields provided by the user.
+    - If there is 1 `Expense` or `Income` matching the query, the program will prompt the </br>
+      user to confirm if they wish to edit that entry.
+    - If there is more than 1 `Expense` or `Income` matching the query, the program will return </br>
+      a list for the user to choose from. The user would then have to confirm if </br>
+      they wish to edit the entry.
+- `NAME` can be any string of characters
+- `DATE` can be any of the [acceptable date formats](#dateFormat).
+- `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
+- `INTERVAL` can be a string of either `MONTH` or `YEAR`. The string is not case-sensitive.
+- `END_DATE` can be any of the [acceptable date formats](#dateFormat).
+
+Examples:
+
+- `editR n/Textbook d/2012-09-21 a/15`
+- `editR n/Cheese Burger d/2020-04-20 a/4.2`
+
+Examples and expected output:
+
+- If user query only matches 1 `Expense` or `Income` in the expense list
+
+```
+editR n/Textbook d/2012-09-21 a/15
+Is this what you want to edit?
+    Expense | OTHERS | 2012-09-21 | Textbook |-$15.00 | MONTH | Forever :D
+Type "y" if yes. Type "n" if not.
+y
+What would you like to edit?
+n/NETFLIX
+Got it! I will update the fields accordingly!
+```
+
+- If user query matches more than 1 `Expense` or `Income` in the list
+
+```
+editR n/Textbook d/2012-09-21 a/15
+Here is the list of items containing the keyword.
+    1  Expense | OTHERS | 2012-09-21 | Textbook |-$15.00 | MONTH | Forever :D
+    2  Expense | OTHERS | 2012-09-21 | Textbook |-$15.00 | MONTH | Forever :D
+Enter the index of the item you want to edit. To cancel, type "cancel"
+1
+What would you like to edit?
+a/5
+Got it! I will update the fields accordingly!
+```
 
 ## <a name="cat"></a>View available categories: `cat`
 
 Shows a list of all available categories and its corresponding tag number</br>
+
 Format: `cat`
 
 Expected Output:
@@ -425,6 +482,7 @@ c/7 OTHERS         | c/7 OTHERS
 ## <a name="set"></a>Setting budget: `set`
 
 Set budget for individual categories</br>
+
 Format: `set c/CATEGORY_NUMBER a/AMOUNT`
 - `set` takes in 2 mandatory fields, `c/CATEGORY_NUMBER` and `a/AMOUNT`
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
@@ -433,20 +491,29 @@ Format: `set c/CATEGORY_NUMBER a/AMOUNT`
 Example: If you want to set budget for "FOOD" to $100, type `set c/0 a/100`, as `c/0` correspond to "FOOD"
 
 Expected Output:
+
 ```
 Budget for FOOD set to $100.00
 ```
 
 ## <a name="budget"></a>View monthly budget: `budget`
 
-view monthly spending and budget for current month</br>
+View monthly spending and budget for current month</br>
+
 Format: `budget`
 
-- ``
-
 Expected Output:
+
 ```
-Budget for FOOD set to $100.00
+Here is the budget for the month.
+      FOOD       | $5.00 / $100.0
+ ENTERTAINMENT   | $0.00 / Not set
+ TRANSPORTATION  | $0.00 / Not set
+   HOUSEHOLD     | $0.00 / Not set
+    APPAREL      | $0.00 / Not set
+     BEAUTY      | $0.00 / Not set
+      GIFT       | $0.00 / Not set
+     OTHERS      | $23.50 / Not set
 ```
 
 ## <a name="exit"></a>Exit the program: `exit`
@@ -462,11 +529,15 @@ Expected Output:
 ## <a name="Commannd Summary"></a>Command Summary
 | Command | Format,Examples |
 | -----| -----|
-|Add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g. `add n/burger a/5 d/2021-10-20 c/0`|
-|AddR | `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]` </br> e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH`
-|Edit |`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `edit n/burger a/5 d/2021-10-20 c/0`|
-|Delete | `delete``[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `delete n/Cheese Burger d/20-10-2021 a/4.2` |
-|View |`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]` </br> e.g. `view from 2021-03-25 2022-01-02 by amount ascending`|
-|View categories | `cat` |
-|Help | `help` |
-|Exit | `exit` |
+|add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g. `add n/burger a/5 d/2021-10-20 c/0` |
+|addR | `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]` </br> e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH` |
+|edit |`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `edit n/burger a/5 d/2021-10-20 c/0` |
+|editR |`editR` `[n/NAME]` `[d/DATE]` `[a/AMOUNT]` `[c/CATEGORY_NUMBER]` `[i/INTERVAL]` `[e/END_DATE]` </br> e.g.`editR n/Textbook d/2012-09-21 a/15` | 
+|delete |`delete` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br> e.g. `delete n/Cheese Burger d/20-10-2021 a/4.2` |
+|deleteR |`deleteR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]` </br> e.g. `deleteR n/Netflix` |
+|view |`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]` </br> e.g. `view from 2021-03-25 2022-01-02 by amount ascending`|
+|view categories | `cat` |
+|set | `set` `c/CATEGORY_NUMBER` `a/AMOUNT`|
+|budget | `budget` |
+|help | `help` |
+|exit | `exit` |
