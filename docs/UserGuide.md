@@ -59,7 +59,7 @@ Using this guide, you will be able to navigate the app and use all of its functi
 
 Refer to the [Features Section](#features) below for details of each comm
 
-### <a name="[For users new to CLI] changingTheDirectory"></a>Changing the Directory to your tp.jar file
+### <a name="changingTheDirectory"></a>[For users new to CLI] Changing the Directory to your tp.jar file
 1. Right-click on your tp.jar file and select Properties. There would be a pop up with all the information.
 2. Look for the Location and copy the entire string.
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
