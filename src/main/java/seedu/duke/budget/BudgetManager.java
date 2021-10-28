@@ -43,8 +43,9 @@ public class BudgetManager {
     }
 
     public boolean isExceedBudget(Entry entry, ArrayList<Entry> entries) {
-        if (entry.getType() == Type.Income) return false;
-        else {
+        if (entry.getType() == Type.Income) {
+            return false;
+        } else {
             Expense expense = (Expense) entry;
             Budget budget = getBudgetFromCategory(expense.getCategory());
             return getMonthlySpendingCategory(expense.getCategory(), entries) > 0.8 * budget.getLimit();
