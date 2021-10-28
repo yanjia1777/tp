@@ -9,7 +9,6 @@ import seedu.duke.entries.RecurringEntry;
 import seedu.duke.entries.Interval;
 import seedu.duke.entries.ExpenseCategory;
 
-import javax.security.sasl.RealmCallback;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -275,7 +274,7 @@ public class Ui {
 
     public int[] printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
         int maxNameLength = 4;
-        int maxAmountLength = 6;
+        int maxAmountLength = 5;
         System.out.println("Here is the list of your entries:");
         if (fromDate != null) {
             System.out.println("Since " + fromDate + " to " + endDate + ":");
@@ -406,7 +405,7 @@ public class Ui {
             String limit = budget.getLimit() == 0 ? "Not set" : "$" + budget.getLimit();
             System.out.printf("%s | $%.2f / %s\n",
                     categoryIndented,
-                    budget.getMontlhySpending(entryList),
+                    budget.getMonthlySpending(entryList),
                     limit);
         }
     }
