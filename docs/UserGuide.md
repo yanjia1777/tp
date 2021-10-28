@@ -145,11 +145,11 @@ Examples and expected Output
 
 ```
 add n/Textbook a/15
-I've added: Expense |      OTHERS      | 2021-10-25 |     textbook     |-$15.00
+I've added: Expense  | OTHERS | 2021-10-28 | Textbook | $15.00
 add n/Cheese burger a/4.2 d/2021-04-20 c/0
-I've added: Expense |       FOOD       | 2021-04-20 |    cheeseurger   |-$4.20
+I've added: Expense  | FOOD | 2021-04-20 | Cheese burger | $4.20
 add income n/Sales a/34 d/2021-02-19 c/1
-I've added :Income  |  ENTERTAINMENT   | 2021-02-19 |      Sales       | $34.00
+I've added: Income  | WAGES | 2021-02-19 | Sales | $34.00
 ```
 
 ## <a name="addR"></a>Adding Recurring Entries: `addR`
@@ -175,17 +175,17 @@ Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] [i/INTERVAL]
 Examples:
 - `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH`
 - `addR a/5 n/phone bills c/4 i/year e/2023-10-26`
-- `addR a/5 n/phone bills d/2021-10-10 i/mOnTh`
+- `addR income a/10000 n/salary d/2021-10-10 i/mOnTh`
 
 Examples and expected Output
 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
-I've added :Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00 | MONTH | Forever :D
+I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
 addR a/5 n/phone bills c/4 i/year
-I've added :Expense |     APPAREL      | 2021-10-26 |      shirt       |-$300.00 | YEAR | 2023-10-26
-addR a/5 n/phone bills d/2021-10-10 i/mOnTh
-I've added :Expense |      OTHERS      | 2021-10-10 |   phone bills    |-$5.00 | MONTH | Forever :D
+I've added: Expense | APPAREL | 2021-10-28 | phone bills |-$5.00 | YEAR | Forever :D
+addR income a/10000 n/salary d/2021-10-10 i/mOnTh
+I've added: Income  | OTHERS | 2021-10-10 | salary | $10,000.00 | MONTH | Forever :D
 ```
 
 ## <a name="view"></a>Viewing all entries: `view`
@@ -280,10 +280,10 @@ Examples and expected output:
 ```
 delete n/Textbook d/2012-09-21
 Is this what you want to delete?
-    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+    Expense  | OTHERS | 2012-09-21 | Textbook | $40.00
 Type "y" if yes. Type "n" if not.
 y
-I have deleted: Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+I have deleted: Expense  | OTHERS | 2012-09-21 | Textbook | $40.00
 ```
 
 - If user query matches more than 1 `Expense` or `Income` in the list
@@ -291,11 +291,11 @@ I have deleted: Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15
 ```
 delete n/Cheese Burger d/2020-04-20 a/4.2
 Here is the list of items containing the keyword.
-    1  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
-    2  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
+    1  Income  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
+    2  Expense  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 Enter the index of the item you want to delete. To cancel, type "cancel"
 1
-I have deleted: Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+I have deleted: Income  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 ```
 
 ## <a name="deleteR"></a>Deleting a recurring entry: `deleteR`
@@ -330,10 +330,10 @@ Examples and expected output:
 ```
 deleteR n/Netflix
 Is this what you want to delete?
-    Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15.00 | MONTH | Forever :D
+    Expense | OTHERS | 2021-10-28 | Netflix |-$90.00 | YEAR | Forever :D
 Type "y" if yes. Type "n" if not.
 y
-I have deleted: Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15.00 | MONTH | Forever :D
+I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$90.00 | YEAR | Forever :D
 ```
 
 - If user query matches more than 1 `RecurringExpense` or `RecurringIncome` in the list
@@ -341,11 +341,11 @@ I have deleted: Expense |   ENTERTAINMENT   | 2012-09-21 |     Netflix     |-$15
 ```
 deleteR i/mOnTh
 Here is the list of items containing the keyword.
-    1  Income  |      OTHERS      | 2020-04-20 |     Allowance    | $600.0 | MONTH | Forever :D
-    2  Expense |  TRANSPORTATION  | 2020-04-20 |  Consesion card  | -$4.20 | MONTH | 2023-12-12
+    1  Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forever :D
+    2  Expense | OTHERS | 2021-10-28 | Viu |-$30.00 | MONTH | Forever :D
 Enter the index of the item you want to delete. To cancel, type "cancel"
 1
-I have deleted: Income  |      OTHERS      | 2020-04-20 |     Allowance    | $600.0 | MONTH | Forever :D
+I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forever :D
 ```
 
 
@@ -381,7 +381,7 @@ Examples and expected output:
 ```
 edit n/Textbook d/2012-09-21 a/15
 Is this what you want to edit?
-    Expense |      OTHERS      | 2012-09-21 |     Textbook     |-$15.00
+    Expense  | OTHERS | 2012-09-21 | Textbook | $15.00
 Type "y" if yes. Type "n" if not.
 y
 What would you like to edit?
@@ -394,12 +394,12 @@ Got it! I will update the fields accordingly!
 ```
 edit n/Cheese Burger d/2020-04-20 a/4.2
 Here is the list of items containing the keyword.
-    1  Expense |  TRANSPORTATION  | 2020-04-20 |  Cheese Burger   |-$4.20
-    2  Income  |      OTHERS      | 2020-04-20 |  Cheese Burger   | $4.20
+    1  Expense  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
+    2  Expense  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 Enter the index of the item you want to edit. To cancel, type "cancel"
 1
 What would you like to edit?
-c/0
+c/7
 Got it! I will update the fields accordingly!
 
 ```
@@ -440,7 +440,7 @@ Is this what you want to edit?
 Type "y" if yes. Type "n" if not.
 y
 What would you like to edit?
-a/5
+n/NETFLIX
 Got it! I will update the fields accordingly!
 ```
 
@@ -491,6 +491,7 @@ Format: `set c/CATEGORY_NUMBER a/AMOUNT`
 Example: If you want to set budget for "FOOD" to $100, type `set c/0 a/100`, as `c/0` correspond to "FOOD"
 
 Expected Output:
+
 ```
 Budget for FOOD set to $100.00
 ```
@@ -502,6 +503,7 @@ View monthly spending and budget for current month</br>
 Format: `budget`
 
 Expected Output:
+
 ```
 Here is the budget for the month.
       FOOD       | $5.00 / $100.0
