@@ -1,6 +1,11 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.*;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Expense;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.Type;
+import seedu.duke.entries.Income;
+import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Filter;
@@ -150,16 +155,12 @@ public class NormalFinanceManager extends FinanceManager {
 
     private void setEditedEntry(int index, Entry entry, Type type, String name, String catNumStr, String dateStr,
                                 String amountStr) throws MintException {
-        int pos;
-        double amount;
-        LocalDate date;
-        Enum category;
         ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
-        date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        amount = Double.parseDouble(amountStr);
-        pos = Integer.parseInt(catNumStr);
+        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        double amount = Double.parseDouble(amountStr);
+        int pos = Integer.parseInt(catNumStr);
         ValidityChecker.checkValidCatNum(pos);
-        category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
         if (entry.getType() == Type.Expense) {
             entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
         } else {

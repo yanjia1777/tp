@@ -174,21 +174,15 @@ public class RecurringFinanceManager extends FinanceManager {
 
     private void setEditedEntry(int index, String name, Type type, String dateStr, String amountStr, String endDateStr,
                                 String intervalStr, String catNumStr) throws MintException {
-        Enum category;
-        LocalDate date;
-        double amount;
-        LocalDate endDate;
-        int pos;
-        Interval interval;
         ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
         ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
-        date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        amount = Double.parseDouble(amountStr);
-        endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
-        pos = Integer.parseInt(catNumStr);
+        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        double amount = Double.parseDouble(amountStr);
+        LocalDate endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+        int pos = Integer.parseInt(catNumStr);
         ValidityChecker.checkValidCatNum(pos);
-        category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
-        interval = Interval.determineInterval(intervalStr);
+        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        Interval interval = Interval.determineInterval(intervalStr);
 
         if (type == Type.Expense) {
             recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,

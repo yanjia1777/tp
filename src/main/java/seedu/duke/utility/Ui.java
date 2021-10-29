@@ -40,9 +40,6 @@ public class Ui {
     public static final String SOLID_LINE = "_______________________________________________________________________\n";
     public static final String LINE = "    ____________________________________________________________";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-//    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "I was unable to perform any edits! "
-//            + "Please check that you have included the tags of the fields you wish to edit! :(";
-
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     protected static final int INDEX_CANCEL = -1;
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
