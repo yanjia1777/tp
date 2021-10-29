@@ -42,11 +42,10 @@ public class AddCommand extends Command {
                 double spending = budgetManager.getMonthlySpendingCategory(category, entries);
                 Budget budget = budgetManager.getBudgetFromCategory(category);
                 double limit = budget.getLimit();
-                if (spending > 0.8 * limit) {
+                if (spending > 0.8 * limit && limit != 0) {
                     System.out.printf("Slow down, you've set aside $%.2f for %s, "
                             + "but you already spent $%.2f.\n", limit, category, spending);
                 }
-
             }
         } catch (MintException e) {
             ui.printError(e);
