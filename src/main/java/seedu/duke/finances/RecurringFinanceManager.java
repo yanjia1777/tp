@@ -110,7 +110,6 @@ public class RecurringFinanceManager extends FinanceManager {
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
         int indexToBeChanged = 0;
-        boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         String originalEntryStr = "";
         try {
@@ -123,8 +122,6 @@ public class RecurringFinanceManager extends FinanceManager {
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
             editSpecifiedEntry(choice, indexToBeChanged, entry);
-            // edited
-            printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -133,13 +130,8 @@ public class RecurringFinanceManager extends FinanceManager {
             System.out.println(ERROR_INVALID_DATE);
         }
         String newEntryStr = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
-        Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+        Ui.printOutcomeOfEditAttempt(exceptionThrown);
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
-    }
-
-    private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
-        String newExpense = recurringEntryList.get(indexToBeChanged).toString();
-        return !originalExpense.equals(newExpense);
     }
 
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {

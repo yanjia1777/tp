@@ -103,10 +103,8 @@ public class NormalFinanceManager extends FinanceManager {
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
         int indexToBeChanged = 0;
-        boolean printEditSuccess = false;
         boolean exceptionThrown = false;
         String originalEntryStr = "";
-        Parser parser = new Parser();
         try {
             originalEntryStr = overWriteString(entry);
             if (entryList.contains(entry)) {
@@ -117,8 +115,6 @@ public class NormalFinanceManager extends FinanceManager {
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
             editSpecifiedEntry(choice, indexToBeChanged, entry);
-            // edited
-            printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
         } catch (NumberFormatException e) {
             exceptionThrown = true;
             System.out.println(ERROR_INVALID_NUMBER);
@@ -127,13 +123,8 @@ public class NormalFinanceManager extends FinanceManager {
             System.out.println(ERROR_INVALID_DATE);
         }
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
-        Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+        Ui.printOutcomeOfEditAttempt(exceptionThrown);
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
-    }
-
-    protected Boolean isEditSuccessful(int indexToBeChanged, String originalEntry) {
-        String newEntry = entryList.get(indexToBeChanged).toString();
-        return !originalEntry.equals(newEntry);
     }
 
     @Override

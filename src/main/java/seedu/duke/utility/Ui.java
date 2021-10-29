@@ -40,9 +40,8 @@ public class Ui {
     public static final String SOLID_LINE = "_______________________________________________________________________\n";
     public static final String LINE = "    ____________________________________________________________";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
-            + "I was unable to perform any edits! "
-            + "Please check that you have made changes or included the tags of the fields you wish to edit! :(";
+//    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "I was unable to perform any edits! "
+//            + "Please check that you have included the tags of the fields you wish to edit! :(";
 
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     protected static final int INDEX_CANCEL = -1;
@@ -199,13 +198,9 @@ public class Ui {
         System.out.println("Delete aborted.");
     }
 
-    public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {
+    public static void printOutcomeOfEditAttempt(Boolean exceptionThrown) {
         if (!exceptionThrown) {
-            if (printEditSuccess) {
-                System.out.println(SUCCESSFUL_EDIT_MESSAGE);
-            } else {
-                System.out.println(UNSUCCESSFUL_EDIT_MESSAGE);
-            }
+            System.out.println(SUCCESSFUL_EDIT_MESSAGE);
         }
     }
 
