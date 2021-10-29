@@ -32,7 +32,7 @@ public class DeleteRecurringCommand extends Command {
                         RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             if (isDeleteAll) {
-                deleteAll(normalFinanceManager, normalListDataManager);
+                deleteAll(recurringFinanceManager, recurringListDataManager);
                 return;
             }
             Entry deletedEntry = recurringFinanceManager.deleteEntryByKeywords(tags, query);
@@ -44,10 +44,11 @@ public class DeleteRecurringCommand extends Command {
         }
     }
 
-    public void deleteAll(NormalFinanceManager normalFinanceManager, NormalListDataManager normalListDataManager) {
+    public void deleteAll(RecurringFinanceManager recurringFinanceManager,
+                          RecurringListDataManager recurringListDataManager) {
         if (Ui.isConfirmDeleteAll()) {
-            normalFinanceManager.deleteAll();
-            normalListDataManager.deleteAll();
+            recurringFinanceManager.deleteAll();
+            recurringListDataManager.deleteAll();
             Ui.deleteAllConfirmation();
         } else {
             Ui.deleteAborted();
