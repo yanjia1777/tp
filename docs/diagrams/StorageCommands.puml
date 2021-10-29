@@ -13,8 +13,12 @@ activate addCommand
 
 addCommand -> normalListDataManager : appendToEntryTextFIle (entry:Entry)
 activate normalListDataManager
+normalListDataManager --> addCommand
+deactivate normalListDataManager
 
-return
+addCommand --> duke
+deactivate addCommand
+
 return
 
 
