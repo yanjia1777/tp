@@ -375,7 +375,7 @@ Ok. I have cancelled the process.
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
-:bomb: **CAUTION**
+**CAUTION**
 - Do not edit the same field multiple times in one command.
 
 **Expected**
@@ -418,7 +418,7 @@ Got it! I will update the fields accordingly!
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
-:bomb: **CAUTION**
+**CAUTION**
 - Do not edit the same field multiple times in one command.
 
 **Expected**
