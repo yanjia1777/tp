@@ -442,8 +442,6 @@ Budget for FOOD set to $100.00
 view monthly spending and budget for current month</br>
 Format: `budget`
 
-- ``
-
 Expected Output:
 ```
 Budget for FOOD set to $100.00
