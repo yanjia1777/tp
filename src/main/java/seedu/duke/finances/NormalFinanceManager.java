@@ -117,6 +117,7 @@ public class NormalFinanceManager extends FinanceManager {
                 throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
             }
             editSpecifiedEntry(choice, indexToBeChanged, entry);
+            System.out.println(entryList.get(indexToBeChanged));
             // edited
             printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
         } catch (NumberFormatException e) {

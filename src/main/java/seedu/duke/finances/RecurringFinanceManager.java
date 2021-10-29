@@ -348,9 +348,7 @@ public class RecurringFinanceManager extends FinanceManager {
         if (viewOptions.fromDate != null) {
             viewRecurringExpenseBetweenTwoDates(outputArray, viewOptions.fromDate,
                     viewOptions.endDate);
-        }
-
-        if (viewOptions.isViewAll) {
+        } else if (viewOptions.isViewAll) {
             viewAllRecurringExpense(outputArray);
         } else if (!viewOptions.isViewFrom) {
             if (viewOptions.month == null) {
