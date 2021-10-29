@@ -39,7 +39,6 @@ public class ViewCommand extends Command {
             applyModifiers(outputArray);
 
             double total = calculateTotal(outputArray);
-
             int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
 
             if (viewOptions.isViewAll) {
@@ -110,7 +109,7 @@ public class ViewCommand extends Command {
 
     public double calculateTotal(ArrayList<Entry> list) {
         double total = 0;
-        for (Entry entry: list) {
+        for (Entry entry : list) {
             if (entry.getType() == Type.Expense) {
                 total -= entry.getAmount();
             } else {
