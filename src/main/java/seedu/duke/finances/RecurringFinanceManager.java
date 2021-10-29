@@ -179,7 +179,6 @@ public class RecurringFinanceManager extends FinanceManager {
             ValidityChecker.checkValidCatNum(pos);
             category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
             interval = Interval.determineInterval(intervalStr);
-            ValidityChecker.checkValidCatNum(pos);
 
             if (count == 0) {
                 throw new MintException("No Valid Fields Entered!");

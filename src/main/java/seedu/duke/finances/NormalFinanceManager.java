@@ -98,7 +98,6 @@ public class NormalFinanceManager extends FinanceManager {
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
         int indexToBeChanged = 0;
-        boolean exceptionThrown = false;
         String originalEntryStr = "";
         originalEntryStr = overWriteString(entry);
         if (entryList.contains(entry)) {
