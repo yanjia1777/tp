@@ -203,7 +203,7 @@ A smart and simple way to keep track of your expenses
 ## <a name="manual-test"></a>Instructions for manual testing
 > We define an 'item' as an expense/income
 
-### :heavy_plus_sign: <a name="Adding"></a>Adding an Item
+### <a name="Adding"></a>Adding an Item
 
 **Prerequisites**
 
@@ -280,7 +280,7 @@ add income n/Selling Textbooks a/23.5
 I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
 ```
 
-### :x: <a name="delete"></a>Deleting an Item
+### <a name="delete"></a>Deleting an Item
 
 **Prerequisites**
 
@@ -358,7 +358,7 @@ Ok. I have cancelled the process.
 ```
 
 
-### :writing_hand: <a name="edit"></a>Editing an Item
+### <a name="edit"></a>Editing an Item
 
 **Prerequisites**
 
@@ -453,7 +453,7 @@ Got it! I will update the fields accordingly!
 ```
 
 
-### :alarm_clock: :heavy_plus_sign: <a name="Add-recurring-item"></a>Adding a Recurring Item
+### <a name="Add-recurring-item"></a>Adding a Recurring Item
 
 **Prerequisites**
 
@@ -533,7 +533,7 @@ addR income a/90 n/Full-time job d/2021-10-10 i/MONTH
 I've added: Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | Forever :D
 ```
 
-### :alarm_clock: :x: <a name="Delete-recurring-item"></a>Deleting a Recurring Item
+### <a name="Delete-recurring-item"></a>Deleting a Recurring Item
 
 **Prerequisites**
 
@@ -677,7 +677,7 @@ n
 Ok. I have cancelled the process.
 ```
 
-### :alarm_clock: :writing_hand: <a name="Edit-recurring-item"></a>Editing a recurring item
+### <a name="Edit-recurring-item"></a>Editing a recurring item
 
 **Prerequisites**
 
@@ -765,7 +765,7 @@ What would you like to edit?
 n/part-time job
 Got it! I will update the fields accordingly!
 ```
-### :heavy_plus_sign: <a name="set"></a>Adding Spending Limits
+### <a name="set"></a>Adding Spending Limits
 
 **Prerequisites**
 
@@ -817,7 +817,7 @@ Here is the budget for the month.
      OTHERS      | $23.50 / Not set
 ```
 
-### :heavy_plus_sign: <a name="View"></a>Viewing entries
+### <a name="View"></a>Viewing entries
 
 **Prerequisites**
 
