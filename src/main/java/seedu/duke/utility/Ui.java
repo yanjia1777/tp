@@ -198,10 +198,8 @@ public class Ui {
         System.out.println("Delete aborted.");
     }
 
-    public static void printOutcomeOfEditAttempt(Boolean exceptionThrown) {
-        if (!exceptionThrown) {
-            System.out.println(SUCCESSFUL_EDIT_MESSAGE);
-        }
+    public static void printOutcomeOfEditAttempt() {
+        System.out.println(SUCCESSFUL_EDIT_MESSAGE);
     }
 
     public void printCategoryList() {

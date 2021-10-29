@@ -1,11 +1,6 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.Income;
-import seedu.duke.entries.IncomeCategory;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Type;
+import seedu.duke.entries.*;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
@@ -105,25 +100,18 @@ public class NormalFinanceManager extends FinanceManager {
         int indexToBeChanged = 0;
         boolean exceptionThrown = false;
         String originalEntryStr = "";
-        try {
-            originalEntryStr = overWriteString(entry);
-            if (entryList.contains(entry)) {
-                indexToBeChanged = entryList.indexOf(entry);
-                choice = scanFieldsToUpdate();
-            } else {
-                //                logger.log(Level.INFO, "User entered invalid entry");
-                throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
-            }
-            editSpecifiedEntry(choice, indexToBeChanged, entry);
-        } catch (NumberFormatException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_NUMBER);
-        } catch (DateTimeParseException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_DATE);
+        originalEntryStr = overWriteString(entry);
+        if (entryList.contains(entry)) {
+            indexToBeChanged = entryList.indexOf(entry);
+            choice = scanFieldsToUpdate();
+        } else {
+            //                logger.log(Level.INFO, "User entered invalid entry");
+            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
+        editSpecifiedEntry(choice, indexToBeChanged, entry);
+
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
-        Ui.printOutcomeOfEditAttempt(exceptionThrown);
+        Ui.printOutcomeOfEditAttempt();
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
     }
 
@@ -135,6 +123,11 @@ public class NormalFinanceManager extends FinanceManager {
             LocalDate date = entry.getDate();
             double amount = entry.getAmount();
             Enum category = entry.getCategory();
+            String catNumStr = String.valueOf(entry.getCategory().ordinal());
+            String dateStr = date.toString();
+            String amountStr = Double.toString(amount);
+            int pos = 0;
+
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
@@ -144,22 +137,24 @@ public class NormalFinanceManager extends FinanceManager {
                 }
                 if (word.contains(DATE_SEPARATOR)) {
                     count++;
-                    String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+                    dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
                     count++;
-                    String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    amount = Double.parseDouble(amountStr);
+                    amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     count++;
-                    String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    int pos = Integer.parseInt(catNumStr);
-                    ValidityChecker.checkValidCatNum(pos);
-                    category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+                    catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                 }
             }
+            ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
+            date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+            amount = Double.parseDouble(amountStr);
+            pos = Integer.parseInt(catNumStr);
+            ValidityChecker.checkValidCatNum(pos);
+            category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+
             if (count == 0) {
                 throw new MintException("No valid fields entered!");
             }

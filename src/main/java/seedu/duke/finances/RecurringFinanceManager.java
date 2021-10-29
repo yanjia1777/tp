@@ -110,27 +110,18 @@ public class RecurringFinanceManager extends FinanceManager {
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
         int indexToBeChanged = 0;
-        boolean exceptionThrown = false;
         String originalEntryStr = "";
-        try {
-            originalEntryStr = overWriteString((RecurringEntry) entry);
-            if (recurringEntryList.contains(entry)) {
-                indexToBeChanged = recurringEntryList.indexOf(entry);
-                choice = scanFieldsToUpdate();
-            } else {
-                //                logger.log(Level.INFO, "User entered invalid entry");
-                throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
-            }
-            editSpecifiedEntry(choice, indexToBeChanged, entry);
-        } catch (NumberFormatException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_NUMBER);
-        } catch (DateTimeParseException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_DATE);
+        originalEntryStr = overWriteString((RecurringEntry) entry);
+        if (recurringEntryList.contains(entry)) {
+            indexToBeChanged = recurringEntryList.indexOf(entry);
+            choice = scanFieldsToUpdate();
+        } else {
+            //                logger.log(Level.INFO, "User entered invalid entry");
+            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
+        editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
-        Ui.printOutcomeOfEditAttempt(exceptionThrown);
+        Ui.printOutcomeOfEditAttempt();
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
     }
 
@@ -142,7 +133,15 @@ public class RecurringFinanceManager extends FinanceManager {
             double amount = recurringEntry.getAmount();
             LocalDate endDate = recurringEntry.getEndDate();
             Interval interval = recurringEntry.getInterval();
+            Type type = recurringEntry.getType();
             Enum category = recurringEntry.getCategory();
+            String dateStr = date.toString();
+            String amountStr = Double.toString(amount);
+            String endDateStr = endDate.toString();
+            String intervalStr = interval.toString();
+            String catNumStr = String.valueOf(entry.getCategory().ordinal());
+
+            int pos = 0;
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
@@ -151,37 +150,41 @@ public class RecurringFinanceManager extends FinanceManager {
                     count++;
                 }
                 if (word.contains(DATE_SEPARATOR)) {
-                    String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+                    dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     count++;
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
-                    String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    amount = Double.parseDouble(amountStr);
+                    amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     count++;
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
-                    String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    int pos = Integer.parseInt(catNumStr);
-                    ValidityChecker.checkValidCatNum(pos);
-                    category = ExpenseCategory.values()[pos];
+                      catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     count++;
                 }
                 if (word.contains(END_DATE_SEPARATOR)) {
-                    String endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+                    endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     count++;
                 }
                 if (word.contains(INTERVAL_SEPARATOR)) {
-                    String intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    interval = Interval.determineInterval(intervalStr);
+                    intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     count++;
                 }
             }
+            ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
+            ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
+            date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+            amount = Double.parseDouble(amountStr);
+            endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+            pos = Integer.parseInt(catNumStr);
+            ValidityChecker.checkValidCatNum(pos);
+            category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+            interval = Interval.determineInterval(intervalStr);
+            ValidityChecker.checkValidCatNum(pos);
+
             if (count == 0) {
                 throw new MintException("No Valid Fields Entered!");
             }
-            if (recurringEntry.getType() == Type.Expense) {
+            if (type == Type.Expense) {
                 recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,
                         interval, endDate));
             } else {
@@ -235,7 +238,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 boolean isYearMonthBetweenStartAndEnd = startYM.compareTo(currentYM) <= 0
                         && currentYM.compareTo(endYM) <= 0;
                 if (isYearMonthBetweenStartAndEnd) {
-                    RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
+                    RecurringEntry newExpense = createRecurringEntryObject(recurringEntry);
                     newExpense.setDate(currentYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                     expenseList.add(newExpense);
                 }
@@ -244,7 +247,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 boolean isSameMonthAsStart = startYM.getMonth() == currentYM.getMonth();
                 boolean isYearBetweenStartAndEnd = startY <= year && year <= endY;
                 if (isSameMonthAsStart && isYearBetweenStartAndEnd) {
-                    RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
+                    RecurringEntry newExpense = createRecurringEntryObject(recurringEntry);
                     newExpense.setDate(currentYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                     expenseList.add(newExpense);
                 }
@@ -256,7 +259,7 @@ public class RecurringFinanceManager extends FinanceManager {
     }
 
     public void viewRecurringExpenseByYear(ArrayList<Entry> expenseList, int year) {
-        for (Entry entry: recurringEntryList) {
+        for (Entry entry : recurringEntryList) {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
             YearMonth startRecurringYM = YearMonth.from(recurringEntry.getDate());
             YearMonth endRecurringYM = YearMonth.from(recurringEntry.getEndDate());
@@ -271,7 +274,7 @@ public class RecurringFinanceManager extends FinanceManager {
                     boolean isBetweenRecurringPeriod = iteratorYM.compareTo(startRecurringYM) >= 0
                             && iteratorYM.compareTo(endRecurringYM) <= 0;
                     if (isBetweenRecurringPeriod) {
-                        RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
+                        RecurringEntry newExpense = createRecurringEntryObject(recurringEntry);
                         newExpense.setDate(iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                         expenseList.add(newExpense);
                     }
@@ -311,7 +314,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 while (iteratorYM.compareTo(endLoopYM) <= 0) {
                     LocalDate currentDate = iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth());
                     if (currentDate.compareTo(startDate) >= 0 && currentDate.compareTo(endDate) <= 0) {
-                        RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
+                        RecurringEntry newExpense = createRecurringEntryObject(recurringEntry);
                         newExpense.setDate(iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                         expenseList.add(newExpense);
                     }
@@ -324,7 +327,7 @@ public class RecurringFinanceManager extends FinanceManager {
                     LocalDate currentDate = LocalDate.of(i, startRecurringDate.getMonthValue(),
                             startRecurringDate.getDayOfMonth());
                     if (currentDate.compareTo(startDate) >= 0 && currentDate.compareTo(endDate) <= 0) {
-                        RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
+                        RecurringEntry newExpense = createRecurringEntryObject(recurringEntry);
                         newExpense.setDate(currentDate);
                         expenseList.add(newExpense);
                     }
