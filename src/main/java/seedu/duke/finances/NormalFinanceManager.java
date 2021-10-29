@@ -2,21 +2,13 @@ package seedu.duke.finances;
 
 import seedu.duke.entries.*;
 import seedu.duke.exception.MintException;
-import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
-import seedu.duke.parser.ViewOptions;
 import seedu.duke.utility.Filter;
-import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
-import seedu.duke.parser.ViewOptions;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class NormalFinanceManager extends FinanceManager {
 
@@ -147,23 +139,31 @@ public class NormalFinanceManager extends FinanceManager {
                     catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                 }
             }
-            ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
-            date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-            amount = Double.parseDouble(amountStr);
-            pos = Integer.parseInt(catNumStr);
-            ValidityChecker.checkValidCatNum(pos);
-            category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
-
             if (count == 0) {
                 throw new MintException("No valid fields entered!");
             }
-            if (entry.getType() == Type.Expense) {
-                entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
-            } else {
-                entryList.set(index, new Income(name, date, amount, (IncomeCategory) category));
-            }
+            setEditedEntry(index, entry, type, name, catNumStr, dateStr, amountStr);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
+        }
+    }
+
+    private void setEditedEntry(int index, Entry entry, Type type, String name, String catNumStr, String dateStr,
+                                String amountStr) throws MintException {
+        int pos;
+        double amount;
+        LocalDate date;
+        Enum category;
+        ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
+        date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        amount = Double.parseDouble(amountStr);
+        pos = Integer.parseInt(catNumStr);
+        ValidityChecker.checkValidCatNum(pos);
+        category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        if (entry.getType() == Type.Expense) {
+            entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
+        } else {
+            entryList.set(index, new Income(name, date, amount, (IncomeCategory) category));
         }
     }
 

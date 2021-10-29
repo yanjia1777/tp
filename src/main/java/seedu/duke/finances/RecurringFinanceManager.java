@@ -11,22 +11,15 @@ import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.parser.ViewOptions;
-import seedu.duke.storage.DataManagerActions;
-import seedu.duke.storage.NormalListDataManager;
-import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Filter;
-import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
@@ -170,28 +163,39 @@ public class RecurringFinanceManager extends FinanceManager {
                     count++;
                 }
             }
-            ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
-            ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
-            date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-            amount = Double.parseDouble(amountStr);
-            endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
-            pos = Integer.parseInt(catNumStr);
-            ValidityChecker.checkValidCatNum(pos);
-            category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
-            interval = Interval.determineInterval(intervalStr);
-
             if (count == 0) {
                 throw new MintException("No Valid Fields Entered!");
             }
-            if (type == Type.Expense) {
-                recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,
-                        interval, endDate));
-            } else {
-                recurringEntryList.set(index, new RecurringIncome(name, date, amount, (IncomeCategory) category,
-                        interval, endDate));
-            }
+            setEditedEntry(index, name, type, dateStr, amountStr, endDateStr, intervalStr, catNumStr);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
+        }
+    }
+
+    private void setEditedEntry(int index, String name, Type type, String dateStr, String amountStr, String endDateStr,
+                                String intervalStr, String catNumStr) throws MintException {
+        Enum category;
+        LocalDate date;
+        double amount;
+        LocalDate endDate;
+        int pos;
+        Interval interval;
+        ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
+        ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
+        date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        amount = Double.parseDouble(amountStr);
+        endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+        pos = Integer.parseInt(catNumStr);
+        ValidityChecker.checkValidCatNum(pos);
+        category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        interval = Interval.determineInterval(intervalStr);
+
+        if (type == Type.Expense) {
+            recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,
+                    interval, endDate));
+        } else {
+            recurringEntryList.set(index, new RecurringIncome(name, date, amount, (IncomeCategory) category,
+                    interval, endDate));
         }
     }
 
