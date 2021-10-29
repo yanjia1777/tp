@@ -151,7 +151,7 @@ public class RecurringFinanceManager extends FinanceManager {
                     count++;
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
-                      catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     count++;
                 }
                 if (word.contains(END_DATE_SEPARATOR)) {
