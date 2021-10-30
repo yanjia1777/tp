@@ -40,10 +40,6 @@ public class Ui {
     public static final String SOLID_LINE = "_______________________________________________________________________\n";
     public static final String LINE = "    ____________________________________________________________";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    public static final String UNSUCCESSFUL_EDIT_MESSAGE = "No difference detected!"
-            + "I was unable to perform any edits! "
-            + "Please check that you have made changes or included the tags of the fields you wish to edit! :(";
-
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     protected static final int INDEX_CANCEL = -1;
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
@@ -199,14 +195,8 @@ public class Ui {
         System.out.println("Delete aborted.");
     }
 
-    public static void printOutcomeOfEditAttempt(Boolean printEditSuccess, Boolean exceptionThrown) {
-        if (!exceptionThrown) {
-            if (printEditSuccess) {
-                System.out.println(SUCCESSFUL_EDIT_MESSAGE);
-            } else {
-                System.out.println(UNSUCCESSFUL_EDIT_MESSAGE);
-            }
-        }
+    public static void printOutcomeOfEditAttempt() {
+        System.out.println(SUCCESSFUL_EDIT_MESSAGE);
     }
 
     public void printCategoryList() {
@@ -324,7 +314,7 @@ public class Ui {
     }
 
     public void printViewRecurring(ArrayList<Entry> entryList, int maxNameIndent, int maxAmountIndent) {
-        System.out.println("Here is the information about your recurring entries:");
+        System.out.println("Here is the list of recurring entries added to the above list:");
         for (Entry entry : entryList) {
             printViewIndividualEntry(entry, maxNameIndent, maxAmountIndent);
         }
