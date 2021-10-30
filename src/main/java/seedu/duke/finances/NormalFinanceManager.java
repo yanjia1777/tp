@@ -1,6 +1,7 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.*;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
