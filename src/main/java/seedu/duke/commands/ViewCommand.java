@@ -42,7 +42,6 @@ public class ViewCommand extends Command {
             applyRecurringModifiers(recurringOutputArray);
 
             double total = calculateTotal(outputArray);
-
             int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
             ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1]);
         } catch (MintException e) {
@@ -126,7 +125,7 @@ public class ViewCommand extends Command {
 
     public double calculateTotal(ArrayList<Entry> list) {
         double total = 0;
-        for (Entry entry: list) {
+        for (Entry entry : list) {
             if (entry.getType() == Type.Expense) {
                 total -= entry.getAmount();
             } else {
