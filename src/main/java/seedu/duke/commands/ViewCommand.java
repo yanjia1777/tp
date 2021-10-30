@@ -38,6 +38,7 @@ public class ViewCommand extends Command {
             outputArray = recurringFinanceManager.appendEntryForView(viewOptions, outputArray, recurringOutputArray);
 
             outputArray.sort(Sorter.compareByDate);
+            recurringOutputArray.sort(Sorter.compareByDate);
             applyModifiers(outputArray);
             applyRecurringModifiers(recurringOutputArray);
 
