@@ -32,21 +32,19 @@ public class ViewCommand extends Command {
                         RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             ArrayList<Entry> outputArray;
+            ArrayList<Entry> recurringOutputArray = new ArrayList<>();
 
             outputArray = normalFinanceManager.getCopyOfArray();
-            outputArray = recurringFinanceManager.view(viewOptions, outputArray);
+            outputArray = recurringFinanceManager.appendEntryForView(viewOptions, outputArray, recurringOutputArray);
 
+            outputArray.sort(Sorter.compareByDate);
             applyModifiers(outputArray);
+            applyRecurringModifiers(recurringOutputArray);
 
             double total = calculateTotal(outputArray);
 
             int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
-
-            if (viewOptions.isViewAll) {
-                ArrayList<Entry> recurringOutputArray = recurringFinanceManager.getCopyOfRecurringEntryList();
-                applyModifiers(recurringOutputArray);
-                ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1]);
-            }
+            ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1]);
         } catch (MintException e) {
             ui.printError(e);
         }
@@ -75,6 +73,24 @@ public class ViewCommand extends Command {
             assert viewOptions.endDate != null : "There should be a valid end date";
             Sorter.trimFrom(outputArray, viewOptions.fromDate);
             Sorter.trimEnd(outputArray, viewOptions.endDate);
+        }
+
+        if (viewOptions.sortType != null) {
+            sort(viewOptions.sortType, outputArray);
+        }
+
+        if (viewOptions.isAscending) {
+            Collections.reverse(outputArray);
+        }
+    }
+
+    public void applyRecurringModifiers(ArrayList<Entry> outputArray) throws MintException {
+        if (viewOptions.onlyExpense) {
+            outputArray.removeIf(entry -> entry.getType() != Type.Expense);
+        }
+
+        if (viewOptions.onlyIncome) {
+            outputArray.removeIf(entry -> entry.getType() != Type.Income);
         }
 
         if (viewOptions.sortType != null) {

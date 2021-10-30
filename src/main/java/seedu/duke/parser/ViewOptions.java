@@ -12,27 +12,17 @@ import java.util.Arrays;
 
 public class ViewOptions {
     public String sortType;
-    public boolean onlyExpense;
-    public  boolean onlyIncome;
-    public LocalDate fromDate;
-    public LocalDate endDate;
+    public boolean onlyExpense = false;
+    public  boolean onlyIncome = false;
+    public LocalDate fromDate = null;
+    public LocalDate endDate = null;
     public Month month;
-    public int year;
+    public int year = 0;
     public boolean isViewFrom;
-    public boolean isViewAll;
-    public boolean isAscending;
+    public boolean isViewAll = true;
+    public boolean isAscending = false;
 
     public ViewOptions(String[] argumentArrayInput) throws MintException {
-        onlyExpense = false;
-        onlyIncome = false;
-        fromDate = null;
-        endDate = null;
-        month = null;
-        year = 0;
-        isViewFrom = false;
-        isViewAll = true;
-        isAscending = false;
-
         ArrayList<String>  argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
 
         if (argumentArray.contains("expense")) {
@@ -53,11 +43,10 @@ public class ViewOptions {
 
         if (argumentArray.contains("year")) {
             try {
+                isViewAll = false;
                 year = Integer.parseInt(argumentArray.get(argumentArray.indexOf("year") + 1));
                 if (year < 1000 || year > 9999) {
                     throw new MintException(MintException.ERROR_INVALID_YEAR);
-                } else {
-                    isViewAll = false;
                 }
             } catch (IndexOutOfBoundsException e) {
                 year = LocalDate.now().getYear();
@@ -66,11 +55,11 @@ public class ViewOptions {
 
         if (argumentArray.contains("month")) {
             try {
+                isViewAll = false;
                 month = Month.of(Integer.parseInt(argumentArray.get(argumentArray.indexOf("month") + 1)));
                 if (year == 0) {
                     year = LocalDate.now().getYear();
                 }
-                isViewAll = false;
             } catch (DateTimeException | NumberFormatException e) {
                 throw new MintException(MintException.ERROR_INVALID_MONTH);
             } catch (IndexOutOfBoundsException e) {
