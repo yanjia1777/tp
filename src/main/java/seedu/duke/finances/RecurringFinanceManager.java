@@ -9,19 +9,20 @@ import seedu.duke.entries.Interval;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
+import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.parser.ViewOptions;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Ui;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
+
 
 public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
@@ -106,95 +107,83 @@ public class RecurringFinanceManager extends FinanceManager {
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
         int indexToBeChanged = 0;
-        boolean printEditSuccess = false;
-        boolean exceptionThrown = false;
         String originalEntryStr = "";
-        try {
-            originalEntryStr = overWriteString((RecurringEntry) entry);
-            if (recurringEntryList.contains(entry)) {
-                indexToBeChanged = recurringEntryList.indexOf(entry);
-                choice = scanFieldsToUpdate();
-            } else {
-                //                logger.log(Level.INFO, "User entered invalid entry");
-                throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
-            }
-            editSpecifiedEntry(choice, indexToBeChanged, entry);
-            // edited
-            printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
-        } catch (NumberFormatException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_NUMBER);
-        } catch (DateTimeParseException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_DATE);
+        originalEntryStr = overWriteString((RecurringEntry) entry);
+        if (recurringEntryList.contains(entry)) {
+            indexToBeChanged = recurringEntryList.indexOf(entry);
+            choice = scanFieldsToUpdate();
+        } else {
+            //                logger.log(Level.INFO, "User entered invalid entry");
+            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
+        editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
-        Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+        Ui.printOutcomeOfEditAttempt();
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
-    }
-
-    private Boolean isEditSuccessful(int indexToBeChanged, String originalExpense) {
-        String newExpense = recurringEntryList.get(indexToBeChanged).toString();
-        return !originalExpense.equals(newExpense);
     }
 
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
-            String name = recurringEntry.getName();
-            LocalDate date = recurringEntry.getDate();
-            double amount = recurringEntry.getAmount();
-            LocalDate endDate = recurringEntry.getEndDate();
-            Interval interval = recurringEntry.getInterval();
-            Enum category = recurringEntry.getCategory();
+            Parser parser = new Parser();
+            HashMap<String, String> entryFields = parser.prepareRecurringEntryToAmendForEdit(entry);
+            Type type = recurringEntry.getType();
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
-                    name = nonEmptyNewDescription(word);
+                    String name = nonEmptyNewDescription(word);
+                    entryFields.put("name", name);
                     count++;
                 }
                 if (word.contains(DATE_SEPARATOR)) {
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+                    entryFields.put("date", dateStr);
                     count++;
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    amount = Double.parseDouble(amountStr);
+                    entryFields.put("amount",amountStr);
                     count++;
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    int pos = Integer.parseInt(catNumStr);
-                    ValidityChecker.checkValidCatNum(pos);
-                    category = ExpenseCategory.values()[pos];
+                    entryFields.put("catNum", catNumStr);
                     count++;
                 }
                 if (word.contains(END_DATE_SEPARATOR)) {
                     String endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+                    entryFields.put("endDate", endDateStr);
                     count++;
                 }
                 if (word.contains(INTERVAL_SEPARATOR)) {
                     String intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    interval = Interval.determineInterval(intervalStr);
+                    entryFields.put("interval", intervalStr);
                     count++;
                 }
             }
             if (count == 0) {
                 throw new MintException("No Valid Fields Entered!");
             }
-            if (recurringEntry.getType() == Type.Expense) {
-                recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,
-                        interval, endDate));
-            } else {
-                recurringEntryList.set(index, new RecurringIncome(name, date, amount, (IncomeCategory) category,
-                        interval, endDate));
-            }
+            setEditedEntry(index, entryFields, type);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
+    }
+
+    private void setEditedEntry(int index, HashMap<String, String> entryFields, Type type) throws MintException {
+        Parser parser = new Parser();
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+        String intervalStr = entryFields.get("interval");
+        String endDateStr = entryFields.get("endDate");
+
+        ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
+        ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
+        RecurringEntry recurringEntry = parser.convertRecurringEntryToRespectiveTypes(entryFields, type);
+        recurringEntryList.set(index, recurringEntry);
     }
 
     public String getStringToUpdate(int index) {
