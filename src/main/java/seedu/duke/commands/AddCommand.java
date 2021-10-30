@@ -38,14 +38,11 @@ public class AddCommand extends Command {
             if (entry.getType() == Type.Expense) {
                 ArrayList<Entry> entries = normalFinanceManager.getEntryList();
                 Expense expense = (Expense) entry;
-                ExpenseCategory category = expense.getCategory();
-                double spending = budgetManager.getMonthlySpendingCategory(category, entries);
-                Budget budget = budgetManager.getBudgetFromCategory(category);
-                double limit = budget.getLimit();
-                if (spending > 0.8 * limit) {
-                    System.out.printf("Slow down, you've set aside $%.2f for %s, "
-                            + "but you already spent $%.2f.\n", limit, category, spending);
-                }
+                ExpenseCategory categoryOfCurrentEntry = expense.getCategory();
+                double amountSpent = budgetManager.getMonthlySpendingCategory(categoryOfCurrentEntry, entries);
+                Budget budgetOfCurrentEntry = budgetManager.getMonthlyBudgetFromCategory(categoryOfCurrentEntry);
+                double spendingLimit = budgetOfCurrentEntry.getLimit();
+                ui.printBudgetWarningMessage(categoryOfCurrentEntry, amountSpent, spendingLimit);
 
             }
         } catch (MintException e) {
