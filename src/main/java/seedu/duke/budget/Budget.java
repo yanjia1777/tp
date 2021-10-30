@@ -30,7 +30,7 @@ public abstract class Budget {
         return this.limit;
     }
 
-    public double getMontlhySpending(ArrayList<Entry> entries) {
+    public double getMonthlySpending(ArrayList<Entry> entries) {
         double amount = 0;
         for (Entry entry : entries) {
             if (entry.getType() == Type.Expense

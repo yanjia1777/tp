@@ -1,9 +1,9 @@
 @startuml
 !include Style.puml
 
-participant Duke        as duke
-participant AddCommand as addCommand
-participant NormalListDataManager as normalListDataManager
+participant ":Duke"        as duke
+participant ":AddCommand" as addCommand
+participant ":NormalListDataManager" as normalListDataManager
 
 -> duke : add command
 activate duke
@@ -13,8 +13,12 @@ activate addCommand
 
 addCommand -> normalListDataManager : appendToEntryTextFIle (entry:Entry)
 activate normalListDataManager
+normalListDataManager --> addCommand
+deactivate normalListDataManager
 
-return
+addCommand --> duke
+deactivate addCommand
+
 return
 
 

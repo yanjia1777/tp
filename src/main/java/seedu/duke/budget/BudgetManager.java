@@ -1,10 +1,12 @@
 package seedu.duke.budget;
 
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.storage.BudgetDataManager;
+import seedu.duke.entries.Type;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BudgetManager {
@@ -34,15 +36,38 @@ public class BudgetManager {
     }
 
     public void setBudget(ExpenseCategory category, double amount) {
-        Budget budget = getBudgetFromCategory(category);
+        Budget budget = getMonthlyBudgetFromCategory(category);
         budget.setLimit(amount);
+    }
+
+    public boolean isExceedBudget(Entry entry, ArrayList<Entry> entries) {
+        if (entry.getType() == Type.Income) {
+            return false;
+        } else {
+            Expense expense = (Expense) entry;
+            Budget budget = getMonthlyBudgetFromCategory(expense.getCategory());
+            return getMonthlySpendingCategory(expense.getCategory(), entries) > 0.8 * budget.getLimit();
+        }
+    }
+
+    public double getMonthlySpendingCategory(ExpenseCategory category, ArrayList<Entry> entries) {
+        double amount = 0;
+        for (Entry entry : entries) {
+            if (entry.getType() == Type.Expense
+                    && (entry.getCategory() == category)
+                    && (entry.getDate().getMonth() == LocalDate.now().getMonth())
+                    && entry.getDate().getYear() == LocalDate.now().getYear()) {
+                amount += entry.getAmount();
+            }
+        }
+        return amount;
     }
 
     public ArrayList<Budget> getBudgetList() {
         return budgetList;
     }
 
-    private Budget getBudgetFromCategory(ExpenseCategory category) {
+    public Budget getMonthlyBudgetFromCategory(ExpenseCategory category) {
         switch (category) {
         case FOOD:
             return foodBudget;
