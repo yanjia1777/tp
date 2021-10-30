@@ -314,7 +314,7 @@ public class Ui {
     }
 
     public void printViewRecurring(ArrayList<Entry> entryList, int maxNameIndent, int maxAmountIndent) {
-        System.out.println("Here is the information about your recurring entries:");
+        System.out.println("Here is the list of recurring entries added to the above list:");
         for (Entry entry : entryList) {
             printViewIndividualEntry(entry, maxNameIndent, maxAmountIndent);
         }

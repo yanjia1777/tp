@@ -16,14 +16,13 @@ public class ViewOptions {
     public  boolean onlyIncome = false;
     public LocalDate fromDate = null;
     public LocalDate endDate = null;
-    public Month month = null;
+    public Month month;
     public int year = 0;
-    public boolean isViewFrom = false;
+    public boolean isViewFrom;
     public boolean isViewAll = true;
     public boolean isAscending = false;
 
     public ViewOptions(String[] argumentArrayInput) throws MintException {
-
         ArrayList<String>  argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
 
         if (argumentArray.contains("expense")) {
@@ -44,6 +43,7 @@ public class ViewOptions {
 
         if (argumentArray.contains("year")) {
             try {
+                isViewAll = false;
                 year = Integer.parseInt(argumentArray.get(argumentArray.indexOf("year") + 1));
                 if (year < 1000 || year > 9999) {
                     throw new MintException(MintException.ERROR_INVALID_YEAR);
@@ -55,6 +55,7 @@ public class ViewOptions {
 
         if (argumentArray.contains("month")) {
             try {
+                isViewAll = false;
                 month = Month.of(Integer.parseInt(argumentArray.get(argumentArray.indexOf("month") + 1)));
                 if (year == 0) {
                     year = LocalDate.now().getYear();
@@ -78,7 +79,7 @@ public class ViewOptions {
                 if (endDate == null) {
                     endDate = LocalDate.now();
                 }
-
+                isViewAll = false;
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
                 throw new MintException(MintException.ERROR_INVALID_DATE);
             }
