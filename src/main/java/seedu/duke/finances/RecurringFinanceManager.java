@@ -9,6 +9,7 @@ import seedu.duke.entries.Interval;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
+import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.parser.ViewOptions;
 import seedu.duke.utility.Filter;
@@ -20,6 +21,7 @@ import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class RecurringFinanceManager extends FinanceManager {
     public static final String END_DATE_SEPARATOR = "e/";
@@ -121,76 +123,65 @@ public class RecurringFinanceManager extends FinanceManager {
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
-            String name = recurringEntry.getName();
-            LocalDate date = recurringEntry.getDate();
-            double amount = recurringEntry.getAmount();
-            LocalDate endDate = recurringEntry.getEndDate();
-            Interval interval = recurringEntry.getInterval();
+            Parser parser = new Parser();
+            HashMap<String, String> entryFields = parser.prepareRecurringEntryToAmendForEdit(entry);
             Type type = recurringEntry.getType();
-            Enum category = recurringEntry.getCategory();
-            String dateStr = date.toString();
-            String amountStr = Double.toString(amount);
-            String endDateStr = endDate.toString();
-            String intervalStr = interval.toString();
-            String catNumStr = String.valueOf(entry.getCategory().ordinal());
-
-            int pos = 0;
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
-                    name = nonEmptyNewDescription(word);
+                    String name = nonEmptyNewDescription(word);
+                    entryFields.put("name", name);
                     count++;
                 }
                 if (word.contains(DATE_SEPARATOR)) {
-                    dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("date", dateStr);
                     count++;
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
-                    amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("amount",amountStr);
                     count++;
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
-                    catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("catNum", catNumStr);
                     count++;
                 }
                 if (word.contains(END_DATE_SEPARATOR)) {
-                    endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("endDate", endDateStr);
                     count++;
                 }
                 if (word.contains(INTERVAL_SEPARATOR)) {
-                    intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("interval", intervalStr);
                     count++;
                 }
             }
             if (count == 0) {
                 throw new MintException("No Valid Fields Entered!");
             }
-            setEditedEntry(index, name, type, dateStr, amountStr, endDateStr, intervalStr, catNumStr);
+            setEditedEntry(index, entryFields, type);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
     }
 
-    private void setEditedEntry(int index, String name, Type type, String dateStr, String amountStr, String endDateStr,
-                                String intervalStr, String catNumStr) throws MintException {
+    private void setEditedEntry(int index, HashMap<String, String> entryFields, Type type) throws MintException {
+        Parser parser = new Parser();
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+        String intervalStr = entryFields.get("interval");
+        String endDateStr = entryFields.get("endDate");
+
         ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
         ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
-        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        double amount = Double.parseDouble(amountStr);
-        LocalDate endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
-        int pos = Integer.parseInt(catNumStr);
-        ValidityChecker.checkValidCatNum(pos);
-        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
-        Interval interval = Interval.determineInterval(intervalStr);
-
-        if (type == Type.Expense) {
-            recurringEntryList.set(index, new RecurringExpense(name, date, amount, (ExpenseCategory) category,
-                    interval, endDate));
-        } else {
-            recurringEntryList.set(index, new RecurringIncome(name, date, amount, (IncomeCategory) category,
-                    interval, endDate));
-        }
+        RecurringEntry recurringEntry = parser.convertRecurringEntryToRespectiveTypes(entryFields, type);
+        recurringEntryList.set(index, recurringEntry);
     }
 
     public String getStringToUpdate(int index) {

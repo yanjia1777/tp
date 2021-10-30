@@ -1,12 +1,8 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Type;
-import seedu.duke.entries.Income;
-import seedu.duke.entries.IncomeCategory;
+import seedu.duke.entries.*;
 import seedu.duke.exception.MintException;
+import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Ui;
@@ -14,6 +10,7 @@ import seedu.duke.utility.Ui;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class NormalFinanceManager extends FinanceManager {
 
@@ -114,58 +111,53 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
+            Parser parser = new Parser();
+            HashMap<String, String> entryFields = parser.prepareEntryToAmendForEdit(entry);
             Type type = entry.getType();
-            String name = entry.getName();
-            LocalDate date = entry.getDate();
-            double amount = entry.getAmount();
-            Enum category = entry.getCategory();
-            String catNumStr = String.valueOf(entry.getCategory().ordinal());
-            String dateStr = date.toString();
-            String amountStr = Double.toString(amount);
-            int pos = 0;
 
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
                     count++;
-                    name = nonEmptyNewDescription(word);
+                    String name = nonEmptyNewDescription(word);
+                    entryFields.put("name", name);
                 }
                 if (word.contains(DATE_SEPARATOR)) {
                     count++;
-                    dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("date", dateStr);
                 }
                 if (word.contains(AMOUNT_SEPARATOR)) {
                     count++;
-                    amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("amount",amountStr);
                 }
                 if (word.contains(CATEGORY_SEPARATOR)) {
                     count++;
-                    catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    entryFields.put("catNum", catNumStr);
                 }
             }
             if (count == 0) {
                 throw new MintException("No valid fields entered!");
             }
-            setEditedEntry(index, entry, type, name, catNumStr, dateStr, amountStr);
+            setEditedEntry(index, entryFields, type);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
     }
 
-    private void setEditedEntry(int index, Entry entry, Type type, String name, String catNumStr, String dateStr,
-                                String amountStr) throws MintException {
+    private void setEditedEntry(int index, HashMap<String, String> entryFields, Type type) throws MintException {
+        Parser parser = new Parser();
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+
         ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
-        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        double amount = Double.parseDouble(amountStr);
-        int pos = Integer.parseInt(catNumStr);
-        ValidityChecker.checkValidCatNum(pos);
-        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
-        if (entry.getType() == Type.Expense) {
-            entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
-        } else {
-            entryList.set(index, new Income(name, date, amount, (IncomeCategory) category));
-        }
+        Entry entry = parser.convertEntryToRespectiveTypes(entryFields, type);
+        entryList.set(index, entry);
     }
 
     public ArrayList<Entry> getCopyOfArray() {
