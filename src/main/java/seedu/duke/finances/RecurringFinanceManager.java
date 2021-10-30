@@ -244,8 +244,7 @@ public class RecurringFinanceManager extends FinanceManager {
                         && currentYM.compareTo(endYM) <= 0;
                 if (isYearMonthBetweenStartAndEnd) {
                     RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
-                    LocalDate newDate = LocalDate.parse(currentYM.atDay(recurringEntry.getDate().getDayOfMonth()).toString());
-                    newExpense.setDate(newDate);
+                    newExpense.setDate(currentYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                     expenseList.add(newExpense);
                 }
                 break;
@@ -254,8 +253,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 boolean isYearBetweenStartAndEnd = startY <= year && year <= endY;
                 if (isSameMonthAsStart && isYearBetweenStartAndEnd) {
                     RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
-                    LocalDate newDate = LocalDate.parse(currentYM.atDay(recurringEntry.getDate().getDayOfMonth()).toString());
-                    newExpense.setDate(newDate);
+                    newExpense.setDate(currentYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                     expenseList.add(newExpense);
                 }
                 break;
@@ -282,8 +280,7 @@ public class RecurringFinanceManager extends FinanceManager {
                             && iteratorYM.compareTo(endRecurringYM) <= 0;
                     if (isBetweenRecurringPeriod) {
                         RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
-                        LocalDate newDate = LocalDate.parse(iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth()).toString());
-                        newExpense.setDate(newDate);
+                        newExpense.setDate(iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                         expenseList.add(newExpense);
                     }
                     iteratorYM = iteratorYM.plusMonths(1);
@@ -293,8 +290,7 @@ public class RecurringFinanceManager extends FinanceManager {
                 boolean isYearBetweenStartAndEnd = startY <= year && year <= endY;
                 if (isYearBetweenStartAndEnd) {
                     YearMonth billYM = YearMonth.of(year, startRecurringYM.getMonthValue());
-                    LocalDate newDate = LocalDate.parse(billYM.atDay(recurringEntry.getDate().getDayOfMonth()).toString());
-                    recurringEntry.setDate(newDate);
+                    recurringEntry.setDate(billYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                     expenseList.add(recurringEntry);
                 }
                 break;
@@ -324,8 +320,7 @@ public class RecurringFinanceManager extends FinanceManager {
                     LocalDate currentDate = iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth());
                     if (currentDate.compareTo(startDate) >= 0 && currentDate.compareTo(endDate) <= 0) {
                         RecurringEntry newExpense =  createRecurringEntryObject(recurringEntry);
-                        LocalDate newDate = LocalDate.parse(iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth()).toString());
-                        recurringEntry.setDate(newDate);
+                        newExpense.setDate(iteratorYM.atDay(recurringEntry.getDate().getDayOfMonth()));
                         expenseList.add(newExpense);
                     }
                     iteratorYM = iteratorYM.plusMonths(1);

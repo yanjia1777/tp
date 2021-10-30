@@ -12,17 +12,26 @@ import java.util.Arrays;
 
 public class ViewOptions {
     public String sortType;
-    public boolean onlyExpense = false;
-    public  boolean onlyIncome = false;
-    public LocalDate fromDate = null;
-    public LocalDate endDate = null;
-    public Month month = null;
-    public int year = 0;
-    public boolean isViewFrom = false;
-    public boolean isViewAll = true;
-    public boolean isAscending = false;
+    public boolean onlyExpense;
+    public  boolean onlyIncome;
+    public LocalDate fromDate;
+    public LocalDate endDate;
+    public Month month;
+    public int year;
+    public boolean isViewFrom;
+    public boolean isViewAll;
+    public boolean isAscending;
 
     public ViewOptions(String[] argumentArrayInput) throws MintException {
+        onlyExpense = false;
+        onlyIncome = false;
+        fromDate = null;
+        endDate = null;
+        month = null;
+        year = 0;
+        isViewFrom = false;
+        isViewAll = true;
+        isAscending = false;
 
         ArrayList<String>  argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
 
