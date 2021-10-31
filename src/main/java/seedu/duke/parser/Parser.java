@@ -32,6 +32,8 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -492,6 +494,85 @@ public class Parser {
             return new SetBudgetCommand(this.expenseCategory, this.amount);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
+        }
+    }
+
+    public HashMap<String, String> prepareRecurringEntryToAmendForEdit(Entry entry) {
+        RecurringEntry recurringEntry = (RecurringEntry) entry;
+        String name = recurringEntry.getName();
+        LocalDate date = recurringEntry.getDate();
+        double amount = recurringEntry.getAmount();
+        LocalDate endDate = recurringEntry.getEndDate();
+        Interval interval = recurringEntry.getInterval();
+        String dateStr = date.toString();
+        String amountStr = Double.toString(amount);
+        String endDateStr = endDate.toString();
+        String intervalStr = interval.toString();
+        String catNumStr = String.valueOf(entry.getCategory().ordinal());
+        String[] entryFieldsToAdd = {name, dateStr, amountStr, endDateStr, intervalStr, catNumStr};
+        String[] entryFieldKeys = {"name", "date", "amount", "endDate", "interval", "catNum"};
+        HashMap<String, String> entryFields = new HashMap<>();
+        for (int index = 0; index < entryFieldsToAdd.length; index++) {
+            entryFields.put(entryFieldKeys[index], entryFieldsToAdd[index]);
+        }
+        return entryFields;
+    }
+
+    public HashMap<String, String> prepareEntryToAmendForEdit(Entry entry) {
+        String name = entry.getName();
+        LocalDate date = entry.getDate();
+        double amount = entry.getAmount();
+        String catNumStr = String.valueOf(entry.getCategory().ordinal());
+        String dateStr = date.toString();
+        String amountStr = Double.toString(amount);
+        String[] entryFieldsToAdd = {name, dateStr, amountStr, catNumStr};
+        String[] entryFieldKeys = {"name", "date", "amount", "catNum"};
+        HashMap<String, String> entryFields = new HashMap<>();
+        for (int index = 0; index < entryFieldsToAdd.length; index++) {
+            entryFields.put(entryFieldKeys[index], entryFieldsToAdd[index]);
+        }
+        return entryFields;
+    }
+
+    public RecurringEntry convertRecurringEntryToRespectiveTypes(HashMap<String, String> entryFields,
+                                                                   Type type) throws MintException {
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+        String intervalStr = entryFields.get("interval");
+        String endDateStr = entryFields.get("endDate");
+
+        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        double amount = Double.parseDouble(amountStr);
+        LocalDate endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+        int pos = Integer.parseInt(catNumStr);
+        ValidityChecker.checkValidCatNum(pos);
+        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        Interval interval = Interval.determineInterval(intervalStr);
+        if (type == Type.Expense) {
+            return new RecurringExpense(name, date, amount, (ExpenseCategory) category, interval, endDate);
+        } else {
+            return new RecurringIncome(name, date, amount, (IncomeCategory) category, interval, endDate);
+        }
+    }
+
+    public Entry convertEntryToRespectiveTypes(HashMap<String, String> entryFields,
+                                                                 Type type) throws MintException {
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+
+        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        double amount = Double.parseDouble(amountStr);
+        int pos = Integer.parseInt(catNumStr);
+        ValidityChecker.checkValidCatNum(pos);
+        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        if (type == Type.Expense) {
+            return new Expense(name, date, amount, (ExpenseCategory) category);
+        } else {
+            return new Income(name, date, amount, (IncomeCategory) category);
         }
     }
 
