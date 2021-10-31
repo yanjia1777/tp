@@ -40,7 +40,7 @@ public class ValidityChecker {
     static void checkInvalidAmount(Parser parser) throws MintException {
         boolean isDoubleWithoutLetters = doublePattern.matcher(parser.amountStr).matches();
         boolean isEmpty = parser.amountStr == null;
-        if ( isEmpty || !isDoubleWithoutLetters) {
+        if (isEmpty || !isDoubleWithoutLetters) {
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
     }
