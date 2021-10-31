@@ -46,7 +46,7 @@ public class DataManagerActions {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
-                if(myObj.isDirectory()) {
+                if (myObj.isDirectory()) {
                     System.out.println("Seems like a directory had a text file's extension... "
                             + "Deleting that and trying again... ");
                     myObj.delete();
