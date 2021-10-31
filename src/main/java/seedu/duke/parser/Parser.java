@@ -607,13 +607,4 @@ public class Parser {
             return new InvalidCommand(MintException.ERROR_INVALID_COMMAND);
         }
     }
-    /*
-    case "deleteall":
-        deleteCommand = new DeleteCommand();
-        deleteCommand.deleteAll(entryList);
-        break;
-    default:
-        isRecurring = false;
-        throw new MintException(MintException.ERROR_INVALID_COMMAND);
-     */
 }

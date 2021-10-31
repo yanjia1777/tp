@@ -48,6 +48,8 @@ public class ViewOptions {
                 if (year < 1000 || year > 9999) {
                     throw new MintException(MintException.ERROR_INVALID_YEAR);
                 }
+            } catch (NumberFormatException e) {
+                throw new MintException(MintException.ERROR_INVALID_YEAR);
             } catch (IndexOutOfBoundsException e) {
                 year = LocalDate.now().getYear();
             }
@@ -68,7 +70,6 @@ public class ViewOptions {
         }
 
         if (argumentArray.contains("from")) {
-            isViewFrom = true;
             try {
                 fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
                 try {
@@ -79,7 +80,6 @@ public class ViewOptions {
                 if (endDate == null) {
                     endDate = LocalDate.now();
                 }
-                isViewAll = false;
             } catch (IndexOutOfBoundsException | DateTimeParseException e) {
                 throw new MintException(MintException.ERROR_INVALID_DATE);
             }
