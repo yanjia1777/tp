@@ -428,7 +428,7 @@ public class Ui {
                 getRightIndented(String.format("$%,.2f", budget.getLimit()), maxLimitLength);
         String percentage = "";
         if (budget.getLimit() != 0 && budget.getMonthlySpending(entryList) != 0) {
-            percentage = String.format("%,.2f" ,budget.getMonthlySpending(entryList) / budget.getLimit() * 100) + "%";
+            percentage = String.format("%,.2f", budget.getMonthlySpending(entryList) / budget.getLimit() * 100) + "%";
         }
         System.out.println(categoryIndented + " | " + spending + " / " + limit + " | " + percentage);
     }

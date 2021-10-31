@@ -56,7 +56,7 @@ public class ViewOptions {
         }
     }
 
-    public void yearCheck(ArrayList<String> argumentArray) throws MintException{
+    public void yearCheck(ArrayList<String> argumentArray) throws MintException {
         if (argumentArray.contains("year")) {
             try {
                 isViewAll = false;
@@ -72,7 +72,7 @@ public class ViewOptions {
         }
     }
 
-    public void monthCheck(ArrayList<String> argumentArray) throws MintException{
+    public void monthCheck(ArrayList<String> argumentArray) throws MintException {
         if (argumentArray.contains("month")) {
             try {
                 isViewAll = false;
@@ -88,7 +88,7 @@ public class ViewOptions {
         }
     }
 
-    public void dateCheck(ArrayList<String> argumentArray) throws MintException{
+    public void dateCheck(ArrayList<String> argumentArray) throws MintException {
         if (argumentArray.contains("from")) {
             try {
                 fromDate = LocalDate.parse(argumentArray.get(argumentArray.indexOf("from") + 1));
