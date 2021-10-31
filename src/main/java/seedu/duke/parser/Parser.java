@@ -488,7 +488,6 @@ public class Parser {
     private Command prepareSetBudget(String userInput) {
         try {
             parseInputByTags(userInput);
-            ValidityChecker.checkPositiveAmount(amountStr);
             setCategoryViaCatNum(catNumStr);
             setAmountViaAmountStr(amountStr);
             return new SetBudgetCommand(this.expenseCategory, this.amount);
