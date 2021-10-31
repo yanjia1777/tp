@@ -44,7 +44,7 @@ class AddFunctionTest {
         ExpenseCategory expenseCat = ExpenseCategory.FOOD;
         Expense expense = new Expense(expenseName, expenseDate, expenseAmount, expenseCat);
         AddCommand addCommand = new AddCommand(expense);
-        addCommand.execute(normalFinanceManager,recurringFinanceManager, budgetManager, normalListDataManager,
+        addCommand.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
                 dataManagerActions, recurringListDataManager, budgetDataManager, ui);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -52,9 +52,9 @@ class AddFunctionTest {
         String[] viewArray = {"view"};
         ViewOptions viewOptions = new ViewOptions(viewArray);
         ViewCommand viewCommand = new ViewCommand(viewOptions);
-        viewCommand.execute(normalFinanceManager,recurringFinanceManager, budgetManager, normalListDataManager,
+        viewCommand.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
                 dataManagerActions, recurringListDataManager, budgetDataManager, ui);
-        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
+        String expectedOutput = LIST_OF_EXPENSES + System.lineSeparator()
                 + "  Type  |     Category     |    Date    |   Name   |   Amount    | Every |   Until"
                 + System.lineSeparator()
                 + "Expense |      OTHERS      | 2020-01-06 |  Burger  |-$4.20" + System.lineSeparator()
@@ -62,78 +62,79 @@ class AddFunctionTest {
                 + "Here is the list of recurring entries added to the above list:";
         assertEquals(expectedOutput, outContent.toString());
     }
-//
-//    @Test
-//    public void addExpense_twoAdditions_expectSuccess() throws MintException {
-//        LocalDate date = LocalDate.now();
-//        ExpenseList expenseList = new ExpenseList();
-//        CategoryList.initialiseCategories();
-//        Expense expenseFood = new Expense("burger", "2021-10-10", "10", "1");
-//        Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13", "2");
-//        String foodExpenseName = expenseFood.getName();
-//        String foodExpenseDate = expenseFood.getDate().toString();
-//        String foodExpenseAmount = Double.toString(expenseFood.getAmount());
-//        String entExpenseName = expenseEntertainment.getName();
-//        String entDate = expenseEntertainment.getDate().toString();
-//        String entExpenseAmount = Double.toString(expenseEntertainment.getAmount());
-//        String foodCatNum = "0";
-//        String entCatNum = "1";
-//        expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount, foodCatNum);
-//        expenseList.addExpense(entExpenseName, entDate, entExpenseAmount, entCatNum);
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//        // After this all System.out.println() statements will come to outContent stream.
-//        String[] emptyArray = {"view"};
-//        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
-//        expenseList.viewExpense(emptyArray, recurringExpenseList);
-//        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
-//                + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator()
-//                + " Entertainment  | 2021-10-10 | movie | $13.00" + System.lineSeparator();
-//        assertEquals(expectedOutput, outContent.toString());
-//    }
-//
-//    @Test
-//    public void addExpense_wrongAmountFormat_expectErrorMessage() throws MintException {
-//        ExpenseList expenseList = new ExpenseList();
-//        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
-//        Parser parser = new Parser();
-//
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//
-//        parser.executeCommand("add n/burger d/2021-12-23 a/ABCD c/1", expenseList, recurringExpenseList);
-//        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_AMOUNT + System.lineSeparator();
-//        assertEquals(expectedOutput, outContent.toString());
-//    }
-//
-//
-//    @Test
-//    public void addExpense_wrongDateFormat_expectErrorMessage() throws MintException {
-//        ExpenseList expenseList = new ExpenseList();
-//        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
-//        Parser parser = new Parser();
-//
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//
-//        parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList, recurringExpenseList);
-//        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DATE + System.lineSeparator();
-//        assertEquals(expectedOutput, outContent.toString());
-//
-//
-//    }
-//
-//    @Test
-//    public void addExpense_noName_expectErrorMessage() throws MintException {
-//        ExpenseList expenseList = new ExpenseList();
-//        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
-//        Parser parser = new Parser();
-//
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//
-//        parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList, recurringExpenseList);
-//        String expectedOutput = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DESCRIPTION + System.lineSeparator();
-//        assertEquals(expectedOutput, outContent.toString());
-//    }
+    /**
+    @Test
+    public void addExpense_twoAdditions_expectSuccess() throws MintException {
+        LocalDate date = LocalDate.now();
+        ExpenseList expenseList = new ExpenseList();
+        CategoryList.initialiseCategories();
+        Expense expenseFood = new Expense("burger", "2021-10-10", "10", "1");
+        Expense expenseEntertainment = new Expense("movie", "2021-10-10", "13", "2");
+        String foodExpenseName = expenseFood.getName();
+        String foodExpenseDate = expenseFood.getDate().toString();
+        String foodExpenseAmount = Double.toString(expenseFood.getAmount());
+        String entExpenseName = expenseEntertainment.getName();
+        String entDate = expenseEntertainment.getDate().toString();
+        String entExpenseAmount = Double.toString(expenseEntertainment.getAmount());
+        String foodCatNum = "0";
+        String entCatNum = "1";
+        expenseList.addExpense(foodExpenseName, foodExpenseDate, foodExpenseAmount, foodCatNum);
+        expenseList.addExpense(entExpenseName, entDate, entExpenseAmount, entCatNum);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        // After this all System.out.println() statements will come to outContent stream.
+        String[] emptyArray = {"view"};
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
+        expenseList.viewExpense(emptyArray, recurringExpenseList);
+        String expectedOutput  = LIST_OF_EXPENSES + System.lineSeparator()
+                + "      Food      | 2021-10-10 | burger | $10.00" + System.lineSeparator()
+                + " Entertainment  | 2021-10-10 | movie | $13.00" + System.lineSeparator();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void addExpense_wrongAmountFormat_expectErrorMessage() throws MintException {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
+        Parser parser = new Parser();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        parser.executeCommand("add n/burger d/2021-12-23 a/ABCD c/1", expenseList, recurringExpenseList);
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_AMOUNT + System.lineSeparator();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+
+    @Test
+    public void addExpense_wrongDateFormat_expectErrorMessage() throws MintException {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
+        Parser parser = new Parser();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        parser.executeCommand("add n/movie d/ABCD a/10 c/3", expenseList, recurringExpenseList);
+        String expectedOutput  = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DATE + System.lineSeparator();
+        assertEquals(expectedOutput, outContent.toString());
+
+
+    }
+
+    @Test
+    public void addExpense_noName_expectErrorMessage() throws MintException {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
+        Parser parser = new Parser();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        parser.executeCommand("add n/ d/2021-01-01 a/10 c/3", expenseList, recurringExpenseList);
+        String expectedOutput = Parser.STRING_INCLUDE + "1. " + Parser.STRING_DESCRIPTION + System.lineSeparator();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+    **/
 }
