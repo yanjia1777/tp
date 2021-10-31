@@ -70,6 +70,7 @@ public class Duke {
                 break;
             }
         }
+        ui.shutdown();
         logger.log(Level.INFO, "User exited Mint");
     }
 }

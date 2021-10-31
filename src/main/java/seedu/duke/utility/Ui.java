@@ -48,14 +48,15 @@ public class Ui {
     public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
     public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
             + "Please delete the text files and try again!";
+    public static final String GREETINGS = "Hello! I'm Mint" + System.lineSeparator() + "What can I do for you?";
+    public static final String SHUTDOWN = "Goodbye! Hope to see you again soon!";
 
     public void printGreetings() {
-        System.out.println("Hello! I'm Mint");
-        System.out.println("What can I do for you?");
+        System.out.println(GREETINGS);
     }
 
-    public static void shutdown() {
-        System.out.println("Goodbye! Hope to see you again soon!");
+    public void shutdown() {
+        System.out.println(SHUTDOWN);
     }
 
     public static void printInvalidTagError() {
