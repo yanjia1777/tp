@@ -16,8 +16,8 @@ public class MintException extends Exception {
             + "n/ d/ a/ c/ i/ e/";
     public static final String ERROR_INDEX_INVALID_NUMBER = "Please enter a valid number.";
     public static final String ERROR_INDEX_OUT_OF_BOUND = "Please enter a number between "
-            + "0 and total number of items listed.";
-    public static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount! (Positive number)";
+            + "1 and total number of items listed.";
+    public static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     public static final String ERROR_INVALID_DATE = "Please enter a valid date!";
     public static final String ERROR_INVALID_MONTH = "Please enter a valid month!";
     public static final String ERROR_INVALID_YEAR = "Please enter a valid year!";

@@ -293,10 +293,7 @@ public class Parser {
 
     public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);
-        if (argumentsArray.length <= 1) {
-            throw new MintException(ERROR_MISSING_PARAMS);
-        }
-        if (Objects.equals(argumentsArray[1], "income")) {
+        if (argumentsArray.length > 1 && Objects.equals(argumentsArray[1], "income")) {
             type = Type.Income;
         } else {
             type = Type.Expense;
