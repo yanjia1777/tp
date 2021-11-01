@@ -543,16 +543,17 @@ Expected Output:
 
 ## <a name="Commannd Summary"></a>Command Summary
 
+Please refresh page if table is not rendered properly.
+
 | Command | Format,Examples |
 | -----| -----|
 |add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` <br> e.g. `add n/burger a/5 d/2021-10-20 c/0` | 
-|addR | `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]` <br> e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH` | 
-|edit |`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` <br> e.g. `edit n/burger a/5 d/2021-10-20 c/0` | 
-|editR |`editR` `[n/NAME]` `[d/DATE]` `[a/AMOUNT]` `[c/CATEGORY_NUMBER]` `[i/INTERVAL]` `[e/END_DATE]`
-e.g.`editR n/Textbook d/2012-09-21 a/15` | 
+|addR | `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]` <br> e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH` |
+|edit |`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]`<br>  e.g. `edit n/burger a/5 d/2021-10-20 c/0` | 
+|editR |`editR` `[n/NAME]` `[d/DATE]` `[a/AMOUNT]` `[c/CATEGORY_NUMBER]` `[i/INTERVAL]` `[e/END_DATE]` <br> e.g.`editR n/Textbook d/2012-09-21 a/15` | 
 |delete |`delete` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` <br> e.g. `delete n/Cheese Burger d/20-10-2021 a/4.2` | 
-|deleteR |`deleteR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]` <br> e.g. `deleteR n/Netflix` | 
-|view |`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]` e.g. `view from 2021-03-25 2022-01-02 by amount ascending`| 
+|deleteR |`deleteR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`<br>  e.g. `deleteR n/Netflix` | 
+|view |`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]` <br> e.g. `view from 2021-03-25 2022-01-02 by amount ascending`|
 |view categories | `cat` | 
 |set | `set` `c/CATEGORY_NUMBER` `a/AMOUNT`| 
 |budget | `budget` |
