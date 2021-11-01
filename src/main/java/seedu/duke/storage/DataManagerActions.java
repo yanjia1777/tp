@@ -46,7 +46,7 @@ public class DataManagerActions {
             assert (file != null);
             File myObj = new File(file);
             if (myObj.createNewFile()) {
-                if(!isPrinted) {
+                if (!isPrinted) {
                     Ui.printFirstTimeUserMessage();
                     isPrinted = true;
                 }
