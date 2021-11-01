@@ -141,10 +141,10 @@ Format: `add [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
 - If `income` is included after `add`, entry will be an income entry, else it will be an expense entry.
 - `NAME` can be any string of characters
 - `AMOUNT` is any number up to 2 decimal points.
-- `DATE(optional)` can be any of the [acceptable date formats](#dateFormat). 
+- `DATE(optional)` can be any of the [acceptable date formats](#dateFormat).
     - If the date is not specified, the default date set would be the date of expense entry.
-- `CATEGORY_NUMBER(optional)` 
-    - Please refer to the [available categories](#categoryList). 
+- `CATEGORY_NUMBER(optional)`
+    - Please refer to the [available categories](#categoryList).
     - If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be C/7 which is `others`.
 
 Examples:
@@ -367,23 +367,21 @@ I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forev
 
 ## <a name="edit"></a>Editing an entry: `edit`
 
-Edits an existing entry 
+Edits an existing entry
 
 Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
 
 - At least one of the optional fields must be provided
-- When editing fields, existing fields of the `Expense` or `Income` indicated by the user will be 
-  replaced.
+- When editing fields, existing fields of the `Expense` or `Income` indicated by the user will be replaced.
 - Our program searches the entry that matches the fields provided by the user.
-    - If there is 1 `Expense` or `Income` matching the query, the program will prompt the 
-      user to confirm if they wish to edit that entry.
-    - If there is more than 1 `Expense` or `Income` matching the query, the program will return 
-      a list for the user to choose from. The user would then have to confirm if 
-      they wish to edit the entry.
+    - If there is 1 `Expense` or `Income` matching the query, the program will prompt the user to confirm if they wish
+      to edit that entry.
+    - If there is more than 1 `Expense` or `Income` matching the query, the program will return a list for the user to
+      choose from. The user would then have to confirm if they wish to edit the entry.
 - `NAME` can be any string of characters
 - `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
-- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList). 
+- `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
 
 Examples:
 
@@ -422,19 +420,17 @@ Got it! I will update the fields accordingly!
 
 ## <a name="editR"></a>Editing a recurring entry: `editR`
 
-Edits an existing recurring entry 
+Edits an existing recurring entry
 
 Format: `editR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
 
 - At least one of the optional fields must be provided
-- When editing fields, existing fields of the `Expense` or `Income` indicated by the user will be 
-  replaced.
+- When editing fields, existing fields of the `Expense` or `Income` indicated by the user will be replaced.
 - Our program searches the entry that matches the fields provided by the user.
-    - If there is 1 `Expense` or `Income` matching the query, the program will prompt the 
-      user to confirm if they wish to edit that entry.
-    - If there is more than 1 `Expense` or `Income` matching the query, the program will return 
-      a list for the user to choose from. The user would then have to confirm if 
-      they wish to edit the entry.
+    - If there is 1 `Expense` or `Income` matching the query, the program will prompt the user to confirm if they wish
+      to edit that entry.
+    - If there is more than 1 `Expense` or `Income` matching the query, the program will return a list for the user to
+      choose from. The user would then have to confirm if they wish to edit the entry.
 - `NAME` can be any string of characters
 - `DATE` can be any of the [acceptable date formats](#dateFormat).
 - `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50
@@ -548,27 +544,17 @@ Expected Output:
 ## <a name="Commannd Summary"></a>Command Summary
 
 | Command | Format,Examples |
-
 | -----| -----|
-
-|add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]`
-</br>
-e.g. `add n/burger a/5 d/2021-10-20 c/0` | |addR
-| `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]`
-</br>
-e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH` | |edit
-|`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]`
-</br>
-e.g. `edit n/burger a/5 d/2021-10-20 c/0` | |editR
-|`editR` `[n/NAME]` `[d/DATE]` `[a/AMOUNT]` `[c/CATEGORY_NUMBER]` `[i/INTERVAL]` `[e/END_DATE]`
-</br>
-e.g.`editR n/Textbook d/2012-09-21 a/15` | |delete |`delete` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]`
-</br>
-e.g. `delete n/Cheese Burger d/20-10-2021 a/4.2` | |deleteR
-|`deleteR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
-</br>
-e.g. `deleteR n/Netflix` | |view
-|`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]`
-</br>
-e.g. `view from 2021-03-25 2022-01-02 by amount ascending`| |view categories | `cat` | |set
-| `set` `c/CATEGORY_NUMBER` `a/AMOUNT`| |budget | `budget` | |help | `help` | |exit | `exit` |
+|add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` <br> e.g. `add n/burger a/5 d/2021-10-20 c/0` | 
+|addR | `addR` `[income]` `n/NAME a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` `i/INTERVAL` `[e/END_DATE]` <br> e.g. `addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH` | 
+|edit |`edit` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` <br> e.g. `edit n/burger a/5 d/2021-10-20 c/0` | 
+|editR |`editR` `[n/NAME]` `[d/DATE]` `[a/AMOUNT]` `[c/CATEGORY_NUMBER]` `[i/INTERVAL]` `[e/END_DATE]`
+e.g.`editR n/Textbook d/2012-09-21 a/15` | 
+|delete |`delete` `[n/NAME]` `[a/AMOUNT]` `[d/DATE]` `[c/CATEGORY_NUMBER]` <br> e.g. `delete n/Cheese Burger d/20-10-2021 a/4.2` | 
+|deleteR |`deleteR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]` <br> e.g. `deleteR n/Netflix` | 
+|view |`view` `[income]` `[expense]` `[by SORTTYPE]` `[month MONTH]` `[year YEAR]` `[from STARTDATE [ENDDATE]]` `[up/ascending]` e.g. `view from 2021-03-25 2022-01-02 by amount ascending`| 
+|view categories | `cat` | 
+|set | `set` `c/CATEGORY_NUMBER` `a/AMOUNT`| 
+|budget | `budget` |
+|help | `help` | 
+|exit | `exit` |
