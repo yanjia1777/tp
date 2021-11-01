@@ -65,7 +65,7 @@ public class RecurringListDataManager extends DataManagerActions {
     }
 
     public void loadEntry(String type, String name, String dateStr, String amountStr,
-                          String catNumStr, String intervalStr, String endDateStr, ArrayList<Entry> recurringList) {
+            String catNumStr, String intervalStr, String endDateStr, ArrayList<Entry> recurringList) {
         //should check type before loading
         RecurringEntry recurringEntry;
         LocalDate date = LocalDate.parse(dateStr);
