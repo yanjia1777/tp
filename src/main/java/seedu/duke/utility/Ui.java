@@ -70,7 +70,7 @@ public class Ui {
                 + "Square brackets \"[ ]\" identifies an optional argument.\n"
                 + "List of commands available.\n"
                 + SOLID_LINE
-                + "KEYING IN ENTRIES\n"
+                + "KEYING IN ENTRIES. Type \"cat\" to view category number.\n"
                 + "- add n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1\n"
                 + "- add income n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]\n"
@@ -80,8 +80,8 @@ public class Ui {
                 + "- edit [n/{keyword}] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Edit entries using keyword search. Needs at least 1 tag. Example: edit n/chicken\n"
                 + SOLID_LINE
-                + "RECURRING EXPENSES AND INCOME\n"
-                + "Similar to keying in entries, but includes interval(mandatory for adding), endDate(optional)"
+                + "RECURRING EXPENSES AND INCOME. Type \"cat\" to view category number.\n"
+                + "Similar to keying in entries, but includes interval(mandatory for adding), endDate(optional)\n"
                 + "Commands requires a \"R\", \n"
                 + "e.g. addR, addR income, deleteR, editR\n\n"
                 + "- addR n/NAME a/AMOUNT i/INTERVAL [d/START_DATE] [e/END_DATE] [c/CATEGORY_NUMBER] \n"
@@ -95,7 +95,7 @@ public class Ui {
                 + INDENT + "Edit recurring entries using keyword search. Needs at least 1 tag. "
                 + "Example: editR n/spotify\n"
                 + SOLID_LINE
-                + "BUDGETING\n"
+                + "BUDGETING. Type \"cat\" to view category number.\n"
                 + "- set c/category number a/AMOUNT\n"
                 + INDENT + "Set spending limit for individual category. Example: set c/0 100\n"
                 + "- budget\n"
