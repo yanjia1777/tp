@@ -233,7 +233,7 @@ public class Ui {
         StringBuilder missingFieldsErrorMessage = new StringBuilder();
         missingFieldsErrorMessage.append(Parser.STRING_INCLUDE);
         for (String delimiter : missingDelimiters) {
-            switch (delimiter) {
+            switch (delimiter.trim()) {
             case "n/":
                 missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_DESCRIPTION);
                 index++;
