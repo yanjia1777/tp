@@ -71,7 +71,7 @@ public class RecurringFinanceManager extends FinanceManager {
         ArrayList<Entry> filteredList = new ArrayList<>(recurringEntryList);
         RecurringEntry queryToSearch = (RecurringEntry) query;
         for (String tag : tags) {
-            switch (tag) {
+            switch (tag.trim()) {
             case "n/":
                 filteredList = Filter.filterEntryByName(queryToSearch.getName(), filteredList);
                 break;

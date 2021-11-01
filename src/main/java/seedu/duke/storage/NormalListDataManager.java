@@ -126,7 +126,7 @@ public class NormalListDataManager extends DataManagerActions {
 
 
     public void loadEntry(String type, String name, String dateStr, String amountStr,
-                                 String catNumStr, ArrayList<Entry> entryList) {
+            String catNumStr, ArrayList<Entry> entryList) {
         //should check type before loading
         Entry entry;
         LocalDate date = LocalDate.parse(dateStr);

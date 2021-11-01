@@ -9,7 +9,8 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public abstract class FinanceManager {
-    public static final String STRING_PROMPT_EDIT = "What would you like to edit?";
+    public static final String STRING_PROMPT_EDIT = "What would you like to edit? "
+            + "Type the tag and what you want to change e.g. a/10";
     public static final String NAME_SEPARATOR = "n/";
     public static final String DATE_SEPARATOR = "d/";
     public static final String AMOUNT_SEPARATOR = "a/";

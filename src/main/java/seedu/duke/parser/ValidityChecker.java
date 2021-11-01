@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 public class ValidityChecker {
     public static final int MIN_CATNUM = 0;
     public static final int MAX_CATNUM = 7;
+    public static final String BLANK = "";
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
@@ -176,12 +177,13 @@ public class ValidityChecker {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
             throw new MintException("Invalid type detected!");
         }
-        if (name.equals("")) {
+        if (name.equals(BLANK)) {
             throw new MintException("Empty description detected!");
         }
         try {
             LocalDate.parse(date, dateFormatter);
             Double.parseDouble(amount);
+            checkInvalidAmountString(amount);
             int catNumInt = Integer.parseInt(catNum);
             checkValidCatNum(catNumInt);
         } catch (DateTimeParseException e) {
@@ -215,11 +217,20 @@ public class ValidityChecker {
     public static void checkValidityOfFieldsInBudgetListTxt(String catNum, String amount) throws MintException {
         try {
             Double.parseDouble(amount);
+            checkInvalidAmountString(amount);
             checkValidCatNum(Integer.parseInt(catNum));
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid amount!");
             throw new MintException("Unable to load text file! Invalid number detected! "
                     + "Did u accidentally edit the file?");
+        }
+    }
+
+    static void checkInvalidAmountString(String amountStr) throws MintException {
+        boolean isDoubleWithoutLetters = doublePattern.matcher(amountStr).matches();
+        boolean isEmpty = amountStr == null;
+        if (isEmpty || !isDoubleWithoutLetters) {
+            throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
     }
 }
