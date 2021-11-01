@@ -527,6 +527,7 @@ Expected Output:
 
 
 ## <a name="Commannd Summary"></a>Command Summary
+
 | Command | Format,Examples |
 | -----| -----|
 |add |`add` `[income]` `n/NAME` `a/AMOUNT` `[d/DATE]` `[c/CATEGORY_NUMBER]` </br>e.g. `add n/burger a/5 d/2021-10-20 c/0` |

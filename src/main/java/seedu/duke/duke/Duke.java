@@ -13,8 +13,7 @@ import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.MintLogger;
 import seedu.duke.utility.Ui;
 
-import java.io.File;
-import java.util.Scanner;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,6 +70,7 @@ public class Duke {
                 break;
             }
         }
+        ui.shutdown();
         logger.log(Level.INFO, "User exited Mint");
     }
 }
