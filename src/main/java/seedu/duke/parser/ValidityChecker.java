@@ -182,6 +182,7 @@ public class ValidityChecker {
         try {
             LocalDate.parse(date, dateFormatter);
             Double.parseDouble(amount);
+            checkInvalidAmountString(amount);
             int catNumInt = Integer.parseInt(catNum);
             checkValidCatNum(catNumInt);
         } catch (DateTimeParseException e) {
@@ -215,11 +216,20 @@ public class ValidityChecker {
     public static void checkValidityOfFieldsInBudgetListTxt(String catNum, String amount) throws MintException {
         try {
             Double.parseDouble(amount);
+            checkInvalidAmountString(amount);
             checkValidCatNum(Integer.parseInt(catNum));
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid amount!");
             throw new MintException("Unable to load text file! Invalid number detected! "
                     + "Did u accidentally edit the file?");
+        }
+    }
+
+    static void checkInvalidAmountString(String amountStr) throws MintException {
+        boolean isDoubleWithoutLetters = doublePattern.matcher(amountStr).matches();
+        boolean isEmpty = amountStr == null;
+        if (isEmpty || !isDoubleWithoutLetters) {
+            throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
     }
 }
