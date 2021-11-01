@@ -1,6 +1,7 @@
 package seedu.duke.storage;
 
 import seedu.duke.exception.MintException;
+import seedu.duke.utility.Ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,20 +41,21 @@ public class DataManagerActions {
     }
 
     private void createNewFiles(String[] filesToCreate) throws IOException, MintException {
+        Boolean isPrinted = false;
         for (String file: filesToCreate) {
             assert (file != null);
             File myObj = new File(file);
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+                if(!isPrinted) {
+                    Ui.printFirstTimeUserMessage();
+                    isPrinted = true;
+                }
             } else {
                 if (myObj.isDirectory()) {
-                    System.out.println("Seems like a directory had a text file's extension... "
-                            + "Deleting that and trying again... ");
+                    Ui.printRetryFileCreationMessage();
                     myObj.delete();
                     createNewFiles(filesToCreate);
                     throw new MintException("Essential files created!");
-                } else {
-                    System.out.println("File already exists.");
                 }
             }
         }
