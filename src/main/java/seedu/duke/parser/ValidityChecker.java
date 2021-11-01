@@ -96,13 +96,13 @@ public class ValidityChecker {
                                                String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
-                : new String[]{"n/", "d/", "a/", "c/"};
+        String[] tags = parser.isRecurring ? new String[]{" n/", " d/", " a/", " c/", " i/", " e/"}
+                : new String[]{" n/", " d/", " a/", " c/"};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
         for (String tag : tags) {
             try {
-                if (userInput.contains(tag.trim())) {
+                if (userInput.contains(tag)) {
                     switch (tag.trim()) {
                     case "n/":
                         checkEmptyName(parser);
@@ -135,7 +135,7 @@ public class ValidityChecker {
         }
 
         if (invalidTags.size() > 0) {
-            Ui.constructErrorMessage(invalidTags);
+            //Ui.constructErrorMessage(invalidTags);
             throw new MintException(Ui.constructErrorMessage(invalidTags).toString());
         } else if (validTags.size() == 0) {
             throw new MintException("Please enter at least one tag.");
@@ -148,13 +148,13 @@ public class ValidityChecker {
             String[] mandatoryTags;
             switch (parser.command) {
             case "add":
-                mandatoryTags = new String[]{"n/", "a/"};
+                mandatoryTags = new String[]{" n/", " a/"};
                 break;
             case "addR":
-                mandatoryTags = new String[]{"n/", "a/", "i/"};
+                mandatoryTags = new String[]{" n/", " a/", " i/"};
                 break;
             case "set":
-                mandatoryTags = new String[]{"c/", "a/"};
+                mandatoryTags = new String[]{" c/", " a/"};
                 break;
             default:
                 mandatoryTags = new String[]{};
@@ -172,7 +172,7 @@ public class ValidityChecker {
     }
 
     public static void checkValidityOfFieldsInNormalListTxt(String type, String name, String date, String amount,
-                                                  String catNum) throws MintException {
+                                                            String catNum) throws MintException {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
             throw new MintException("Invalid type detected!");
         }

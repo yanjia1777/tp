@@ -74,7 +74,7 @@ public class Ui {
                 + "- add n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1\n"
                 + "- add income n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]\n"
-                + INDENT + "Add income. Example: add n/payday a/400 d/2021-10-10 c/1\n"
+                + INDENT + "Add income. Example: add income n/payday a/400 d/2021-10-10 c/1\n"
                 + "- delete [n/{keyword}] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Delete entries using keyword search. Needs at least 1 tag. Example: delete n/chicken\n"
                 + "- edit [n/{keyword}] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
@@ -233,7 +233,7 @@ public class Ui {
         StringBuilder missingFieldsErrorMessage = new StringBuilder();
         missingFieldsErrorMessage.append(Parser.STRING_INCLUDE);
         for (String delimiter : missingDelimiters) {
-            switch (delimiter) {
+            switch (delimiter.trim()) {
             case "n/":
                 missingFieldsErrorMessage.append(index).append(Parser.SEPARATOR).append(Parser.STRING_DESCRIPTION);
                 index++;
