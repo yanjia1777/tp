@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class ValidityChecker {
     public static final int MIN_CATNUM = 0;
@@ -21,6 +22,7 @@ public class ValidityChecker {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
+    public static final Pattern doublePattern = Pattern.compile("\\d+(\\.\\d+)?");
 
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
@@ -35,26 +37,10 @@ public class ValidityChecker {
         }
     }
 
-    static void checkPositiveAmount(double amount) throws MintException {
-        if (amount < 0) {
-            throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
-
-        }
-    }
-
-    static void checkPositiveAmount(String amountStr) throws MintException {
-        double amount = Double.parseDouble(amountStr);
-        if (amount < 0) {
-            throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
-
-        }
-    }
-
     static void checkInvalidAmount(Parser parser) throws MintException {
-        try {
-            Double.parseDouble(parser.amountStr);
-        } catch (NumberFormatException e) {
-            logger.log(Level.INFO, "User entered invalid amount");
+        boolean isDoubleWithoutLetters = doublePattern.matcher(parser.amountStr).matches();
+        boolean isEmpty = parser.amountStr == null;
+        if (isEmpty || !isDoubleWithoutLetters) {
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
     }
@@ -188,25 +174,22 @@ public class ValidityChecker {
     public static void checkValidityOfFieldsInNormalListTxt(String type, String name, String date, String amount,
                                                   String catNum) throws MintException {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
-            throw new MintException("Unable to load text file! Invalid type detected! "
-                    + "Did u accidentally edit the file?");
+            throw new MintException("Invalid type detected!");
         }
         if (name.equals("")) {
-            throw new MintException("Unable to load text file! Empty description detected! "
-                    + "Did u accidentally edit the file?");
+            throw new MintException("Empty description detected!");
         }
         try {
             LocalDate.parse(date, dateFormatter);
             Double.parseDouble(amount);
-            checkValidCatNum(Integer.parseInt(catNum));
+            int catNumInt = Integer.parseInt(catNum);
+            checkValidCatNum(catNumInt);
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
-            throw new MintException("Unable to load text file! Invalid date detected! "
-                    + "Did u accidentally edit the file?");
+            throw new MintException("Invalid date detected!");
         } catch (NumberFormatException e) {
-            logger.log(Level.INFO, "User entered invalid amount!");
-            throw new MintException("Unable to load text file! Invalid amount detected! "
-                    + "Did u accidentally edit the file?");
+            logger.log(Level.INFO, "User entered invalid number!");
+            throw new MintException("Invalid number detected!");
         }
     }
 
@@ -215,20 +198,17 @@ public class ValidityChecker {
             LocalDate parsedEndDate = LocalDate.parse(endDate, dateFormatter);
             LocalDate parsedDate = LocalDate.parse(endDate, dateFormatter);
             if (parsedEndDate.isBefore(parsedDate)) {
-                throw new MintException("Unable to load text file! Invalid date detected! "
-                        + "Did u accidentally edit the file?");
+                throw new MintException("Invalid date detected!");
             }
             Interval.valueOf(interval.toUpperCase());
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
-            throw new MintException("Unable to load text file! Invalid date detected! "
-                    + "Did u accidentally edit the file?");
+            throw new MintException("Invalid date detected!");
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
-            throw new MintException("Unable to load text file! Invalid interval detected! "
-                    + "Did u accidentally edit the file?");
+            throw new MintException("Invalid interval detected!");
         }
     }
 
