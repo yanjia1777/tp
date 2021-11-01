@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class ValidityChecker {
     public static final int MIN_CATNUM = 0;
@@ -21,6 +22,7 @@ public class ValidityChecker {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
+    public static final Pattern doublePattern = Pattern.compile("\\d+(\\.\\d+)?");
 
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
@@ -35,26 +37,10 @@ public class ValidityChecker {
         }
     }
 
-    static void checkPositiveAmount(double amount) throws MintException {
-        if (amount < 0) {
-            throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
-
-        }
-    }
-
-    static void checkPositiveAmount(String amountStr) throws MintException {
-        double amount = Double.parseDouble(amountStr);
-        if (amount < 0) {
-            throw new MintException(MintException.ERROR_POSITIVE_NUMBER);
-
-        }
-    }
-
     static void checkInvalidAmount(Parser parser) throws MintException {
-        try {
-            Double.parseDouble(parser.amountStr);
-        } catch (NumberFormatException e) {
-            logger.log(Level.INFO, "User entered invalid amount");
+        boolean isDoubleWithoutLetters = doublePattern.matcher(parser.amountStr).matches();
+        boolean isEmpty = parser.amountStr == null;
+        if (isEmpty || !isDoubleWithoutLetters) {
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
     }
@@ -110,13 +96,13 @@ public class ValidityChecker {
                                                String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
-                : new String[]{"n/", "d/", "a/", "c/"};
+        String[] tags = parser.isRecurring ? new String[]{" n/", " d/", " a/", " c/", " i/", " e/"}
+                : new String[]{" n/", " d/", " a/", " c/"};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
         for (String tag : tags) {
             try {
-                if (userInput.contains(tag.trim())) {
+                if (userInput.contains(tag)) {
                     switch (tag.trim()) {
                     case "n/":
                         checkEmptyName(parser);
@@ -149,7 +135,7 @@ public class ValidityChecker {
         }
 
         if (invalidTags.size() > 0) {
-            Ui.constructErrorMessage(invalidTags);
+            //Ui.constructErrorMessage(invalidTags);
             throw new MintException(Ui.constructErrorMessage(invalidTags).toString());
         } else if (validTags.size() == 0) {
             throw new MintException("Please enter at least one tag.");
@@ -162,13 +148,13 @@ public class ValidityChecker {
             String[] mandatoryTags;
             switch (parser.command) {
             case "add":
-                mandatoryTags = new String[]{"n/", "a/"};
+                mandatoryTags = new String[]{" n/", " a/"};
                 break;
             case "addR":
-                mandatoryTags = new String[]{"n/", "a/", "i/"};
+                mandatoryTags = new String[]{" n/", " a/", " i/"};
                 break;
             case "set":
-                mandatoryTags = new String[]{"c/", "a/"};
+                mandatoryTags = new String[]{" c/", " a/"};
                 break;
             default:
                 mandatoryTags = new String[]{};
@@ -186,7 +172,7 @@ public class ValidityChecker {
     }
 
     public static void checkValidityOfFieldsInNormalListTxt(String type, String name, String date, String amount,
-                                                  String catNum) throws MintException {
+                                                            String catNum) throws MintException {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
             throw new MintException("Invalid type detected!");
         }

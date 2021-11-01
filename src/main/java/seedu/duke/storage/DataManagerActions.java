@@ -1,5 +1,7 @@
 package seedu.duke.storage;
 
+import seedu.duke.exception.MintException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -32,17 +34,27 @@ public class DataManagerActions {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        } catch (MintException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    private void createNewFiles(String[] filesToCreate) throws IOException {
+    private void createNewFiles(String[] filesToCreate) throws IOException, MintException {
         for (String file: filesToCreate) {
             assert (file != null);
             File myObj = new File(file);
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
-                System.out.println("File already exists.");
+                if (myObj.isDirectory()) {
+                    System.out.println("Seems like a directory had a text file's extension... "
+                            + "Deleting that and trying again... ");
+                    myObj.delete();
+                    createNewFiles(filesToCreate);
+                    throw new MintException("Essential files created!");
+                } else {
+                    System.out.println("File already exists.");
+                }
             }
         }
     }
