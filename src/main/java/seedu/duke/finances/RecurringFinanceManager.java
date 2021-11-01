@@ -216,7 +216,7 @@ public class RecurringFinanceManager extends FinanceManager {
 
     public LocalDate createLocalDate(YearMonth yearMonth, int day) {
         String dateToString = yearMonth.toString() + "-" + day;
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("[yyyy-MM-dd]");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("[yyyy-MM-d][yyyy-MM-dd]");
         return LocalDate.parse(dateToString, dateFormatter);
     }
 
