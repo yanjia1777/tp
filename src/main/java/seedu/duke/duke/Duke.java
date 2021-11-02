@@ -61,6 +61,7 @@ public class Duke {
         while (userInput != null) {
             if (ui.hasUnsafeCharacters(userInput)) {
                 ui.printUnsafeCharacters();
+                userInput = ui.readUserInput();
                 continue;
             }
             Command command = parser.parseCommand(userInput);
