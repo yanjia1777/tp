@@ -29,36 +29,37 @@ public class NormalFinanceManager extends FinanceManager {
         return entryList;
     }
 
-    @Override
-    public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
-        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
-        Entry entry;
-        if (filteredList.size() == 0) {
-            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
-        } else if (filteredList.size() == 1) {
-            Entry onlyEntry = filteredList.get(0);
-            if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
-                entry = onlyEntry;
-            } else {
-                throw new MintException("Ok. I have cancelled the process.");
-            }
-            return entry;
-        }
-
-        Ui.viewGivenList(filteredList);
-
-        try {
-            int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
-            if (index >= 0) {
-                entry = filteredList.get(index);
-            } else {
-                throw new MintException("Ok. I have cancelled the process.");
-            }
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-        return entry;
-    }
+    //    @Override
+    //    public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query)
+    //    throws MintException {
+    //        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
+    //        Entry entry;
+    //        if (filteredList.size() == 0) {
+    //            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
+    //        } else if (filteredList.size() == 1) {
+    //            Entry onlyEntry = filteredList.get(0);
+    //            if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
+    //                entry = onlyEntry;
+    //            } else {
+    //                throw new MintException("Ok. I have cancelled the process.");
+    //            }
+    //            return entry;
+    //        }
+    //
+    //        Ui.viewGivenList(filteredList);
+    //
+    //        try {
+    //            int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
+    //            if (index >= 0) {
+    //                entry = filteredList.get(index);
+    //            } else {
+    //                throw new MintException("Ok. I have cancelled the process.");
+    //            }
+    //        } catch (MintException e) {
+    //            throw new MintException(e.getMessage());
+    //        }
+    //        return entry;
+    //    }
 
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
