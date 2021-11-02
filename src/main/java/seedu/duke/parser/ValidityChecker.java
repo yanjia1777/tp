@@ -25,6 +25,7 @@ public class ValidityChecker {
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
     public static final Pattern doublePattern = Pattern.compile("\\d+(\\.\\d+)?");
+    public static final String userTagNoSpace = "(.*)[0-9a-zA-Z/\\-.]{2}/(.*)";
 
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
@@ -249,6 +250,12 @@ public class ValidityChecker {
         boolean isEmpty = amountStr == null;
         if (isEmpty || !isDoubleWithoutLetters) {
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
+        }
+    }
+
+    public static void checkTagsFormatSpacing(String userInput) throws MintException {
+        if (userInput.matches(userTagNoSpace)) {
+            throw new MintException(MintException.ERROR_NO_SPACE_BEFORE_TAGS);
         }
     }
 }
