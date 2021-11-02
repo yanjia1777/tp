@@ -33,6 +33,10 @@ public abstract class FinanceManager {
 
     }
 
+    public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+        return null;
+    }
+
     public ArrayList<String> editEntry(Entry query) throws MintException {
         return null;
     }

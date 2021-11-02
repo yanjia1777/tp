@@ -63,6 +63,7 @@ public class RecurringFinanceManager extends FinanceManager {
         return entry;
     }
 
+    @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags,
                                                   Entry query) throws MintException {
         ArrayList<Entry> filteredList = new ArrayList<>(recurringEntryList);
