@@ -57,8 +57,8 @@ public class Duke {
         normalListDataManager.loadPreviousFileContents(normalFinanceManager.entryList);
         recurringListDataManager.loadPreviousFileContents(recurringFinanceManager.recurringEntryList);
         budgetDataManager.loadFromTextFile(budgetManager.getBudgetList());
-        while (true) {
-            String userInput = ui.readUserInput();
+        String userInput = ui.readUserInput();
+        while (userInput != null) {
             if (ui.hasUnsafeCharacters(userInput)) {
                 ui.printUnsafeCharacters();
                 continue;
@@ -69,6 +69,7 @@ public class Duke {
             if (command.isExit()) {
                 break;
             }
+            userInput = ui.readUserInput();
         }
         ui.shutdown();
         logger.log(Level.INFO, "User exited Mint");
