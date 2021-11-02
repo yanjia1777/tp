@@ -82,21 +82,21 @@ class EditExpenseTest {
                 normalFinanceManager.entryList.get(index).toString());
     }
 
-//    @Test
-//    public void editExpense_invalidCategoryNumber_expectFailure() {
-//        CategoryList.initialiseCategories();
-//        String input = "c/1000";
-//        InputStream in = new ByteArrayInputStream(input.getBytes());
-//        System.setIn(in);
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//        ExpenseList expenseList = new ExpenseList();
-//        expenseList.addExpense("Movie", "2021-12-23", "40", "1");
-//        Exception exception = assertThrows(MintException.class,
-//            () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
-//        String expectedMessage = "Please enter a valid category number! c/0 to c/7";
-//        String actualMessage = exception.getMessage();
-//        assertTrue(actualMessage.contains(expectedMessage));
-//    }
-//
+    //    @Test
+    //    public void editExpense_invalidCategoryNumber_expectFailure() {
+    //        CategoryList.initialiseCategories();
+    //        String input = "c/1000";
+    //        InputStream in = new ByteArrayInputStream(input.getBytes());
+    //        System.setIn(in);
+    //        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    //        System.setOut(new PrintStream(outContent));
+    //        ExpenseList expenseList = new ExpenseList();
+    //        expenseList.addExpense("Movie", "2021-12-23", "40", "1");
+    //        Exception exception = assertThrows(MintException.class,
+    //            () -> expenseList.editExpense("Movie", "2021-12-23", "40", "1"));
+    //        String expectedMessage = "Please enter a valid category number! c/0 to c/7";
+    //        String actualMessage = exception.getMessage();
+    //        assertTrue(actualMessage.contains(expectedMessage));
+    //    }
+    //
 }
