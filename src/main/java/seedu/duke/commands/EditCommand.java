@@ -25,9 +25,9 @@ public class EditCommand extends Command {
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
-                        RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
-                        NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
-                        RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
+            RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
+            NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
+            RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             ArrayList<String> list = normalFinanceManager.editEntryByKeywords(tags, query);
             String stringToOverwrite = list.get(0);
