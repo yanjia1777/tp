@@ -438,36 +438,42 @@ public class Ui {
         System.out.printf("Budget for %s set to $%.2f\n", category, amount);
     }
 
-    public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entryList) {
+    public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entries,
+            ArrayList<Entry> recurringEntries) {
         int maxSpendingLength = MIN_SPENDING_INDENTATION;
         int maxLimitLength = MIN_LIMIT_INDENTATION;
         for (Budget budget : budgetList) {
-            if (String.format("$%,.2f", budget.getMonthlySpending(entryList)).length() > maxSpendingLength) {
-                maxSpendingLength = String.format("$%,.2f", budget.getMonthlySpending(entryList)).length();
+            if (String.format("$%,.2f",
+                    budget.getMonthlySpending(entries, recurringEntries)).length() > maxSpendingLength) {
+                maxSpendingLength = String.format("$%,.2f",
+                        budget.getMonthlySpending(entries, recurringEntries)).length();
             }
             if (String.format("$%,.2f", budget.getLimit()).length() > maxLimitLength) {
                 maxLimitLength = String.format("$%,.2f", budget.getLimit()).length();
             }
         }
-        System.out.println("Here is the budget for the month.");
+        System.out.println("Here is the budget for ." + LocalDate.now().getMonth() + " " + LocalDate.now().getYear());
         System.out.println("    Category     | " + getLeftIndented("Amount", maxSpendingLength)
                 + " | " + getRightIndented("Budget", maxLimitLength) + " | Percentage");
         for (Budget budget : budgetList) {
-            printBudgetIndividualEntry(budget, entryList, maxSpendingLength, maxLimitLength);
+            printBudgetIndividualEntry(budget, entries, recurringEntries, maxSpendingLength, maxLimitLength);
         }
 
     }
 
-    public void printBudgetIndividualEntry(Budget budget, ArrayList<Entry> entryList, int maxSpendingLength,
-                                           int maxLimitLength) {
+    public void printBudgetIndividualEntry(Budget budget, ArrayList<Entry> entries,
+            ArrayList<Entry> recurringEntries, int maxSpendingLength,
+            int maxLimitLength) {
         String categoryIndented = getCategoryIndented(budget.getCategory()).toString();
-        String spending = getLeftIndented(String.format("$%,.2f", budget.getMonthlySpending(entryList)),
+        String spending = getLeftIndented(String.format("$%,.2f",
+                budget.getMonthlySpending(entries, recurringEntries)),
                 maxSpendingLength);
         String limit = budget.getLimit() == 0 ? getRightIndented("Not set", maxLimitLength) :
                 getRightIndented(String.format("$%,.2f", budget.getLimit()), maxLimitLength);
         String percentage = "";
-        if (budget.getLimit() != 0 && budget.getMonthlySpending(entryList) != 0) {
-            percentage = String.format("%,.2f", budget.getMonthlySpending(entryList) / budget.getLimit() * 100) + "%";
+        if (budget.getLimit() != 0 && budget.getMonthlySpending(entries, recurringEntries) != 0) {
+            percentage = String.format("%,.2f",
+                    budget.getMonthlySpending(entries, recurringEntries) / budget.getLimit() * 100) + "%";
         }
         System.out.println(categoryIndented + " | " + spending + " / " + limit + " | " + percentage);
     }
