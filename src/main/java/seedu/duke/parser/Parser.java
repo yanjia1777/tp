@@ -281,6 +281,7 @@ public class Parser {
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         try {
+            ValidityChecker.identifyDuplicateTags(this, userInput);
             parseType(userInput);
             parseInputByTagsLoop(userInput);
             ArrayList<String> validTags = ValidityChecker.checkExistenceAndValidityOfTags(this, userInput);
