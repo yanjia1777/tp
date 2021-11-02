@@ -8,7 +8,6 @@ import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Ui;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import java.util.HashMap;
 public class NormalFinanceManager extends FinanceManager {
 
     public ArrayList<Entry> entryList;
+    public static boolean hasOneMatch;
 
     public NormalFinanceManager() {
         this.entryList = new ArrayList<>();
@@ -35,7 +35,6 @@ public class NormalFinanceManager extends FinanceManager {
         Entry entry;
         if (filteredList.size() == 0) {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
-
         } else if (filteredList.size() == 1) {
             Entry onlyEntry = filteredList.get(0);
             if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
@@ -47,6 +46,7 @@ public class NormalFinanceManager extends FinanceManager {
         }
 
         Ui.viewGivenList(filteredList);
+
         try {
             int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
             if (index >= 0) {
@@ -60,6 +60,7 @@ public class NormalFinanceManager extends FinanceManager {
         return entry;
     }
 
+    @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
