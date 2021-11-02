@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidityChecker {
@@ -24,6 +25,7 @@ public class ValidityChecker {
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
     public static final Pattern doublePattern = Pattern.compile("\\d+(\\.\\d+)?");
+    public static final String userTagNoSpace = "(.*)[0-9a-zA-Z/\\-.]{2}/(.*)";
 
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
@@ -90,6 +92,23 @@ public class ValidityChecker {
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
             throw new MintException("Please enter valid interval: MONTH, YEAR");
+        }
+    }
+
+    static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
+        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
+                : new String[]{"n/", "d/", "a/", "c/"};
+
+        for (String tag: tags) {
+            int count = 0;
+            Pattern pattern = Pattern.compile(tag);
+            Matcher matcher = pattern.matcher(userInput);
+            while (matcher.find()) {
+                count++;
+            }
+            if (count > 1) {
+                throw new MintException(MintException.ERROR_DUPLICATE_TAGS);
+            }
         }
     }
 
@@ -231,6 +250,12 @@ public class ValidityChecker {
         boolean isEmpty = amountStr == null;
         if (isEmpty || !isDoubleWithoutLetters) {
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
+        }
+    }
+
+    public static void checkTagsFormatSpacing(String userInput) throws MintException {
+        if (userInput.matches(userTagNoSpace)) {
+            throw new MintException(MintException.ERROR_NO_SPACE_BEFORE_TAGS);
         }
     }
 }

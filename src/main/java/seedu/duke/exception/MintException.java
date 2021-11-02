@@ -22,6 +22,8 @@ public class MintException extends Exception {
     public static final String ERROR_INVALID_MONTH = "Please enter a valid month!";
     public static final String ERROR_INVALID_YEAR = "Please enter a valid year!";
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
+    public static final String ERROR_DUPLICATE_TAGS = "Please do not enter more than one duplicate tags!";
+    public static final String ERROR_NO_SPACE_BEFORE_TAGS = "Please ensure spaces between tags.";
 
     public MintException(String message) {
         super(message);
