@@ -16,6 +16,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Ui {
+    public static final String FIRST_TIME_USER_MESSAGE = "You must be a first time user!\n"
+            + "Welcome! To get you started, type \"help\" to get a list of commands you can use.\n"
+            + "Alternatively, Type \"add n/[description] a/[amount]\" to add your very first item.\n"
+            + "To see what you have added, type \"view\"!";
+    public static final String RETRY_FILE_CREATION_MESSAGE = "Seems like a directory had a text file's extension... "
+            + "Deleting that and trying again... ";
     private Scanner in;
 
     public Ui() {
@@ -43,6 +49,8 @@ public class Ui {
     protected static final String LINE_SEPARATOR = System.lineSeparator();
     public static final int MIN_NAME_INDENTATION = 4;
     public static final int MIN_AMOUNT_INDENTATION = 5;
+    public static final int MIN_SPENDING_INDENTATION = 6;
+    public static final int MIN_LIMIT_INDENTATION = 7;
     protected static final int INDEX_CANCEL = -1;
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
     public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
@@ -217,6 +225,14 @@ public class Ui {
 
     public static void printMissingFileMessage() {
         System.out.println(MISSING_FILE_MESSAGE);
+    }
+
+    public static void printFirstTimeUserMessage() {
+        System.out.println(FIRST_TIME_USER_MESSAGE);
+    }
+
+    public static void printRetryFileCreationMessage() {
+        System.out.println(RETRY_FILE_CREATION_MESSAGE);
     }
 
     public static void printFieldsErrorMessage() {
@@ -400,8 +416,8 @@ public class Ui {
     }
 
     public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entryList) {
-        int maxSpendingLength = 6;
-        int maxLimitLength = 7;
+        int maxSpendingLength = MIN_SPENDING_INDENTATION;
+        int maxLimitLength = MIN_LIMIT_INDENTATION;
         for (Budget budget : budgetList) {
             if (String.format("$%,.2f", budget.getMonthlySpending(entryList)).length() > maxSpendingLength) {
                 maxSpendingLength = String.format("$%,.2f", budget.getMonthlySpending(entryList)).length();

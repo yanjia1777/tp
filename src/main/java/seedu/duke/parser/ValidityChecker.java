@@ -14,11 +14,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidityChecker {
     public static final int MIN_CATNUM = 0;
     public static final int MAX_CATNUM = 7;
+    public static final String BLANK = "";
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
@@ -89,6 +91,23 @@ public class ValidityChecker {
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
             throw new MintException("Please enter valid interval: MONTH, YEAR");
+        }
+    }
+
+    static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
+        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
+                : new String[]{"n/", "d/", "a/", "c/"};
+
+        for (String tag: tags) {
+            int count = 0;
+            Pattern pattern = Pattern.compile(tag);
+            Matcher matcher = pattern.matcher(userInput);
+            while (matcher.find()) {
+                count++;
+            }
+            if (count > 1) {
+                throw new MintException(MintException.ERROR_DUPLICATE_TAGS);
+            }
         }
     }
 
@@ -176,7 +195,7 @@ public class ValidityChecker {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
             throw new MintException("Invalid type detected!");
         }
-        if (name.equals("")) {
+        if (name.equals(BLANK)) {
             throw new MintException("Empty description detected!");
         }
         try {
