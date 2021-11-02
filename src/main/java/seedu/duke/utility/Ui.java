@@ -39,7 +39,10 @@ public class Ui {
     }
 
     public String readUserInput() {
-        return in.nextLine().trim();
+        if (in.hasNextLine()) {
+            return in.nextLine().trim();
+        }
+        return null;
     }
 
     protected static final String INDENT = "    ";
@@ -160,19 +163,23 @@ public class Ui {
         int index = 0;
         boolean proceedToDelete = false;
         while (!proceedToDelete) {
-            String userInput = in.nextLine();
-            if (userInput.trim().equals("cancel")) {
-                return INDEX_CANCEL;
-            }
-            try {
-                index = Integer.parseInt(userInput);
+            if (in.hasNextLine()) {
+                String userInput = in.nextLine();
+                if (userInput.trim().equals("cancel")) {
+                    return INDEX_CANCEL;
+                }
+                try {
+                    index = Integer.parseInt(userInput.trim());
+                } catch (NumberFormatException e) {
+                    System.out.println(MintException.ERROR_INDEX_INVALID_NUMBER + CANCEL_MESSAGE);
+                }
                 if (index < 1 || index > filteredList.size()) {
                     System.out.println(MintException.ERROR_INDEX_OUT_OF_BOUND + CANCEL_MESSAGE);
                 } else {
                     proceedToDelete = true;
                 }
-            } catch (NumberFormatException e) {
-                System.out.println(MintException.ERROR_INDEX_INVALID_NUMBER + CANCEL_MESSAGE);
+            } else {
+                throw new MintException("no new line found");
             }
         }
         return index - 1;
@@ -197,7 +204,7 @@ public class Ui {
 
     public static boolean isConfirmed() {
         Scanner in = new Scanner(System.in);
-        while (true) {
+        while (in.hasNextLine()) {
             String userInput = in.nextLine();
             switch (userInput.trim()) {
             case "y":
@@ -210,6 +217,7 @@ public class Ui {
                 break;
             }
         }
+        return false;
     }
 
     public static void deleteAllConfirmation() {
