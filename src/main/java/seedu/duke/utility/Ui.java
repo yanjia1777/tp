@@ -219,13 +219,11 @@ public class Ui {
         System.out.println("Delete aborted.");
     }
 
-    public void printNoMatchingEntryMessage()
-    {
+    public void printNoMatchingEntryMessage() {
         System.out.println(MintException.ERROR_EXPENSE_NOT_IN_LIST);
     }
 
-    public void printCancelMessage()
-    {
+    public void printCancelMessage() {
         System.out.println("Ok. I have cancelled the process.");
     }
     public static void printOutcomeOfEditAttempt() {
