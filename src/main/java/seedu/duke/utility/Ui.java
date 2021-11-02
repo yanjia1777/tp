@@ -443,8 +443,10 @@ public class Ui {
         int maxSpendingLength = MIN_SPENDING_INDENTATION;
         int maxLimitLength = MIN_LIMIT_INDENTATION;
         for (Budget budget : budgetList) {
-            if (String.format("$%,.2f", budget.getMonthlySpending(entries, recurringEntries)).length() > maxSpendingLength) {
-                maxSpendingLength = String.format("$%,.2f", budget.getMonthlySpending(entries, recurringEntries)).length();
+            if (String.format("$%,.2f",
+                    budget.getMonthlySpending(entries, recurringEntries)).length() > maxSpendingLength) {
+                maxSpendingLength = String.format("$%,.2f",
+                        budget.getMonthlySpending(entries, recurringEntries)).length();
             }
             if (String.format("$%,.2f", budget.getLimit()).length() > maxLimitLength) {
                 maxLimitLength = String.format("$%,.2f", budget.getLimit()).length();
