@@ -28,6 +28,7 @@ public class MintException extends Exception {
 
     public static final String ERROR_MISSING_TAG_TYPE = "\"/\" is strictly use for tags. Please specify tag type, "
             + "e.g. \"n/\"";
+    public static final String ERROR_AMOUNT_TOO_LARGE = "Please enter an amount less than or equal to 1 million!";
 
     public MintException(String message) {
         super(message);
