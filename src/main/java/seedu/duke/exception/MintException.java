@@ -24,7 +24,8 @@ public class MintException extends Exception {
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
     public static final String ERROR_DUPLICATE_TAGS = "Please do not enter more than one duplicate tags!";
     public static final String ERROR_NO_SPACE_BEFORE_TAGS = "Please ensure spaces before each tag, e.g. \" n/name\".";
-    public static final String ERROR_MISSING_TAG_TYPE = "\"/\" is strictly use for tags. Please specify tag type, e.g. \"n/\"";
+    public static final String ERROR_MISSING_TAG_TYPE = "\"/\" is strictly use for tags. Please specify tag type, "
+            + "e.g. \"n/\"";
 
     public MintException(String message) {
         super(message);
