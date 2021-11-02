@@ -34,7 +34,7 @@ public class EditCommand extends Command {
             RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             Entry entryToEdit = determineEntryToEdit(normalFinanceManager, ui);
-            if(entryToEdit != null) {
+            if (entryToEdit != null) {
                 ArrayList<String> list = normalFinanceManager.editEntry(entryToEdit);
                 String stringToOverwrite = list.get(0);
                 String stringToUpdate = list.get(1);

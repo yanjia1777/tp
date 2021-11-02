@@ -30,7 +30,8 @@ public class NormalFinanceManager extends FinanceManager {
     }
 
     //    @Override
-    //    public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
+    //    public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query)
+    //    throws MintException {
     //        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
     //        Entry entry;
     //        if (filteredList.size() == 0) {

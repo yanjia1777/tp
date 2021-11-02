@@ -226,7 +226,7 @@ public class Ui {
     public void printCancelMessage() {
         System.out.println("Ok. I have cancelled the process.");
     }
-    
+
     public static void printOutcomeOfEditAttempt() {
         System.out.println(SUCCESSFUL_EDIT_MESSAGE);
     }

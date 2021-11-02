@@ -32,7 +32,7 @@ public class EditRecurringCommand extends Command {
         try {
             EditCommand dummyEditCommand = new EditCommand(tags, query);
             Entry entryToEdit = dummyEditCommand.determineEntryToEdit(recurringFinanceManager, ui);
-            if(entryToEdit != null) {
+            if (entryToEdit != null) {
                 ArrayList<String> list = recurringFinanceManager.editEntry(entryToEdit);
                 String stringToOverwrite = list.get(0);
                 String stringToUpdate = list.get(1);
