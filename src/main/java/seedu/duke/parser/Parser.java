@@ -4,6 +4,7 @@ package seedu.duke.parser;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.AddRecurringCommand;
 import seedu.duke.commands.Command;
+import seedu.duke.commands.DeleteAllCommand;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.DeleteRecurringCommand;
 import seedu.duke.commands.EditCommand;
@@ -68,6 +69,8 @@ public class Parser {
     public static final String EDIT_RECURRING = "editR";
     public static final String SET_BUDGET = "set";
     public static final String VIEW_BUDGET = "budget";
+    public static final String DELETEALL = "deleteAll";
+    public static final String DELETEALL2 = "deleteall";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
@@ -377,21 +380,13 @@ public class Parser {
             initAmountStr();
             initIntervalStr();
             initEndDateStr();
-            boolean isDeleteAll = false;
-            parseInputByArguments(userInput);
-            ArrayList<String> validTags = null;
+            ArrayList<String> validTags = parseInputByTags(userInput);
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            if (Objects.equals(argumentsArray[1], "all")) {
-                isDeleteAll = true;
-            } else {
-                validTags = parseInputByTags(userInput);
-            }
-            Entry expense = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
-            assert Objects.requireNonNull(validTags).size() >= 1 || isDeleteAll
-                    : "There should be at least one valid tag or is deleting all";
-            return new DeleteCommand(validTags, expense, isDeleteAll);
+            Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
+            assert Objects.requireNonNull(validTags).size() >= 1 : "There should be at least one valid tag";
+            return new DeleteCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
@@ -446,20 +441,13 @@ public class Parser {
             initIntervalStr();
             initEndDateStr();
             isRecurring = true;
-            boolean isDeleteAll = false;
-            parseInputByArguments(userInput);
-            ArrayList<String> validTags = null;
+            ArrayList<String> validTags = parseInputByTags(userInput);
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            if (Objects.equals(argumentsArray[1], "all")) {
-                isDeleteAll = true;
-            } else {
-                validTags = parseInputByTags(userInput);
-            }
             RecurringEntry entry = (type == Type.Income)
                     ? createRecurringIncomeObject() : createRecurringExpenseObject();
-            return new DeleteRecurringCommand(validTags, entry, isDeleteAll);
+            return new DeleteRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
@@ -573,6 +561,23 @@ public class Parser {
         }
     }
 
+    public Command prepareDeleteAll(String userInput) {
+        try {
+            parseInputByArguments(userInput);
+            if (Objects.equals(argumentsArray[1], "n") || Objects.equals(argumentsArray[1], "normal")) {
+                return new DeleteAllCommand(true, false);
+            } else if (Objects.equals(argumentsArray[1], "r") || Objects.equals(argumentsArray[1], "recurring")) {
+                return new DeleteAllCommand(false, true);
+            } else {
+                throw new MintException(MintException.ERROR_NO_DELIMETER);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return new DeleteAllCommand(true, true);
+        } catch (MintException e) {
+            return new InvalidCommand(e.getMessage());
+        }
+    }
+
 
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
@@ -593,6 +598,10 @@ public class Parser {
             return prepareSetBudget(userInput);
         case VIEW_BUDGET:
             return new ViewBudgetCommand();
+        case DELETEALL:
+            //fallthrough
+        case DELETEALL2:
+            return prepareDeleteAll(userInput);
         case VIEW:
             return prepareView(userInput);
         case VIEW_ALL_CATEGORIES:
