@@ -27,43 +27,47 @@ public class ValidityChecker {
     public static final Pattern doublePattern = Pattern.compile("\\d+(\\.\\d+)?");
     public static final String userTagNoSpace = "(.*)[0-9a-zA-Z/\\-.]{2}/(.*)";
     public static final String forwardSlashWithoutTagType = "(.*)[ ]/(.*)";
+    public static final double AMOUNT_LIMIT = 1000000.0;
 
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
 
-    static void checkEmptyName(Parser parser) throws MintException {
-        boolean hasEmptyName = parser.name.equals(Parser.STRING_EMPTY);
+    static void checkEmptyName(String name) throws MintException {
+        boolean hasEmptyName = name.equals(Parser.STRING_EMPTY);
         if (hasEmptyName) {
             logger.log(Level.INFO, "User entered empty name");
             throw new MintException(MintException.ERROR_NO_NAME);
         }
     }
 
-    static void checkInvalidAmount(Parser parser) throws MintException {
-        boolean isDoubleWithoutLetters = doublePattern.matcher(parser.amountStr).matches();
-        boolean isEmpty = parser.amountStr == null;
+    static void checkInvalidAmount(String amountStr) throws MintException {
+        boolean isDoubleWithoutLetters = doublePattern.matcher(amountStr).matches();
+        boolean isEmpty = amountStr == null;
         if (isEmpty || !isDoubleWithoutLetters) {
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
+        double amount = Double.parseDouble(amountStr);
+        if (amount >= AMOUNT_LIMIT) {
+            throw new MintException(MintException.ERROR_AMOUNT_TOO_LARGE);
+        }
     }
 
-    static void checkInvalidDate(Parser parser) throws MintException {
+    static void checkInvalidDate(String dateStr) throws MintException {
         try {
-            LocalDate.parse(parser.dateStr, dateFormatter);
+            LocalDate.parse(dateStr, dateFormatter);
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
             throw new MintException(MintException.ERROR_INVALID_DATE);
         }
     }
 
-
-    static void checkInvalidEndDate(Parser parser) throws MintException {
+    static void checkInvalidEndDate(String endDateStr, String startDateStr) throws MintException {
         try {
-            LocalDate parsedEndDate = LocalDate.parse(parser.endDateStr, dateFormatter);
-            LocalDate parsedDate = LocalDate.parse(parser.dateStr, dateFormatter);
-            if (parsedEndDate.isBefore(parsedDate)) {
+            LocalDate parsedEndDate = LocalDate.parse(endDateStr, dateFormatter);
+            LocalDate parsedStartDate = LocalDate.parse(startDateStr, dateFormatter);
+            if (parsedEndDate.isBefore(parsedStartDate)) {
                 throw new MintException("End date must be after start date.");
             }
         } catch (DateTimeParseException e) {
@@ -74,9 +78,9 @@ public class ValidityChecker {
         }
     }
 
-    public static void checkInvalidCatNum(Parser parser) throws MintException {
+    public static void checkInvalidCatNum(String catNumStr) throws MintException {
         try {
-            int catNumInt = Integer.parseInt(parser.catNumStr);
+            int catNumInt = Integer.parseInt(catNumStr);
             if (!(catNumInt >= MIN_CATNUM && catNumInt <= MAX_CATNUM)) {
                 throw new MintException(MintException.ERROR_INVALID_CATNUM);
             }
@@ -87,9 +91,9 @@ public class ValidityChecker {
 
     }
 
-    private static void checkInvalidInterval(Parser parser) throws MintException {
+    private static void checkInvalidInterval(String intervalStr) throws MintException {
         try {
-            Interval.valueOf(parser.intervalStr.toUpperCase());
+            Interval.valueOf(intervalStr.toUpperCase());
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
             throw new MintException("Please enter valid interval: MONTH, YEAR");
@@ -126,22 +130,22 @@ public class ValidityChecker {
                 if (userInput.contains(tag)) {
                     switch (tag.trim()) {
                     case "n/":
-                        checkEmptyName(parser);
+                        checkEmptyName(parser.name);
                         break;
                     case "d/":
-                        checkInvalidDate(parser);
+                        checkInvalidDate(parser.dateStr);
                         break;
                     case "a/":
-                        checkInvalidAmount(parser);
+                        checkInvalidAmount(parser.amountStr);
                         break;
                     case "c/":
-                        checkInvalidCatNum(parser);
+                        checkInvalidCatNum(parser.catNumStr);
                         break;
                     case "i/":
-                        checkInvalidInterval(parser);
+                        checkInvalidInterval(parser.intervalStr);
                         break;
                     case "e/":
-                        checkInvalidEndDate(parser);
+                        checkInvalidEndDate(parser.endDateStr, parser.dateStr);
                         break;
                     default:
                         throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
@@ -203,7 +207,7 @@ public class ValidityChecker {
         try {
             LocalDate.parse(date, dateFormatter);
             Double.parseDouble(amount);
-            checkInvalidAmountString(amount);
+            checkInvalidAmount(amount);
             int catNumInt = Integer.parseInt(catNum);
             checkValidCatNum(catNumInt);
         } catch (DateTimeParseException e) {
@@ -237,20 +241,12 @@ public class ValidityChecker {
     public static void checkValidityOfFieldsInBudgetListTxt(String catNum, String amount) throws MintException {
         try {
             Double.parseDouble(amount);
-            checkInvalidAmountString(amount);
+            checkInvalidAmount(amount);
             checkValidCatNum(Integer.parseInt(catNum));
         } catch (NumberFormatException e) {
             logger.log(Level.INFO, "User entered invalid amount!");
             throw new MintException("Unable to load text file! Invalid number detected! "
                     + "Did u accidentally edit the file?");
-        }
-    }
-
-    static void checkInvalidAmountString(String amountStr) throws MintException {
-        boolean isDoubleWithoutLetters = doublePattern.matcher(amountStr).matches();
-        boolean isEmpty = amountStr == null;
-        if (isEmpty || !isDoubleWithoutLetters) {
-            throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
     }
 
