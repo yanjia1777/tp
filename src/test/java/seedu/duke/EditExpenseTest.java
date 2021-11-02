@@ -5,21 +5,10 @@ import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.storage.DataManagerActions;
-
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.duke.parser.ValidityChecker.dateFormatter;
 
 class EditExpenseTest {
