@@ -45,29 +45,29 @@ public abstract class FinanceManager {
 
     }
 
-    public Entry deleteEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
-        try {
-            Entry entry = chooseEntryByKeywords(tags, true, query);
-            if (entry != null) {
-                deleteEntry(entry);
-            } 
-            return entry;
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-    }
-
-    public ArrayList<String> editEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
-        try {
-            Entry entry = chooseEntryByKeywords(tags, false, query);
-            if (entry != null) {
-                return editEntry(entry);
-            }
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-        return null;
-    }
+    //    public Entry deleteEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+    //        try {
+    //            Entry entry = chooseEntryByKeywords(tags, true, query);
+    //            if (entry != null) {
+    //                deleteEntry(entry);
+    //            }
+    //            return entry;
+    //        } catch (MintException e) {
+    //            throw new MintException(e.getMessage());
+    //        }
+    //    }
+    //
+    //    public ArrayList<String> editEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+    //        try {
+    //            Entry entry = chooseEntryByKeywords(tags, false, query);
+    //            if (entry != null) {
+    //                return editEntry(entry);
+    //            }
+    //        } catch (MintException e) {
+    //            throw new MintException(e.getMessage());
+    //        }
+    //        return null;
+    //    }
 
     public void editSpecifiedEntry(String userInput, int indexToBeChanged, Entry entry) throws MintException {
         Parser parser = new Parser();
