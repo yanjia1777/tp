@@ -1,23 +1,12 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.entries.Entry;
 import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.storage.DataManagerActions;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.duke.parser.ValidityChecker.dateFormatter;
 
 class AddFunctionTest {
