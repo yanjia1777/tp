@@ -32,7 +32,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -281,6 +280,7 @@ public class Parser {
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         try {
+            ValidityChecker.checkTagsFormatSpacing(userInput);
             ValidityChecker.identifyDuplicateTags(this, userInput);
             parseType(userInput);
             parseInputByTagsLoop(userInput);
