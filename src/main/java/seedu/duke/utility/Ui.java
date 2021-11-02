@@ -140,15 +140,6 @@ public class Ui {
         }
     }
 
-    public static void viewGivenListAndTotal(ArrayList<Entry> list, double totalAmount) {
-        System.out.println("Here is the list of your entries:");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(INDENT + (i + 1) + "  " + list.get(i).toString());
-        }
-        System.out.println(LINE);
-        System.out.println(INDENT + "Total: " + totalAmount);
-    }
-
     public static int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) throws MintException {
         if (isDelete) {
             System.out.println("Enter the index of the item you want to delete." + CANCEL_MESSAGE);
@@ -220,6 +211,15 @@ public class Ui {
         System.out.println("Delete aborted.");
     }
 
+    public void printNoMatchingEntryMessage()
+    {
+        System.out.println(MintException.ERROR_EXPENSE_NOT_IN_LIST);
+    }
+
+    public void printCancelMessage()
+    {
+        System.out.println("Ok. I have cancelled the process.");
+    }
     public static void printOutcomeOfEditAttempt() {
         System.out.println(SUCCESSFUL_EDIT_MESSAGE);
     }
