@@ -57,13 +57,13 @@ class NormalFinanceManagerTest {
     public void filterEntryByKeywords_queryFullName_oneMatchingResult() {
         LocalDate date1 = LocalDate.parse("2021-10-29", dateFormatter);
         LocalDate date2 = LocalDate.parse("2021-11-29", dateFormatter);
-        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense targetEntry = new Expense("Pear", date1, 3.9, ExpenseCategory.FOOD);
         Expense dummyEntry = new Expense("Apple", date2, 5.0, ExpenseCategory.FOOD);
         entryList.add(targetEntry);
         entryList.add(dummyEntry);
         ArrayList<String> tags = new ArrayList<>();
         tags.add("n/");
+        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense query = new Expense("Pear", date3, 5.0, ExpenseCategory.FOOD);
         try {
             ArrayList<Entry> filteredList = financeManager.filterEntryByKeywords(tags, query);
@@ -81,13 +81,13 @@ class NormalFinanceManagerTest {
     public void filterEntryByKeywords_queryFullName_multipleMatchingResult() {
         LocalDate date1 = LocalDate.parse("2021-10-29", dateFormatter);
         LocalDate date2 = LocalDate.parse("2021-11-29", dateFormatter);
-        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense targetEntry1 = new Expense("pork", date1, 3.9, ExpenseCategory.FOOD);
         Expense targetEntry2 = new Expense("PoRk", date2, 5.0, ExpenseCategory.FOOD);
         entryList.add(targetEntry1);
         entryList.add(targetEntry2);
         ArrayList<String> tags = new ArrayList<>();
         tags.add("n/");
+        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense query = new Expense("pork", date3, 5.0, ExpenseCategory.OTHERS);
         try {
             ArrayList<Entry> filteredList = financeManager.filterEntryByKeywords(tags, query);
@@ -156,13 +156,13 @@ class NormalFinanceManagerTest {
     public void filterEntryByKeywords_queryAmount_multipleMatchingResult() {
         LocalDate date1 = LocalDate.parse("2021-10-29", dateFormatter);
         LocalDate date2 = LocalDate.parse("2021-11-29", dateFormatter);
-        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense targetEntry1 = new Expense("Ice", date1, 3.9, ExpenseCategory.FOOD);
         Expense targetEntry2 = new Expense("yoyo", date2, 3.9, ExpenseCategory.OTHERS);
         entryList.add(targetEntry1);
         entryList.add(targetEntry2);
         ArrayList<String> tags = new ArrayList<>();
         tags.add("a/");
+        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense query = new Expense("eel", date3, 3.9, ExpenseCategory.APPAREL);
         try {
             ArrayList<Entry> filteredList = financeManager.filterEntryByKeywords(tags, query);
@@ -203,13 +203,13 @@ class NormalFinanceManagerTest {
     public void filterEntryByKeywords_queryCategory_oneMatchingResult() {
         LocalDate date1 = LocalDate.parse("2021-10-29", dateFormatter);
         LocalDate date2 = LocalDate.parse("2021-11-29", dateFormatter);
-        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense targetEntry = new Expense("choco", date1, 3.9, ExpenseCategory.FOOD);
         Expense dummyEntry = new Expense("movie", date2, 5.0, ExpenseCategory.ENTERTAINMENT);
         entryList.add(targetEntry);
         entryList.add(dummyEntry);
         ArrayList<String> tags = new ArrayList<>();
         tags.add("c/");
+        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense query = new Expense("yoyo", date3, 1.0, ExpenseCategory.FOOD);
         try {
             ArrayList<Entry> filteredList = financeManager.filterEntryByKeywords(tags, query);
@@ -227,7 +227,6 @@ class NormalFinanceManagerTest {
     public void filterEntryByKeywords_queryNameAndDate_oneMatchingResult() {
         LocalDate date1 = LocalDate.parse("2021-10-29", dateFormatter);
         LocalDate date2 = LocalDate.parse("2021-11-29", dateFormatter);
-        LocalDate date3 = LocalDate.parse("2021-11-12", dateFormatter);
         Expense targetEntry = new Expense("bread", date1, 3.9, ExpenseCategory.FOOD);
         Expense dummyEntry1 = new Expense("kinder", date2, 5.0, ExpenseCategory.FOOD);
         Income dummyEntry2 = new Income("Bread", date2, 5.0, IncomeCategory.OTHERS);
@@ -252,27 +251,34 @@ class NormalFinanceManagerTest {
         entryList.remove(dummyEntry2);
     }
 
-
-
-
-
-
-/*
     @Test
-    public void deleteEntry_nonExistingItem_printErrorMessage() throws MintException {
-        ExpenseList expenseList = new ExpenseList();
-        RecurringExpenseList recurringExpenseList = new RecurringExpenseList();
-        Parser parser = new Parser();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
-        parser.executeCommand("delete n/Cheese d/2021-12-23 a/18 c/1", expenseList, recurringExpenseList);
-        String expectedOutput  = "Hmm.. That item is not in the list." + Ui.LINE_SEPARATOR;
-        assertEquals(expectedOutput, outContent.toString());
+    public void filterEntryByKeywords_queryDateAndAmountAndCategory_oneMatchingResult() {
+        LocalDate date1 = LocalDate.parse("2021-10-29", dateFormatter);
+        LocalDate date2 = LocalDate.parse("2021-11-29", dateFormatter);
+        Expense targetEntry = new Expense("bread", date1, 1.0, ExpenseCategory.FOOD);
+        Expense dummyEntry1 = new Expense("kinder", date2, 5.0, ExpenseCategory.FOOD);
+        Income dummyEntry2 = new Income("Bread", date1, 1.0, IncomeCategory.OTHERS);
+        entryList.add(targetEntry);
+        entryList.add(dummyEntry1);
+        entryList.add(dummyEntry2);
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("d/");
+        tags.add("c/");
+        tags.add("a/");
+        Expense query = new Expense("Bread", date1, 1.0, ExpenseCategory.FOOD);
+        try {
+            ArrayList<Entry> filteredList = financeManager.filterEntryByKeywords(tags, query);
+            assertEquals(1, filteredList.size());
+            assertTrue(filteredList.contains(targetEntry));
+            assertFalse(filteredList.contains(dummyEntry1));
+            assertFalse(filteredList.contains(dummyEntry2));
+        } catch (MintException e) {
+            e.printStackTrace();
+        }
+        entryList.remove(targetEntry);
+        entryList.remove(dummyEntry1);
+        entryList.remove(dummyEntry2);
     }
-
- */
 
     /*
     public void deleteEntry_existingItem_success() throws MintException {
