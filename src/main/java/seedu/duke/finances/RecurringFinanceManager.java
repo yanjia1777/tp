@@ -133,28 +133,23 @@ public class RecurringFinanceManager extends FinanceManager {
                     String name = nonEmptyNewDescription(word);
                     entryFields.put("name", name);
                     count++;
-                }
-                if (word.contains(DATE_SEPARATOR)) {
+                } else if (word.contains(DATE_SEPARATOR)) {
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("date", dateStr);
                     count++;
-                }
-                if (word.contains(AMOUNT_SEPARATOR)) {
+                } else if (word.contains(AMOUNT_SEPARATOR)) {
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("amount",amountStr);
                     count++;
-                }
-                if (word.contains(CATEGORY_SEPARATOR)) {
+                } else if (word.contains(CATEGORY_SEPARATOR)) {
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("catNum", catNumStr);
                     count++;
-                }
-                if (word.contains(END_DATE_SEPARATOR)) {
+                } else if (word.contains(END_DATE_SEPARATOR)) {
                     String endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("endDate", endDateStr);
                     count++;
-                }
-                if (word.contains(INTERVAL_SEPARATOR)) {
+                } else if (word.contains(INTERVAL_SEPARATOR)) {
                     String intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("interval", intervalStr);
                     count++;
