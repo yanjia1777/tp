@@ -104,8 +104,8 @@ public class NormalFinanceManager extends FinanceManager {
             //                logger.log(Level.INFO, "User entered invalid entry");
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
+        ValidityChecker.checkTagsFormatSpacing(choice);
         editSpecifiedEntry(choice, indexToBeChanged, entry);
-
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt();
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));

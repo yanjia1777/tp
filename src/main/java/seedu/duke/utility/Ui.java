@@ -59,7 +59,7 @@ public class Ui {
     protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
     public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
     public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
-            + "Please delete the text files and try again!";
+            + "Invalid line deleted. We have reloaded the list!";
     public static final String GREETINGS = "Hello! I'm Mint" + System.lineSeparator() + "What can I do for you?";
     public static final String SHUTDOWN = "Goodbye! Hope to see you again soon!";
 
