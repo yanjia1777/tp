@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.duke.parser.ValidityChecker.checkValidityOfFieldsInNormalListTxt;
 import static seedu.duke.parser.ValidityChecker.checkValidityOfFieldsInRecurringListTxt;
 
-public class listValidityCheckerTest {
+public class ListValidityCheckerTest {
 
     @Test
     void checkValidityOfFieldsInNormalListTxt_checkAmountFieldExceedInvalid_failure() {
