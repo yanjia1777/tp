@@ -87,6 +87,7 @@ public class NormalFinanceManager extends FinanceManager {
 
     @Override
     public void deleteEntry(Entry entry) {
+        assert entryList.contains(entry) : "entryList should contain the entry to delete.";
         //logger.log(Level.INFO, "User deleted expense: " + entry);
         entryList.remove(entry);
     }

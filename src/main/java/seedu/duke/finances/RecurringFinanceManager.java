@@ -97,6 +97,7 @@ public class RecurringFinanceManager extends FinanceManager {
 
     @Override
     public void deleteEntry(Entry entry) {
+        assert recurringEntryList.contains(entry) : "recurringEntryList should contain the entry to delete.";
         //logger.log(Level.INFO, "User deleted expense: " + entry);
         recurringEntryList.remove(entry);
     }
