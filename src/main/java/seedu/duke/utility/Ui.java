@@ -452,7 +452,7 @@ public class Ui {
                 maxLimitLength = String.format("$%,.2f", budget.getLimit()).length();
             }
         }
-        System.out.println("Here is the budget for ." + LocalDate.now().getMonth() + " " + LocalDate.now().getYear());
+        System.out.println("Here is the budget for " + LocalDate.now().getMonth() + " " + LocalDate.now().getYear());
         System.out.println("    Category     | " + getLeftIndented("Amount", maxSpendingLength)
                 + " | " + getRightIndented("Budget", maxLimitLength) + " | Percentage");
         for (Budget budget : budgetList) {
