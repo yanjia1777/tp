@@ -111,7 +111,8 @@ class ViewFunctionTest {
     //            ViewCommand view = new ViewCommand(viewOptions);
     //            Ui ui = new Ui();
     //            RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
-    //            outputArray = recurringFinanceManager.appendEntryForView(viewOptions, outputArray, recurringOutputArray);
+    //            outputArray = recurringFinanceManager.appendEntryForView(viewOptions, outputArray,
+    //            recurringOutputArray);
     //            ByteArrayOutputStream output = new ByteArrayOutputStream();
     //            System.setOut(new PrintStream(output));
     //            view.view(outputArray,recurringOutputArray, ui);
