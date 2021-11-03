@@ -30,7 +30,7 @@ public class SetBudgetTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         BudgetManager budgetManager = new BudgetManager();
-        NormalFinanceManager normalFinanceManager= new NormalFinanceManager();
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
         RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
         Ui ui = new Ui();
         budgetManager.setBudget(ExpenseCategory.FOOD, 100);

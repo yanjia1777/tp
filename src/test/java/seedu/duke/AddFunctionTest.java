@@ -39,7 +39,6 @@ class AddFunctionTest {
 
     @Test
     void addExpense_largeAmount_warningMessage() {
-        Ui ui = new Ui();
         BudgetManager budgetManager = new BudgetManager();
         budgetManager.setBudget(ExpenseCategory.FOOD, 100);
         NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
@@ -56,6 +55,7 @@ class AddFunctionTest {
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
+        Ui ui = new Ui();
         ui.printBudgetWarningMessage(ExpenseCategory.FOOD, amountSpent, spendingLimit);
 
         String expectedOutput = "Slow down, you've set aside $100.00 for FOOD, but you already spent $90.00.\n";
