@@ -6,6 +6,8 @@ import seedu.duke.budget.BudgetManager;
 import seedu.duke.entries.Entry;
 import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.Income;
+import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.utility.Ui;
@@ -37,6 +39,23 @@ class AddFunctionTest {
         assertEquals(expense, normalFinanceManager.entryList.get(index));
     }
 
+    @Test
+    void addIncome_allFieldsValid_success() {
+        String name = "OnlyFans";
+        LocalDate date = LocalDate.parse("2021-06-09", dateFormatter);
+        Double amount = Double.parseDouble("69");
+        IncomeCategory category = IncomeCategory.COMMISSION;
+        Income income = new Income(name, date, amount, category);
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        try {
+            normalFinanceManager.addEntry(income);
+        } catch (MintException e) {
+            e.printStackTrace();
+        }
+        int index = normalFinanceManager.entryList.indexOf(income);
+        assertEquals(income, normalFinanceManager.entryList.get(index));
+    }
+  
     @Test
     void addExpense_largeAmount_warningMessage() {
         BudgetManager budgetManager = new BudgetManager();
