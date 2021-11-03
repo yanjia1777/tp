@@ -52,7 +52,7 @@ class ViewFunctionTest {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));
             view.view(outputArray,recurringOutputArray, ui);
-            String expectedOutput = "Here is the list of your entries:\n"
+            String expectedOutput = "Here is the list of your entries:" + System.lineSeparator()
                     + "  Type  | Category |    Date    |      Name      |   Amount    | Every |   Until"
                     + System.lineSeparator()
                     + "Expense |   FOOD   | 2021-02-01 | Samurai Burger |-$7.50       |       |"
