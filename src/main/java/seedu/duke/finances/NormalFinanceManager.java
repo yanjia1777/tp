@@ -125,18 +125,15 @@ public class NormalFinanceManager extends FinanceManager {
                     count++;
                     String name = nonEmptyNewDescription(word);
                     entryFields.put("name", name);
-                }
-                if (word.contains(DATE_SEPARATOR)) {
+                } else if (word.contains(DATE_SEPARATOR)) {
                     count++;
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("date", dateStr);
-                }
-                if (word.contains(AMOUNT_SEPARATOR)) {
+                } else if (word.contains(AMOUNT_SEPARATOR)) {
                     count++;
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("amount",amountStr);
-                }
-                if (word.contains(CATEGORY_SEPARATOR)) {
+                } else if (word.contains(CATEGORY_SEPARATOR)) {
                     count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("catNum", catNumStr);
