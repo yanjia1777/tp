@@ -42,7 +42,7 @@ public class ViewCommand extends Command {
         }
     }
 
-    public void view(ArrayList<Entry> outputArray, ArrayList<Entry> recurringOutputArray, Ui ui) throws MintException{
+    public void view(ArrayList<Entry> outputArray, ArrayList<Entry> recurringOutputArray, Ui ui) throws MintException {
         outputArray.sort(Sorter.compareByDate);
         recurringOutputArray.sort(Sorter.compareByDate);
         applyModifiers(outputArray);

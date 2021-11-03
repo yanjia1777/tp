@@ -344,7 +344,8 @@ public class Ui {
         return new int[]{maxCatLength, maxNameLength, maxAmountLength};
     }
 
-    private static void printViewIndividualEntry(Entry entry, int maxCatLength, int maxNameLength, int maxAmountLength, int indexInt) {
+    private static void printViewIndividualEntry(Entry entry, int maxCatLength, int maxNameLength,
+            int maxAmountLength, int indexInt) {
         String index = indexInt == 0 ? "" : "   " + indexInt + "   | ";
         String type = entry.getType() == Type.Expense ? entry.getType().toString() : entry.getType() + " ";
         String category = getMiddleIndented(entry.getCategory().name(), maxCatLength);
@@ -365,7 +366,8 @@ public class Ui {
         }
     }
 
-    public void printViewRecurring(ArrayList<Entry> entryList, int maxCatIndent, int maxNameIndent, int maxAmountIndent) {
+    public void printViewRecurring(ArrayList<Entry> entryList, int maxCatIndent, int maxNameIndent,
+            int maxAmountIndent) {
         System.out.println("Here is the list of recurring entries added to the above list:");
         for (Entry entry : entryList) {
             printViewIndividualEntry(entry, maxCatIndent, maxNameIndent, maxAmountIndent, 0);
@@ -458,7 +460,8 @@ public class Ui {
                 + getLeftIndented("Amount", maxSpendingLength) + " | "
                 + getRightIndented("Budget", maxLimitLength) + " | Percentage");
         for (Budget budget : budgetList) {
-            printBudgetIndividualEntry(budget, entries, recurringEntries, maxCatLength, maxSpendingLength, maxLimitLength);
+            printBudgetIndividualEntry(budget, entries, recurringEntries, maxCatLength, maxSpendingLength,
+                    maxLimitLength);
         }
 
     }
