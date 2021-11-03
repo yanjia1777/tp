@@ -72,7 +72,8 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
-    public void reload(ArrayList<Entry> entryList, String fieldsInTextFile) throws FileNotFoundException, MintException {
+    public void reload(ArrayList<Entry> entryList, String fieldsInTextFile) throws FileNotFoundException,
+            MintException {
         deleteLineInTextFile(fieldsInTextFile);
         entryList.clear();
         loadEntryListContents(entryList);
