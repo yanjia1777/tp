@@ -57,7 +57,7 @@ class ViewFunctionTest {
                     + "Expense |   FOOD   | 2021-02-01 | Samurai Burger |-$7.50       |       |\n"
                     + "Income  |   GIFT   | 2015-12-15 |    Lottery     | $250,000.00 |       |\n"
                     + "                                      Net Total: | $249,992.50\n"
-                    + "Here is the list of recurring entries added to the above list:";
+                    + "Here is the list of recurring entries added to the above list:\n";
             assertEquals(expectedOutput, output.toString());
         } catch (MintException e) {
             e.printStackTrace();
