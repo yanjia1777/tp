@@ -30,7 +30,6 @@ class ViewFunctionTest {
     void view_allFieldsValid_success() {
 
         ArrayList<Entry> outputArray = new ArrayList<>();
-        ArrayList<Entry> recurringOutputArray = new ArrayList<>();
 
         String name = "Samurai Burger";
         LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
@@ -64,6 +63,7 @@ class ViewFunctionTest {
         Income income = new Income(name, date, amount, categoryI);
         outputArray.add(income);
 
+        ArrayList<Entry> recurringOutputArray = new ArrayList<>();
         recurringOutputArray.add(expenseR);
         recurringOutputArray.add(incomeR);
 
