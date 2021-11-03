@@ -12,6 +12,7 @@ import seedu.duke.entries.RecurringExpense;
 import seedu.duke.entries.RecurringIncome;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
+import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.parser.ViewOptions;
 import seedu.duke.utility.Ui;
 
@@ -63,14 +64,16 @@ class ViewFunctionTest {
         Income income = new Income(name, date, amount, categoryI);
         outputArray.add(income);
 
-        outputArray.add(expenseR);
-        outputArray.add(incomeR);
+        recurringOutputArray.add(expenseR);
+        recurringOutputArray.add(incomeR);
 
         try {
             String[] argumentArray = {"view"};
             ViewOptions viewOptions = new ViewOptions(argumentArray);
             ViewCommand view = new ViewCommand(viewOptions);
             Ui ui = new Ui();
+            RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
+            outputArray = recurringFinanceManager.appendEntryForView(viewOptions, outputArray, recurringOutputArray);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));
             view.view(outputArray,recurringOutputArray, ui);

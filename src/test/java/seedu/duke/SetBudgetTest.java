@@ -38,15 +38,15 @@ public class SetBudgetTest {
         ui.printBudgetBreakdown(budgetManager.getBudgetList(), normalFinanceManager.getEntryList(),
                 recurringFinanceManager.getCopyOfRecurringEntryList());
         String expectedOutput = "Here is the budget for NOVEMBER 2021" + System.lineSeparator()
-                + "    Category     | Amount | Budget  | Percentage" + System.lineSeparator()
-                + "      FOOD       |  $0.00 / $100.00 | " + System.lineSeparator()
-                + " ENTERTAINMENT   |  $0.00 / $200.00 | " + System.lineSeparator()
-                + " TRANSPORTATION  |  $0.00 / Not set | " + System.lineSeparator()
-                + "   HOUSEHOLD     |  $0.00 / Not set | " + System.lineSeparator()
-                + "    APPAREL      |  $0.00 / Not set | " + System.lineSeparator()
-                + "     BEAUTY      |  $0.00 / Not set | " + System.lineSeparator()
-                + "      GIFT       |  $0.00 / Not set | " + System.lineSeparator()
-                + "     OTHERS      |  $0.00 / Not set | " + System.lineSeparator();
+                + "   Category     | Amount | Budget  | Percentage" + System.lineSeparator()
+                + "     FOOD       |  $0.00 / $100.00 | " + System.lineSeparator()
+                + "ENTERTAINMENT   |  $0.00 / $200.00 | " + System.lineSeparator()
+                + "TRANSPORTATION  |  $0.00 / Not set | " + System.lineSeparator()
+                + "  HOUSEHOLD     |  $0.00 / Not set | " + System.lineSeparator()
+                + "   APPAREL      |  $0.00 / Not set | " + System.lineSeparator()
+                + "    BEAUTY      |  $0.00 / Not set | " + System.lineSeparator()
+                + "     GIFT       |  $0.00 / Not set | " + System.lineSeparator()
+                + "    OTHERS      |  $0.00 / Not set | " + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
