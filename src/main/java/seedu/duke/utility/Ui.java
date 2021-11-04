@@ -107,6 +107,11 @@ public class Ui {
                 + INDENT + "Edit recurring entries using keyword search. Needs at least 1 tag. "
                 + "Example: editR n/spotify\n"
                 + SOLID_LINE
+                + "DELETE ALL ENTRIES\n"
+                + "- deleteAll [normal] [recurring]\n"
+                + INDENT + "Only deletes all entries of the corresponding type.\n"
+                + INDENT + "If no modifiers are specified, it defaults to deleting all entries regardless of type.\n"
+                + SOLID_LINE
                 + "BUDGETING. Type \"cat\" to view category number.\n"
                 + "- set c/category number a/AMOUNT\n"
                 + INDENT + "Set spending limit for individual category. Example: set c/0 100\n"
