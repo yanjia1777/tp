@@ -27,7 +27,7 @@ public class ValidityChecker {
     public static final Pattern doublePattern = Pattern.compile("\\d+(\\.\\d+)?");
     public static final String userTagNoSpace = "(.*)[0-9a-zA-Z/\\-.][a-zA-Z]/(.*)";
     public static final String invalidForwardSlash = "(.*)[0-9a-zA-Z/\\-.][0-9/\\-.]/(.*)";
-    public static final String forwardSlashWithoutTagType = "(.*)[ ]/(.*)";
+    public static final String forwardSlashWithoutTagType = "(.*)[ \\-.]/(.*)";
     public static final double AMOUNT_LIMIT = 1000000.0;
 
     public static DateTimeFormatter dateFormatter
@@ -98,6 +98,18 @@ public class ValidityChecker {
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
             throw new MintException("Please enter valid interval: MONTH, YEAR");
+        }
+    }
+
+    public static int checkValidIndex(String indexStr, int size) throws MintException {
+        try {
+            int index = Integer.parseInt(indexStr);
+            if (index < 1 || index > size) {
+                throw new MintException(MintException.ERROR_INDEX_OUT_OF_BOUND);
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new MintException(MintException.ERROR_INDEX_INVALID_NUMBER);
         }
     }
 
