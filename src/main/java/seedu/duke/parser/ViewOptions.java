@@ -61,7 +61,7 @@ public class ViewOptions {
             try {
                 isViewAll = false;
                 year = Integer.parseInt(argumentArray.get(argumentArray.indexOf("year") + 1));
-                if (year < 1000 || year > 9999) {
+                if (year < 2000 || year > 2200) {
                     throw new MintException(MintException.ERROR_INVALID_YEAR);
                 }
             } catch (NumberFormatException e) {
