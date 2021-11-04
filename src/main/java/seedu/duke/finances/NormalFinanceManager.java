@@ -11,11 +11,13 @@ import seedu.duke.utility.Ui;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NormalFinanceManager extends FinanceManager {
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public ArrayList<Entry> entryList;
-    public static boolean hasOneMatch;
 
     public NormalFinanceManager() {
         this.entryList = new ArrayList<>();
@@ -63,6 +65,7 @@ public class NormalFinanceManager extends FinanceManager {
 
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+        assert tags.size() > 0 : "There should be more than one tag to be queried";
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
             switch (tag.trim()) {
@@ -88,7 +91,7 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public void deleteEntry(Entry entry) {
         assert entryList.contains(entry) : "entryList should contain the entry to delete.";
-        //logger.log(Level.INFO, "User deleted expense: " + entry);
+        logger.log(Level.INFO, "User deleted entry: " + entry);
         entryList.remove(entry);
     }
 
