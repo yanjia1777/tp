@@ -4,10 +4,8 @@ import seedu.duke.entries.Entry;
 import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.Type;
-import seedu.duke.storage.BudgetDataManager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -38,18 +36,8 @@ public class BudgetManager {
     }
 
     public void setBudget(ExpenseCategory category, double amount) {
-        Budget budget = getBudgetFromCategory(category);
+        Budget budget = getMonthlyBudgetFromCategory(category);
         budget.setLimit(amount);
-    }
-
-    public boolean isExceedBudget(Entry entry, ArrayList<Entry> entries) {
-        if (entry.getType() == Type.Income) {
-            return false;
-        } else {
-            Expense expense = (Expense) entry;
-            Budget budget = getBudgetFromCategory(expense.getCategory());
-            return getMonthlySpendingCategory(expense.getCategory(), entries) > 0.8 * budget.getLimit();
-        }
     }
 
     public double getMonthlySpendingCategory(ExpenseCategory category, ArrayList<Entry> entries) {
@@ -69,7 +57,7 @@ public class BudgetManager {
         return budgetList;
     }
 
-    public Budget getBudgetFromCategory(ExpenseCategory category) {
+    public Budget getMonthlyBudgetFromCategory(ExpenseCategory category) {
         switch (category) {
         case FOOD:
             return foodBudget;

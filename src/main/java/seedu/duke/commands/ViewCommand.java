@@ -27,30 +27,33 @@ public class ViewCommand extends Command {
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
-                        RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
-                        NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
-                        RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
+            RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
+            NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
+            RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             ArrayList<Entry> outputArray;
+            ArrayList<Entry> recurringOutputArray = new ArrayList<>();
 
             outputArray = normalFinanceManager.getCopyOfArray();
-            outputArray = recurringFinanceManager.view(viewOptions, outputArray);
-
-            applyModifiers(outputArray);
-
-            double total = calculateTotal(outputArray);
-
-            int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
-
-            if (viewOptions.isViewAll) {
-                ArrayList<Entry> recurringOutputArray = recurringFinanceManager.getCopyOfRecurringEntryList();
-                applyModifiers(recurringOutputArray);
-                ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1]);
-            }
+            outputArray = recurringFinanceManager.appendEntryForView(viewOptions, outputArray, recurringOutputArray);
+            view(outputArray, recurringOutputArray, ui, viewOptions.isViewAll);
         } catch (MintException e) {
             ui.printError(e);
         }
     }
+
+    public void view(ArrayList<Entry> outputArray, ArrayList<Entry> recurringOutputArray,
+                     Ui ui, boolean isViewAll) throws MintException {
+        outputArray.sort(Sorter.compareByDate);
+        recurringOutputArray.sort(Sorter.compareByDate);
+        applyModifiers(outputArray);
+        applyRecurringModifiers(recurringOutputArray);
+
+        double total = calculateTotal(outputArray);
+        int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
+        ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1], indentations[2], isViewAll);
+    }
+
 
     public void applyModifiers(ArrayList<Entry> outputArray) throws MintException {
         if (viewOptions.onlyExpense) {
@@ -86,6 +89,24 @@ public class ViewCommand extends Command {
         }
     }
 
+    public void applyRecurringModifiers(ArrayList<Entry> outputArray) throws MintException {
+        if (viewOptions.onlyExpense) {
+            outputArray.removeIf(entry -> entry.getType() != Type.Expense);
+        }
+
+        if (viewOptions.onlyIncome) {
+            outputArray.removeIf(entry -> entry.getType() != Type.Income);
+        }
+
+        if (viewOptions.sortType != null) {
+            sort(viewOptions.sortType, outputArray);
+        }
+
+        if (viewOptions.isAscending) {
+            Collections.reverse(outputArray);
+        }
+    }
+
     public void sort(String sortType, ArrayList<Entry> outputArray) throws MintException {
         assert sortType != null : "sortType should have a command";
         switch (sortType) {
@@ -110,7 +131,7 @@ public class ViewCommand extends Command {
 
     public double calculateTotal(ArrayList<Entry> list) {
         double total = 0;
-        for (Entry entry: list) {
+        for (Entry entry : list) {
             if (entry.getType() == Type.Expense) {
                 total -= entry.getAmount();
             } else {

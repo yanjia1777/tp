@@ -4,6 +4,7 @@ package seedu.duke.parser;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.AddRecurringCommand;
 import seedu.duke.commands.Command;
+import seedu.duke.commands.DeleteAllCommand;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.DeleteRecurringCommand;
 import seedu.duke.commands.EditCommand;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -45,13 +47,15 @@ public class Parser {
     public static final String SEPARATOR = ". ";
     public static final String STRING_INCLUDE = "Please include the following in your command or make them valid: \n";
     public static final String STRING_DESCRIPTION = "Description of item\n";
-    public static final String STRING_DATE = "Date of purchase\n";
-    public static final String STRING_AMOUNT = "Amount\n";
-    public static final String STRING_CATNUM = "Category number\n";
-    public static final String STRING_INTERVAL = "Interval of item\n";
-    public static final String STRING_END_DATE = "Interval of item\n";
-    public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7 for expenses, "
-            + "c/0 to c/4 for income";
+    public static final String STRING_DATE = "Date of purchase or start date of the recurring period"
+            + " (2000-01-01 to 2200-12-31)\n";
+    public static final String STRING_AMOUNT = "Amount (Valid positive number below 1 million)\n";
+    public static final String STRING_CATNUM = "Category number (0 to 7)\n";
+    public static final String STRING_INTERVAL = "Interval of item (month or year in case-insensitive format e.g.,"
+            + " mOnTh, year, MONTH)\n";
+    public static final String STRING_END_DATE = "End date of the recurring period (should be after the start date"
+            + " but within valid range)\n";
+    public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
     public static final int CAT_NUM_FOOD_INT = 0;
     public static final int CAT_NUM_OTHERS_INT = 7;
     public static final String CAT_NUM_FOOD = "0";
@@ -66,6 +70,8 @@ public class Parser {
     public static final String EDIT_RECURRING = "editR";
     public static final String SET_BUDGET = "set";
     public static final String VIEW_BUDGET = "budget";
+    public static final String DELETEALL = "deleteAll";
+    public static final String DELETEALL2 = "deleteall";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
@@ -279,6 +285,8 @@ public class Parser {
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         try {
+            ValidityChecker.checkTagsFormatSpacing(userInput);
+            ValidityChecker.identifyDuplicateTags(this, userInput);
             parseType(userInput);
             parseInputByTagsLoop(userInput);
             ArrayList<String> validTags = ValidityChecker.checkExistenceAndValidityOfTags(this, userInput);
@@ -291,10 +299,7 @@ public class Parser {
 
     public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);
-        if (argumentsArray.length <= 1) {
-            throw new MintException(ERROR_MISSING_PARAMS);
-        }
-        if (Objects.equals(argumentsArray[1], "income")) {
+        if (argumentsArray.length > 1 && Objects.equals(argumentsArray[1], "income")) {
             type = Type.Income;
         } else {
             type = Type.Expense;
@@ -377,21 +382,13 @@ public class Parser {
             initAmountStr();
             initIntervalStr();
             initEndDateStr();
-            boolean isDeleteAll = false;
-            parseInputByArguments(userInput);
-            ArrayList<String> validTags = null;
+            ArrayList<String> validTags = parseInputByTags(userInput);
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            if (Objects.equals(argumentsArray[1], "all")) {
-                isDeleteAll = true;
-            } else {
-                validTags = parseInputByTags(userInput);
-            }
-            Entry expense = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
-            assert Objects.requireNonNull(validTags).size() >= 1 || isDeleteAll
-                    : "There should be at least one valid tag or is deleting all";
-            return new DeleteCommand(validTags, expense, isDeleteAll);
+            Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
+            assert Objects.requireNonNull(validTags).size() >= 1 : "There should be at least one valid tag";
+            return new DeleteCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
@@ -446,20 +443,13 @@ public class Parser {
             initIntervalStr();
             initEndDateStr();
             isRecurring = true;
-            boolean isDeleteAll = false;
-            parseInputByArguments(userInput);
-            ArrayList<String> validTags = null;
+            ArrayList<String> validTags = parseInputByTags(userInput);
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            if (Objects.equals(argumentsArray[1], "all")) {
-                isDeleteAll = true;
-            } else {
-                validTags = parseInputByTags(userInput);
-            }
             RecurringEntry entry = (type == Type.Income)
                     ? createRecurringIncomeObject() : createRecurringExpenseObject();
-            return new DeleteRecurringCommand(validTags, entry, isDeleteAll);
+            return new DeleteRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
@@ -486,10 +476,105 @@ public class Parser {
     private Command prepareSetBudget(String userInput) {
         try {
             parseInputByTags(userInput);
-            ValidityChecker.checkPositiveAmount(amountStr);
             setCategoryViaCatNum(catNumStr);
             setAmountViaAmountStr(amountStr);
             return new SetBudgetCommand(this.expenseCategory, this.amount);
+        } catch (MintException e) {
+            return new InvalidCommand(e.getMessage());
+        }
+    }
+
+    public HashMap<String, String> prepareRecurringEntryToAmendForEdit(Entry entry) {
+        RecurringEntry recurringEntry = (RecurringEntry) entry;
+        String name = recurringEntry.getName();
+        LocalDate date = recurringEntry.getDate();
+        double amount = recurringEntry.getAmount();
+        LocalDate endDate = recurringEntry.getEndDate();
+        Interval interval = recurringEntry.getInterval();
+        String dateStr = date.toString();
+        String amountStr = Double.toString(amount);
+        String endDateStr = endDate.toString();
+        String intervalStr = interval.toString();
+        String catNumStr = String.valueOf(entry.getCategory().ordinal());
+        String[] entryFieldsToAdd = {name, dateStr, amountStr, endDateStr, intervalStr, catNumStr};
+        String[] entryFieldKeys = {"name", "date", "amount", "endDate", "interval", "catNum"};
+        HashMap<String, String> entryFields = new HashMap<>();
+        for (int index = 0; index < entryFieldsToAdd.length; index++) {
+            entryFields.put(entryFieldKeys[index], entryFieldsToAdd[index]);
+        }
+        return entryFields;
+    }
+
+    public HashMap<String, String> prepareEntryToAmendForEdit(Entry entry) {
+        String name = entry.getName();
+        LocalDate date = entry.getDate();
+        double amount = entry.getAmount();
+        String catNumStr = String.valueOf(entry.getCategory().ordinal());
+        String dateStr = date.toString();
+        String amountStr = Double.toString(amount);
+        String[] entryFieldsToAdd = {name, dateStr, amountStr, catNumStr};
+        String[] entryFieldKeys = {"name", "date", "amount", "catNum"};
+        HashMap<String, String> entryFields = new HashMap<>();
+        for (int index = 0; index < entryFieldsToAdd.length; index++) {
+            entryFields.put(entryFieldKeys[index], entryFieldsToAdd[index]);
+        }
+        return entryFields;
+    }
+
+    public RecurringEntry convertRecurringEntryToRespectiveTypes(HashMap<String, String> entryFields,
+                                                                   Type type) throws MintException {
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+        String intervalStr = entryFields.get("interval");
+        String endDateStr = entryFields.get("endDate");
+
+        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        double amount = Double.parseDouble(amountStr);
+        LocalDate endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
+        int pos = Integer.parseInt(catNumStr);
+        ValidityChecker.checkValidCatNum(pos);
+        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        Interval interval = Interval.determineInterval(intervalStr);
+        if (type == Type.Expense) {
+            return new RecurringExpense(name, date, amount, (ExpenseCategory) category, interval, endDate);
+        } else {
+            return new RecurringIncome(name, date, amount, (IncomeCategory) category, interval, endDate);
+        }
+    }
+
+    public Entry convertEntryToRespectiveTypes(HashMap<String, String> entryFields,
+                                                                 Type type) throws MintException {
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+
+        LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
+        double amount = Double.parseDouble(amountStr);
+        int pos = Integer.parseInt(catNumStr);
+        ValidityChecker.checkValidCatNum(pos);
+        Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+        if (type == Type.Expense) {
+            return new Expense(name, date, amount, (ExpenseCategory) category);
+        } else {
+            return new Income(name, date, amount, (IncomeCategory) category);
+        }
+    }
+
+    public Command prepareDeleteAll(String userInput) {
+        try {
+            parseInputByArguments(userInput);
+            if (Objects.equals(argumentsArray[1], "n") || Objects.equals(argumentsArray[1], "normal")) {
+                return new DeleteAllCommand(true, false);
+            } else if (Objects.equals(argumentsArray[1], "r") || Objects.equals(argumentsArray[1], "recurring")) {
+                return new DeleteAllCommand(false, true);
+            } else {
+                throw new MintException(MintException.ERROR_NO_DELIMETER);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return new DeleteAllCommand(true, true);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
@@ -515,6 +600,10 @@ public class Parser {
             return prepareSetBudget(userInput);
         case VIEW_BUDGET:
             return new ViewBudgetCommand();
+        case DELETEALL:
+            //fallthrough
+        case DELETEALL2:
+            return prepareDeleteAll(userInput);
         case VIEW:
             return prepareView(userInput);
         case VIEW_ALL_CATEGORIES:
@@ -527,13 +616,4 @@ public class Parser {
             return new InvalidCommand(MintException.ERROR_INVALID_COMMAND);
         }
     }
-    /*
-    case "deleteall":
-        deleteCommand = new DeleteCommand();
-        deleteCommand.deleteAll(entryList);
-        break;
-    default:
-        isRecurring = false;
-        throw new MintException(MintException.ERROR_INVALID_COMMAND);
-     */
 }

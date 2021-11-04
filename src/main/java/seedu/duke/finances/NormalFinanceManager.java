@@ -1,29 +1,21 @@
 package seedu.duke.finances;
 
-import seedu.duke.entries.Income;
-import seedu.duke.entries.IncomeCategory;
 import seedu.duke.entries.Entry;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.entries.Type;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.Parser;
 import seedu.duke.parser.ValidityChecker;
-import seedu.duke.parser.ViewOptions;
 import seedu.duke.utility.Filter;
-import seedu.duke.utility.Sorter;
 import seedu.duke.utility.Ui;
-import seedu.duke.parser.ViewOptions;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NormalFinanceManager extends FinanceManager {
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public ArrayList<Entry> entryList;
 
@@ -40,40 +32,11 @@ public class NormalFinanceManager extends FinanceManager {
     }
 
     @Override
-    public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
-        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
-        Entry entry;
-        if (filteredList.size() == 0) {
-            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
-
-        } else if (filteredList.size() == 1) {
-            Entry onlyEntry = filteredList.get(0);
-            if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
-                entry = onlyEntry;
-            } else {
-                throw new MintException("Ok. I have cancelled the process.");
-            }
-            return entry;
-        }
-
-        Ui.viewGivenList(filteredList);
-        try {
-            int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
-            if (index >= 0) {
-                entry = filteredList.get(index);
-            } else {
-                throw new MintException("Ok. I have cancelled the process.");
-            }
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-        return entry;
-    }
-
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+        assert tags.size() > 0 : "There should be more than one tag to be queried";
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
-            switch (tag) {
+            switch (tag.trim()) {
             case "n/":
                 filteredList = Filter.filterEntryByName(query.getName(), filteredList);
                 break;
@@ -95,7 +58,8 @@ public class NormalFinanceManager extends FinanceManager {
 
     @Override
     public void deleteEntry(Entry entry) {
-        //logger.log(Level.INFO, "User deleted expense: " + entry);
+        assert entryList.contains(entry) : "entryList should contain the entry to delete.";
+        logger.log(Level.INFO, "User deleted entry: " + entry);
         entryList.remove(entry);
     }
 
@@ -103,83 +67,69 @@ public class NormalFinanceManager extends FinanceManager {
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
         int indexToBeChanged = 0;
-        boolean printEditSuccess = false;
-        boolean exceptionThrown = false;
         String originalEntryStr = "";
-        Parser parser = new Parser();
-        try {
-            originalEntryStr = overWriteString(entry);
-            if (entryList.contains(entry)) {
-                indexToBeChanged = entryList.indexOf(entry);
-                choice = scanFieldsToUpdate();
-            } else {
-                //                logger.log(Level.INFO, "User entered invalid entry");
-                throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
-            }
-            editSpecifiedEntry(choice, indexToBeChanged, entry);
-            // edited
-            printEditSuccess = isEditSuccessful(indexToBeChanged, originalEntryStr);
-        } catch (NumberFormatException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_NUMBER);
-        } catch (DateTimeParseException e) {
-            exceptionThrown = true;
-            System.out.println(ERROR_INVALID_DATE);
+        originalEntryStr = overWriteString(entry);
+        if (entryList.contains(entry)) {
+            indexToBeChanged = entryList.indexOf(entry);
+            choice = scanFieldsToUpdate();
+        } else {
+            //                logger.log(Level.INFO, "User entered invalid entry");
+            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
+        ValidityChecker.checkTagsFormatSpacing(choice);
+        editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
-        Ui.printOutcomeOfEditAttempt(printEditSuccess, exceptionThrown);
+        Ui.printOutcomeOfEditAttempt();
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
-    }
-
-    protected Boolean isEditSuccessful(int indexToBeChanged, String originalEntry) {
-        String newEntry = entryList.get(indexToBeChanged).toString();
-        return !originalEntry.equals(newEntry);
     }
 
     @Override
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
+            Parser parser = new Parser();
+            HashMap<String, String> entryFields = parser.prepareEntryToAmendForEdit(entry);
             Type type = entry.getType();
-            String name = entry.getName();
-            LocalDate date = entry.getDate();
-            double amount = entry.getAmount();
-            Enum category = entry.getCategory();
+
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
                 if (word.contains(NAME_SEPARATOR)) {
                     count++;
-                    name = nonEmptyNewDescription(word);
-                }
-                if (word.contains(DATE_SEPARATOR)) {
+                    String name = nonEmptyNewDescription(word);
+                    entryFields.put("name", name);
+                } else if (word.contains(DATE_SEPARATOR)) {
                     count++;
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-                }
-                if (word.contains(AMOUNT_SEPARATOR)) {
+                    entryFields.put("date", dateStr);
+                } else if (word.contains(AMOUNT_SEPARATOR)) {
                     count++;
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    amount = Double.parseDouble(amountStr);
-                }
-                if (word.contains(CATEGORY_SEPARATOR)) {
+                    entryFields.put("amount",amountStr);
+                } else if (word.contains(CATEGORY_SEPARATOR)) {
                     count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
-                    int pos = Integer.parseInt(catNumStr);
-                    ValidityChecker.checkValidCatNum(pos);
-                    category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
+                    entryFields.put("catNum", catNumStr);
                 }
             }
             if (count == 0) {
                 throw new MintException("No valid fields entered!");
             }
-            if (entry.getType() == Type.Expense) {
-                entryList.set(index, new Expense(name, date, amount, (ExpenseCategory) category));
-            } else {
-                entryList.set(index, new Income(name, date, amount, (IncomeCategory) category));
-            }
+            setEditedEntry(index, entryFields, type);
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
+    }
+
+    private void setEditedEntry(int index, HashMap<String, String> entryFields, Type type) throws MintException {
+        Parser parser = new Parser();
+        String name = entryFields.get("name");
+        String dateStr = entryFields.get("date");
+        String amountStr = entryFields.get("amount");
+        String catNumStr = entryFields.get("catNum");
+
+        ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
+        Entry entry = parser.convertEntryToRespectiveTypes(entryFields, type);
+        entryList.set(index, entry);
     }
 
     public ArrayList<Entry> getCopyOfArray() {
