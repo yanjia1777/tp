@@ -77,13 +77,13 @@ public class ViewOptions {
             try {
                 isViewAll = false;
                 month = Month.of(Integer.parseInt(argumentArray.get(argumentArray.indexOf("month") + 1)));
-                if (year == 0) {
-                    year = LocalDate.now().getYear();
-                }
             } catch (DateTimeException | NumberFormatException e) {
                 throw new MintException(MintException.ERROR_INVALID_MONTH);
             } catch (IndexOutOfBoundsException e) {
                 month = LocalDate.now().getMonth();
+            }
+            if (year == 0) {
+                year = LocalDate.now().getYear();
             }
         }
     }
