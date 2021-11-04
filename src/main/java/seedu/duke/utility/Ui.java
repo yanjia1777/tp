@@ -167,18 +167,18 @@ public class Ui {
 
         String userInput = readUserInput();
         while (userInput != null && !proceedToDelete) {
-                if (userInput.equals("cancel")) {
-                    return INDEX_CANCEL;
-                }
-                try {
-                    index = ValidityChecker.checkValidIndex(userInput, filteredList.size());
-                    proceedToDelete = true;
-                } catch (MintException e) {
-                    System.out.println(e.getMessage() + CANCEL_MESSAGE);
-                }
-                if (!proceedToDelete) {
-                    userInput = readUserInput();
-                }
+            if (userInput.equals("cancel")) {
+                return INDEX_CANCEL;
+            }
+            try {
+                index = ValidityChecker.checkValidIndex(userInput, filteredList.size());
+                proceedToDelete = true;
+            } catch (MintException e) {
+                System.out.println(e.getMessage() + CANCEL_MESSAGE);
+            }
+            if (!proceedToDelete) {
+                userInput = readUserInput();
+            }
         }
         return index - 1;
     }
