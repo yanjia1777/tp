@@ -57,7 +57,11 @@ public class ValidityChecker {
 
     static void checkInvalidDate(String dateStr) throws MintException {
         try {
-            LocalDate.parse(dateStr, dateFormatter);
+            LocalDate date = LocalDate.parse(dateStr, dateFormatter);
+            int year = date.getYear();
+            if (year < 2000 || year > 2200) {
+                throw new MintException(MintException.ERROR_INVALID_YEAR);
+            }
         } catch (DateTimeParseException e) {
             logger.log(Level.INFO, "User entered invalid date");
             throw new MintException(MintException.ERROR_INVALID_DATE);
@@ -66,9 +70,15 @@ public class ValidityChecker {
 
     static void checkInvalidEndDate(String endDateStr, String startDateStr) throws MintException {
         try {
-            LocalDate parsedEndDate = LocalDate.parse(endDateStr, dateFormatter);
-            LocalDate parsedStartDate = LocalDate.parse(startDateStr, dateFormatter);
-            if (parsedEndDate.isBefore(parsedStartDate)) {
+            LocalDate endDate = LocalDate.parse(endDateStr, dateFormatter);
+            LocalDate startDate = LocalDate.parse(startDateStr, dateFormatter);
+
+            int year = endDate.getYear();
+            if (year < 2000 || year > 2200) {
+                throw new MintException(MintException.ERROR_INVALID_YEAR);
+            }
+
+            if (!endDate.isAfter(startDate)) {
                 throw new MintException("End date must be after start date.");
             }
         } catch (DateTimeParseException e) {
@@ -98,6 +108,18 @@ public class ValidityChecker {
         } catch (IllegalArgumentException e) {
             logger.log(Level.INFO, "User entered invalid interval");
             throw new MintException("Please enter valid interval: MONTH, YEAR");
+        }
+    }
+
+    public static int checkValidIndex(String indexStr, int size) throws MintException {
+        try {
+            int index = Integer.parseInt(indexStr);
+            if (index < 1 || index > size) {
+                throw new MintException(MintException.ERROR_INDEX_OUT_OF_BOUND);
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new MintException(MintException.ERROR_INDEX_INVALID_NUMBER);
         }
     }
 

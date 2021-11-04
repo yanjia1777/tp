@@ -8,6 +8,7 @@ import seedu.duke.entries.Type;
 import seedu.duke.entries.RecurringEntry;
 import seedu.duke.entries.Interval;
 import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.parser.ValidityChecker;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -55,11 +56,11 @@ public class Ui {
     public static final int MIN_SPENDING_INDENTATION = 6;
     public static final int MIN_LIMIT_INDENTATION = 7;
     public static final int MIN_CAT_INDENTATION = 8;
-    protected static final int INDEX_CANCEL = -1;
-    protected static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
+    public static final int INDEX_CANCEL = -1;
+    public static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
     public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
     public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
-            + "Please delete the text files and try again!";
+            + "Invalid line deleted. We have reloaded the list!";
     public static final String GREETINGS = "Hello! I'm Mint" + System.lineSeparator() + "What can I do for you?";
     public static final String SHUTDOWN = "Goodbye! Hope to see you again soon!";
 
@@ -129,7 +130,7 @@ public class Ui {
         );
     }
 
-    public static void viewGivenList(ArrayList<Entry> list) {
+    public void viewGivenList(ArrayList<Entry> list) {
         int maxNameLength = MIN_NAME_INDENTATION;
         int maxAmountLength = MIN_AMOUNT_INDENTATION;
         int maxCatLength = MIN_CAT_INDENTATION;
@@ -148,45 +149,41 @@ public class Ui {
         System.out.println(" Index |   Type  | " + getMiddleIndented("Category", maxCatLength) + " |    Date    | "
                 + getMiddleIndented("Name", maxNameLength) + " | "
                 + getMiddleIndented("Amount", maxAmountLength + 1) + " | Every |   Until");
+        int indexCount = 1;
         for (Entry entry : list) {
-            printViewIndividualEntry(entry, maxCatLength, maxNameLength, maxAmountLength, list.indexOf(entry) + 1);
+            printViewIndividualEntry(entry, maxCatLength, maxNameLength, maxAmountLength, indexCount);
+            indexCount++;
         }
     }
 
-    public static int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) throws MintException {
+    public int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) {
         if (isDelete) {
             System.out.println("Enter the index of the item you want to delete." + CANCEL_MESSAGE);
         } else {
             System.out.println("Enter the index of the item you want to edit." + CANCEL_MESSAGE);
         }
-
-        Scanner in = new Scanner(System.in);
         int index = 0;
         boolean proceedToDelete = false;
-        while (!proceedToDelete) {
-            if (in.hasNextLine()) {
-                String userInput = in.nextLine();
-                if (userInput.trim().equals("cancel")) {
-                    return INDEX_CANCEL;
-                }
-                try {
-                    index = Integer.parseInt(userInput.trim());
-                } catch (NumberFormatException e) {
-                    System.out.println(MintException.ERROR_INDEX_INVALID_NUMBER + CANCEL_MESSAGE);
-                }
-                if (index < 1 || index > filteredList.size()) {
-                    System.out.println(MintException.ERROR_INDEX_OUT_OF_BOUND + CANCEL_MESSAGE);
-                } else {
-                    proceedToDelete = true;
-                }
-            } else {
-                throw new MintException("no new line found");
+
+        String userInput = readUserInput();
+        while (userInput != null && !proceedToDelete) {
+            if (userInput.equals("cancel")) {
+                return INDEX_CANCEL;
+            }
+            try {
+                index = ValidityChecker.checkValidIndex(userInput, filteredList.size());
+                proceedToDelete = true;
+            } catch (MintException e) {
+                System.out.println(e.getMessage() + CANCEL_MESSAGE);
+            }
+            if (!proceedToDelete) {
+                userInput = readUserInput();
             }
         }
         return index - 1;
     }
 
-    public static boolean isConfirmedToDeleteOrEdit(Entry entry, boolean isDelete) {
+    public boolean isConfirmedToDeleteOrEdit(Entry entry, boolean isDelete) {
         if (isDelete) {
             System.out.println("Is this what you want to delete?");
         } else {
@@ -197,35 +194,34 @@ public class Ui {
         return isConfirmed();
     }
 
-    public static boolean isConfirmDeleteAll() {
+    public boolean isConfirmDeleteAll() {
         System.out.println("Are you sure you want to delete all entries?");
         System.out.println("Type \"y\" if yes. Type \"n\" if not.");
         return isConfirmed();
     }
 
-    public static boolean isConfirmed() {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNextLine()) {
-            String userInput = in.nextLine();
+    public boolean isConfirmed() {
+        String userInput = readUserInput();
+        while (userInput != null) {
             switch (userInput.trim()) {
             case "y":
                 return true;
             case "n":
                 return false;
             default:
-                System.out.println("Sorry I don't understand what that means. +"
+                System.out.println("Sorry I don't understand what that means. "
                         + "Type \"y\" if yes. Type \"n\" if not.");
-                break;
             }
+            userInput = readUserInput();
         }
         return false;
     }
 
-    public static void deleteAllConfirmation() {
+    public void deleteAllConfirmation() {
         System.out.println("All entries successfully deleted.");
     }
 
-    public static void deleteAborted() {
+    public void deleteAborted() {
         System.out.println("Delete aborted.");
     }
 
@@ -372,8 +368,12 @@ public class Ui {
     }
 
     public void printViewRecurring(ArrayList<Entry> entryList, int maxCatIndent, int maxNameIndent,
-            int maxAmountIndent) {
-        System.out.println("Here is the list of recurring entries added to the above list:");
+            int maxAmountIndent, boolean isViewAll) {
+        if (isViewAll) {
+            System.out.println("Here is the list of all recurring entries, where some were added to the above list:");
+        } else {
+            System.out.println("Here is the list of recurring entries added to the above list:");
+        }
         for (Entry entry : entryList) {
             printViewIndividualEntry(entry, maxCatIndent, maxNameIndent, maxAmountIndent, 0);
         }
