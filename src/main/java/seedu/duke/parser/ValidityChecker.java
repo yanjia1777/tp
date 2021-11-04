@@ -111,6 +111,18 @@ public class ValidityChecker {
         }
     }
 
+    public static int checkValidIndex(String indexStr, int size) throws MintException {
+        try {
+            int index = Integer.parseInt(indexStr);
+            if (index < 1 || index > size) {
+                throw new MintException(MintException.ERROR_INDEX_OUT_OF_BOUND);
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new MintException(MintException.ERROR_INDEX_INVALID_NUMBER);
+        }
+    }
+
     static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
         String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
