@@ -368,8 +368,12 @@ public class Ui {
     }
 
     public void printViewRecurring(ArrayList<Entry> entryList, int maxCatIndent, int maxNameIndent,
-            int maxAmountIndent) {
-        System.out.println("Here is the list of recurring entries added to the above list:");
+            int maxAmountIndent, boolean isViewAll) {
+        if (isViewAll) {
+            System.out.println("Here is the list of all recurring entries, where some were added to the above list:");
+        } else {
+            System.out.println("Here is the list of recurring entries added to the above list:");
+        }
         for (Entry entry : entryList) {
             printViewIndividualEntry(entry, maxCatIndent, maxNameIndent, maxAmountIndent, 0);
         }
