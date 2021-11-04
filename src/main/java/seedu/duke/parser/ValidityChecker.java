@@ -251,7 +251,7 @@ public class ValidityChecker {
         }
     }
 
-    public static void checkTagsFormatting(String userInput) throws MintException {
+    public static void checkTagsFormatSpacing(String userInput) throws MintException {
         if (userInput.matches(userTagNoSpace)) {
             throw new MintException(MintException.ERROR_NO_SPACE_BEFORE_TAGS);
         }
