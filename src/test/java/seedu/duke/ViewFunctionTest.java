@@ -60,7 +60,8 @@ class ViewFunctionTest {
                     + "Income  |   GIFT   | 2015-12-15 |    Lottery     | $250,000.00 |       |"
                     + System.lineSeparator()
                     + "                                      Net Total: | $249,992.50" + System.lineSeparator()
-                    + "Here is the list of recurring entries added to the above list:" + System.lineSeparator();
+                    + "Here is the list of all recurring entries, where some were added to the above list:"
+                    + System.lineSeparator();
             assertEquals(expectedOutput, output.toString());
         } catch (MintException e) {
             e.printStackTrace();
