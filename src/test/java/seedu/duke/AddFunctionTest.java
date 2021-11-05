@@ -10,6 +10,7 @@ import seedu.duke.entries.Income;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
+import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.utility.Ui;
 
 import java.io.ByteArrayOutputStream;
@@ -61,6 +62,7 @@ class AddFunctionTest {
         BudgetManager budgetManager = new BudgetManager();
         budgetManager.setBudget(ExpenseCategory.FOOD, 100);
         NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
         Expense expense = new Expense("haidilao", LocalDate.now(), 90, ExpenseCategory.FOOD);
         try {
             normalFinanceManager.addEntry(expense);
@@ -68,9 +70,10 @@ class AddFunctionTest {
             e.printStackTrace();
         }
         ArrayList<Entry> entries = normalFinanceManager.getEntryList();
-        double amountSpent = budgetManager.getMonthlySpendingCategory(ExpenseCategory.FOOD, entries);
-        Budget budgetOfCurrentEntry = budgetManager.getMonthlyBudgetFromCategory(ExpenseCategory.FOOD);
-        double spendingLimit = budgetOfCurrentEntry.getLimit();
+        ArrayList<Entry> recurringEntries = recurringFinanceManager.getCopyOfRecurringEntryList();
+        Budget budget = budgetManager.getMonthlyBudgetFromCategory(ExpenseCategory.FOOD);
+        double amountSpent = budget.getMonthlySpending(entries, recurringEntries);
+        double spendingLimit = budget.getLimit();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
