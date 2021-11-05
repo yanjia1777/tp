@@ -45,19 +45,6 @@ public class BudgetManager {
         budget.setLimit(amount);
     }
 
-//    public double getMonthlySpendingCategory(ExpenseCategory category, ArrayList<Entry> entries) {
-//        double amount = 0;
-//        for (Entry entry : entries) {
-//            if (entry.getType() == Type.Expense
-//                    && (entry.getCategory() == category)
-//                    && (entry.getDate().getMonth() == LocalDate.now().getMonth())
-//                    && entry.getDate().getYear() == LocalDate.now().getYear()) {
-//                amount += entry.getAmount();
-//            }
-//        }
-//        return amount;
-//    }
-
     public ArrayList<Budget> getBudgetList() {
         return budgetList;
     }
