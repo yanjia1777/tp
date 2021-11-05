@@ -3,22 +3,15 @@ package seedu.duke;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import seedu.duke.entries.Entry;
-import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Income;
 import seedu.duke.entries.IncomeCategory;
 import seedu.duke.entries.Interval;
 import seedu.duke.entries.RecurringExpense;
 import seedu.duke.entries.RecurringIncome;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.RecurringFinanceManager;
-import seedu.duke.parser.Parser;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -818,21 +811,22 @@ class RecurringFinanceManagerTest {
         LocalDate expectedDate1 = LocalDate.parse("2021-10-15", dateFormatter);
         LocalDate expectedDate2 = LocalDate.parse("2021-11-15", dateFormatter);
         LocalDate expectedDate3 = LocalDate.parse("2021-12-15", dateFormatter);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendMonthlyEntryByYear(resultList, rawRecurringList, entry, 2021);
+        assertEquals(4, resultList.size());
+
         RecurringIncome expectedEntry1 = new RecurringIncome(
                 "bonus", expectedDate1, 3.9, IncomeCategory.SALARY, Interval.MONTH, endDate);
         RecurringIncome expectedEntry2 = new RecurringIncome(
                 "bonus", expectedDate2, 3.9, IncomeCategory.SALARY, Interval.MONTH, endDate);
         RecurringIncome expectedEntry3 = new RecurringIncome(
                 "bonus", expectedDate3, 3.9, IncomeCategory.SALARY, Interval.MONTH, endDate);
-        ArrayList<Entry> resultList = new ArrayList<>();
-        ArrayList<Entry> rawRecurringList = new ArrayList<>();
 
-        financeManager.appendMonthlyEntryByYear(resultList, rawRecurringList, entry, 2021);
-        assertEquals(4, resultList.size());
-        assertTrue(resultList.contains(entry));
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertTrue(resultList.contains(expectedEntry3));
+        assertTrue(resultList.contains(entry));
         assertEquals(1, rawRecurringList.size());
         assertTrue(rawRecurringList.contains(entry));
         entryList.remove(entry);
@@ -848,21 +842,22 @@ class RecurringFinanceManagerTest {
         LocalDate expectedDate1 = LocalDate.parse("2022-02-28", dateFormatter);
         LocalDate expectedDate2 = LocalDate.parse("2022-03-31", dateFormatter);
         LocalDate expectedDate3 = LocalDate.parse("2022-04-30", dateFormatter);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendMonthlyEntryByYear(resultList, rawRecurringList, entry, 2022);
+        assertEquals(4, resultList.size());
+
         RecurringExpense expectedEntry1 = new RecurringExpense(
                 "jelly", expectedDate1, 3.9, ExpenseCategory.FOOD, Interval.MONTH, endDate);
         RecurringExpense expectedEntry2 = new RecurringExpense(
                 "jelly", expectedDate2, 3.9, ExpenseCategory.FOOD, Interval.MONTH, endDate);
         RecurringExpense expectedEntry3 = new RecurringExpense(
                 "jelly", expectedDate3, 3.9, ExpenseCategory.FOOD, Interval.MONTH, endDate);
-        ArrayList<Entry> resultList = new ArrayList<>();
-        ArrayList<Entry> rawRecurringList = new ArrayList<>();
 
-        financeManager.appendMonthlyEntryByYear(resultList, rawRecurringList, entry, 2022);
-        assertEquals(4, resultList.size());
-        assertTrue(resultList.contains(entry));
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertTrue(resultList.contains(expectedEntry3));
+        assertTrue(resultList.contains(entry));
         assertEquals(1, rawRecurringList.size());
         assertTrue(rawRecurringList.contains(entry));
         entryList.remove(entry);
@@ -945,18 +940,19 @@ class RecurringFinanceManagerTest {
 
         LocalDate startDate = LocalDate.parse("2021-06-15", dateFormatter);
         LocalDate endDate = LocalDate.parse("2021-12-12", dateFormatter);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendMonthlyEntryBetweenTwoDates(resultList, rawRecurringList, entry, startDate, endDate,
+                date4, endRecurringDate);
+        assertEquals(3, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.parse("2021-10-15", dateFormatter);
         LocalDate expectedDate2 = LocalDate.parse("2021-11-15", dateFormatter);
         RecurringIncome expectedEntry1 = new RecurringIncome(
                 "bonus", expectedDate1, 3.9, IncomeCategory.SALARY, Interval.MONTH, endRecurringDate);
         RecurringIncome expectedEntry2 = new RecurringIncome(
                 "bonus", expectedDate2, 3.9, IncomeCategory.SALARY, Interval.MONTH, endRecurringDate);
-        ArrayList<Entry> resultList = new ArrayList<>();
-        ArrayList<Entry> rawRecurringList = new ArrayList<>();
 
-        financeManager.appendMonthlyEntryBetweenTwoDates(resultList, rawRecurringList, entry, startDate, endDate,
-                date4, endRecurringDate);
-        assertEquals(3, resultList.size());
         assertTrue(resultList.contains(entry));
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
@@ -974,18 +970,19 @@ class RecurringFinanceManagerTest {
 
         LocalDate startDate = LocalDate.parse("2021-06-15", dateFormatter);
         LocalDate endDate = LocalDate.parse("2021-12-10", dateFormatter);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendMonthlyEntryBetweenTwoDates(resultList, rawRecurringList, entry, startDate, endDate,
+                date4, endRecurringDate);
+        assertEquals(3, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.parse("2021-10-15", dateFormatter);
         LocalDate expectedDate2 = LocalDate.parse("2021-11-15", dateFormatter);
         RecurringIncome expectedEntry1 = new RecurringIncome(
                 "bonus", expectedDate1, 3.9, IncomeCategory.SALARY, Interval.MONTH, endRecurringDate);
         RecurringIncome expectedEntry2 = new RecurringIncome(
                 "bonus", expectedDate2, 3.9, IncomeCategory.SALARY, Interval.MONTH, endRecurringDate);
-        ArrayList<Entry> resultList = new ArrayList<>();
-        ArrayList<Entry> rawRecurringList = new ArrayList<>();
 
-        financeManager.appendMonthlyEntryBetweenTwoDates(resultList, rawRecurringList, entry, startDate, endDate,
-                date4, endRecurringDate);
-        assertEquals(3, resultList.size());
         assertTrue(resultList.contains(entry));
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
@@ -1043,14 +1040,15 @@ class RecurringFinanceManagerTest {
 
         LocalDate startDate = LocalDate.parse("2021-06-15", dateFormatter);
         LocalDate endDate = LocalDate.parse("2023-12-12", dateFormatter);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendYearlyEntryBetweenTwoDates(resultList, rawRecurringList, entry, startDate, endDate,
+                date4, endRecurringDate);
+
         LocalDate expectedDate1 = LocalDate.parse("2022-09-15", dateFormatter);
         RecurringIncome expectedEntry1 = new RecurringIncome(
                 "bonus", expectedDate1, 3.9, IncomeCategory.SALARY, Interval.YEAR, endRecurringDate);
-        ArrayList<Entry> resultList = new ArrayList<>();
-        ArrayList<Entry> rawRecurringList = new ArrayList<>();
 
-        financeManager.appendYearlyEntryBetweenTwoDates(resultList, rawRecurringList, entry, startDate, endDate,
-                date4, endRecurringDate);
         assertEquals(2, resultList.size());
         assertTrue(resultList.contains(entry));
         assertTrue(resultList.contains(expectedEntry1));
@@ -1132,6 +1130,9 @@ class RecurringFinanceManagerTest {
         entryList.add(entry2);
         ArrayList<Entry> resultList = new ArrayList<>();
         ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendEntryByMonth(resultList, rawRecurringList, 1, 2022);
+        assertEquals(2, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.of(2022, 1, 15);
         LocalDate expectedDate2 = LocalDate.of(2022, 1, 26);
         RecurringExpense expectedEntry1 = new RecurringExpense(
@@ -1139,8 +1140,6 @@ class RecurringFinanceManagerTest {
         RecurringIncome expectedEntry2 = new RecurringIncome(
                 "new year", expectedDate2, 3.9, IncomeCategory.ALLOWANCE, Interval.YEAR, endDate);
 
-        financeManager.appendEntryByMonth(resultList, rawRecurringList, 1, 2022);
-        assertEquals(2, resultList.size());
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertEquals(2, rawRecurringList.size());
@@ -1164,6 +1163,9 @@ class RecurringFinanceManagerTest {
         entryList.add(entry2);
         ArrayList<Entry> resultList = new ArrayList<>();
         ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendEntryByMonth(resultList, rawRecurringList, 2, 2022);
+        assertEquals(2, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.of(2022, 2, 28);
         LocalDate expectedDate2 = LocalDate.of(2022, 2, 12);
         RecurringExpense expectedEntry1 = new RecurringExpense(
@@ -1171,8 +1173,6 @@ class RecurringFinanceManagerTest {
         RecurringIncome expectedEntry2 = new RecurringIncome(
                 "new year", expectedDate2, 3.9, IncomeCategory.ALLOWANCE, Interval.YEAR, endDate);
 
-        financeManager.appendEntryByMonth(resultList, rawRecurringList, 2, 2022);
-        assertEquals(2, resultList.size());
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertEquals(2, rawRecurringList.size());
@@ -1212,10 +1212,14 @@ class RecurringFinanceManagerTest {
                 "pocket money", date4, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endDate);
         entryList.add(entry1);
         entryList.add(entry2);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendEntryByYear(resultList, rawRecurringList, 2022);
+        assertEquals(3, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.of(2022, 1, 26);
         LocalDate expectedDate2 = LocalDate.of(2022, 1, 15);
         LocalDate expectedDate3 = LocalDate.of(2022, 2, 15);
-
         RecurringExpense expectedEntry1 = new RecurringExpense(
                 "jelly", expectedDate1, 3.9, ExpenseCategory.FOOD, Interval.YEAR, endDate);
         RecurringIncome expectedEntry2 = new RecurringIncome(
@@ -1223,10 +1227,6 @@ class RecurringFinanceManagerTest {
         RecurringIncome expectedEntry3 = new RecurringIncome(
                 "pocket money", expectedDate3, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endDate);
 
-        ArrayList<Entry> resultList = new ArrayList<>();
-        ArrayList<Entry> rawRecurringList = new ArrayList<>();
-        financeManager.appendEntryByYear(resultList, rawRecurringList, 2022);
-        assertEquals(3, resultList.size());
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertTrue(resultList.contains(expectedEntry3));
@@ -1248,21 +1248,21 @@ class RecurringFinanceManagerTest {
                 "pocket money", date2, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endDate);
         entryList.add(entry1);
         entryList.add(entry2);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        financeManager.appendEntryByYear(resultList, rawRecurringList, 2022);
+        assertEquals(3, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.of(2022, 2, 28);
         LocalDate expectedDate2 = LocalDate.of(2022, 1, 31);
         LocalDate expectedDate3 = LocalDate.of(2022, 2, 28);
-
         RecurringExpense expectedEntry1 = new RecurringExpense(
                 "jelly", expectedDate1, 3.9, ExpenseCategory.FOOD, Interval.YEAR, endDate);
         RecurringIncome expectedEntry2 = new RecurringIncome(
                 "pocket money", expectedDate2, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endDate);
         RecurringIncome expectedEntry3 = new RecurringIncome(
                 "pocket money", expectedDate3, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endDate);
-        ArrayList<Entry> resultList = new ArrayList<>();
-        ArrayList<Entry> rawRecurringList = new ArrayList<>();
 
-        financeManager.appendEntryByYear(resultList, rawRecurringList, 2022);
-        assertEquals(3, resultList.size());
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertTrue(resultList.contains(expectedEntry3));
@@ -1306,10 +1306,14 @@ class RecurringFinanceManagerTest {
         entryList.add(entry2);
         ArrayList<Entry> resultList = new ArrayList<>();
         ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        LocalDate startDate = LocalDate.parse("2021-06-15", dateFormatter);
+        LocalDate endDate = LocalDate.parse("2021-12-12", dateFormatter);
+        financeManager.appendEntryBetweenTwoDates(resultList, rawRecurringList, startDate, endDate);
+        assertEquals(4, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.of(2021, 11, 26);
         LocalDate expectedDate2 = LocalDate.of(2021, 10, 15);
         LocalDate expectedDate3 = LocalDate.of(2021, 11, 15);
-
         RecurringExpense expectedEntry1 = new RecurringExpense(
                 "jelly", expectedDate1, 3.9, ExpenseCategory.FOOD, Interval.YEAR, endRecurringDate);
         RecurringIncome expectedEntry2 = new RecurringIncome(
@@ -1317,14 +1321,10 @@ class RecurringFinanceManagerTest {
         RecurringIncome expectedEntry3 = new RecurringIncome(
                 "pocket money", expectedDate3, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
 
-        LocalDate startDate = LocalDate.parse("2021-06-15", dateFormatter);
-        LocalDate endDate = LocalDate.parse("2021-12-12", dateFormatter);
-        financeManager.appendEntryBetweenTwoDates(resultList, rawRecurringList, startDate, endDate);
-        assertEquals(4, resultList.size());
         assertTrue(resultList.contains(expectedEntry1));
-        assertTrue(resultList.contains(entry2));
         assertTrue(resultList.contains(expectedEntry2));
         assertTrue(resultList.contains(expectedEntry3));
+        assertTrue(resultList.contains(entry2));
         assertEquals(2, rawRecurringList.size());
         assertTrue(rawRecurringList.contains(entry1));
         assertTrue(rawRecurringList.contains(entry2));
@@ -1344,10 +1344,14 @@ class RecurringFinanceManagerTest {
         entryList.add(entry2);
         ArrayList<Entry> resultList = new ArrayList<>();
         ArrayList<Entry> rawRecurringList = new ArrayList<>();
+        LocalDate startDate = LocalDate.parse("2021-09-15", dateFormatter);
+        LocalDate endDate = LocalDate.parse("2021-12-12", dateFormatter);
+        financeManager.appendEntryBetweenTwoDates(resultList, rawRecurringList, startDate, endDate);
+        assertEquals(3, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.of(2021, 9, 30);
         LocalDate expectedDate2 = LocalDate.of(2021, 9, 15);
         LocalDate expectedDate3 = LocalDate.of(2021, 10, 15);
-
         RecurringExpense expectedEntry1 = new RecurringExpense(
                 "jelly", expectedDate1, 3.9, ExpenseCategory.FOOD, Interval.MONTH, endRecurringDate);
         RecurringIncome expectedEntry2 = new RecurringIncome(
@@ -1355,10 +1359,6 @@ class RecurringFinanceManagerTest {
         RecurringIncome expectedEntry3 = new RecurringIncome(
                 "pocket money", expectedDate3, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
 
-        LocalDate startDate = LocalDate.parse("2021-09-15", dateFormatter);
-        LocalDate endDate = LocalDate.parse("2021-12-12", dateFormatter);
-        financeManager.appendEntryBetweenTwoDates(resultList, rawRecurringList, startDate, endDate);
-        assertEquals(3, resultList.size());
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertTrue(resultList.contains(expectedEntry3));
@@ -1401,31 +1401,31 @@ class RecurringFinanceManagerTest {
         entryList.add(entry2);
         ArrayList<Entry> resultList = new ArrayList<>();
         ArrayList<Entry> rawRecurringList = new ArrayList<>();
-        LocalDate expectedDate1 = LocalDate.of(2022, 2, 28);
-        LocalDate expectedDate2 = LocalDate.of(2022, 1, 31);
-        LocalDate expectedDate3 = LocalDate.of(2022, 2, 28);
-        LocalDate expectedDate4 = LocalDate.of(2022, 3, 31);
-
-        RecurringExpense expectedEntry1 = new RecurringExpense(
-                "jelly", expectedDate1, 3.9, ExpenseCategory.FOOD, Interval.YEAR, endRecurringDate);
-        RecurringIncome expectedEntry2 = new RecurringIncome(
-                "pocket money", expectedDate2, 100.0,
-                IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
-        RecurringIncome expectedEntry3 = new RecurringIncome(
-                "pocket money", expectedDate3, 100.0,
-                IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
-        RecurringIncome expectedEntry4 = new RecurringIncome(
-                "pocket money", expectedDate4, 100.0,
-                IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
-
         LocalDate startDate = LocalDate.parse("2022-01-01", dateFormatter);
         LocalDate endDate = LocalDate.parse("2022-03-31", dateFormatter);
         financeManager.appendEntryBetweenTwoDates(resultList, rawRecurringList, startDate, endDate);
         assertEquals(4, resultList.size());
+
+        LocalDate expectedDate1 = LocalDate.of(2022, 2, 28);
+        RecurringExpense expectedEntry1 = new RecurringExpense("jelly", expectedDate1, 3.9,
+                ExpenseCategory.FOOD, Interval.YEAR, endRecurringDate);
         assertTrue(resultList.contains(expectedEntry1));
+
+        LocalDate expectedDate2 = LocalDate.of(2022, 1, 31);
+        RecurringIncome expectedEntry2 = new RecurringIncome("pocket money", expectedDate2, 100.0,
+                IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
         assertTrue(resultList.contains(expectedEntry2));
+
+        LocalDate expectedDate3 = LocalDate.of(2022, 2, 28);
+        RecurringIncome expectedEntry3 = new RecurringIncome("pocket money", expectedDate3, 100.0,
+                IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
         assertTrue(resultList.contains(expectedEntry3));
+
+        LocalDate expectedDate4 = LocalDate.of(2022, 3, 31);
+        RecurringIncome expectedEntry4 = new RecurringIncome("pocket money", expectedDate4, 100.0,
+                IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
         assertTrue(resultList.contains(expectedEntry4));
+
         assertEquals(2, rawRecurringList.size());
         assertTrue(rawRecurringList.contains(entry1));
         assertTrue(rawRecurringList.contains(entry2));
@@ -1466,10 +1466,13 @@ class RecurringFinanceManagerTest {
                 "pocket money", date2, 100.0, IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
         entryList.add(entry1);
         entryList.add(entry2);
+        ArrayList<Entry> resultList = new ArrayList<>();
+        financeManager.appendAllEntry(resultList);
+        assertEquals(3, resultList.size());
+
         LocalDate expectedDate1 = LocalDate.of(2020, 2, 15);
         LocalDate expectedDate2 = LocalDate.of(2021, 2, 15);
         LocalDate expectedDate3 = LocalDate.of(2021, 8, 27);
-
         RecurringExpense expectedEntry1 = new RecurringExpense(
                 "jelly", expectedDate1, 3.9, ExpenseCategory.FOOD, Interval.YEAR, endRecurringDate);
         RecurringExpense expectedEntry2 = new RecurringExpense(
@@ -1477,10 +1480,6 @@ class RecurringFinanceManagerTest {
         RecurringIncome expectedEntry3 = new RecurringIncome(
                 "pocket money", expectedDate3, 100.0,
                 IncomeCategory.ALLOWANCE, Interval.MONTH, endRecurringDate);
-
-        ArrayList<Entry> resultList = new ArrayList<>();
-        financeManager.appendAllEntry(resultList);
-        assertEquals(3, resultList.size());
         assertTrue(resultList.contains(expectedEntry1));
         assertTrue(resultList.contains(expectedEntry2));
         assertTrue(resultList.contains(expectedEntry3));
