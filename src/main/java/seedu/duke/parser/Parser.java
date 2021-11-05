@@ -74,6 +74,7 @@ public class Parser {
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
+    public static final String SPACE = "\\s+";
     protected String command;
     protected String name;
     protected String dateStr;
@@ -314,7 +315,7 @@ public class Parser {
     }
 
     public void parseInputByArguments(String userInput) {
-        argumentsArray = userInput.split("\\s+");
+        argumentsArray = userInput.split(SPACE);
     }
 
 
