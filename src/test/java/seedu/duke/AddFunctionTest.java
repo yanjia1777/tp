@@ -15,7 +15,6 @@ import seedu.duke.utility.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
