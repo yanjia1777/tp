@@ -14,6 +14,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+//@@author irvinseet
 public class BudgetManager {
     ArrayList<Budget> budgetList;
     FoodBudget foodBudget = new FoodBudget(0);
