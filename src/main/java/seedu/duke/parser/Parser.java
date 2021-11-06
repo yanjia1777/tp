@@ -102,6 +102,10 @@ public class Parser {
     public Parser() {
     }
 
+    public ExpenseCategory getExpenseCategory() {
+        return expenseCategory;
+    }
+
     private static int indexOfTag(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
