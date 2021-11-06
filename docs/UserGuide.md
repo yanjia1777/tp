@@ -81,7 +81,7 @@ Refer to the [Features Section](#features) below for details of each comm
 |Tag | Description |Format | Example of input |
 |--------|----|-------------------|-------------|
 | `n/NAME`    | Name of the entry | Any string of characters                                            | `n/Hai di lao`, `n/123`|
-| `a/AMOUNT`  | Amount in dollars. <br /> Numbers after decimal points are in cents.   | Positive number smaller than 1 million. It will be automatically <br />  rounded to 2 decimal points if higher precision is given.| | 
+| `a/AMOUNT`  | Amount in dollars. Numbers after decimal points are in cents.   | Positive number smaller than 1 million. It will be automatically rounded to 2 decimal points if higher precision is given.| | 
 | `d/DATE`    | Date or start date | Any of the [acceptable date formats](#dateFormat) from `2000-01-01` | `d/2016-02-13`, `d/2016-2-13`  |
 |             |                    | to `2200-12-31`. If the date is not specified, the default date set |  |
 |             |                    | would be the date of entry added.                                   |  |
