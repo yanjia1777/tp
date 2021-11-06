@@ -89,8 +89,8 @@ public class RecurringFinanceManager extends FinanceManager {
     @Override
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged = 0;
-        String originalEntryStr = "";
+        int indexToBeChanged;
+        String originalEntryStr;
         originalEntryStr = overWriteString((RecurringEntry) entry);
         if (recurringEntryList.contains(entry)) {
             indexToBeChanged = recurringEntryList.indexOf(entry);
@@ -179,16 +179,6 @@ public class RecurringFinanceManager extends FinanceManager {
         ValidityChecker.checkInvalidEndDate(endDateStr, dateStr);
         RecurringEntry recurringEntry = parser.convertRecurringEntryToRespectiveTypes(entryFields, type);
         recurringEntryList.set(index, recurringEntry);
-    }
-
-    //@@author
-    public String getStringToUpdate(int index) {
-        Entry entry = recurringEntryList.get(index);
-        RecurringEntry recurringEntry = (RecurringEntry) entry;
-        return recurringEntry.getType() + "|" + recurringEntry.getCategory().ordinal()
-                + "|" + recurringEntry.getDate() + "|" + recurringEntry.getName()
-                + "|" + recurringEntry.getAmount() + "|" + recurringEntry.getInterval()
-                + "|" + recurringEntry.getEndDate();
     }
 
     public static String overWriteString(RecurringEntry entry) {
@@ -428,7 +418,7 @@ public class RecurringFinanceManager extends FinanceManager {
         appendEntryBetweenTwoDates(entryList, dummyList, earliestDate, LocalDate.now());
     }
 
-    //@@author
+    //@@author yanjia1777
     public void deleteAll() {
         recurringEntryList.clear();
     }

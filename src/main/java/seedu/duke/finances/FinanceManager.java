@@ -16,11 +16,7 @@ public abstract class FinanceManager {
     public static final String AMOUNT_SEPARATOR = "a/";
     public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
     public static final int LENGTH_OF_SEPARATOR = 2;
-    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DATE = "Invalid date entered! Unable to edit expense.";
     public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
-    public static final String ERROR_INVALID_SORTDATE = "Please input a valid date.";
     public static final String CATEGORY_SEPARATOR = "c/";
     public static final String BLANK = "";
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

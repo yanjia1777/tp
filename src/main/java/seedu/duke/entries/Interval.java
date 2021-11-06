@@ -2,6 +2,7 @@ package seedu.duke.entries;
 
 import seedu.duke.exception.MintException;
 
+//@@author pos0414
 public enum Interval {
     MONTH("MONTH"),
     YEAR("YEAR");
