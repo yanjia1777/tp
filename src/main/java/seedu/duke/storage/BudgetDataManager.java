@@ -1,12 +1,9 @@
 package seedu.duke.storage;
 
 import seedu.duke.budget.Budget;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.entries.Entry;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Ui;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -99,11 +96,6 @@ public class BudgetDataManager extends DataManagerActions {
     public void loadBudget(int catNum, double amount, ArrayList<Budget> budgetList) {
         Budget budget = budgetList.get(catNum);
         budget.setLimit(amount);
-    }
-
-    public void writeToTextFile(ArrayList<Budget> budgetList) {
-        BudgetDataManager budgetDataManager = new BudgetDataManager();
-        budgetDataManager.writeToBudgetTextFile(budgetList);
     }
 
     public void loadFromTextFile(ArrayList<Budget> budgetList) {
