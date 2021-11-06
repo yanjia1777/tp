@@ -17,6 +17,7 @@ import seedu.duke.utility.Ui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//@@author yanjia1777
 public class Duke {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
