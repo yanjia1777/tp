@@ -304,7 +304,7 @@ public class Parser {
         }
     }
 
-
+    //@@author yanjia1777
     public Entry checkType() {
         if (Objects.equals(argumentsArray[1], "income")) {
             return createIncomeObject();
@@ -618,7 +618,6 @@ public class Parser {
         }
     }
 
-    //@@author pos0414
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
         switch (command) {

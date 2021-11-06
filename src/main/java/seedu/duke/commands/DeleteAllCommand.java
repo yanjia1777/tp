@@ -11,6 +11,7 @@ import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Ui;
 
+//@@author yanjia1777
 public class DeleteAllCommand extends Command {
     private final boolean isNormal;
     private final boolean isRecurring;
