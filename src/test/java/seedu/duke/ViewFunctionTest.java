@@ -280,4 +280,320 @@ class ViewFunctionTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void viewByDateAscendingWithRecurringEntries_allFieldsValid_success() {
+
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
+        BudgetManager budgetManager = new BudgetManager();
+        NormalListDataManager normalListDataManager = new NormalListDataManager();
+        DataManagerActions dataManagerActions = new DataManagerActions();
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager();
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        Ui ui = new Ui();
+
+        String name = "Samurai Burger";
+        LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
+        double amount = Double.parseDouble("7.50");
+        ExpenseCategory categoryE = ExpenseCategory.FOOD;
+        Expense expense = new Expense(name, date, amount, categoryE);
+
+        name = "Maid Cafe";
+        date = LocalDate.parse("2012-06-06", dateFormatter);
+        Interval interval = Interval.YEAR;
+        LocalDate endDate = LocalDate.parse("2023-01-06", dateFormatter);
+        amount = Double.parseDouble("14.6");
+        categoryE = ExpenseCategory.ENTERTAINMENT;
+        RecurringExpense expenseR = new RecurringExpense(name, date, amount, categoryE, interval, endDate);
+
+        name = "OnlyFans";
+        date = LocalDate.parse("2021-06-09", dateFormatter);
+        interval = Interval.MONTH;
+        endDate = LocalDate.parse("2027-04-01", dateFormatter);
+        amount = Double.parseDouble("300");
+        IncomeCategory categoryI = IncomeCategory.COMMISSION;
+        RecurringIncome incomeR = new RecurringIncome(name, date, amount, categoryI, interval, endDate);
+
+        name = "Lottery";
+        date = LocalDate.parse("2015-12-15", dateFormatter);
+        amount = Double.parseDouble("250000");
+        categoryI = IncomeCategory.GIFT;
+        Income income = new Income(name, date, amount, categoryI);
+
+        try {
+            normalFinanceManager.addEntry(expense);
+            normalFinanceManager.addEntry(income);
+            recurringFinanceManager.addEntry(expenseR);
+            recurringFinanceManager.addEntry(incomeR);
+            String[] argumentArray = {"view"};
+            ViewOptions viewOptions = new ViewOptions(argumentArray);
+            viewOptions.sortType = "date";
+            viewOptions.isAscending = true;
+            ViewCommand command = new ViewCommand(viewOptions);
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(output));
+            command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
+                    dataManagerActions, recurringListDataManager, budgetDataManager, ui);
+            String expectedOutput = "Here is the list of your entries:"
+                    + System.lineSeparator()
+                    + "  Type  |   Category    |    Date    |      Name      |   Amount    | Every |   Until"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2013-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2014-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2015-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Income  |     GIFT      | 2015-12-15 |    Lottery     | $250,000.00 |       |"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2016-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2017-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2018-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2019-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2020-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense |     FOOD      | 2021-02-01 | Samurai Burger |-$7.50       |       |"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2021-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-06-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-07-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-08-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-09-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-10-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "                                           Net Total: | $251,346.50"
+                    + System.lineSeparator()
+                    + "Here is the list of all recurring entries, where some were added to the above list:"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-06-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator();
+            assertEquals(expectedOutput, output.toString());
+        } catch (MintException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void viewByNameWithRecurringEntries_allFieldsValid_success() {
+
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
+        BudgetManager budgetManager = new BudgetManager();
+        NormalListDataManager normalListDataManager = new NormalListDataManager();
+        DataManagerActions dataManagerActions = new DataManagerActions();
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager();
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        Ui ui = new Ui();
+
+        String name = "Samurai Burger";
+        LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
+        double amount = Double.parseDouble("7.50");
+        ExpenseCategory categoryE = ExpenseCategory.FOOD;
+        Expense expense = new Expense(name, date, amount, categoryE);
+
+        name = "Maid Cafe";
+        date = LocalDate.parse("2012-06-06", dateFormatter);
+        Interval interval = Interval.YEAR;
+        LocalDate endDate = LocalDate.parse("2023-01-06", dateFormatter);
+        amount = Double.parseDouble("14.6");
+        categoryE = ExpenseCategory.ENTERTAINMENT;
+        RecurringExpense expenseR = new RecurringExpense(name, date, amount, categoryE, interval, endDate);
+
+        name = "OnlyFans";
+        date = LocalDate.parse("2021-06-09", dateFormatter);
+        interval = Interval.MONTH;
+        endDate = LocalDate.parse("2027-04-01", dateFormatter);
+        amount = Double.parseDouble("300");
+        IncomeCategory categoryI = IncomeCategory.COMMISSION;
+        RecurringIncome incomeR = new RecurringIncome(name, date, amount, categoryI, interval, endDate);
+
+        name = "Lottery";
+        date = LocalDate.parse("2015-12-15", dateFormatter);
+        amount = Double.parseDouble("250000");
+        categoryI = IncomeCategory.GIFT;
+        Income income = new Income(name, date, amount, categoryI);
+
+        try {
+            normalFinanceManager.addEntry(expense);
+            normalFinanceManager.addEntry(income);
+            recurringFinanceManager.addEntry(expenseR);
+            recurringFinanceManager.addEntry(incomeR);
+            String[] argumentArray = {"view"};
+            ViewOptions viewOptions = new ViewOptions(argumentArray);
+            viewOptions.sortType = "name";
+            ViewCommand command = new ViewCommand(viewOptions);
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(output));
+            command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
+                    dataManagerActions, recurringListDataManager, budgetDataManager, ui);
+            String expectedOutput = "Here is the list of your entries:"
+                    + System.lineSeparator()
+                    + "  Type  |   Category    |    Date    |      Name      |   Amount    | Every |   Until"
+                    + System.lineSeparator()
+                    + "Income  |     GIFT      | 2015-12-15 |    Lottery     | $250,000.00 |       |"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2021-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2020-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2019-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2018-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2017-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2016-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2015-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2014-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2013-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-10-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-09-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-08-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-07-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-06-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Expense |     FOOD      | 2021-02-01 | Samurai Burger |-$7.50       |       |"
+                    + System.lineSeparator()
+                    + "                                           Net Total: | $251,346.50"
+                    + System.lineSeparator()
+                    + "Here is the list of all recurring entries, where some were added to the above list:"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-06-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator();
+            assertEquals(expectedOutput, output.toString());
+        } catch (MintException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void viewByCategoryWithRecurringEntries_allFieldsValid_success() {
+
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
+        BudgetManager budgetManager = new BudgetManager();
+        NormalListDataManager normalListDataManager = new NormalListDataManager();
+        DataManagerActions dataManagerActions = new DataManagerActions();
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager();
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        Ui ui = new Ui();
+
+        String name = "Samurai Burger";
+        LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
+        double amount = Double.parseDouble("7.50");
+        ExpenseCategory categoryE = ExpenseCategory.FOOD;
+        Expense expense = new Expense(name, date, amount, categoryE);
+
+        name = "Maid Cafe";
+        date = LocalDate.parse("2012-06-06", dateFormatter);
+        Interval interval = Interval.YEAR;
+        LocalDate endDate = LocalDate.parse("2023-01-06", dateFormatter);
+        amount = Double.parseDouble("14.6");
+        categoryE = ExpenseCategory.ENTERTAINMENT;
+        RecurringExpense expenseR = new RecurringExpense(name, date, amount, categoryE, interval, endDate);
+
+        name = "OnlyFans";
+        date = LocalDate.parse("2021-06-09", dateFormatter);
+        interval = Interval.MONTH;
+        endDate = LocalDate.parse("2027-04-01", dateFormatter);
+        amount = Double.parseDouble("300");
+        IncomeCategory categoryI = IncomeCategory.COMMISSION;
+        RecurringIncome incomeR = new RecurringIncome(name, date, amount, categoryI, interval, endDate);
+
+        name = "Lottery";
+        date = LocalDate.parse("2015-12-15", dateFormatter);
+        amount = Double.parseDouble("250000");
+        categoryI = IncomeCategory.GIFT;
+        Income income = new Income(name, date, amount, categoryI);
+
+        try {
+            normalFinanceManager.addEntry(expense);
+            normalFinanceManager.addEntry(income);
+            recurringFinanceManager.addEntry(expenseR);
+            recurringFinanceManager.addEntry(incomeR);
+            String[] argumentArray = {"view"};
+            ViewOptions viewOptions = new ViewOptions(argumentArray);
+            viewOptions.sortType = "category";
+            ViewCommand command = new ViewCommand(viewOptions);
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(output));
+            command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
+                    dataManagerActions, recurringListDataManager, budgetDataManager, ui);
+            String expectedOutput = "Here is the list of your entries:"
+                    + System.lineSeparator()
+                    + "  Type  |   Category    |    Date    |      Name      |   Amount    | Every |   Until"
+                    + System.lineSeparator()
+                    + "Expense |     FOOD      | 2021-02-01 | Samurai Burger |-$7.50       |       |"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2021-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2020-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2019-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2018-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2017-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2016-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2015-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2014-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2013-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-10-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-09-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-08-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-07-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-06-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator()
+                    + "Income  |     GIFT      | 2015-12-15 |    Lottery     | $250,000.00 |       |"
+                    + System.lineSeparator()
+                    + "                                           Net Total: | $251,346.50"
+                    + System.lineSeparator()
+                    + "Here is the list of all recurring entries, where some were added to the above list:"
+                    + System.lineSeparator()
+                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + System.lineSeparator()
+                    + "Income  |  COMMISSION   | 2021-06-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
+                    + System.lineSeparator();
+            assertEquals(expectedOutput, output.toString());
+        } catch (MintException e) {
+            e.printStackTrace();
+        }
+    }
 }
