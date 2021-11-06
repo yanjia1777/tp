@@ -366,7 +366,7 @@ public class Ui {
             int maxAmountIndent, boolean isViewAll, boolean isViewExpenseOrIncome) {
         if (!isViewAll) {
             System.out.println("Here is the list of recurring entries added to the above list:");
-        } else if (isViewExpenseOrIncome){
+        } else if (isViewExpenseOrIncome) {
             System.out.print("Here is the list of applicable recurring entries, ");
             System.out.println("where some were added to the above list:");
         } else {
