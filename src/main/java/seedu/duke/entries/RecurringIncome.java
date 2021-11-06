@@ -3,6 +3,7 @@ package seedu.duke.entries;
 import java.time.LocalDate;
 import java.util.Objects;
 
+
 //@@author pos0414
 public class RecurringIncome extends RecurringEntry {
     protected IncomeCategory category;
