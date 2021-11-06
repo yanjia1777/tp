@@ -102,9 +102,9 @@ public class DeleteAllFunctionTest {
             DeleteAllCommand command = new DeleteAllCommand(false, true);
             command.deleteAllRecurring(recurringFinanceManager, recurringListDataManager);
             ArrayList<Entry> expectedNormalArray = new ArrayList<>();
-            ArrayList<Entry> expectedRecurringArray = new ArrayList<>();
             expectedNormalArray.add(expense);
             expectedNormalArray.add(income);
+            ArrayList<Entry> expectedRecurringArray = new ArrayList<>();
             assertEquals(expectedNormalArray, normalFinanceManager.entryList);
             assertEquals(expectedRecurringArray, recurringFinanceManager.recurringEntryList);
         } catch (MintException e) {
