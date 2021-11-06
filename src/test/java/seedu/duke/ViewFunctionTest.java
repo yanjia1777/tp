@@ -115,9 +115,7 @@ class ViewFunctionTest {
 
         try {
             normalFinanceManager.addEntry(expense);
-            normalFinanceManager.addEntry(expenseR);
             normalFinanceManager.addEntry(income);
-            normalFinanceManager.addEntry(incomeR);
             recurringFinanceManager.addEntry(expenseR);
             recurringFinanceManager.addEntry(incomeR);
             String[] argumentArray = {"view"};
