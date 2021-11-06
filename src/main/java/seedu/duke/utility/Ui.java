@@ -492,7 +492,7 @@ public class Ui {
 
     public void printUnsafeCharacters() {
         System.out.println("Please do not use special characters. "
-                + "Only '.', '/', '-' are allowed. '/' is strictly use for tags. ");
+                + "Only '.', '/', '-' are allowed. '/' is strictly use for tags.");
     }
 }
 
