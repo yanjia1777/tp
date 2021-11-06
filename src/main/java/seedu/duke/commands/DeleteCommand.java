@@ -14,6 +14,7 @@ import seedu.duke.utility.Ui;
 
 import java.util.ArrayList;
 
+//@@author pos0414
 public class DeleteCommand extends Command {
     private final Entry query;
     private final ArrayList<String> tags;

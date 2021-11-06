@@ -26,7 +26,12 @@ public class NormalListDataManager extends DataManagerActions {
     public static final String TEXT_DELIMITER = "|";
     public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
 
-
+    //@@author Yitching
+    /**
+     * Saves the expense in the Mint.txt file
+     *
+     * @param entry Entry type variable that contains all the attributes of the entry.
+     */
     public void appendToEntryListTextFile(Entry entry) {
         // Format of Mint.txt file: 0|2021-12-03|Textbook|15.0
         FileWriter fileWriter;
@@ -41,6 +46,12 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * Calls all the methods required to edit a specified expense in the Mint.txt file.
+     *
+     * @param originalString is the string to be overwritten.
+     * @param newString is the string used to overwrite the original string.
+     */
     public void editEntryListTextFile(String originalString, String newString) {
         ArrayList<String> fileContent;
         try {
@@ -52,6 +63,13 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * Identifies which line in the Mint.txt file needs to be overwritten.
+     *
+     * @param originalString is the string to be overwritten.
+     * @param newString is the string used to overwrite the original string.
+     * @param fileContent holds the content of the Mint.txt file
+     */
     private void setContentToBeChanged(String originalString, String newString, ArrayList<String> fileContent) {
         for (int i = 0; i < fileContent.size(); i++) {
             if (fileContent.get(i).equals(originalString)) {
@@ -61,6 +79,11 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * Calls all the methods required to delete the line in the Mint.txt file.
+     *
+     * @param originalString is the string to be deleted.
+     */
     public void deleteLineInTextFile(String originalString) {
         ArrayList<String> fileContent;
         try {
@@ -72,6 +95,10 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    //@@author
+    /**
+     * Deletes all lines in the text file.
+     */
     public void deleteAll() {
         try {
             new FileWriter(NORMAL_FILE_PATH, false).close();
@@ -80,6 +107,13 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    //@@author Yitching
+    /**
+     * Identifies which line in the Mint.txt file needs to be deleted.
+     *
+     * @param originalString is the string to be deleted.
+     * @param fileContent holds the content of the Mint.txt file
+     */
     private void lineRemoval(String originalString, ArrayList<String> fileContent) {
         for (int i = 0; i < fileContent.size(); i++) {
             if (fileContent.get(i).equals(originalString)) {
@@ -89,21 +123,20 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * Writes any changes to the Mint.txt file.
+     *
+     * @param fileContent holds the content of the Mint.txt file.
+     */
     protected void editTextFile(ArrayList<String> fileContent) throws IOException {
         Files.write(Path.of(NORMAL_FILE_PATH), fileContent, StandardCharsets.UTF_8);
     }
 
-    public void removeAll() {
-        try {
-            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH),
-                    StandardCharsets.UTF_8));
-            fileContent.clear();
-            editTextFile(fileContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Loads all the expenses into the entryList arrayList.
+     *
+     * @param entryList Entry type arrayList that stores the all the normal expenses.
+     */
     public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException,
             ArrayIndexOutOfBoundsException, MintException {
         File mintEntryList = new File(NORMAL_FILE_PATH); // create a File for the given file path
@@ -132,6 +165,13 @@ public class NormalListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * If any invalid lines or errors are found, this function deletes the invalid lines and reloads the contents from
+     * the Mint.txt file to the entryList.
+     *
+     * @param entryList Entry type arrayList that stores the all the normal expenses.
+     * @param fieldsInTextFile different fields from text file to be loaded into different attributes of the entryList.
+     */
     public void reload(ArrayList<Entry> entryList, String fieldsInTextFile) throws FileNotFoundException,
             MintException {
         deleteLineInTextFile(fieldsInTextFile);
@@ -139,6 +179,16 @@ public class NormalListDataManager extends DataManagerActions {
         loadEntryListContents(entryList);
     }
 
+    /**
+     * Load the expenses from the Mint.txt file to the entryList
+     *
+     * @param type string containing information on whether it is an expense or income
+     * @param name string containing description of expense
+     * @param dateStr string containing the date of expense.
+     * @param amountStr string containing the amount spent on the expense.
+     * @param catNumStr string of category number representing different categories
+     * @param entryList Entry type arrayList that stores the all the normal expenses.
+     */
     public void loadEntry(String type, String name, String dateStr, String amountStr,
             String catNumStr, ArrayList<Entry> entryList) {
         //should check type before loading
@@ -156,6 +206,12 @@ public class NormalListDataManager extends DataManagerActions {
         entryList.add(entry);
     }
 
+    /**
+     * At the start of the program, load the contents of the Mint.txt file to the entryList. If there is any
+     * missing or erroneous text files or directory, this function would create all the necessary files and directory.
+     *
+     * @param entryList Entry type arrayList that stores the all the normal expenses.
+     */
     public void loadPreviousFileContents(ArrayList<Entry> entryList) {
         try {
             loadEntryListContents(entryList);
@@ -169,5 +225,5 @@ public class NormalListDataManager extends DataManagerActions {
             Ui.printFieldsErrorMessage();
         }
     }
-
 }
+//@@author Yitching

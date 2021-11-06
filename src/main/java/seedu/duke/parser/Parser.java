@@ -103,6 +103,7 @@ public class Parser {
     public Parser() {
     }
 
+    //@@author irvinseet
     public ExpenseCategory getExpenseCategory() {
         return expenseCategory;
     }
@@ -129,6 +130,7 @@ public class Parser {
         return tagType;
     }
 
+    //@@author irvinseet
     public String getDescription(String userInput, int currentTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3).trim();
@@ -267,6 +269,7 @@ public class Parser {
         this.endDateStr = "2200-12-31";
     }
 
+    //@@author irvinseet
     private void parseInputByTagsLoop(String userInput) throws MintException {
         String tagType;
         String description;
@@ -287,6 +290,7 @@ public class Parser {
         }
     }
 
+    //@@author irvinseet
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         try {
@@ -324,6 +328,7 @@ public class Parser {
     }
 
 
+    //@@author irvinseet
     private Expense createExpenseObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
@@ -340,6 +345,7 @@ public class Parser {
         return new Income(name, date, amount, incomeCategory);
     }
 
+    //@@author pos0414
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
@@ -399,6 +405,7 @@ public class Parser {
         }
     }
 
+    //@@author yanjia1777
     private Command prepareView(String userInput) {
         try {
             parseInputByArguments(userInput);
@@ -410,6 +417,7 @@ public class Parser {
         }
     }
 
+    //@@author pos0414
     private Command prepareEditEntry(String userInput) {
         try {
             initDateStr();
@@ -479,6 +487,7 @@ public class Parser {
         }
     }
 
+    //@@author irvinseet
     private Command prepareSetBudget(String userInput) {
         try {
             parseInputByTags(userInput);
@@ -490,6 +499,15 @@ public class Parser {
         }
     }
 
+    //@@author Yitching
+    /**
+     * Prepares the user input by splitting it into the respective fields to overwrite existing recurring expense.
+     *
+     * @param entry Entry type variable, casted to RecurringEntry type, that contains all the attributes of the
+     *     recurring expense.
+     *
+     * @return returns a HashMap containing all the different attributes in String.
+     */
     public HashMap<String, String> prepareRecurringEntryToAmendForEdit(Entry entry) {
         RecurringEntry recurringEntry = (RecurringEntry) entry;
         String name = recurringEntry.getName();
@@ -511,6 +529,13 @@ public class Parser {
         return entryFields;
     }
 
+    /**
+     * Prepares the user input by splitting it into the respective fields to overwrite existing expense.
+     *
+     * @param entry Entry type variable that contains all the attributes of the expense.
+     *
+     * @return returns a HashMap containing all the different attributes in String.
+     */
     public HashMap<String, String> prepareEntryToAmendForEdit(Entry entry) {
         String name = entry.getName();
         LocalDate date = entry.getDate();
@@ -527,6 +552,14 @@ public class Parser {
         return entryFields;
     }
 
+    /**
+     * Conversion of attributes from string to their respective data types.
+     *
+     * @param entryFields HashMap containing all the String type attributes.
+     * @param type refers to whether it is an expense or an income.
+     *
+     * @return returns the new RecurringEntry to overwrite the old RecurringEntry.
+     */
     public RecurringEntry convertRecurringEntryToRespectiveTypes(HashMap<String, String> entryFields,
                                                                    Type type) throws MintException {
         String name = entryFields.get("name");
@@ -550,6 +583,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Conversion of attributes from string to their respective data types.
+     *
+     * @param entryFields HashMap containing all the String type attributes.
+     * @param type refers to whether it is an expense or an income.
+     *
+     * @return returns the new Entry to overwrite the old Entry.
+     */
     public Entry convertEntryToRespectiveTypes(HashMap<String, String> entryFields,
                                                                  Type type) throws MintException {
         String name = entryFields.get("name");
@@ -569,6 +610,7 @@ public class Parser {
         }
     }
 
+    //@@author yanjia1777
     public Command prepareDeleteAll(String userInput) {
         try {
             parseInputByArguments(userInput);
@@ -586,7 +628,7 @@ public class Parser {
         }
     }
 
-
+    //@@author pos0414
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
         switch (command) {
