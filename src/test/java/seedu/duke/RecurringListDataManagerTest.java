@@ -85,7 +85,7 @@ public class RecurringListDataManagerTest {
         fileWriter.flush();
         fileWriter.close();
         assertThrows(ArrayIndexOutOfBoundsException.class,
-                    () -> recurringListDataManager.loadEntryListContents(entryList));
+            () -> recurringListDataManager.loadEntryListContents(entryList));
         ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(RECURRING_FILE_PATH),
                 StandardCharsets.UTF_8));
         assertFalse(fileContent.contains(gibberishToRemove));

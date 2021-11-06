@@ -80,7 +80,7 @@ public class NormalListDataManagerTest {
         fileWriter.flush();
         fileWriter.close();
         assertThrows(ArrayIndexOutOfBoundsException.class,
-                    () -> normalListDataManager.loadEntryListContents(entryList));
+            () -> normalListDataManager.loadEntryListContents(entryList));
         ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH),
                 StandardCharsets.UTF_8));
         assertFalse(fileContent.contains(gibberishToRemove));
