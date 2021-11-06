@@ -2,9 +2,11 @@ package seedu.duke;
 
 import org.junit.jupiter.api.Test;
 import seedu.duke.budget.BudgetManager;
-import seedu.duke.commands.EditCommand;
 import seedu.duke.commands.EditRecurringCommand;
-import seedu.duke.entries.*;
+import seedu.duke.entries.Entry;
+import seedu.duke.entries.Interval;
+import seedu.duke.entries.ExpenseCategory;
+import seedu.duke.entries.RecurringExpense;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
