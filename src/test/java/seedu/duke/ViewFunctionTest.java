@@ -221,8 +221,9 @@ class ViewFunctionTest {
             normalFinanceManager.addEntry(income);
             recurringFinanceManager.addEntry(expenseR);
             recurringFinanceManager.addEntry(incomeR);
-            String[] argumentArray = {"view", "by", "amount"};
+            String[] argumentArray = {"view"};
             ViewOptions viewOptions = new ViewOptions(argumentArray);
+            viewOptions.sortType = "amount";
             ViewCommand command = new ViewCommand(viewOptions);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));
