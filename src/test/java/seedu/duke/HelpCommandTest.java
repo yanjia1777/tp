@@ -9,14 +9,16 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HelpCommandTest {
+    public static final String INDENT = "    ";
+    public static final String SOLID_LINE = "_______________________________________________________________________\n";
+
     @Test
-    void HelpCommandTest_validInput_success() {
+    void helpCommandTest_validInput_success() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         Ui ui = new Ui();
         ui.help();
-        String INDENT = "    ";
-        String SOLID_LINE = "_______________________________________________________________________\n";
+
         String expectedOutput = "Available tags: n/name d/date a/AMOUNT c/CATEGORY_NUMBER i/interval e/endDate\n"
                 + "Order of tags does not matter.\n"
                 + "Square brackets \"[ ]\" identifies an optional argument.\n"

@@ -26,7 +26,7 @@ public class UiTest {
     }
 
     @Test
-    void UiSetBudget_correctType_success() {
+    void uiSetBudget_correctType_success() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         Ui ui = new Ui();
