@@ -2,14 +2,13 @@
 hide circle
 skinparam classAttributeIconSize 0
 skinparam groupInheritance 2
-package "Finance" <<Rectangle>> {
-package "finances" <<Rectangle>> {
+package "FinanceManager" <<Rectangle>> {
 class  "{abstract}\nFinanceManager"
 class NormalFinanceManager
 class RecurringFinanceManager
 }
 
-package "entries" <<Rectangle>> {
+package "Entry" <<Rectangle>> {
 
 class "{abstract}\nRecurringEntry"
 class RecurringExpense
@@ -22,18 +21,18 @@ class Expense
 RecurringFinanceManager -u-|> "{abstract}\nFinanceManager"
 NormalFinanceManager -u-|> "{abstract}\nFinanceManager"
 
-"{abstract}\nRecurringEntry" -u-|> "{abstract}\nEntry"
-RecurringIncome -u-|> "{abstract}\nRecurringEntry"
-RecurringExpense -u-|> "{abstract}\nRecurringEntry"
-Income -u--|> "{abstract}\nEntry"
-Expense -u--|> "{abstract}\nEntry"
+
 
 RecurringFinanceManager ----> "*" RecurringIncome
 RecurringFinanceManager ----> "*" RecurringExpense
 NormalFinanceManager ----> "*" Income
 NormalFinanceManager ----> "*" Expense
 
+"{abstract}\nRecurringEntry" -u-|> "{abstract}\nEntry"
+RecurringIncome -u-|> "{abstract}\nRecurringEntry"
+RecurringExpense -u-|> "{abstract}\nRecurringEntry"
+Income -u--|> "{abstract}\nEntry"
+Expense -u--|> "{abstract}\nEntry"
 
-}
 hide members
 @enduml

@@ -53,8 +53,8 @@ Apart from `Main`, Mint comprises six main components, namely:
 
 - `Ui`: The UI of the App 
 - `Logic`: Make sense of user input and execute command
-- `Model`: Holds the data of the App
-- `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
+- `Model`: Holds the data of the App and performs actions on the data.
+- `Storage`: Reads from and writes to [`LocalStorage`](#local-storage).
 
 The components interact with each other, as shown in the sequence diagram below.
 
@@ -73,7 +73,7 @@ The Ui component,
 * outputs entries requested by the user.
 
 ### <a name="logic"></a>Logic Component
-Here's a (partial) class diagram of the `Logic` component.
+Here is a (partial) class diagram of the `Logic` component.
 
 ![](images/Logic.png)
 
@@ -92,20 +92,24 @@ The Seuquence Diagram below illustrates the interactions within the `Logic` comp
 `parseCommand("delete a/12")` API call.
 ![](images/LogicSequenceDiagram.png)
 ### <a name="model"></a>Model Component
-The `Model` package consists of two components: `Finance` and `Budget`.
-##### <a name="finance"></a>Finance Component
+The `Model` package consists of three components: `FinanceManager`, `Entry`, and `Budget`.
+##### <a name="finance"></a>Finance and Entry Components
 ![](images/Finance.png)
 
-The `Finance` component,
-- stores all the entry data i.e., all `Entry` objects (which are contained in `FinancialManager` object).
-  - `NormalFinanceManager` object stores all the `Income` and `Expense` objects
-  - `RecurringFinanceManager` stores all the `RecurringIncome` and `RecurringExpense` objects
+The `FinanceManager` component,
+- stores all the entry data i.e., all `Entry` objects.
+    - `NormalFinanceManager` object stores all the `Income` and `Expense` objects
+    - `RecurringFinanceManager` stores all the `RecurringIncome` and `RecurringExpense` objects
 - performs action on the list of `Entry` objects (e.g., add, delete, etc.)
-- depends on Ui component as some action needs confirmation from the user (e.g. For delete, </br>
-if there are multiple entries that match the tags the user specified, the user needs to choose which one to delete.)
+- depends on the `Ui` component as some action needs confirmation from the user (e.g. For edit, 
+  after the user chooses the entry to edit, the user needs to provide the fields to be edited.)
+
+The `Entry` component,
+- stores information about the individual `Entry` object.
+- does not depend on any of the other three components.
+
 #### <a name="budget"></a>Budget Component
 
-#### <a name="budget"></a>Budget
 ![](images/Budget.png)
 
 The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of the seven `ExpenseCategory`'s.

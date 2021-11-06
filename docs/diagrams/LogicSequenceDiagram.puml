@@ -8,14 +8,15 @@ end box
 box Logic
 Participant ":Parser" as Parser
 Participant ":ValidityChecker" as Valid
-Participant ":DeleteCommand" as DeleteCommand
+Participant ":AddCommand" as DeleteCommand
 end box
 
 
 
 box Model
 Participant ":NormalFinanceManager" as NormalFinanceManager
-Participant "query:Entry" as Entry
+Participant ":Entry" as Entry
+Participant ":BudgetManager" as Budget
 end box
 
 box Storage
@@ -26,6 +27,8 @@ activate Duke
 Duke -> Parser : parseCommand(userInput)
 activate Parser
 
+Parser -> Parser : prepareAddEntry(userInput)
+activate Parser
 Parser -> Parser : parseInputByTags(userInput)
 activate Parser
 Parser -> Valid : checkExistenceAndValidityOfTags(parser, userInput)
@@ -34,7 +37,7 @@ Valid --> Parser : validTags
 deactivate Valid
 
 
-Parser --> Parser : validTags
+Parser --> Parser
 deactivate Parser
 Parser -> Parser : createIncomeObject()
 
@@ -43,35 +46,43 @@ create Entry
 
 Parser -> Entry : create
 activate Entry
-Entry --> Parser : query
+Entry --> Parser : entry
 deactivate Entry
-Parser --> Parser : query
+Parser --> Parser : entry
 deactivate Parser
 
 create DeleteCommand
-Parser -> DeleteCommand : DeleteCommand(validTags, query)
+Parser -> DeleteCommand : AddCommand(entry)
 activate DeleteCommand
-DeleteCommand --> Parser
+DeleteCommand --> Parser : command
 deactivate DeleteCommand
-Parser --> Duke
+Parser --> Parser : command
+deactivate Parser
+Parser --> Duke : command
+
 deactivate Parser
 
 Duke -> DeleteCommand : execute(...)
+
 activate DeleteCommand
-DeleteCommand -> NormalFinanceManager : deleteByKeyword(validTags, query)
+DeleteCommand -> NormalFinanceManager : addEntry(entry)
 activate NormalFinanceManager
-NormalFinanceManager --> DeleteCommand : deletedEntry
+NormalFinanceManager --> DeleteCommand
 deactivate NormalFinanceManager
-DeleteCommand -> NormalListDataManager : deleteLineInTextFile(stringToDelete)
+
+DeleteCommand -> NormalListDataManager : appendToEntryListTextFile(entry)
 activate NormalListDataManager
 NormalListDataManager --> DeleteCommand
 deactivate NormalListDataManager
 
 
-DeleteCommand -> Ui : printEntryDeleted(deletedEntry)
+DeleteCommand -> Ui : printEntryAdded(entry)
+
 activate Ui
 Ui --> DeleteCommand
 deactivate Ui
+DeleteCommand -> Budget : checkExceedBudget
+
 DeleteCommand --> Duke
 deactivate DeleteCommand
 destroy DeleteCommand
