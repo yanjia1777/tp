@@ -23,7 +23,6 @@ step-by-step-instructions.
     - [Adding entries](#add)
     - [Adding recurring entries](#addR)
     - [Viewing entries](#view)
-      - [Viewing recurring entries](#viewRecurring)
     - [Deleting entries](#delete)
     - [Deleting recurring entries](#deleteR)
     - [Deleting all entries](#deleteAll)
@@ -36,6 +35,7 @@ step-by-step-instructions.
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
 - [Command Summary](#command-summary)
+- [Frequently Asked Questions](#faq)
 
 ## <a name="quickStart"></a>Quick Start
 
@@ -259,18 +259,24 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
 - In addition to the normal entries, recurring entries will also be shown on the list.
   - Depending on the above options, recurring entries will be automatically added to the entries' list according to the 
   recurring period.
-  - Refer to [note about recurring entries](#recurringNote) for more information on what criteria the automatic addition
+  - Refer to [notes about recurring entries](#recurringNote) for more information on what criteria the automatic addition
   will be based on.
-  - There will be separate list at the bottom to show which original recurring entries were added to the entries' list.
-  - If no options were specified correctly, it will default to viewing all recurring entries up to today; the
-  separate list will show all available recurring entries, not only the ones added to the entries' list.
+  - If no date options are specified correctly, it will default to viewing recurring entries up to current date.
+  - There will be a separate list at the bottom to show the original recurring entries.
+    - If neither date options nor expense/income options are specified, the separate list will show all recurring 
+    entries.
+    - If expense/income options are specified but not date options, the separate list will show applicable recurring
+    entries, where some may not have been added to the entries' list.
+    - If date options are specified correctly, the separate list will only show recurring entries that were added to
+    the entries' list.
+  - For more information about why the `view` works this way, refer to [Frequently Asked Questions](#faq).
 
 Examples:
 Assume today's date is `2021-11-06`
 - `view`
 - `view income`
 - `view month 4 year 2021`
-- `view from 2021-03-25 2022-01-02 by amount ascending`
+- `view from 2022-01-13 2022-03-15 by amount ascending`
 
 Examples and expected Output:
 
@@ -281,10 +287,10 @@ Here is the list of your entries:
 Income  |      GIFT      | 2021-12-25 | Christmas allowance | $200.00 |       |
 Expense | TRANSPORTATION | 2021-11-04 |        Taxi         |-$6.99   |       |
 Income  |   ALLOWANCE    | 2021-10-31 |      Allowance      | $1.00   | MONTH | 2023-08-31
-Expense | ENTERTAINMENT  | 2021-10-21 |       Netflix       |-$12.00  | MONTH | 2030-03-20
+Expense | ENTERTAINMENT  | 2021-10-21 |       Netflix       |-$12.00  | MONTH | 2030-02-20
 Expense | ENTERTAINMENT  | 2021-10-04 |        Movie        |-$22.44  |       |
 Income  |   ALLOWANCE    | 2021-09-30 |      Allowance      | $1.00   | MONTH | 2023-08-31
-Expense | ENTERTAINMENT  | 2021-09-21 |       Netflix       |-$12.00  | MONTH | 2030-03-20
+Expense | ENTERTAINMENT  | 2021-09-21 |       Netflix       |-$12.00  | MONTH | 2030-02-20
 Income  |   ALLOWANCE    | 2021-08-31 |      Allowance      | $1.00   | MONTH | 2023-08-31
 Expense |      FOOD      | 2021-04-20 |    Cheese burger    |-$15.00  |       |
 Expense |     OTHERS     | 2021-02-28 |      Nintendo       |-$19.99  | YEAR  | 2023-01-15
@@ -292,7 +298,7 @@ Expense |     OTHERS     | 2020-02-29 |      Nintendo       |-$19.99  | YEAR  | 
                                                  Net Total: | $94.59
 Here is the list of all recurring entries, where some were added to the above list:
 Expense |     OTHERS     | 2022-01-01 |      New year       |-$100.00 | YEAR  | Forever :D
-Expense | ENTERTAINMENT  | 2021-09-21 |       Netflix       |-$12.00  | MONTH | 2030-03-20
+Expense | ENTERTAINMENT  | 2021-09-21 |       Netflix       |-$12.00  | MONTH | 2030-02-20
 Income  |   ALLOWANCE    | 2021-08-31 |      Allowance      | $1.00   | MONTH | 2023-08-31
 Expense |     OTHERS     | 2020-02-29 |      Nintendo       |-$19.99  | YEAR  | 2023-01-15
 ```
@@ -306,9 +312,8 @@ Income  | ALLOWANCE | 2021-10-31 |      Allowance      | $1.00   | MONTH | 2023-
 Income  | ALLOWANCE | 2021-09-30 |      Allowance      | $1.00   | MONTH | 2023-08-31
 Income  | ALLOWANCE | 2021-08-31 |      Allowance      | $1.00   | MONTH | 2023-08-31
                                             Net Total: | $203.00
-Here is the list of all recurring entries, where some were added to the above list:
+Here is the list of applicable recurring entries, where some were added to the above list:
 Income  | ALLOWANCE | 2021-08-31 |      Allowance      | $1.00   | MONTH | 2023-08-31
-
 ```
 
 ```
@@ -329,15 +334,14 @@ Since 2022-01-13 to 2022-03-15:
   Type  |   Category    |    Date    |   Name    | Amount | Every |   Until
 Income  |   ALLOWANCE   | 2022-01-31 | Allowance | $1.00  | MONTH | 2023-08-31
 Income  |   ALLOWANCE   | 2022-02-28 | Allowance | $1.00  | MONTH | 2023-08-31
-Expense | ENTERTAINMENT | 2022-01-21 |  Netflix  |-$12.00 | MONTH | 2030-03-20
-Expense | ENTERTAINMENT | 2022-02-21 |  Netflix  |-$12.00 | MONTH | 2030-03-20
+Expense | ENTERTAINMENT | 2022-01-21 |  Netflix  |-$12.00 | MONTH | 2030-02-20
+Expense | ENTERTAINMENT | 2022-02-21 |  Netflix  |-$12.00 | MONTH | 2030-02-20
 Expense |    OTHERS     | 2022-02-28 | Nintendo  |-$19.99 | YEAR  | 2023-01-15
                                       Net Total: |-$41.99
 Here is the list of recurring entries added to the above list:
 Income  |   ALLOWANCE   | 2021-08-31 | Allowance | $1.00  | MONTH | 2023-08-31
-Expense | ENTERTAINMENT | 2021-09-21 |  Netflix  |-$12.00 | MONTH | 2030-03-20
+Expense | ENTERTAINMENT | 2021-09-21 |  Netflix  |-$12.00 | MONTH | 2030-02-20
 Expense |    OTHERS     | 2020-02-29 | Nintendo  |-$19.99 | YEAR  | 2023-01-15
-
 ```
 
 ## <a name="delete"></a>Deleting an entry: `delete`
@@ -655,3 +659,5 @@ Please refresh page if table is not rendered properly.
 |budget | `budget` |
 |help | `help` | 
 |exit | `exit` |
+
+## <a name="faq"></a>Frequently Asked Questions
