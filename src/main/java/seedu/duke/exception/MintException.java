@@ -1,5 +1,6 @@
 package seedu.duke.exception;
 
+//@@author pos0414
 public class MintException extends Exception {
     public static final String LINE_SEPARATOR = System.lineSeparator();
     public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";

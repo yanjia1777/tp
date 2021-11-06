@@ -127,6 +127,7 @@ public class Ui {
         );
     }
 
+    //@@author yanjia1777
     public void viewGivenList(ArrayList<Entry> list) {
         int maxNameLength = MIN_NAME_INDENTATION;
         int maxAmountLength = MIN_AMOUNT_INDENTATION;

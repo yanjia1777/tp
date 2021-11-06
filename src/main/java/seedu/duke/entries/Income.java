@@ -3,7 +3,6 @@ package seedu.duke.entries;
 import java.time.LocalDate; // import the LocalDate class
 import java.util.Objects;
 
-
 public class Income extends Entry {
     protected IncomeCategory category;
 

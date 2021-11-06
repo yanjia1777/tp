@@ -130,7 +130,6 @@ public class Parser {
         return tagType;
     }
 
-    //@@author irvinseet
     public String getDescription(String userInput, int currentTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3).trim();
@@ -200,17 +199,6 @@ public class Parser {
             return IncomeCategory.OTHERS;
         default:
             throw new MintException(ERROR_INVALID_CATNUM);
-        }
-    }
-
-    private Interval setIntervalViaString(String interval) throws MintException {
-        switch (interval) {
-        case "MONTHLY":
-            return Interval.MONTH;
-        case "YEARLY":
-            return Interval.YEAR;
-        default:
-            throw new MintException("Invalid interval");
         }
     }
 
@@ -306,6 +294,7 @@ public class Parser {
         }
     }
 
+    //@@author yanjia1777
     public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);
         if (argumentsArray.length > 1 && Objects.equals(argumentsArray[1], "income")) {
@@ -314,6 +303,7 @@ public class Parser {
             type = Type.Expense;
         }
     }
+
 
     public Entry checkType() {
         if (Objects.equals(argumentsArray[1], "income")) {

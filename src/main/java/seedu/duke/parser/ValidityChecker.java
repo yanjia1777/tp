@@ -129,7 +129,6 @@ public class ValidityChecker {
         }
     }
 
-    //@@author irvinseet
     static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
         String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
@@ -147,7 +146,6 @@ public class ValidityChecker {
         }
     }
 
-    //@@author pos0414
     static ArrayList<String> identifyValidTags(Parser parser, String userInput,
                                                String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
