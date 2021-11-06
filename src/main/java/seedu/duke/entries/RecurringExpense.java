@@ -1,10 +1,9 @@
 package seedu.duke.entries;
 
-import seedu.duke.utility.Ui;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
+//@@author pos0414
 public class RecurringExpense extends RecurringEntry {
     private ExpenseCategory category;
 

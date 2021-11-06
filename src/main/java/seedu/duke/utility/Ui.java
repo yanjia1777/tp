@@ -17,6 +17,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Ui {
+    protected static final String INDENT = "    ";
+    public static final String SOLID_LINE = "_______________________________________________________________________\n";
+    public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
+    public static final int MIN_NAME_INDENTATION = 4;
+    public static final int MIN_AMOUNT_INDENTATION = 5;
+    public static final int MIN_SPENDING_INDENTATION = 6;
+    public static final int MIN_LIMIT_INDENTATION = 7;
+    public static final int MIN_CAT_INDENTATION = 8;
+    public static final int INDEX_CANCEL = -1;
+    public static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
+    public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
+    public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
+            + "Invalid line deleted. We have reloaded the list!";
+    public static final String GREETINGS = "Hello! I'm Mint" + System.lineSeparator() + "What can I do for you?";
+    public static final String SHUTDOWN = "Goodbye! Hope to see you again soon!";
+
     public static final String FIRST_TIME_USER_MESSAGE = "You must be a first time user!\n"
             + "Welcome! To get you started, type \"help\" to get a list of commands you can use.\n"
             + "Alternatively, Type \"add n/[description] a/[amount]\" to add your very first item.\n"
@@ -33,6 +49,7 @@ public class Ui {
         System.out.println(e.getMessage());
     }
 
+    //@@author irvinseet
     public boolean hasUnsafeCharacters(String text) {
         Pattern pattern = Pattern.compile("[$&+,:;=\\\\?@#|'<>^*()%!]");
         Matcher matcher = pattern.matcher(text);
@@ -46,24 +63,6 @@ public class Ui {
         return null;
     }
 
-    protected static final String INDENT = "    ";
-    public static final String SOLID_LINE = "_______________________________________________________________________\n";
-    public static final String LINE = "    ____________________________________________________________";
-    public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    protected static final String LINE_SEPARATOR = System.lineSeparator();
-    public static final int MIN_NAME_INDENTATION = 4;
-    public static final int MIN_AMOUNT_INDENTATION = 5;
-    public static final int MIN_SPENDING_INDENTATION = 6;
-    public static final int MIN_LIMIT_INDENTATION = 7;
-    public static final int MIN_CAT_INDENTATION = 8;
-    public static final int INDEX_CANCEL = -1;
-    public static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
-    public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
-    public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
-            + "Invalid line deleted. We have reloaded the list!";
-    public static final String GREETINGS = "Hello! I'm Mint" + System.lineSeparator() + "What can I do for you?";
-    public static final String SHUTDOWN = "Goodbye! Hope to see you again soon!";
-
     public void printGreetings() {
         System.out.println(GREETINGS);
     }
@@ -72,6 +71,7 @@ public class Ui {
         System.out.println(SHUTDOWN);
     }
 
+    //@@author irvinseet
     public void help() {
         System.out.println("Available tags: n/name d/date a/AMOUNT c/CATEGORY_NUMBER i/interval e/endDate\n"
                 + "Order of tags does not matter.\n"
@@ -125,6 +125,7 @@ public class Ui {
         );
     }
 
+    //@@author yanjia1777
     public void viewGivenList(ArrayList<Entry> list) {
         int maxNameLength = MIN_NAME_INDENTATION;
         int maxAmountLength = MIN_AMOUNT_INDENTATION;
@@ -151,6 +152,7 @@ public class Ui {
         }
     }
 
+    //@@author pos0414
     public int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) {
         if (isDelete) {
             System.out.println("Enter the index of the item you want to delete." + CANCEL_MESSAGE);
@@ -189,12 +191,14 @@ public class Ui {
         return isConfirmed();
     }
 
+    //@@author yanjia1777
     public boolean isConfirmDeleteAll() {
         System.out.println("Are you sure you want to delete all entries?");
         System.out.println("Type \"y\" if yes. Type \"n\" if not.");
         return isConfirmed();
     }
 
+    //@@author pos0414
     public boolean isConfirmed() {
         String userInput = readUserInput();
         while (userInput != null) {
@@ -212,6 +216,7 @@ public class Ui {
         return false;
     }
 
+    //@@author yanjia1777
     public void deleteAllConfirmation() {
         System.out.println("All entries successfully deleted.");
     }
@@ -232,6 +237,7 @@ public class Ui {
         System.out.println(SUCCESSFUL_EDIT_MESSAGE);
     }
 
+    //@@author irvinseet
     public void printCategoryList() {
         System.out.println("Here are the categories and its tag number\n"
                 + "Expenses           | Income\n"
@@ -266,6 +272,7 @@ public class Ui {
     //        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
     //    }
 
+    //@@author Yitching
     public static StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
         int index = 1;
         StringBuilder missingFieldsErrorMessage = new StringBuilder();
@@ -303,6 +310,7 @@ public class Ui {
         return missingFieldsErrorMessage;
     }
 
+    //@@author yanjia1777
     public int[] printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
         int maxNameLength = MIN_NAME_INDENTATION;
         int maxAmountLength = MIN_AMOUNT_INDENTATION;
@@ -436,10 +444,12 @@ public class Ui {
         System.out.println("I have deleted: " + entry);
     }
 
+    //@@author irvinseet
     public void printSetBudget(ExpenseCategory category, double amount) {
         System.out.printf("Budget for %s set to $%.2f\n", category, amount);
     }
 
+    //@@author yanjia1777
     public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entries,
             ArrayList<Entry> recurringEntries) {
         int maxSpendingLength = MIN_SPENDING_INDENTATION;
@@ -486,6 +496,7 @@ public class Ui {
         System.out.println(category + " | " + spending + " / " + limit + " | " + percentage);
     }
 
+    //@@author irvinseet
     public void printBudgetWarningMessage(ExpenseCategory category, double spending, double limit) {
         if (spending > 0.8 * limit && limit != 0) {
             System.out.printf("Slow down, you've set aside $%.2f for %s, "
@@ -493,6 +504,7 @@ public class Ui {
         }
     }
 
+    //@@author irvinseet
     public void printUnsafeCharacters() {
         System.out.println("Please do not use special characters. "
                 + "Only '.', '/', '-' are allowed. '/' is strictly use for tags.");
