@@ -232,6 +232,7 @@ public class ValidityChecker {
             LocalDate.parse(date, dateFormatter);
             Double.parseDouble(amount);
             checkInvalidAmount(amount);
+            checkInvalidDate(date);
             int catNumInt = Integer.parseInt(catNum);
             checkValidCatNum(catNumInt);
         } catch (DateTimeParseException e) {

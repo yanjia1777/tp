@@ -151,6 +151,7 @@ public class RecurringFinanceManager extends FinanceManager {
 
         ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
         ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
+        ValidityChecker.checkInvalidEndDate(endDateStr, dateStr);
         RecurringEntry recurringEntry = parser.convertRecurringEntryToRespectiveTypes(entryFields, type);
         recurringEntryList.set(index, recurringEntry);
     }
