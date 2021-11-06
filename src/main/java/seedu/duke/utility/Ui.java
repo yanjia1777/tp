@@ -72,11 +72,6 @@ public class Ui {
         System.out.println(SHUTDOWN);
     }
 
-    public static void printInvalidTagError() {
-        System.out.println("Sorry, we are only able to process name, date and process for now");
-        System.out.println("The following tags are available: n/ d/ a/");
-    }
-
     public void help() {
         System.out.println("Available tags: n/name d/date a/AMOUNT c/CATEGORY_NUMBER i/interval e/endDate\n"
                 + "Order of tags does not matter.\n"
@@ -171,7 +166,7 @@ public class Ui {
                 return INDEX_CANCEL;
             }
             try {
-                index = ValidityChecker.checkValidIndex(userInput, filteredList.size());
+                index = ValidityChecker.checkInvalidIndex(userInput, filteredList.size());
                 proceedToDelete = true;
             } catch (MintException e) {
                 System.out.println(e.getMessage() + CANCEL_MESSAGE);
