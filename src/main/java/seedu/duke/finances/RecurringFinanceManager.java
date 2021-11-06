@@ -78,7 +78,7 @@ public class RecurringFinanceManager extends FinanceManager {
 
     //@@author Yitching
     /**
-     * Calls all the methods required for edit
+     * Calls all the methods required for edit.
      *
      * @param entry Entry type variable, casted to RecurringEntry type, that contains all the attributes of the entry.
      *

@@ -65,7 +65,7 @@ public class NormalFinanceManager extends FinanceManager {
 
     //@@author Yitching
     /**
-     * Calls all the methods required for edit
+     * Calls all the methods required for edit.
      *
      * @param entry Entry type variable that contains all the attributes of the expense.
      *
