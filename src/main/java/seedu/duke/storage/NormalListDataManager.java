@@ -93,17 +93,6 @@ public class NormalListDataManager extends DataManagerActions {
         Files.write(Path.of(NORMAL_FILE_PATH), fileContent, StandardCharsets.UTF_8);
     }
 
-    public void removeAll() {
-        try {
-            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH),
-                    StandardCharsets.UTF_8));
-            fileContent.clear();
-            editTextFile(fileContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException,
             ArrayIndexOutOfBoundsException, MintException {
         File mintEntryList = new File(NORMAL_FILE_PATH); // create a File for the given file path

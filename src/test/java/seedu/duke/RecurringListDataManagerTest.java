@@ -12,14 +12,16 @@ import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.storage.DataManagerActions;
 import seedu.duke.storage.RecurringListDataManager;
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.duke.parser.ValidityChecker.dateFormatter;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -72,5 +74,20 @@ public class RecurringListDataManagerTest {
         recurringListDataManager.deleteLineInTextFile(stringToDelete);
         fileContent = new ArrayList<>(Files.readAllLines(Path.of(RECURRING_FILE_PATH), StandardCharsets.UTF_8));
         assertFalse(fileContent.contains(stringToDelete));
+    }
+
+    @Test
+    @Order(4)
+    public void deleteInvalidLineInTextFile_deleteOneLine_expectSuccess() throws Exception {
+        String gibberishToRemove = "sdsadsadsads";
+        FileWriter fileWriter = new FileWriter(RECURRING_FILE_PATH, true);
+        fileWriter.write(gibberishToRemove);
+        fileWriter.flush();
+        fileWriter.close();
+        assertThrows(ArrayIndexOutOfBoundsException.class,
+            () -> recurringListDataManager.loadEntryListContents(entryList));
+        ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(RECURRING_FILE_PATH),
+                StandardCharsets.UTF_8));
+        assertFalse(fileContent.contains(gibberishToRemove));
     }
 }
