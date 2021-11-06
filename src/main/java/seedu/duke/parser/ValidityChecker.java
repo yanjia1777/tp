@@ -36,6 +36,7 @@ public class ValidityChecker {
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
 
+    //@@author pos0414
     public static void checkEmptyName(String name) throws MintException {
         boolean hasEmptyName = name.equals(Parser.STRING_EMPTY);
         if (hasEmptyName) {
@@ -104,6 +105,7 @@ public class ValidityChecker {
 
     }
 
+    //@@author pos0414
     public static void checkInvalidInterval(String intervalStr) throws MintException {
         try {
             Interval.valueOf(intervalStr.toUpperCase());
@@ -127,6 +129,7 @@ public class ValidityChecker {
         }
     }
 
+    //@@author irvinseet
     static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
         String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
@@ -144,6 +147,7 @@ public class ValidityChecker {
         }
     }
 
+    //@@author pos0414
     static ArrayList<String> identifyValidTags(Parser parser, String userInput,
                                                String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
@@ -216,12 +220,27 @@ public class ValidityChecker {
         }
     }
 
+    //@@author Yitching
+    /**
+     * Checks validity of CatNum to be within the range of categories.
+     *
+     * @param catNum category number representing different categories
+     */
     public static void checkValidCatNum(int catNum) throws MintException {
         if (!((catNum > -1) && (catNum < 8))) {
             throw new MintException(ERROR_INVALID_NUMBER);
         }
     }
 
+    /**
+     * Checks validity of fields in the Normal List for edit method and data storage methods.
+     *
+     * @param type string containing information on whether it is an expense or income
+     * @param name string containing description of expense
+     * @param date string containing the date of expense.
+     * @param amount string containing the amount spent on the expense.
+     * @param catNum string of category number representing different categories
+     */
     public static void checkValidityOfFieldsInNormalListTxt(String type, String name, String date, String amount,
                                                             String catNum) throws MintException {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
@@ -246,6 +265,13 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Checks validity of additional fields in the Recurring List for edit method and data storage methods.
+     *
+     * @param interval string containing the interval of the recurring expense.
+     * @param endDate Entry type arrayList, casted to RecurringEntry type, that stores the all the
+     *     recurring expenses.
+     */
     public static void checkValidityOfFieldsInRecurringListTxt(String interval, String endDate) throws MintException {
         try {
             LocalDate parsedEndDate = LocalDate.parse(endDate, dateFormatter);
@@ -265,6 +291,12 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Checks validity of additional fields in the Recurring List for edit method and data storage methods.
+     *
+     * @param amount string containing the amount limit set for each category.
+     * @param catNum string of category number representing different categories.
+     */
     public static void checkValidityOfFieldsInBudgetListTxt(String catNum, String amount) throws MintException {
         try {
             Double.parseDouble(amount);
@@ -276,6 +308,7 @@ public class ValidityChecker {
                     + "Did u accidentally edit the file?");
         }
     }
+
 
     //@@author irvinseet
     public static void checkTagsFormatSpacing(String userInput) throws MintException {

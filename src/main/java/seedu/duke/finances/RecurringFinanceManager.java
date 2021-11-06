@@ -37,6 +37,7 @@ public class RecurringFinanceManager extends FinanceManager {
         recurringEntryList.add(entry);
     }
 
+    //@@author pos0414
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags,
                                                   Entry query) throws MintException {
@@ -209,6 +210,7 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    //@@author pos0414
     public LocalDate createLocalDateWithYearMonth(YearMonth yearMonth, int day) {
         assert day >= 1 && day <= 31 : "Day should be within 1 - 31";
         String dateToString = yearMonth.toString() + "-" + day;
@@ -426,6 +428,7 @@ public class RecurringFinanceManager extends FinanceManager {
         appendEntryBetweenTwoDates(entryList, dummyList, earliestDate, LocalDate.now());
     }
 
+    //@@author
     public void deleteAll() {
         recurringEntryList.clear();
     }
