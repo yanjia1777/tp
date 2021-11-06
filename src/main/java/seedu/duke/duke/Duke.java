@@ -1,6 +1,5 @@
 package seedu.duke.duke;
 
-import seedu.duke.budget.Budget;
 import seedu.duke.budget.BudgetManager;
 import seedu.duke.commands.Command;
 import seedu.duke.finances.NormalFinanceManager;

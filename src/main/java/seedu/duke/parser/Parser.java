@@ -56,9 +56,6 @@ public class Parser {
     public static final String STRING_END_DATE = "End date of the recurring period (should be after the start date"
             + " but within valid range)\n";
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
-    public static final int CAT_NUM_FOOD_INT = 0;
-    public static final int CAT_NUM_OTHERS_INT = 7;
-    public static final String CAT_NUM_FOOD = "0";
     public static final String CAT_NUM_OTHERS = "7";
     public static final String ADD_ENTRY = "add";
     public static final String ADD_RECURRING = "addR";
@@ -74,7 +71,6 @@ public class Parser {
     public static final String DELETEALL2 = "deleteall";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
-    private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
     public static final String SPACE = "\\s+";
     protected String command;
     protected String name;
@@ -94,7 +90,6 @@ public class Parser {
     protected boolean isRecurring = false;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
@@ -304,7 +299,6 @@ public class Parser {
         }
     }
 
-    //@@author yanjia1777
     public Entry checkType() {
         if (Objects.equals(argumentsArray[1], "income")) {
             return createIncomeObject();

@@ -2,7 +2,6 @@ package seedu.duke.commands;
 
 import seedu.duke.budget.BudgetManager;
 
-import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.storage.BudgetDataManager;

@@ -76,8 +76,8 @@ public class NormalFinanceManager extends FinanceManager {
     @Override
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged = 0;
-        String originalEntryStr = "";
+        int indexToBeChanged;
+        String originalEntryStr;
         originalEntryStr = overWriteString(entry);
         if (entryList.contains(entry)) {
             indexToBeChanged = entryList.indexOf(entry);
@@ -156,7 +156,7 @@ public class NormalFinanceManager extends FinanceManager {
         entryList.set(index, entry);
     }
 
-    //@@author
+    //@@author yanjia1777
     public ArrayList<Entry> getCopyOfArray() {
         ArrayList<Entry> outputArray;
         outputArray = new ArrayList<>(entryList);
