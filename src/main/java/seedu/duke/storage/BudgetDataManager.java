@@ -101,11 +101,6 @@ public class BudgetDataManager extends DataManagerActions {
         budget.setLimit(amount);
     }
 
-    public void writeToTextFile(ArrayList<Budget> budgetList) {
-        BudgetDataManager budgetDataManager = new BudgetDataManager();
-        budgetDataManager.writeToBudgetTextFile(budgetList);
-    }
-
     public void loadFromTextFile(ArrayList<Budget> budgetList) {
         BudgetDataManager budgetDataManager = new BudgetDataManager();
         try {

@@ -11,14 +11,14 @@ import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.storage.DataManagerActions;
 import seedu.duke.storage.NormalListDataManager;
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static seedu.duke.parser.ValidityChecker.dateFormatter;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -67,5 +67,20 @@ public class NormalListDataManagerTest {
         normalListDataManager.deleteLineInTextFile(stringToDelete);
         fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH), StandardCharsets.UTF_8));
         assertFalse(fileContent.contains(stringToDelete));
+    }
+
+    @Test
+    @Order(4)
+    public void deleteInvalidLineInTextFile_deleteOneLine_expectSuccess() throws Exception {
+        ArrayList<String> fileContent;
+        String gibberishToRemove = "sdsadsadsads";
+        FileWriter fileWriter = new FileWriter(NORMAL_FILE_PATH, true);
+        fileWriter.write(gibberishToRemove);
+        fileWriter.flush();
+        fileWriter.close();
+        assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> normalListDataManager.loadEntryListContents(entryList));
+        fileContent = new ArrayList<>(Files.readAllLines(Path.of(NORMAL_FILE_PATH), StandardCharsets.UTF_8));
+        assertFalse(fileContent.contains(gibberishToRemove));
     }
 }
