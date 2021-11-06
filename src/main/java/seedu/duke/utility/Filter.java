@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.stream.Collectors;
-
+//@@author pos0414
 public class Filter {
     public static ArrayList<Entry> filterEntryByName(String name, ArrayList<Entry> listToFilter) {
         ArrayList<Entry> filteredArrayList = listToFilter

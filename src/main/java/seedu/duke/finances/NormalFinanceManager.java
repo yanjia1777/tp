@@ -31,6 +31,7 @@ public class NormalFinanceManager extends FinanceManager {
         return entryList;
     }
 
+    //@@author pos0414
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
         assert tags.size() > 0 : "There should be more than one tag to be queried";
