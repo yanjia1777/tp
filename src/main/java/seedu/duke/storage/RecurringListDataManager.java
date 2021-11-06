@@ -25,6 +25,12 @@ import java.util.Scanner;
 public class RecurringListDataManager extends DataManagerActions {
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
+    //@@author Yitching
+    /**
+     * Saves the expense in the MintRecurring.txt file
+     *
+     * @param entry Entry type variable, casted to RecurringEntry type, that contains all the attributes of the entry.
+     */
     public void appendToMintRecurringListTextFile(Entry entry) {
         // Format of MintRecurring.txt file: Expense|7|2021-10-25|SALARY|10000.0|MONTH
         FileWriter fileWriter;
@@ -41,6 +47,11 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * Loads all the expenses into the recurringEntryList arrayList.
+     *
+     * @param entryList Entry type arrayList, casted to RecurringEntry type, that stores the all the recurring expenses.
+     */
     public void loadEntryListContents(ArrayList<Entry> entryList) throws FileNotFoundException, MintException,
             ArrayIndexOutOfBoundsException {
         File mintEntryList = new File(RECURRING_FILE_PATH); // create a File for the given file path
@@ -72,6 +83,14 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * If any invalid lines or errors are found, this function deletes the invalid lines and reloads the contents from
+     * the MintRecurring.txt file to the recurringEntryList.
+     *
+     * @param entryList Entry type arrayList, casted to RecurringEntry type, that stores the all the recurring expenses.
+     * @param fieldsInTextFile different fields from text file to be loaded into different attributes of the
+     *     recurringEntryList.
+     */
     public void reload(ArrayList<Entry> entryList, String fieldsInTextFile) throws FileNotFoundException,
             MintException {
         deleteLineInTextFile(fieldsInTextFile);
@@ -79,6 +98,19 @@ public class RecurringListDataManager extends DataManagerActions {
         loadEntryListContents(entryList);
     }
 
+    /**
+     * Load the expenses from the MintRecurring.txt file to the entryList
+     *
+     * @param type string containing information on whether it is an expense or income
+     * @param name string containing description of expense
+     * @param dateStr string containing the date of expense.
+     * @param amountStr string containing the amount spent on the expense.
+     * @param catNumStr string of category number representing different categories
+     * @param endDateStr string containing the end date of the recurring expense.
+     * @param intervalStr string containing the interval of the recurring expense.
+     * @param recurringList Entry type arrayList, casted to RecurringEntry type, that stores the all the
+     *     recurring expenses.
+     */
     public void loadEntry(String type, String name, String dateStr, String amountStr,
             String catNumStr, String intervalStr, String endDateStr, ArrayList<Entry> recurringList) {
         //should check type before loading
@@ -103,6 +135,11 @@ public class RecurringListDataManager extends DataManagerActions {
         recurringList.add(recurringEntry);
     }
 
+    /**
+     * Calls all the methods required to delete the line in the MintRecurring.txt file.
+     *
+     * @param originalString is the string to be deleted.
+     */
     public void deleteLineInTextFile(String originalString) {
         ArrayList<String> fileContent;
         try {
@@ -114,6 +151,10 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
+    //@@author
+    /**
+     * Deletes all lines in the text file.
+     */
     public void deleteAll() {
         try {
             new FileWriter(RECURRING_FILE_PATH, false).close();
@@ -122,6 +163,13 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
+    //@@author Yitching
+    /**
+     * Identifies which line in the MintRecurring.txt file needs to be deleted.
+     *
+     * @param originalString is the string to be deleted.
+     * @param fileContent holds the content of the MintRecurring.txt file
+     */
     protected void lineRemoval(String originalString, ArrayList<String> fileContent) {
         for (int i = 0; i < fileContent.size(); i++) {
             if (fileContent.get(i).equals(originalString)) {
@@ -131,10 +179,21 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * Writes any changes to the MintRecurring.txt file.
+     *
+     * @param fileContent holds the content of the MintRecurring.txt file.
+     */
     protected void editTextFile(ArrayList<String> fileContent) throws IOException {
         Files.write(Path.of(RECURRING_FILE_PATH), fileContent, StandardCharsets.UTF_8);
     }
 
+    /**
+     * Calls all the methods required to edit a specified expense in the MintRecurring.txt file.
+     *
+     * @param originalString is the string to be overwritten.
+     * @param newString is the string used to overwrite the original string.
+     */
     public void editEntryListTextFile(String originalString, String newString) {
         ArrayList<String> fileContent;
         try {
@@ -146,6 +205,13 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * Identifies which line in the MintRecurring.txt file needs to be overwritten.
+     *
+     * @param originalString is the string to be overwritten.
+     * @param newString is the string used to overwrite the original string.
+     * @param fileContent holds the content of the MintRecurring.txt file
+     */
     private void setContentToBeChanged(String originalString, String newString, ArrayList<String> fileContent) {
         for (int i = 0; i < fileContent.size(); i++) {
             if (fileContent.get(i).equals(originalString)) {
@@ -155,6 +221,14 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 
+    /**
+     * At the start of the program, load the contents of the MintRecurring.txt file to the recurringEntryList.
+     * If there is any missing or erroneous text files or directory, this function would create all the necessary files
+     * and directory.
+     *
+     * @param recurringEntryList Entry type arrayList, casted to RecurringEntry type, that stores the all the
+     *     recurring expenses.
+     */
     public void loadPreviousFileContents(ArrayList<Entry> recurringEntryList) {
         try {
             loadEntryListContents(recurringEntryList);
@@ -169,3 +243,4 @@ public class RecurringListDataManager extends DataManagerActions {
         }
     }
 }
+//@@author Yitching

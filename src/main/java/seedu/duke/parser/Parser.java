@@ -488,6 +488,15 @@ public class Parser {
         }
     }
 
+    //@@author Yitching
+    /**
+     * Prepares the user input by splitting it into the respective fields to overwrite existing recurring expense.
+     *
+     * @param entry Entry type variable, casted to RecurringEntry type, that contains all the attributes of the
+     *     recurring expense.
+     *
+     * @return returns a HashMap containing all the different attributes in String.
+     */
     public HashMap<String, String> prepareRecurringEntryToAmendForEdit(Entry entry) {
         RecurringEntry recurringEntry = (RecurringEntry) entry;
         String name = recurringEntry.getName();
@@ -509,6 +518,13 @@ public class Parser {
         return entryFields;
     }
 
+    /**
+     * Prepares the user input by splitting it into the respective fields to overwrite existing expense.
+     *
+     * @param entry Entry type variable that contains all the attributes of the expense.
+     *
+     * @return returns a HashMap containing all the different attributes in String.
+     */
     public HashMap<String, String> prepareEntryToAmendForEdit(Entry entry) {
         String name = entry.getName();
         LocalDate date = entry.getDate();
@@ -525,6 +541,14 @@ public class Parser {
         return entryFields;
     }
 
+    /**
+     * Conversion of attributes from string to their respective data types.
+     *
+     * @param entryFields HashMap containing all the String type attributes.
+     * @param type refers to whether it is an expense or an income.
+     *
+     * @return returns the new RecurringEntry to overwrite the old RecurringEntry.
+     */
     public RecurringEntry convertRecurringEntryToRespectiveTypes(HashMap<String, String> entryFields,
                                                                    Type type) throws MintException {
         String name = entryFields.get("name");
@@ -548,6 +572,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Conversion of attributes from string to their respective data types.
+     *
+     * @param entryFields HashMap containing all the String type attributes.
+     * @param type refers to whether it is an expense or an income.
+     *
+     * @return returns the new Entry to overwrite the old Entry.
+     */
     public Entry convertEntryToRespectiveTypes(HashMap<String, String> entryFields,
                                                                  Type type) throws MintException {
         String name = entryFields.get("name");
@@ -567,6 +599,7 @@ public class Parser {
         }
     }
 
+    //@@author
     public Command prepareDeleteAll(String userInput) {
         try {
             parseInputByArguments(userInput);

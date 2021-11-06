@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+//@@author Yitching
 public class DataManagerActions {
     public static final int NUMBER_OF_CATEGORIES = 8;
     public static final String REGEX_TO_REPLACE = "[\\p{Alpha}, [\\p{Punct}&&[^.]]+]";
@@ -19,6 +20,10 @@ public class DataManagerActions {
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
     public static final String BUDGET_FILE_PATH = "data" + File.separator + "MintBudget.txt";
 
+    /**
+     * Creates the necessary data directory. This function also checks for erroneous "data" file types and deletes
+     * any if found. It would then create the necessary directory.
+     */
     public void createDirectory() {
         Path path = Paths.get("data" + File.separator + "Mint.txt");
         File myObj = new File(String.valueOf(path.getParent()));
@@ -38,6 +43,10 @@ public class DataManagerActions {
         }
     }
 
+    /**
+     * This function stores all the necessary file names and calls the function to create the necessary files. It
+     * catches any exceptions thrown.
+     */
     public void createFiles() {
         try {
             String[] filesToCreate = {RECURRING_FILE_PATH, NORMAL_FILE_PATH, BUDGET_FILE_PATH};
@@ -50,6 +59,12 @@ public class DataManagerActions {
         }
     }
 
+    /**
+     * This is the main function that creates all the necessary files. It also checks for any erroneous files of the
+     * same name but incorrect type and deletes them when found. After deletion, it creates the necessary files.
+     *
+     * @param filesToCreate arrayList containing all the paths of the files that need to be created.
+     */
     private void createNewFiles(String[] filesToCreate) throws IOException, MintException {
         Boolean isPrinted = false;
         for (String file: filesToCreate) {
@@ -71,3 +86,4 @@ public class DataManagerActions {
         }
     }
 }
+//@@author Yitching
