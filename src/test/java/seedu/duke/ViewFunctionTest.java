@@ -560,6 +560,7 @@ class ViewFunctionTest {
             ViewOptions viewOptions = new ViewOptions(argumentArray);
             viewOptions.month = Month.JUNE;
             viewOptions.year = 2021;
+            viewOptions.isViewAll = false;
             ViewCommand command = new ViewCommand(viewOptions);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));
@@ -607,6 +608,7 @@ class ViewFunctionTest {
             String[] argumentArray = {"view"};
             ViewOptions viewOptions = new ViewOptions(argumentArray);
             viewOptions.year = 2021;
+            viewOptions.isViewAll = false;
             ViewCommand command = new ViewCommand(viewOptions);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));
@@ -663,6 +665,7 @@ class ViewFunctionTest {
             ViewOptions viewOptions = new ViewOptions(argumentArray);
             viewOptions.fromDate = LocalDate.parse("2014-01-01");
             viewOptions.endDate = LocalDate.parse("2021-11-06");
+            viewOptions.isViewAll = false;
             ViewCommand command = new ViewCommand(viewOptions);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));
@@ -735,6 +738,7 @@ class ViewFunctionTest {
             ViewOptions viewOptions = new ViewOptions(argumentArray);
             viewOptions.fromDate = LocalDate.parse("2014-01-01");
             viewOptions.endDate = LocalDate.parse("2019-01-01");
+            viewOptions.isViewAll = false;
             ViewCommand command = new ViewCommand(viewOptions);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));

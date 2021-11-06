@@ -17,6 +17,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Ui {
+    protected static final String INDENT = "    ";
+    public static final String SOLID_LINE = "_______________________________________________________________________\n";
+    public static final String LINE = "    ____________________________________________________________";
+    public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
+    protected static final String LINE_SEPARATOR = System.lineSeparator();
+    public static final int MIN_NAME_INDENTATION = 4;
+    public static final int MIN_AMOUNT_INDENTATION = 5;
+    public static final int MIN_SPENDING_INDENTATION = 6;
+    public static final int MIN_LIMIT_INDENTATION = 7;
+    public static final int MIN_CAT_INDENTATION = 8;
+    public static final int INDEX_CANCEL = -1;
+    public static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
+    public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
+    public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
+            + "Invalid line deleted. We have reloaded the list!";
+    public static final String GREETINGS = "Hello! I'm Mint" + System.lineSeparator() + "What can I do for you?";
+    public static final String SHUTDOWN = "Goodbye! Hope to see you again soon!";
+
     public static final String FIRST_TIME_USER_MESSAGE = "You must be a first time user!\n"
             + "Welcome! To get you started, type \"help\" to get a list of commands you can use.\n"
             + "Alternatively, Type \"add n/[description] a/[amount]\" to add your very first item.\n"
@@ -46,24 +64,6 @@ public class Ui {
         }
         return null;
     }
-
-    protected static final String INDENT = "    ";
-    public static final String SOLID_LINE = "_______________________________________________________________________\n";
-    public static final String LINE = "    ____________________________________________________________";
-    public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    protected static final String LINE_SEPARATOR = System.lineSeparator();
-    public static final int MIN_NAME_INDENTATION = 4;
-    public static final int MIN_AMOUNT_INDENTATION = 5;
-    public static final int MIN_SPENDING_INDENTATION = 6;
-    public static final int MIN_LIMIT_INDENTATION = 7;
-    public static final int MIN_CAT_INDENTATION = 8;
-    public static final int INDEX_CANCEL = -1;
-    public static final String CANCEL_MESSAGE = " To cancel, type \"cancel\"";
-    public static final String MISSING_FILE_MESSAGE = "Missing data detected! Creating the necessary files...";
-    public static final String MISSING_FIELDS_MESSAGE = "There seems to be some extra/missing fields! "
-            + "Invalid line deleted. We have reloaded the list!";
-    public static final String GREETINGS = "Hello! I'm Mint" + System.lineSeparator() + "What can I do for you?";
-    public static final String SHUTDOWN = "Goodbye! Hope to see you again soon!";
 
     public void printGreetings() {
         System.out.println(GREETINGS);
@@ -127,6 +127,7 @@ public class Ui {
         );
     }
 
+    //@@author yanjia1777
     public void viewGivenList(ArrayList<Entry> list) {
         int maxNameLength = MIN_NAME_INDENTATION;
         int maxAmountLength = MIN_AMOUNT_INDENTATION;
@@ -217,7 +218,7 @@ public class Ui {
         return false;
     }
 
-    //@@author
+    //@@author yanjia1777
     public void deleteAllConfirmation() {
         System.out.println("All entries successfully deleted.");
     }
@@ -311,7 +312,7 @@ public class Ui {
         return missingFieldsErrorMessage;
     }
 
-    //@@author
+    //@@author yanjia1777
     public int[] printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
         int maxNameLength = MIN_NAME_INDENTATION;
         int maxAmountLength = MIN_AMOUNT_INDENTATION;
@@ -450,7 +451,7 @@ public class Ui {
         System.out.printf("Budget for %s set to $%.2f\n", category, amount);
     }
 
-    //@@author irvinseet
+    //@@author yanjia1777
     public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entries,
             ArrayList<Entry> recurringEntries) {
         int maxSpendingLength = MIN_SPENDING_INDENTATION;
@@ -480,7 +481,6 @@ public class Ui {
 
     }
 
-    //@@author irvinseet
     public void printBudgetIndividualEntry(Budget budget, ArrayList<Entry> entries,
             ArrayList<Entry> recurringEntries, int maxCatLength, int maxSpendingLength,
             int maxLimitLength) {

@@ -18,6 +18,7 @@ import seedu.duke.entries.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//@@author yanjia1777
 public class ViewCommand extends Command {
     private final ViewOptions viewOptions;
 
