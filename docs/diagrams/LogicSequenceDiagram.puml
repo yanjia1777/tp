@@ -61,12 +61,12 @@ activate DeleteCommand
 DeleteCommand -> NormalFinanceManager : deleteByKeyword(validTags, query)
 activate NormalFinanceManager
 NormalFinanceManager --> DeleteCommand : deletedEntry
+deactivate NormalFinanceManager
 DeleteCommand -> NormalListDataManager : deleteLineInTextFile(stringToDelete)
 activate NormalListDataManager
 NormalListDataManager --> DeleteCommand
 deactivate NormalListDataManager
 
-deactivate NormalFinanceManager
 
 DeleteCommand -> Ui : printEntryDeleted(deletedEntry)
 activate Ui
