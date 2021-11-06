@@ -33,7 +33,7 @@ public class ParserCategoryTest {
     @Test
     void addHouseholdExpense_validInput_categoryIsHousehold() {
         Parser parser = new Parser();
-        parser.parseCommand("add n/household a/10 c/4");
+        parser.parseCommand("add n/household a/10 c/3");
         assertEquals(parser.getExpenseCategory(),ExpenseCategory.HOUSEHOLD);
     }
     
