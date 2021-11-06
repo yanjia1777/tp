@@ -344,7 +344,7 @@ public class Parser {
         return new Income(name, date, amount, incomeCategory);
     }
 
-   //@@author pos0414
+    //@@author pos0414
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);

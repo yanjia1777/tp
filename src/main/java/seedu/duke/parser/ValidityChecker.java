@@ -36,7 +36,7 @@ public class ValidityChecker {
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
 
-   //@@author pos0414
+    //@@author pos0414
     public static void checkEmptyName(String name) throws MintException {
         boolean hasEmptyName = name.equals(Parser.STRING_EMPTY);
         if (hasEmptyName) {
