@@ -338,6 +338,7 @@ public class Parser {
         return new Expense(name, date, amount, expenseCategory);
     }
 
+    //@@author yanjia1777
     private Income createIncomeObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
