@@ -170,7 +170,7 @@ I've added: Income  | WAGES | 2021-02-19 | Sales | $34.00
 
 Adds an expense or income to your tracker
 
-Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/END_DATE]`
+Format: `addR [income] n/NAME a/AMOUNT i/INTERVAL [d/DATE] [c/CATEGORY_NUMBER] [e/END_DATE]`
 
 - Adds an entry of the specified `NAME`, `DATE`, `AMOUNT`, `INTERVAL`, `END_DATE` and `CATEGORY_NUMBER`
 - If `income` is included after `add`, entry will be an income entry, else it will be an expense entry.
@@ -184,7 +184,7 @@ Format: `addR [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER] [i/INTERVAL]
   for the expenditure. The string is not case-sensitive.
 - `END_DATE(optional)` can be any of the [acceptable date formats](#dateFormat).
 
-  If the date is not specified, the default date set would be forever.
+  If the date is not specified, the default date set would be forever (2200-12-31).
 
 Examples:
 
