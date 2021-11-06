@@ -102,6 +102,7 @@ public class Parser {
     public Parser() {
     }
 
+    //@@author irvinseet
     public ExpenseCategory getExpenseCategory() {
         return expenseCategory;
     }
@@ -128,6 +129,7 @@ public class Parser {
         return tagType;
     }
 
+    //@@author irvinseet
     public String getDescription(String userInput, int currentTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3).trim();
@@ -266,6 +268,7 @@ public class Parser {
         this.endDateStr = "2200-12-31";
     }
 
+    //@@author irvinseet
     private void parseInputByTagsLoop(String userInput) throws MintException {
         String tagType;
         String description;
@@ -286,6 +289,7 @@ public class Parser {
         }
     }
 
+    //@@author irvinseet
     public ArrayList<String> parseInputByTags(String userInput) throws MintException {
         // for Add, initialise Date to today's date and category to "Others"
         try {
@@ -323,6 +327,7 @@ public class Parser {
     }
 
 
+    //@@author irvinseet
     private Expense createExpenseObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);

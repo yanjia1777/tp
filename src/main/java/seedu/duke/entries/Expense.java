@@ -4,6 +4,7 @@ package seedu.duke.entries;
 import java.time.LocalDate; // import the LocalDate class
 import java.util.Objects;
 
+//@@author irvinseet
 public class Expense extends Entry {
     protected ExpenseCategory category;
 
