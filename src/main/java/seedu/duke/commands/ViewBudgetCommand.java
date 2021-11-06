@@ -13,7 +13,7 @@ import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Ui;
 
-
+//@@author irvinseet
 public class ViewBudgetCommand extends Command {
 
 

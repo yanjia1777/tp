@@ -7,7 +7,7 @@ import seedu.duke.entries.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
+//@@author irvinseet
 public abstract class Budget {
     protected ExpenseCategory category;
     protected String name;
