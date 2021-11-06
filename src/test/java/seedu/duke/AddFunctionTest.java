@@ -3,6 +3,7 @@ package seedu.duke;
 import org.junit.jupiter.api.Test;
 import seedu.duke.budget.Budget;
 import seedu.duke.budget.BudgetManager;
+import seedu.duke.commands.Command;
 import seedu.duke.entries.Entry;
 import seedu.duke.entries.Expense;
 import seedu.duke.entries.ExpenseCategory;
@@ -11,6 +12,11 @@ import seedu.duke.entries.IncomeCategory;
 import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
+import seedu.duke.parser.Parser;
+import seedu.duke.storage.BudgetDataManager;
+import seedu.duke.storage.DataManagerActions;
+import seedu.duke.storage.NormalListDataManager;
+import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Ui;
 
 import java.io.ByteArrayOutputStream;
@@ -56,7 +62,7 @@ class AddFunctionTest {
         int index = normalFinanceManager.entryList.indexOf(income);
         assertEquals(income, normalFinanceManager.entryList.get(index));
     }
-  
+
     @Test
     void addExpense_largeAmount_warningMessage() {
         BudgetManager budgetManager = new BudgetManager();
@@ -81,6 +87,49 @@ class AddFunctionTest {
         ui.printBudgetWarningMessage(ExpenseCategory.FOOD, amountSpent, spendingLimit);
 
         String expectedOutput = "Slow down, you've set aside $100.00 for FOOD, but you already spent $90.00.\n";
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void addExpenseThruParser_nameAndAmountOnly_successWithDefaultValues() {
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
+        BudgetManager budgetManager = new BudgetManager();
+        NormalListDataManager normalListDataManager = new NormalListDataManager();
+        DataManagerActions dataManagerActions = new DataManagerActions();
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager();
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        Ui ui = new Ui();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        Parser parser = new Parser();
+        Command command = parser.parseCommand("add n/burger a/15");
+        command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
+                dataManagerActions, recurringListDataManager, budgetDataManager, ui);
+        String expectedOutput = String.format("I've added: Expense  | OTHERS | %s | burger | $15.00"
+                + System.lineSeparator(), LocalDate.now());
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void addExpenseThruParser_AllFieldsValid_Success() {
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
+        BudgetManager budgetManager = new BudgetManager();
+        NormalListDataManager normalListDataManager = new NormalListDataManager();
+        DataManagerActions dataManagerActions = new DataManagerActions();
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager();
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        Ui ui = new Ui();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        Parser parser = new Parser();
+        Command command = parser.parseCommand("add n/burger a/15 c/0 d/2021-11-06");
+        command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
+                dataManagerActions, recurringListDataManager, budgetDataManager, ui);
+        String expectedOutput = "I've added: Expense  | FOOD | 2021-11-06 | burger | $15.00" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 }
