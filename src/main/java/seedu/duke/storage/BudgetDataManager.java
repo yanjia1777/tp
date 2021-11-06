@@ -1,12 +1,9 @@
 package seedu.duke.storage;
 
 import seedu.duke.budget.Budget;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.entries.Entry;
 import seedu.duke.exception.MintException;
 import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Ui;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

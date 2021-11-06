@@ -13,8 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BudgetDataManagerTest {
@@ -44,14 +46,14 @@ public class BudgetDataManagerTest {
     @Test
     @Order(3)
     public void deleteInvalidLineInTextFile_deleteOneLine_expectSuccess() throws Exception {
-        ArrayList<String> fileContent;
         String gibberishToRemove = "sdsadsadsads";
         FileWriter fileWriter = new FileWriter(BUDGET_FILE_PATH, true);
         fileWriter.write(gibberishToRemove);
         fileWriter.flush();
         fileWriter.close();
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> budgetDataManager.loadBudgetListContents(budgetList));
-        fileContent = new ArrayList<>(Files.readAllLines(Path.of(BUDGET_FILE_PATH), StandardCharsets.UTF_8));
+        ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(BUDGET_FILE_PATH),
+                StandardCharsets.UTF_8));
         assertFalse(fileContent.contains(gibberishToRemove));
     }
 }
