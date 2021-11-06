@@ -32,7 +32,7 @@ import static seedu.duke.parser.ValidityChecker.dateFormatter;
 class ViewFunctionTest {
 
     @Test
-    void view_allFieldsValid_success() {
+    void viewWithNormalEntries_allFieldsValid_success() {
         ArrayList<Entry> outputArray = new ArrayList<>();
         String name = "Samurai Burger";
         LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
@@ -74,45 +74,7 @@ class ViewFunctionTest {
     }
 
     @Test
-    void viewWithRecurring_allFieldsValid_success() {
-
-        ArrayList<Entry> outputArray = new ArrayList<>();
-
-        String name = "Samurai Burger";
-        LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
-        double amount = Double.parseDouble("7.50");
-        ExpenseCategory categoryE = ExpenseCategory.FOOD;
-        Expense expense = new Expense(name, date, amount, categoryE);
-        outputArray.add(expense);
-
-        name = "Maid Cafe";
-        date = LocalDate.parse("2012-06-06", dateFormatter);
-        Interval interval = Interval.YEAR;
-        LocalDate endDate = LocalDate.parse("2023-01-06", dateFormatter);
-        amount = Double.parseDouble("14.6");
-        categoryE = ExpenseCategory.ENTERTAINMENT;
-        RecurringExpense expenseR = new RecurringExpense(name, date, amount, categoryE, interval, endDate);
-        outputArray.add(expenseR);
-
-        name = "OnlyFans";
-        date = LocalDate.parse("2021-06-09", dateFormatter);
-        interval = Interval.MONTH;
-        endDate = LocalDate.parse("2027-04-01", dateFormatter);
-        amount = Double.parseDouble("300");
-        IncomeCategory categoryI = IncomeCategory.COMMISSION;
-        RecurringIncome incomeR = new RecurringIncome(name, date, amount, categoryI, interval, endDate);
-        outputArray.add(incomeR);
-
-        name = "Lottery";
-        date = LocalDate.parse("2015-12-15", dateFormatter);
-        amount = Double.parseDouble("250000");
-        categoryI = IncomeCategory.GIFT;
-        Income income = new Income(name, date, amount, categoryI);
-        outputArray.add(income);
-
-        ArrayList<Entry> recurringOutputArray = new ArrayList<>();
-        recurringOutputArray.add(expenseR);
-        recurringOutputArray.add(incomeR);
+    void viewWithRecurringEntries_allFieldsValid_success() {
 
         NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
         RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
@@ -123,7 +85,41 @@ class ViewFunctionTest {
         BudgetDataManager budgetDataManager = new BudgetDataManager();
         Ui ui = new Ui();
 
+        String name = "Samurai Burger";
+        LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
+        double amount = Double.parseDouble("7.50");
+        ExpenseCategory categoryE = ExpenseCategory.FOOD;
+        Expense expense = new Expense(name, date, amount, categoryE);
+
+        name = "Maid Cafe";
+        date = LocalDate.parse("2012-06-06", dateFormatter);
+        Interval interval = Interval.YEAR;
+        LocalDate endDate = LocalDate.parse("2023-01-06", dateFormatter);
+        amount = Double.parseDouble("14.6");
+        categoryE = ExpenseCategory.ENTERTAINMENT;
+        RecurringExpense expenseR = new RecurringExpense(name, date, amount, categoryE, interval, endDate);
+
+        name = "OnlyFans";
+        date = LocalDate.parse("2021-06-09", dateFormatter);
+        interval = Interval.MONTH;
+        endDate = LocalDate.parse("2027-04-01", dateFormatter);
+        amount = Double.parseDouble("300");
+        IncomeCategory categoryI = IncomeCategory.COMMISSION;
+        RecurringIncome incomeR = new RecurringIncome(name, date, amount, categoryI, interval, endDate);
+
+        name = "Lottery";
+        date = LocalDate.parse("2015-12-15", dateFormatter);
+        amount = Double.parseDouble("250000");
+        categoryI = IncomeCategory.GIFT;
+        Income income = new Income(name, date, amount, categoryI);
+
         try {
+            normalFinanceManager.addEntry(expense);
+            normalFinanceManager.addEntry(expenseR);
+            normalFinanceManager.addEntry(income);
+            normalFinanceManager.addEntry(incomeR);
+            recurringFinanceManager.addEntry(expenseR);
+            recurringFinanceManager.addEntry(incomeR);
             String[] argumentArray = {"view"};
             ViewOptions viewOptions = new ViewOptions(argumentArray);
             ViewCommand command = new ViewCommand(viewOptions);
