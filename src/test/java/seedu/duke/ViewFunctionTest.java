@@ -125,8 +125,7 @@ class ViewFunctionTest {
             System.setOut(new PrintStream(output));
             command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
                     dataManagerActions, recurringListDataManager, budgetDataManager, ui);
-            String expectedOutput = "Here is the list of your entries:"
-                    + System.lineSeparator()
+            String expectedOutput = "Here is the list of your entries:" + System.lineSeparator()
                     + "  Type  |   Category    |    Date    |      Name      |   Amount    | Every |   Until"
                     + System.lineSeparator()
                     + "Income  |  COMMISSION   | 2021-10-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
