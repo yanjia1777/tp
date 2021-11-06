@@ -1,7 +1,5 @@
 package seedu.duke.entries;
 
-import seedu.duke.utility.Ui;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
