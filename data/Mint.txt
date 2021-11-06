@@ -1,2 +1,0 @@
-Expense|0|2021-11-06|burger|15.0
-Expense|7|2021-11-06|burger|15.0
