@@ -33,12 +33,8 @@ import static seedu.duke.parser.ValidityChecker.dateFormatter;
 public class DeleteAllFunctionTest {
     NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
     RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
-    BudgetManager budgetManager = new BudgetManager();
     NormalListDataManager normalListDataManager = new NormalListDataManager();
-    DataManagerActions dataManagerActions = new DataManagerActions();
     RecurringListDataManager recurringListDataManager = new RecurringListDataManager();
-    BudgetDataManager budgetDataManager = new BudgetDataManager();
-    Ui ui = new Ui();
 
     @Test
     void delete_allFieldsValid_success() {
@@ -77,11 +73,14 @@ public class DeleteAllFunctionTest {
             normalFinanceManager.addEntry(income);
             recurringFinanceManager.addEntry(expenseR);
             recurringFinanceManager.addEntry(incomeR);
-            DeleteAllCommand command = new DeleteAllCommand(true, true);
+            DeleteAllCommand command = new DeleteAllCommand(true, false);
             command.deleteAllNormal(normalFinanceManager, normalListDataManager);
-            ArrayList<Entry> expectedArray = new ArrayList<>();
-            assertEquals(expectedArray, normalFinanceManager.entryList);
-            assertEquals(expectedArray, recurringFinanceManager.recurringEntryList);
+            ArrayList<Entry> expectedNormalArray = new ArrayList<>();
+            ArrayList<Entry> expectedRecurringArray = new ArrayList<>();
+            expectedRecurringArray.add(expenseR);
+            expectedRecurringArray.add(incomeR);
+            assertEquals(expectedNormalArray, normalFinanceManager.entryList);
+            assertEquals(expectedRecurringArray, recurringFinanceManager.recurringEntryList);
         } catch (MintException e) {
             e.printStackTrace();
         }
@@ -100,11 +99,14 @@ public class DeleteAllFunctionTest {
             normalFinanceManager.addEntry(income);
             recurringFinanceManager.addEntry(expenseR);
             recurringFinanceManager.addEntry(incomeR);
-            DeleteAllCommand command = new DeleteAllCommand(true, true);
+            DeleteAllCommand command = new DeleteAllCommand(false, true);
             command.deleteAllRecurring(recurringFinanceManager, recurringListDataManager);
-            ArrayList<Entry> expectedArray = new ArrayList<>();
-            assertEquals(expectedArray, normalFinanceManager.entryList);
-            assertEquals(expectedArray, recurringFinanceManager.recurringEntryList);
+            ArrayList<Entry> expectedNormalArray = new ArrayList<>();
+            ArrayList<Entry> expectedRecurringArray = new ArrayList<>();
+            expectedNormalArray.add(expense);
+            expectedNormalArray.add(income);
+            assertEquals(expectedNormalArray, normalFinanceManager.entryList);
+            assertEquals(expectedRecurringArray, recurringFinanceManager.recurringEntryList);
         } catch (MintException e) {
             e.printStackTrace();
         }
