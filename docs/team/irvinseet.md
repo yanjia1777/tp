@@ -15,8 +15,6 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 ### Enhancements Implemented
 
 1. Implemented base classes
-
-- Implemented `Entry` class, which is then inherited by other classes in later part of the code.
 - Implemented `Expense` class.
 
 2. Implementation of enumerations
