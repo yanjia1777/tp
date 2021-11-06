@@ -168,7 +168,7 @@ class ViewFunctionTest {
                     + System.lineSeparator()
                     + "Income  |  COMMISSION   | 2021-06-09 |    OnlyFans    | $300.00     | MONTH | 2027-04-01"
                     + System.lineSeparator()
-                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Mafe Cafe    |-$14.60      | YEAR  | 2023-01-06"
+                    + "Expense | ENTERTAINMENT | 2012-06-06 |   Maid Cafe    |-$14.60      | YEAR  | 2023-01-06"
                     + System.lineSeparator();
             assertEquals(expectedOutput, output.toString());
         } catch (MintException e) {
