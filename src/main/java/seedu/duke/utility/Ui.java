@@ -153,6 +153,7 @@ public class Ui {
         }
     }
 
+    //@@author pos0414
     public int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) {
         if (isDelete) {
             System.out.println("Enter the index of the item you want to delete." + CANCEL_MESSAGE);
@@ -191,12 +192,14 @@ public class Ui {
         return isConfirmed();
     }
 
+    //@@author yanjia1777
     public boolean isConfirmDeleteAll() {
         System.out.println("Are you sure you want to delete all entries?");
         System.out.println("Type \"y\" if yes. Type \"n\" if not.");
         return isConfirmed();
     }
 
+    //@@author pos0414
     public boolean isConfirmed() {
         String userInput = readUserInput();
         while (userInput != null) {
@@ -214,6 +217,7 @@ public class Ui {
         return false;
     }
 
+    //@@author
     public void deleteAllConfirmation() {
         System.out.println("All entries successfully deleted.");
     }
@@ -269,6 +273,7 @@ public class Ui {
     //        System.out.println("Set Limit of " + CategoryList.getCatName(catNumInt) + " to $" + amount);
     //    }
 
+    //@@author Yitching
     public static StringBuilder constructErrorMessage(ArrayList<String> missingDelimiters) throws MintException {
         int index = 1;
         StringBuilder missingFieldsErrorMessage = new StringBuilder();
@@ -306,6 +311,7 @@ public class Ui {
         return missingFieldsErrorMessage;
     }
 
+    //@@author
     public int[] printView(ArrayList<Entry> outputArray, LocalDate fromDate, LocalDate endDate, double total) {
         int maxNameLength = MIN_NAME_INDENTATION;
         int maxAmountLength = MIN_AMOUNT_INDENTATION;

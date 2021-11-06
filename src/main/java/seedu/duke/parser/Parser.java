@@ -344,6 +344,7 @@ public class Parser {
         return new Income(name, date, amount, incomeCategory);
     }
 
+    //@@author pos0414
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
@@ -403,6 +404,7 @@ public class Parser {
         }
     }
 
+    //@@author yanjia1777
     private Command prepareView(String userInput) {
         try {
             parseInputByArguments(userInput);
@@ -413,6 +415,7 @@ public class Parser {
         }
     }
 
+    //@@author pos0414
     private Command prepareEditEntry(String userInput) {
         try {
             initDateStr();
@@ -482,6 +485,7 @@ public class Parser {
         }
     }
 
+    //@@author irvinseet
     private Command prepareSetBudget(String userInput) {
         try {
             parseInputByTags(userInput);
@@ -604,7 +608,7 @@ public class Parser {
         }
     }
 
-    //@@author
+    //@@author yanjia1777
     public Command prepareDeleteAll(String userInput) {
         try {
             parseInputByArguments(userInput);
@@ -622,7 +626,7 @@ public class Parser {
         }
     }
 
-
+    //@@author pos0414
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
         switch (command) {
