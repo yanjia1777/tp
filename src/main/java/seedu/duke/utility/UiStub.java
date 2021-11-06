@@ -16,6 +16,7 @@ public class UiStub extends Ui {
     @Override
     public int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) {
         LocalDate date = LocalDate.parse("2021-10-17");
+        LocalDate endDate = LocalDate.parse("2022-10-17");
         Expense entry1 = new Expense("Cocoa", date, 3.9, ExpenseCategory.FOOD);
         if (filteredList.contains(entry1)) {
             return 0;
@@ -31,7 +32,6 @@ public class UiStub extends Ui {
             return 0;
         }
 
-        LocalDate endDate = LocalDate.parse("2022-10-17");
         RecurringExpense entry4 = new RecurringExpense("Cocoa", date, 3.9, ExpenseCategory.FOOD,
                 Interval.YEAR, endDate);
         if (filteredList.contains(entry4)) {
@@ -43,7 +43,7 @@ public class UiStub extends Ui {
     @Override
     public boolean isConfirmedToDeleteOrEdit(Entry entry, boolean isDelete) {
         LocalDate date = LocalDate.parse("2021-10-17");
-
+        LocalDate endDate = LocalDate.parse("2022-10-17");
         Expense entry1 = new Expense("Cocoa", date, 3.9, ExpenseCategory.FOOD);
         if (entry.equals(entry1)) {
             return true;
@@ -59,7 +59,6 @@ public class UiStub extends Ui {
             return true;
         }
 
-        LocalDate endDate = LocalDate.parse("2022-10-17");
         RecurringExpense entry4 = new RecurringExpense("Cocoa", date, 3.9, ExpenseCategory.FOOD,
                 Interval.YEAR, endDate);
 
