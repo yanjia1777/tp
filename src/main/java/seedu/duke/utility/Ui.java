@@ -166,7 +166,7 @@ public class Ui {
                 return INDEX_CANCEL;
             }
             try {
-                index = ValidityChecker.checkValidIndex(userInput, filteredList.size());
+                index = ValidityChecker.checkInvalidIndex(userInput, filteredList.size());
                 proceedToDelete = true;
             } catch (MintException e) {
                 System.out.println(e.getMessage() + CANCEL_MESSAGE);

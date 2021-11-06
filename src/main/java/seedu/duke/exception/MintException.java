@@ -19,6 +19,8 @@ public class MintException extends Exception {
             + "1 and total number of items listed.";
     public static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
     public static final String ERROR_INVALID_DATE = "Please enter a valid date!";
+    public static final String ERROR_INVALID_END_DATE = "End date must be after start date.";
+    public static final String ERROR_INVALID_INTERVAL = "Please enter valid interval: MONTH, YEAR";
     public static final String ERROR_INVALID_MONTH = "Please enter a valid month!";
     public static final String ERROR_INVALID_YEAR = "Please enter a valid year! Year should be from 2000 to 2200.";
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
