@@ -10,6 +10,7 @@ import seedu.duke.utility.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,7 +38,8 @@ public class SetBudgetTest {
         budgetManager.setBudget(ExpenseCategory.ENTERTAINMENT, 200);
         ui.printBudgetBreakdown(budgetManager.getBudgetList(), normalFinanceManager.getEntryList(),
                 recurringFinanceManager.getCopyOfRecurringEntryList());
-        String expectedOutput = "Here is the budget for NOVEMBER 2021" + System.lineSeparator()
+        String expectedOutput = String.format("Here is the budget for %s %s"
+                + System.lineSeparator(), LocalDate.now().getMonth(), LocalDate.now().getYear())
                 + "   Category    | Amount | Budget  | Percentage" + System.lineSeparator()
                 + "     FOOD      |  $0.00 / $100.00 | " + System.lineSeparator()
                 + "ENTERTAINMENT  |  $0.00 / $200.00 | " + System.lineSeparator()
@@ -48,6 +50,58 @@ public class SetBudgetTest {
                 + "     GIFT      |  $0.00 / Not set | " + System.lineSeparator()
                 + "    OTHERS     |  $0.00 / Not set | " + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void setAllBudget_AllFieldsValid_success() {
+        BudgetManager budgetManager = new BudgetManager();
+        ExpenseCategory foodCategory = ExpenseCategory.FOOD;
+        double amount = 100.00;
+        budgetManager.setBudget(foodCategory, amount);
+        Budget foodBudget = budgetManager.getMonthlyBudgetFromCategory(foodCategory);
+        assertEquals(100, foodBudget.getLimit());
+
+        ExpenseCategory entertainmentCategory = ExpenseCategory.ENTERTAINMENT;
+        amount = 200;
+        budgetManager.setBudget(entertainmentCategory, amount);
+        Budget entertainmentBudget = budgetManager.getMonthlyBudgetFromCategory(entertainmentCategory);
+        assertEquals(200, entertainmentBudget.getLimit());
+
+        ExpenseCategory transportationCategory = ExpenseCategory.TRANSPORTATION;
+        amount = 300;
+        budgetManager.setBudget(transportationCategory, amount);
+        Budget transportationBudget = budgetManager.getMonthlyBudgetFromCategory(transportationCategory);
+        assertEquals(300, transportationBudget.getLimit());
+
+        ExpenseCategory householdCategory = ExpenseCategory.HOUSEHOLD;
+        amount = 400;
+        budgetManager.setBudget(householdCategory, amount);
+        Budget householdBudget = budgetManager.getMonthlyBudgetFromCategory(householdCategory);
+        assertEquals(400, householdBudget.getLimit());
+
+        ExpenseCategory apparelCategory = ExpenseCategory.APPAREL;
+        amount = 500;
+        budgetManager.setBudget(apparelCategory, amount);
+        Budget apparelBudget = budgetManager.getMonthlyBudgetFromCategory(apparelCategory);
+        assertEquals(500, apparelBudget.getLimit());
+
+        ExpenseCategory beautyCategory = ExpenseCategory.BEAUTY;
+        amount = 600;
+        budgetManager.setBudget(beautyCategory, amount);
+        Budget beautyBudget = budgetManager.getMonthlyBudgetFromCategory(beautyCategory);
+        assertEquals(600, beautyBudget.getLimit());
+
+        ExpenseCategory giftCategory = ExpenseCategory.GIFT;
+        amount = 700;
+        budgetManager.setBudget(giftCategory, amount);
+        Budget giftBudget = budgetManager.getMonthlyBudgetFromCategory(giftCategory);
+        assertEquals(700, giftBudget.getLimit());
+
+        ExpenseCategory othersCategory = ExpenseCategory.OTHERS;
+        amount = 800;
+        budgetManager.setBudget(othersCategory, amount);
+        Budget othersBudget = budgetManager.getMonthlyBudgetFromCategory(othersCategory);
+        assertEquals(800, othersBudget.getLimit());
     }
 
 }
