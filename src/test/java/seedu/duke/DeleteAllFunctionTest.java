@@ -55,6 +55,7 @@ public class DeleteAllFunctionTest {
             recurringFinanceManager.addEntry(incomeR);
             DeleteAllCommand command = new DeleteAllCommand(true, true);
             command.deleteAllNormal(normalFinanceManager, normalListDataManager);
+            command.deleteAllRecurring(recurringFinanceManager, recurringListDataManager);
             ArrayList<Entry> expectedArray = new ArrayList<>();
             assertEquals(expectedArray, normalFinanceManager.entryList);
             assertEquals(expectedArray, recurringFinanceManager.recurringEntryList);

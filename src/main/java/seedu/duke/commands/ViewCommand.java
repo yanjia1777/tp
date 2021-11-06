@@ -51,7 +51,10 @@ public class ViewCommand extends Command {
 
         double total = calculateTotal(outputArray);
         int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
-        ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1], indentations[2], isViewAll,
+        int catIndentation = indentations[0];
+        int nameIndentation = indentations[1];
+        int amountIndentation = indentations[2];
+        ui.printViewRecurring(recurringOutputArray, catIndentation, nameIndentation, amountIndentation, isViewAll,
                 isViewExpenseOrIncome);
     }
 
