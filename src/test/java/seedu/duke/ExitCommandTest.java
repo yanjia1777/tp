@@ -1,11 +1,11 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ExitCommandTest {
     @Test
