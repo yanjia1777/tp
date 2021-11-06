@@ -64,6 +64,52 @@ public class DeleteAllFunctionTest {
         }
     }
 
+    @Test
+    void deleteNormal_allFieldsValid_success() {
+
+        Expense expense = expense();
+        Income income = income();
+        RecurringExpense expenseR = recurringExpense();
+        RecurringIncome incomeR = recurringIncome();
+
+        try {
+            normalFinanceManager.addEntry(expense);
+            normalFinanceManager.addEntry(income);
+            recurringFinanceManager.addEntry(expenseR);
+            recurringFinanceManager.addEntry(incomeR);
+            DeleteAllCommand command = new DeleteAllCommand(true, true);
+            command.deleteAllNormal(normalFinanceManager, normalListDataManager);
+            ArrayList<Entry> expectedArray = new ArrayList<>();
+            assertEquals(expectedArray, normalFinanceManager.entryList);
+            assertEquals(expectedArray, recurringFinanceManager.recurringEntryList);
+        } catch (MintException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void deleteRecurring_allFieldsValid_success() {
+
+        Expense expense = expense();
+        Income income = income();
+        RecurringExpense expenseR = recurringExpense();
+        RecurringIncome incomeR = recurringIncome();
+
+        try {
+            normalFinanceManager.addEntry(expense);
+            normalFinanceManager.addEntry(income);
+            recurringFinanceManager.addEntry(expenseR);
+            recurringFinanceManager.addEntry(incomeR);
+            DeleteAllCommand command = new DeleteAllCommand(true, true);
+            command.deleteAllRecurring(recurringFinanceManager, recurringListDataManager);
+            ArrayList<Entry> expectedArray = new ArrayList<>();
+            assertEquals(expectedArray, normalFinanceManager.entryList);
+            assertEquals(expectedArray, recurringFinanceManager.recurringEntryList);
+        } catch (MintException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Expense expense() {
         String name = "Samurai Burger";
         LocalDate date = LocalDate.parse("2021-02-01", dateFormatter);
