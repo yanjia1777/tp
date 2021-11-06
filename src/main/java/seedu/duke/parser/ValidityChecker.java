@@ -30,6 +30,7 @@ public class ValidityChecker {
     public static final String forwardSlashWithoutTagType = "(.*)[ \\-.]/(.*)";
     public static final double AMOUNT_LIMIT = 1000000.0;
 
+    //@@author irvinseet
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
@@ -89,6 +90,7 @@ public class ValidityChecker {
         }
     }
 
+    //@@author irvinseet
     public static void checkInvalidCatNum(String catNumStr) throws MintException {
         try {
             int catNumInt = Integer.parseInt(catNumStr);
@@ -275,6 +277,7 @@ public class ValidityChecker {
         }
     }
 
+    //@@author irvinseet
     public static void checkTagsFormatSpacing(String userInput) throws MintException {
         if (userInput.matches(userTagNoSpace)) {
             throw new MintException(MintException.ERROR_NO_SPACE_BEFORE_TAGS);

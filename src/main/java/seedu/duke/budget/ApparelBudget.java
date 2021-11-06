@@ -2,6 +2,7 @@ package seedu.duke.budget;
 
 import seedu.duke.entries.ExpenseCategory;
 
+//@@author irvinseet
 public class ApparelBudget extends Budget {
 
     public ApparelBudget(double limit) {

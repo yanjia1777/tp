@@ -33,6 +33,7 @@ public class Ui {
         System.out.println(e.getMessage());
     }
 
+    //@@author irvinseet
     public boolean hasUnsafeCharacters(String text) {
         Pattern pattern = Pattern.compile("[$&+,:;=\\\\?@#|'<>^*()%!]");
         Matcher matcher = pattern.matcher(text);
@@ -72,6 +73,7 @@ public class Ui {
         System.out.println(SHUTDOWN);
     }
 
+    //@@author irvinseet
     public void help() {
         System.out.println("Available tags: n/name d/date a/AMOUNT c/CATEGORY_NUMBER i/interval e/endDate\n"
                 + "Order of tags does not matter.\n"
@@ -232,6 +234,7 @@ public class Ui {
         System.out.println(SUCCESSFUL_EDIT_MESSAGE);
     }
 
+    //@@author irvinseet
     public void printCategoryList() {
         System.out.println("Here are the categories and its tag number\n"
                 + "Expenses           | Income\n"
@@ -436,10 +439,12 @@ public class Ui {
         System.out.println("I have deleted: " + entry);
     }
 
+    //@@author irvinseet
     public void printSetBudget(ExpenseCategory category, double amount) {
         System.out.printf("Budget for %s set to $%.2f\n", category, amount);
     }
 
+    //@@author irvinseet
     public void printBudgetBreakdown(ArrayList<Budget> budgetList, ArrayList<Entry> entries,
             ArrayList<Entry> recurringEntries) {
         int maxSpendingLength = MIN_SPENDING_INDENTATION;
@@ -469,6 +474,7 @@ public class Ui {
 
     }
 
+    //@@author irvinseet
     public void printBudgetIndividualEntry(Budget budget, ArrayList<Entry> entries,
             ArrayList<Entry> recurringEntries, int maxCatLength, int maxSpendingLength,
             int maxLimitLength) {
@@ -486,6 +492,7 @@ public class Ui {
         System.out.println(category + " | " + spending + " / " + limit + " | " + percentage);
     }
 
+    //@@author irvinseet
     public void printBudgetWarningMessage(ExpenseCategory category, double spending, double limit) {
         if (spending > 0.8 * limit && limit != 0) {
             System.out.printf("Slow down, you've set aside $%.2f for %s, "
@@ -493,6 +500,7 @@ public class Ui {
         }
     }
 
+    //@@author irvinseet
     public void printUnsafeCharacters() {
         System.out.println("Please do not use special characters. "
                 + "Only '.', '/', '-' are allowed. '/' is strictly use for tags.");
