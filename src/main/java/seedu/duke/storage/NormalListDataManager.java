@@ -167,7 +167,7 @@ public class NormalListDataManager extends DataManagerActions {
 
     /**
      * If any invalid lines or errors are found, this function deletes the invalid lines and reloads the contents from
-     * the Mint.txt file to the budgetList.
+     * the Mint.txt file to the entryList.
      *
      * @param entryList Entry type arrayList that stores the all the normal expenses.
      * @param fieldsInTextFile different fields from text file to be loaded into different attributes of the entryList.
