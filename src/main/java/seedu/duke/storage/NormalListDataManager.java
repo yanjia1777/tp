@@ -97,7 +97,7 @@ public class NormalListDataManager extends DataManagerActions {
 
     //@@author
     /**
-     * Deletes all lines in the text file
+     * Deletes all lines in the text file.
      */
     public void deleteAll() {
         try {

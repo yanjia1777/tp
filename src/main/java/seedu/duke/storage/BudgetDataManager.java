@@ -41,7 +41,7 @@ public class BudgetDataManager extends DataManagerActions {
     }
 
     /**
-     * Loads the spending limits for each category to the budgetList arrayList
+     * Loads the spending limits for each category to the budgetList arrayList.
      *
      * @param budgetList Budget type arrayList that stores the spending limits for each category.
      */

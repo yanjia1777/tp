@@ -89,7 +89,7 @@ public class RecurringListDataManager extends DataManagerActions {
      *
      * @param entryList Entry type arrayList, casted to RecurringEntry type, that stores the all the recurring expenses.
      * @param fieldsInTextFile different fields from text file to be loaded into different attributes of the
-     * recurringEntryList.
+     *     recurringEntryList.
      */
     public void reload(ArrayList<Entry> entryList, String fieldsInTextFile) throws FileNotFoundException,
             MintException {
@@ -109,7 +109,7 @@ public class RecurringListDataManager extends DataManagerActions {
      * @param endDateStr string containing the end date of the recurring expense.
      * @param intervalStr string containing the interval of the recurring expense.
      * @param recurringList Entry type arrayList, casted to RecurringEntry type, that stores the all the
-     * recurring expenses.
+     *     recurring expenses.
      */
     public void loadEntry(String type, String name, String dateStr, String amountStr,
             String catNumStr, String intervalStr, String endDateStr, ArrayList<Entry> recurringList) {
@@ -153,7 +153,7 @@ public class RecurringListDataManager extends DataManagerActions {
 
     //@@author
     /**
-     * Deletes all lines in the text file
+     * Deletes all lines in the text file.
      */
     public void deleteAll() {
         try {
@@ -227,7 +227,7 @@ public class RecurringListDataManager extends DataManagerActions {
      * and directory.
      *
      * @param recurringEntryList Entry type arrayList, casted to RecurringEntry type, that stores the all the
-     * recurring expenses.
+     *     recurring expenses.
      */
     public void loadPreviousFileContents(ArrayList<Entry> recurringEntryList) {
         try {
