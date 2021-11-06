@@ -35,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -409,6 +410,7 @@ public class Parser {
         try {
             parseInputByArguments(userInput);
             ViewOptions viewOptions = new ViewOptions(argumentsArray);
+            logger.log(Level.INFO, "User execute view");
             return new ViewCommand(viewOptions);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
