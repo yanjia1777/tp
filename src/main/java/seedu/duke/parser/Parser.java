@@ -40,7 +40,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-    // take note of the blank space,example " n/"
     public static final String userTag = "\\s[a-z]/";
     public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
     public static final String STRING_EMPTY = "";

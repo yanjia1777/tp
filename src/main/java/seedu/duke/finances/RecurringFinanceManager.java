@@ -237,33 +237,18 @@ public class RecurringFinanceManager extends FinanceManager {
         if (isSameMonthAsStart) {
             appendMonthlyEntryByMonth(entryList, rawRecurringList, entry, currentYM);
         }
-        /*
-        int startY = startYM.getYear();
-        int endY = endYM.getYear();
-        int currentY = currentYM.getYear();
-
-        boolean isYearBetweenStartAndEnd = startY <= currentY && currentY <= endY;
-        if (isSameMonthAsStart && isYearBetweenStartAndEnd) {
-            RecurringEntry newExpense =  createRecurringEntryObject(entry);
-            int recurringDay = entry.getDate().getDayOfMonth();
-            LocalDate newDate = createLocalDateWithYearMonth(currentYM, recurringDay);
-            newExpense.setDate(newDate);
-            entryList.add(newExpense);
-        }
-         */
     }
 
-    public void appendEntryByYear(ArrayList<Entry> entryList, int year) {
+    public void appendEntryByYear(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList, int year) {
         for (Entry entry: recurringEntryList) {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
             YearMonth startYM = YearMonth.from(entry.getDate());
-            YearMonth endYM = YearMonth.from(entry.getEndDate());
             switch (recurringEntry.getInterval()) {
             case MONTH:
-                appendMonthlyEntryByYear(entryList, recurringEntry, startYM, year);
+                appendMonthlyEntryByYear(entryList, rawRecurringList, recurringEntry, year);
                 break;
             case YEAR:
-                appendYearlyEntryByYear(entryList, recurringEntry, startYM, year);
+                appendYearlyEntryByYear(entryList, rawRecurringList, recurringEntry, startYM, year);
                 break;
             default:
                 break;
@@ -271,46 +256,47 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
-    void appendMonthlyEntryByYear(ArrayList<Entry> entryList, RecurringEntry entry, YearMonth startYM,
-            int currentY) {
+    public void appendMonthlyEntryByYear(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
+            RecurringEntry entry, int currentY) {
         YearMonth iteratorYM = YearMonth.of(currentY, Month.JANUARY);
         YearMonth endLoopYM = YearMonth.of(currentY, Month.DECEMBER);
         ArrayList<Entry> dummyList = new ArrayList<>();
-
+        boolean isAdded = false;
         while (iteratorYM.compareTo(endLoopYM) <= 0) {
             appendMonthlyEntryByMonth(entryList, dummyList, entry, iteratorYM);
-            /*
-            boolean isBetweenRecurringPeriod = iteratorYM.compareTo(startYM) >= 0
-                    && iteratorYM.compareTo(endYM) <= 0;
-            if (isBetweenRecurringPeriod) {
-                RecurringEntry newExpense =  createRecurringEntryObject(entry);
-                int recurringDay = entry.getDate().getDayOfMonth();
-                LocalDate newDate = createLocalDateWithYearMonth(iteratorYM,recurringDay);
-                newExpense.setDate(newDate);
-                entryList.add(newExpense);
+            if (dummyList.size() > 0) {
+                isAdded = true;
+                dummyList.remove(0);
             }
-             */
             iteratorYM = iteratorYM.plusMonths(1);
+        }
+
+        if (isAdded) {
+            rawRecurringList.add(entry);
         }
     }
 
-    void appendYearlyEntryByYear(ArrayList<Entry> entryList, RecurringEntry entry, YearMonth startYM,
+    public void appendYearlyEntryByYear(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
+            RecurringEntry entry, YearMonth startYM,
             int currentY) {
         YearMonth currentYM = YearMonth.of(currentY, startYM.getMonthValue());
-        ArrayList<Entry> dummyList = new ArrayList<>();
-        appendYearlyEntryByMonth(entryList, dummyList, entry, startYM, currentYM);
+        appendYearlyEntryByMonth(entryList, rawRecurringList, entry, startYM, currentYM);
     }
 
     public void appendEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             LocalDate startDate, LocalDate endDate) {
         for (Entry entry : recurringEntryList) {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
+            LocalDate startRecurringDate = entry.getDate();
+            LocalDate endRecurringDate = entry.getEndDate();
             switch (recurringEntry.getInterval()) {
             case MONTH:
-                appendMonthlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry, startDate, endDate);
+                appendMonthlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry, startDate, endDate,
+                        startRecurringDate, endRecurringDate);
                 break;
             case YEAR:
-                appendYearlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry, startDate, endDate);
+                appendYearlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry, startDate, endDate,
+                        startRecurringDate, endRecurringDate);
                 break;
             default:
                 break;
@@ -318,22 +304,22 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
-    void appendMonthlyEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
-            RecurringEntry entry, LocalDate startDate, LocalDate endDate) {
-        YearMonth startRecurringYM = YearMonth.from(entry.getDate());
-        YearMonth endRecurringYM = YearMonth.from(entry.getEndDate());
+    public void appendMonthlyEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
+            RecurringEntry entry, LocalDate startDate, LocalDate endDate,
+            LocalDate startRecurringDate, LocalDate endRecurringDate) {
+
+        YearMonth endRecurringYM = YearMonth.from(endRecurringDate);
         YearMonth endYM = YearMonth.from(endDate);
-        YearMonth iteratorYM = startRecurringYM;
+        YearMonth iteratorYM = YearMonth.from(startRecurringDate);
         YearMonth endLoopYM = endYM.isBefore(endRecurringYM) ? endYM : endRecurringYM;
+        int recurringDay = entry.getDate().getDayOfMonth();
         boolean isAdded = false;
 
         while (iteratorYM.compareTo(endLoopYM) <= 0) {
-            int recurringDay = entry.getDate().getDayOfMonth();
             LocalDate currentDate = createLocalDateWithYearMonth(iteratorYM, recurringDay);
-            boolean isAfterStart = currentDate.compareTo(startDate) >= 0;
-            boolean isBeforeEnd = currentDate.compareTo(endDate) <= 0;
-
-            if (isAfterStart && isBeforeEnd) {
+            boolean isBetween = isBetweenQueryAndRecurring(currentDate, startDate, endDate, startRecurringDate,
+                    endRecurringDate);
+            if (isBetween) {
                 RecurringEntry newExpense =  createRecurringEntryObject(entry);
                 newExpense.setDate(currentDate);
                 entryList.add(newExpense);
@@ -347,9 +333,19 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
-    void appendYearlyEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
-            RecurringEntry entry, LocalDate startDate, LocalDate endDate) {
-        LocalDate startRecurringDate = entry.getDate();
+    public boolean isBetweenQueryAndRecurring(LocalDate currentDate, LocalDate startDate, LocalDate endDate,
+            LocalDate startRecurringDate, LocalDate endRecurringDate) {
+        boolean isBetweenQuery = startDate.compareTo(currentDate) <= 0
+                && currentDate.compareTo(endDate) <= 0;
+        boolean isBetweenRecurringPeriod = startRecurringDate.compareTo(currentDate) <= 0
+                && currentDate.compareTo(endRecurringDate) <= 0;
+        return isBetweenQuery && isBetweenRecurringPeriod;
+    }
+
+    public void appendYearlyEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
+            RecurringEntry entry, LocalDate startDate, LocalDate endDate,
+            LocalDate startRecurringDate, LocalDate endRecurringDate) {
+
         int startRecurringYear = startRecurringDate.getYear();
         int startRecurringMonth = startRecurringDate.getMonthValue();
         int startRecurringDay = startRecurringDate.getDayOfMonth();
@@ -360,10 +356,10 @@ public class RecurringFinanceManager extends FinanceManager {
         int effectiveEndYear = Math.min(endRecurringYear, endYear);
         for (int i = startRecurringYear; i <= effectiveEndYear; i++) {
             LocalDate currentDate = createLocalDateWithIndividualValues(i, startRecurringMonth, startRecurringDay);
-            boolean isAfterStart = currentDate.compareTo(startDate) >= 0;
-            boolean isBeforeEnd = currentDate.compareTo(endDate) <= 0;
+            boolean isBetween = isBetweenQueryAndRecurring(currentDate, startDate, endDate, startRecurringDate,
+                    endRecurringDate);
 
-            if (isAfterStart && isBeforeEnd) {
+            if (isBetween) {
                 RecurringEntry newExpense = createRecurringEntryObject(entry);
                 newExpense.setDate(currentDate);
                 entryList.add(newExpense);
@@ -381,13 +377,11 @@ public class RecurringFinanceManager extends FinanceManager {
         if (viewOptions.fromDate != null) {
             appendEntryBetweenTwoDates(entryList, recurringOnlyList, viewOptions.fromDate, viewOptions.endDate);
         } else if (viewOptions.isViewAll) {
-            ArrayList<Entry> dummyList = new ArrayList<>();
-            appendAllEntry(entryList, dummyList);
+            appendAllEntry(entryList);
             recurringOnlyList.addAll(recurringEntryList);
         } else {
             if (viewOptions.month == null) {
-                appendEntryByYear(entryList, viewOptions.year);
-                viewByYear(viewOptions, recurringOnlyList);
+                appendEntryByYear(entryList, recurringOnlyList, viewOptions.year);
             } else {
                 appendEntryByMonth(entryList, recurringOnlyList, viewOptions.month.getValue(), viewOptions.year);
             }
@@ -395,27 +389,15 @@ public class RecurringFinanceManager extends FinanceManager {
         return entryList;
     }
 
-    public void appendAllEntry(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList) {
+    public void appendAllEntry(ArrayList<Entry> entryList) {
         LocalDate earliestDate = LocalDate.now();
         for (Entry recurringExpense : recurringEntryList) {
             if (recurringExpense.getDate().isBefore(earliestDate)) {
                 earliestDate = recurringExpense.getDate();
             }
         }
-        appendEntryBetweenTwoDates(entryList, rawRecurringList, earliestDate, LocalDate.now());
-    }
-
-    public void viewByYear(ViewOptions viewOptions, ArrayList<Entry> entryList) {
-        for (Entry entry : recurringEntryList) {
-            RecurringEntry recurringEntry = (RecurringEntry) entry;
-            int startRecurringYear = recurringEntry.getDate().getYear();
-            int endRecurringYear = recurringEntry.getEndDate().getYear();
-            int currYear = viewOptions.year;
-            boolean isBetween = currYear >= startRecurringYear && currYear <= endRecurringYear;
-            if (isBetween) {
-                entryList.add(recurringEntry);
-            }
-        }
+        ArrayList<Entry> dummyList = new ArrayList<>();
+        appendEntryBetweenTwoDates(entryList, dummyList, earliestDate, LocalDate.now());
     }
 
     public void deleteAll() {
