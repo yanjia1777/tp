@@ -37,7 +37,7 @@ public class RecurringIncome extends RecurringEntry {
         }
         return getType() + "  | " + getCategory().toString() + " | " + getDate() + " | "
                 + getName() + " | $" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
-                + " | " + "Forever :D";
+                + " | " + getEndDate();
     }
 
     //@@author nipafx-reusedS

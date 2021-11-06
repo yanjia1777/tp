@@ -51,7 +51,7 @@ class ViewFunctionTest {
             Ui ui = new Ui();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             System.setOut(new PrintStream(output));
-            view.view(outputArray,recurringOutputArray, ui, viewOptions.isViewAll);
+            view.view(outputArray,recurringOutputArray, ui, viewOptions.isViewAll, viewOptions.isViewExpenseOrIncome);
             String expectedOutput = "Here is the list of your entries:" + System.lineSeparator()
                     + "  Type  | Category |    Date    |      Name      |   Amount    | Every |   Until"
                     + System.lineSeparator()
