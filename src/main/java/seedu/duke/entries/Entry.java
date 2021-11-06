@@ -2,7 +2,7 @@ package seedu.duke.entries;
 
 import java.time.LocalDate; // import the LocalDate class
 
-//@@author irvinseet
+//@@author yanjia1777
 public abstract class Entry {
     protected String name;
     protected LocalDate date;
