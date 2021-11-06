@@ -3,9 +3,14 @@ package seedu.duke;
 import org.junit.jupiter.api.Test;
 import seedu.duke.budget.Budget;
 import seedu.duke.budget.BudgetManager;
+import seedu.duke.commands.SetBudgetCommand;
 import seedu.duke.entries.ExpenseCategory;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
+import seedu.duke.storage.BudgetDataManager;
+import seedu.duke.storage.DataManagerActions;
+import seedu.duke.storage.NormalListDataManager;
+import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Ui;
 
 import java.io.ByteArrayOutputStream;
@@ -104,4 +109,24 @@ public class SetBudgetTest {
         assertEquals(800, othersBudget.getLimit());
     }
 
+    @Test
+    void setBudgetCommandTest_validInputs_returnConfirmationMessage() {
+        NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
+        RecurringFinanceManager recurringFinanceManager = new RecurringFinanceManager();
+        BudgetManager budgetManager = new BudgetManager();
+        NormalListDataManager normalListDataManager = new NormalListDataManager();
+        DataManagerActions dataManagerActions = new DataManagerActions();
+        RecurringListDataManager recurringListDataManager = new RecurringListDataManager();
+        BudgetDataManager budgetDataManager = new BudgetDataManager();
+        Ui ui = new Ui();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        SetBudgetCommand setBudgetCommand = new SetBudgetCommand(ExpenseCategory.FOOD, 1000);
+        setBudgetCommand.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
+                dataManagerActions, recurringListDataManager, budgetDataManager, ui);
+        String expectedOutput = "Budget for FOOD set to $1000.00\n";
+        assertEquals(expectedOutput, outContent.toString());
+    }
 }

@@ -2,6 +2,7 @@ package seedu.duke;
 
 import org.junit.jupiter.api.Test;
 import seedu.duke.budget.BudgetManager;
+import seedu.duke.commands.ViewBudgetCommand;
 import seedu.duke.commands.ViewCategoriesCommand;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
@@ -13,10 +14,11 @@ import seedu.duke.utility.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ViewCategoriesCommandTest {
+public class ViewBudgetCommandTest {
     @Test
     void viewCategoryCommandTest_validInput_success() {
         NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
@@ -31,21 +33,21 @@ public class ViewCategoriesCommandTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        ViewCategoriesCommand command = new ViewCategoriesCommand();
+        ViewBudgetCommand command = new ViewBudgetCommand();
         command.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
                 dataManagerActions, recurringListDataManager, budgetDataManager, ui);
 
-        String expectedOutput = "Here are the categories and its tag number\n"
-                + "Expenses           | Income\n"
-                + "c/0 FOOD           | c/0 ALLOWANCE\n"
-                + "c/1 ENTERTAINMENT  | c/1 WAGES\n"
-                + "c/2 TRANSPORTATION | c/2 SALARY\n"
-                + "c/3 HOUSEHOLD      | c/3 INTERESTED\n"
-                + "c/4 APPAREL        | c/4 INVESTMENT\n"
-                + "c/5 BEAUTY         | c/5 COMMISSION\n"
-                + "c/6 GIFT           | c/6 GIFT\n"
-                + "c/7 OTHERS         | c/7 OTHERS\n"
-                + System.lineSeparator();
+        String expectedOutput = String.format("Here is the budget for %s %s"
+                + System.lineSeparator(), LocalDate.now().getMonth(), LocalDate.now().getYear())
+                + "   Category    | Amount | Budget  | Percentage" + System.lineSeparator()
+                + "     FOOD      |  $0.00 / Not set | " + System.lineSeparator()
+                + "ENTERTAINMENT  |  $0.00 / Not set | " + System.lineSeparator()
+                + "TRANSPORTATION |  $0.00 / Not set | " + System.lineSeparator()
+                + "  HOUSEHOLD    |  $0.00 / Not set | " + System.lineSeparator()
+                + "   APPAREL     |  $0.00 / Not set | " + System.lineSeparator()
+                + "    BEAUTY     |  $0.00 / Not set | " + System.lineSeparator()
+                + "     GIFT      |  $0.00 / Not set | " + System.lineSeparator()
+                + "    OTHERS     |  $0.00 / Not set | " + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 }
