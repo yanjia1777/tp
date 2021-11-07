@@ -14,9 +14,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 ### Enhancements Implemented
 
-1. Implemented base classes
-
-- Implemented `Expense` class.
+1. Implemented `Expense` class.
 
 2. Implementation of enumerations
 
