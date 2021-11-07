@@ -36,6 +36,13 @@ public class RecurringFinanceManager extends FinanceManager {
     }
 
     //@@author pos0414
+    /**
+     * Filters the recurring entries that matches the fields that user queried.
+     * @param tags List of tags that user has queried.
+     * @param query Entry object that contains the details of the query that user has made.
+     * @return List of matching recurring entries
+     * @throws MintException If tag given is invalid
+     */
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags,
                                                   Entry query) throws MintException {
@@ -68,6 +75,12 @@ public class RecurringFinanceManager extends FinanceManager {
         return filteredList;
     }
 
+    /**
+     * Deletes the recurring entry in the recurringEntryList. To reach this point all validity checks and the existence
+     * of the recurring entry inside the recurringEntryList have been checked.
+     * Thus assume the entry exists in the list.
+     * @param entry Entry to be deleted.
+     */
     @Override
     public void deleteEntry(Entry entry) {
         assert recurringEntryList.contains(entry) : "recurringEntryList should contain the entry to delete.";
@@ -199,12 +212,29 @@ public class RecurringFinanceManager extends FinanceManager {
     }
 
     //@@author pos0414
+    /**
+     * Create LocalDate when YearMonth and day is given. If the day does not exist in that specific year and month,
+     * LocalDate created will have a rounded down day.
+     * Only valid year, month, and day are given.
+     * @param yearMonth YearMonth representing the year and month
+     * @param day Integer value of the day
+     * @return LocalDate created from yearMonth and day
+     */
     public LocalDate createLocalDateWithYearMonth(YearMonth yearMonth, int day) {
         assert day >= 1 && day <= 31 : "Day should be within 1 - 31";
         String dateToString = yearMonth.toString() + "-" + day;
         return LocalDate.parse(dateToString, Parser.dateFormatter);
     }
 
+    /**
+     * Create LocalDate when year, month, and days are given. If the day does not exist in that specific year
+     * and month, LocalDate created will have a rounded down day.
+     * Only valid year, month, and day are given.
+     * @param year Integer value of the year
+     * @param month Integer value of the month
+     * @param day Integer value of the day
+     * @return LocalDate created from the year, month, and day
+     */
     public LocalDate createLocalDateWithIndividualValues(int year, int month, int day) {
         assert month >= 1 && month <= 12 : "Month should be within 1 - 12";
         assert day >= 1 && day <= 31 : "Day should be within 1 - 31";
@@ -212,6 +242,17 @@ public class RecurringFinanceManager extends FinanceManager {
         return LocalDate.parse(dateToString, Parser.dateFormatter);
     }
 
+    /**
+     * Checks if each recurring entry in the recurringEntryList recurs for a specific year and month. Creates and
+     * appends the recurring entries with new date that it has recurred if they recur on that year and month,
+     * based on the recurring period and interval. Original entry is added to rawRecurringList if that
+     * entry has recurred on this year and month.
+     * @param entryList List to append the recurring entries
+     *
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param month Month the user wants to view
+     * @param year Year the user wants to view
+     */
     public void appendEntryByMonth(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             int month, int year) {
         for (Entry entry : recurringEntryList) {
@@ -231,6 +272,16 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks if a given monthly recurring entry has recurred on a specific year month, based on the recurring
+     * start date and end date. The date that the entry has recurred is set as the new date for
+     * the recurring entry, and added to the entryList. Original entry is added to rawRecurringList if that
+     * entry has recurred on this year and month.
+     * @param entryList List to append the new-dated recurring entry if it has recurred
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param entry Recurring entry to be checked
+     * @param currentYM YearMonth to be checked if the entry has recurred on that year month
+     */
     public void appendMonthlyEntryByMonth(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             RecurringEntry entry, YearMonth currentYM) {
         LocalDate startDate = entry.getDate();
@@ -247,6 +298,17 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks if a given yearly recurring entry has recurred on a specific year month, based on the recurring
+     * start date and end date. The date that the entry has recurred is set as the new date for
+     * the recurring entry, and added to the entryList. Original entry is added to rawRecurringList if that
+     * entry has recurred on this year and month.
+     * @param entryList List to append the new-dated recurring entry if it has recurred
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param entry Recurring entry to be checked
+     * @param startYM YearMonth of the start date of the recurring entry
+     * @param currentYM YearMonth to be checked if the entry has recurred on that year month
+     */
     public void appendYearlyEntryByMonth(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             RecurringEntry entry, YearMonth startYM, YearMonth currentYM) {
         boolean isSameMonthAsStart = startYM.getMonth() == currentYM.getMonth();
@@ -255,6 +317,16 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Creates and appends the recurring entries to a list with new dates that they have recurred if they do recur
+     * on that year, based on the recurring period and interval, for each recurring entry in the recurringEntryList.
+     * Monthly recurring entries are added for each month in that year it has recurred on that year and month. Yearly
+     * recurring entry is added once for that year if it has recurred on that year. Original entry is added to
+     * rawRecurringList if that entry has recurred on that year.
+     * @param entryList List to append the recurring entries
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param year Year the user wants to view
+     */
     public void appendEntryByYear(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList, int year) {
         for (Entry entry: recurringEntryList) {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
@@ -272,6 +344,16 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks if a given monthly recurring entry has recurred on each month of the year given, based on the recurring
+     * start date and end date. The date that the entry has recurred is set as the new date for
+     * the recurring entry, and added to the entryList. Original entry is added to rawRecurringList if that
+     * entry has recurred on this year.
+     * @param entryList List to append the new-dated recurring entry if it has recurred
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param entry Recurring entry to be checked
+     * @param currentY Year to be checked if the entry has recurred on that year's months
+     */
     public void appendMonthlyEntryByYear(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             RecurringEntry entry, int currentY) {
         YearMonth iteratorYM = YearMonth.of(currentY, Month.JANUARY);
@@ -292,6 +374,17 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks if a given yearly recurring entry has recurred on the year given, based on the recurring
+     * start date and end date. The date that the entry has recurred is set as the new date for
+     * the recurring entry, and added to the entryList. Original entry is added to rawRecurringList if that
+     * entry has recurred on this month.
+     * @param entryList List to append the new-dated recurring entry if it has recurred
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param entry Recurring entry to be checked
+     * @param startYM YearMonth of the start date of the recurring entry
+     * @param currentY Year to be checked if the entry has recurred on that year
+     */
     public void appendYearlyEntryByYear(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             RecurringEntry entry, YearMonth startYM,
             int currentY) {
@@ -299,6 +392,18 @@ public class RecurringFinanceManager extends FinanceManager {
         appendYearlyEntryByMonth(entryList, rawRecurringList, entry, startYM, currentYM);
     }
 
+    /**
+     * Creates and appends the recurring entries to a list with new
+     * dates that they have recurred if they do recur between the two dates, based on the
+     * recurring period and interval, for each recurring entry in the recurringEntryList. Monthly recurring
+     * entries are added for each month between the two dates that it has recurred. Yearly recurring entries are added
+     * for each year between the two dates that it has recurred. Original entry is added to rawRecurringList if that
+     * entry has recurred between the two dates.
+     * @param entryList List to append the recurring entries
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param startDate Starting date of the period that the user wants to view
+     * @param endDate Ending date of the period that the user wants to view
+     */
     public void appendEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             LocalDate startDate, LocalDate endDate) {
         for (Entry entry : recurringEntryList) {
@@ -307,12 +412,12 @@ public class RecurringFinanceManager extends FinanceManager {
             LocalDate endRecurringDate = entry.getEndDate();
             switch (recurringEntry.getInterval()) {
             case MONTH:
-                appendMonthlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry, startDate, endDate,
-                        startRecurringDate, endRecurringDate);
+                appendMonthlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry,
+                        startDate, endDate, startRecurringDate, endRecurringDate);
                 break;
             case YEAR:
-                appendYearlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry, startDate, endDate,
-                        startRecurringDate, endRecurringDate);
+                appendYearlyEntryBetweenTwoDates(entryList, rawRecurringList, recurringEntry,
+                        startDate, endDate, startRecurringDate, endRecurringDate);
                 break;
             default:
                 break;
@@ -320,6 +425,19 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks if a given monthly recurring entry has recurred on each month between the two dates given, based on
+     * the recurring start date and end date. The date that the entry has recurred is set as the new date for
+     * the recurring entry, and added to the entryList. Original entry is added to rawRecurringList if that
+     * entry has recurred on this year.
+     * @param entryList  List to append the new-dated recurring entry if it has recurred
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param entry Recurring entry to be checked
+     * @param startDate Starting date of the period that the user wants to view
+     * @param endDate Ending date of the period that the user wants to view
+     * @param startRecurringDate Start date of the recurring entry
+     * @param endRecurringDate End date of the recurring entry
+     */
     public void appendMonthlyEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             RecurringEntry entry, LocalDate startDate, LocalDate endDate,
             LocalDate startRecurringDate, LocalDate endRecurringDate) {
@@ -333,8 +451,8 @@ public class RecurringFinanceManager extends FinanceManager {
 
         while (iteratorYM.compareTo(endLoopYM) <= 0) {
             LocalDate currentDate = createLocalDateWithYearMonth(iteratorYM, recurringDay);
-            boolean isBetween = isBetweenQueryAndRecurring(currentDate, startDate, endDate, startRecurringDate,
-                    endRecurringDate);
+            boolean isBetween = isBetweenQueryAndRecurring(currentDate, startDate, endDate,
+                    startRecurringDate, endRecurringDate);
             if (isBetween) {
                 RecurringEntry newExpense =  createRecurringEntryObject(entry);
                 newExpense.setDate(currentDate);
@@ -349,6 +467,16 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks if a given LocalDate is between the recurring period (startRecurringDate to endRecurringDate) as well as
+     * between the query period (startDate to endDate)
+     * @param currentDate LocalDate to be checked if ii is between the two periods
+     * @param startDate Starting date of the query period
+     * @param endDate Ending date of the query period
+     * @param startRecurringDate Start date of the recurring entry
+     * @param endRecurringDate End date of the recurring entry
+     * @return True if it is between both periods, false if it isn't
+     */
     public boolean isBetweenQueryAndRecurring(LocalDate currentDate, LocalDate startDate, LocalDate endDate,
             LocalDate startRecurringDate, LocalDate endRecurringDate) {
         boolean isBetweenQuery = startDate.compareTo(currentDate) <= 0
@@ -358,6 +486,19 @@ public class RecurringFinanceManager extends FinanceManager {
         return isBetweenQuery && isBetweenRecurringPeriod;
     }
 
+    /**
+     * Checks if a given yearly recurring entry has recurred on each year between the two dates given, based on
+     * the recurring start date and end date. The date that the entry has recurred is set as the new date for
+     * the recurring entry, and added to the entryList. Original entry is added to rawRecurringList if that
+     * entry has recurred on this year.
+     * @param entryList List to append the new-dated recurring entry if it has recurred
+     * @param rawRecurringList List that wants the original form of recurring entries that were appended
+     * @param entry Recurring entry to be checked
+     * @param startDate Starting date of the period that the user wants to view
+     * @param endDate Ending date of the period that the user wants to view
+     * @param startRecurringDate Start date of the recurring entry
+     * @param endRecurringDate End date of the recurring entry
+     */
     public void appendYearlyEntryBetweenTwoDates(ArrayList<Entry> entryList, ArrayList<Entry> rawRecurringList,
             RecurringEntry entry, LocalDate startDate, LocalDate endDate,
             LocalDate startRecurringDate, LocalDate endRecurringDate) {
@@ -372,8 +513,8 @@ public class RecurringFinanceManager extends FinanceManager {
         int effectiveEndYear = Math.min(endRecurringYear, endYear);
         for (int i = startRecurringYear; i <= effectiveEndYear; i++) {
             LocalDate currentDate = createLocalDateWithIndividualValues(i, startRecurringMonth, startRecurringDay);
-            boolean isBetween = isBetweenQueryAndRecurring(currentDate, startDate, endDate, startRecurringDate,
-                    endRecurringDate);
+            boolean isBetween = isBetweenQueryAndRecurring(currentDate, startDate, endDate,
+                    startRecurringDate, endRecurringDate);
 
             if (isBetween) {
                 RecurringEntry newExpense = createRecurringEntryObject(entry);
@@ -388,6 +529,16 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Given the date options for viewing the entries, it creates and appends the recurring entries to a list with new
+     * dates that they have recurred if they do recur during/on years/months of the date option, for each recurring
+     * entry in the recurringEntryList. Original recurring entry is added to rawRecurringList if that entry has
+     * recurred on that date option.
+     * @param viewOptions ViewOptions that contains the date options the user want to view the entries by
+     * @param entryList List to append the new-dated recurring entry if it has recurred
+     * @param recurringOnlyList  List that wants the original form of recurring entries that were appended
+     * @return The appended entryList
+     */
     public ArrayList<Entry> appendEntryForView(ViewOptions viewOptions, ArrayList<Entry> entryList,
             ArrayList<Entry> recurringOnlyList) {
         if (viewOptions.fromDate != null) {
@@ -405,6 +556,15 @@ public class RecurringFinanceManager extends FinanceManager {
         return entryList;
     }
 
+    /**
+     * Creates and appends the recurring entries to a list with new
+     * dates that they have recurred if they do recur from the past until today, based on the
+     * recurring period and interval, for each recurring entry in the recurringEntryList. Monthly recurring
+     * entries are added for each month from the start date of that recurring entry. Yearly recurring entry is added
+     * for each year between the two dates that it has recurred. Original entry is added to rawRecurringList if that
+     * recurring entry has recurred from the past until today.
+     * @param entryList List to append the new-dated recurring entry if it has recurred
+     */
     public void appendAllEntry(ArrayList<Entry> entryList) {
         LocalDate earliestDate = LocalDate.now();
         for (Entry recurringExpense : recurringEntryList) {

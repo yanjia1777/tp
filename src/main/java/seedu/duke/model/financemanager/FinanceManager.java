@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+/**
+ * Class that deals with operations on entries. Super class of NormalFinanceManger and RecurringFinanceManager.
+ * Contains common method of these two classes.
+ */
 public abstract class FinanceManager {
     public static final String STRING_PROMPT_EDIT = "What would you like to edit? "
             + "Type the tag and what you want to change e.g. a/10";

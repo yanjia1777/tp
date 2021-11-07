@@ -28,6 +28,21 @@ public class ValidityChecker {
     public static final String invalidForwardSlash = "(.*)[0-9a-zA-Z/\\-.][0-9/\\-.]/(.*)";
     public static final String forwardSlashWithoutTagType = "(.*)[ \\-.]/(.*)";
     public static final double AMOUNT_LIMIT = 1000000.0;
+    public static final String SPACED_NAME_TAG = " n/";
+    public static final String SPACED_AMOUNT_TAG = " a/";
+    public static final String SPACED_DATE_TAG = " d/";
+    public static final String SPACED_CATEGORY_TAG = " c/";
+    public static final String SPACED_INTERVAL_TAG = " i/";
+    public static final String SPACED_END_DATE_TAG = " e/";
+    public static final String NAME_TAG = "n/";
+    public static final String AMOUNT_TAG = "a/";
+    public static final String DATE_TAG = "d/";
+    public static final String CATEGORY_TAG = "c/";
+    public static final String INTERVAL_TAG = "i/";
+    public static final String END_DATE_TAG = "e/";
+    public static final String ADD_ENTRY = "add";
+    public static final String ADD_RECURRING = "addR";
+    public static final String SET_BUDGET = "set";
 
     //@@author irvinseet
     public static DateTimeFormatter dateFormatter
@@ -36,6 +51,12 @@ public class ValidityChecker {
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
 
     //@@author pos0414
+
+    /**
+     * Check if given string is empty/blank
+     * @param name Name in string
+     * @throws MintException Name is empty
+     */
     public static void checkEmptyName(String name) throws MintException {
         boolean hasEmptyName = name.equals(Parser.STRING_EMPTY);
         if (hasEmptyName) {
@@ -44,6 +65,11 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Check if given amount is a non-number or too large (> 1M)
+     * @param amountStr Amount in string
+     * @throws MintException When amountStr is empty, non-number, or too large
+     */
     public static void checkInvalidAmount(String amountStr) throws MintException {
         boolean isDoubleWithoutLetters = doublePattern.matcher(amountStr).matches();
         boolean isEmpty = amountStr == null;
@@ -56,6 +82,11 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Check if given date is before year 2000, after year 2200, or invalid date
+     * @param dateStr Date in string
+     * @throws MintException When given date is before year 2000, after year 2200, or invalid form of date
+     */
     public static void checkInvalidDate(String dateStr) throws MintException {
         try {
             LocalDate date = LocalDate.parse(dateStr, dateFormatter);
@@ -69,6 +100,14 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Check if given end date of the recurring period is invalid.
+     * It is invalid when given date is before year 2000, after year 2200, invalid form of date, or equal to or before
+     * the start date of the recurring period
+     * @param endDateStr End date in string
+     * @param startDateStr Start date in string
+     * @throws MintException When the end date is invalid as specified above
+     */
     public static void checkInvalidEndDate(String endDateStr, String startDateStr) throws MintException {
         try {
             LocalDate endDate = LocalDate.parse(endDateStr, dateFormatter);
@@ -111,6 +150,12 @@ public class ValidityChecker {
     }
 
     //@@author pos0414
+
+    /**
+     * Check if given interval is not one of the two available intervals for recurring entries.
+     * @param intervalStr Interval in string
+     * @throws MintException When the interval is invalid
+     */
     public static void checkInvalidInterval(String intervalStr) throws MintException {
         try {
             Interval.valueOf(intervalStr.toUpperCase());
@@ -120,6 +165,13 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Check if given index is invalid, given a size of a list.
+     * @param indexStr Index in string
+     * @param size Size of the list
+     * @return Parsed index
+     * @throws MintException If index is invalid
+     */
     public static int checkInvalidIndex(String indexStr, int size) throws MintException {
         try {
             int index = Integer.parseInt(indexStr);
@@ -134,9 +186,16 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Identify if user entered same tags multiple times.
+     * @param parser Parser object that stores information of whether the entry is recurring
+     * @param userInput User input string
+     * @throws MintException If there are duplicate tags
+     */
     static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
-        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
-                : new String[]{"n/", "d/", "a/", "c/"};
+        String[] tags = parser.isRecurring
+                ? new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG, INTERVAL_TAG, END_DATE_TAG}
+                : new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG};
 
         for (String tag : tags) {
             int count = 0;
@@ -151,34 +210,44 @@ public class ValidityChecker {
         }
     }
 
+    /**
+     * Checks the validity of the fields(Tags) the user entered, and returns the valid tags
+     * @param parser Parser object that contains the string parsed forms of the fields
+     * @param userInput User input String
+     * @param mandatoryTags Must-have tags required by commands
+     * @return List of valid tags
+     * @throws MintException There is more than one invalid tag, or there are no tags entered at all.
+     */
     static ArrayList<String> identifyValidTags(Parser parser, String userInput,
             String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = parser.isRecurring ? new String[]{" n/", " d/", " a/", " c/", " i/", " e/"}
-                : new String[]{" n/", " d/", " a/", " c/"};
+        String[] tags = parser.isRecurring
+                ? new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG, SPACED_AMOUNT_TAG,
+                SPACED_CATEGORY_TAG, SPACED_INTERVAL_TAG, SPACED_END_DATE_TAG}
+                : new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG, SPACED_AMOUNT_TAG, SPACED_CATEGORY_TAG};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
         for (String tag : tags) {
             try {
                 if (userInput.contains(tag)) {
-                    switch (tag.trim()) {
-                    case "n/":
+                    switch (tag) {
+                    case SPACED_NAME_TAG:
                         checkEmptyName(parser.name);
                         break;
-                    case "d/":
+                    case SPACED_DATE_TAG:
                         checkInvalidDate(parser.dateStr);
                         break;
-                    case "a/":
+                    case SPACED_AMOUNT_TAG:
                         checkInvalidAmount(parser.amountStr);
                         break;
-                    case "c/":
+                    case SPACED_CATEGORY_TAG:
                         checkInvalidCatNum(parser.catNumStr);
                         break;
-                    case "i/":
+                    case SPACED_INTERVAL_TAG:
                         checkInvalidInterval(parser.intervalStr);
                         break;
-                    case "e/":
+                    case SPACED_END_DATE_TAG:
                         checkInvalidEndDate(parser.endDateStr, parser.dateStr);
                         break;
                     default:
@@ -201,18 +270,25 @@ public class ValidityChecker {
         return validTags;
     }
 
+    /**
+     * Determine the mandatory tags needed based on the commands and returns the valid tags found.
+     * @param parser Parser object that contains the parsed string form of fields
+     * @param userInput User input string
+     * @return Valid tags found
+     * @throws MintException If there are invalid tags or no tags specified at all
+     */
     static ArrayList<String> checkExistenceAndValidityOfTags(Parser parser, String userInput) throws MintException {
         try {
             String[] mandatoryTags;
             switch (parser.command) {
-            case "add":
-                mandatoryTags = new String[]{" n/", " a/"};
+            case ADD_ENTRY:
+                mandatoryTags = new String[]{SPACED_NAME_TAG, SPACED_AMOUNT_TAG};
                 break;
-            case "addR":
-                mandatoryTags = new String[]{" n/", " a/", " i/"};
+            case ADD_RECURRING:
+                mandatoryTags = new String[]{SPACED_NAME_TAG, SPACED_AMOUNT_TAG, SPACED_INTERVAL_TAG};
                 break;
-            case "set":
-                mandatoryTags = new String[]{" c/", " a/"};
+            case SET_BUDGET:
+                mandatoryTags = new String[]{SPACED_CATEGORY_TAG, SPACED_AMOUNT_TAG};
                 break;
             default:
                 mandatoryTags = new String[]{};

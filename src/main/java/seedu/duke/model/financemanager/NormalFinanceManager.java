@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that deals with operations on normal entries. Stores a list of entries.
+ */
 public class NormalFinanceManager extends FinanceManager {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -32,6 +35,13 @@ public class NormalFinanceManager extends FinanceManager {
     }
 
     //@@author pos0414
+    /**
+     * Filters the normal entries that matches the fields that user queried, from the list of stored normal entries.
+     * @param tags List of tags that user has queried.
+     * @param query Entry object that contains the details of the query that user has made.
+     * @return List of matching entries
+     * @throws MintException If tag given is invalid
+     */
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
         assert tags.size() > 0 : "There should be more than one tag to be queried";
@@ -57,6 +67,11 @@ public class NormalFinanceManager extends FinanceManager {
         return filteredList;
     }
 
+    /**
+     * Deletes the entry in the entryList. To reach this point all validity checks and the existence of the
+     * entry inside the entryList have been checked. Thus assume the entry exists in the list.
+     * @param entry Entry to be deleted.
+     */
     @Override
     public void deleteEntry(Entry entry) {
         assert entryList.contains(entry) : "entryList should contain the entry to delete.";

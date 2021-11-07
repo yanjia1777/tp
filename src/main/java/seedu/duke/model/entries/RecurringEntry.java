@@ -3,6 +3,11 @@ package seedu.duke.model.entries;
 import java.time.LocalDate;
 
 //@@author pos0414
+
+/**
+ * Class that represents recurring entries. Super class of RecurringExpense and RecurringIncome.
+ * endDate is the date where recurring stops. Interval indicates how often the recurring entry recurs.
+ */
 public abstract class RecurringEntry extends Entry {
     private Interval interval;
     private LocalDate endDate;

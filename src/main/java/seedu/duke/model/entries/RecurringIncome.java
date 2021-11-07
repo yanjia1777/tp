@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 //@@author pos0414
+
+/**
+ * Class that represents recurring income.
+ */
 public class RecurringIncome extends RecurringEntry {
     protected IncomeCategory category;
 

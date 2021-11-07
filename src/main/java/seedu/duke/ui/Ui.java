@@ -153,6 +153,13 @@ public class Ui {
     }
 
     //@@author pos0414
+
+    /**
+     * Print out a given list and let the user choose the entry to process by entering the index of that entry.
+     * @param filteredList List of entries the user can choose from
+     * @param isDelete True if it is a delete process, false if it is an edit process
+     * @return index of the entry to process. -1 if user cancels the process.
+     */
     public int chooseItemToDeleteOrEdit(ArrayList<Entry> filteredList, boolean isDelete) {
         if (isDelete) {
             System.out.println("Enter the index of the item you want to delete." + CANCEL_MESSAGE);
@@ -180,6 +187,12 @@ public class Ui {
         return index - 1;
     }
 
+    /**
+     * Get confirmation from the user if the given entry is what the user wants to process.
+     * @param entry Entry to be checked
+     * @param isDelete True if it is a delete process, false if it is an edit process
+     * @return True if the user confirms it is the entry to be processed, False if the user denies (cancel the process)
+     */
     public boolean isConfirmedToDeleteOrEdit(Entry entry, boolean isDelete) {
         if (isDelete) {
             System.out.println("Is this what you want to delete?");
@@ -199,6 +212,11 @@ public class Ui {
     }
 
     //@@author pos0414
+
+    /**
+     * Return True if user says "y", false if user says "n"
+     * @return True if user says "y", false if user says "n"
+     */
     public boolean isConfirmed() {
         String userInput = readUserInput();
         while (userInput != null) {
