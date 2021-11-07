@@ -8,8 +8,8 @@
     - [Ui Component](#text-ui)
     - [Logic Component](#logic)
     - [Model Component](#model)
-      - [Finance Component](#finance)
-      - [Budget Component](#budget)
+        - [Finance Component](#finance)
+        - [Budget Component](#budget)
     - [Storage Component](#storage)
 - [Implementation](#implementation)
 - [Product Scope](#scope)
@@ -51,7 +51,7 @@ the correct sequence.
 
 Apart from `Main`, Mint comprises six main components, namely:
 
-- `Ui`: The UI of the App 
+- `Ui`: The UI of the App
 - `Logic`: Make sense of user input and execute command
 - `Model`: Holds the data of the App and performs actions on the data.
 - `Storage`: Reads from and writes to [`LocalStorage`](#local-storage).
@@ -71,14 +71,16 @@ The Ui component,
 * outputs entries requested by the user.
 
 ### <a name="logic"></a>Logic Component
+
 Here is a (partial) class diagram of the `Logic` component.
 
 ![](images/Logic.png)
 
 How the `Logic` component works:
+
 1. When `Logic` is called upon to parse a command, it uses `Parser` class to parse the user command.
 2. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its </br >
-subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying through `ValidityChecker` class.
+   subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying through `ValidityChecker` class.
 3. `Parser` encapsulates the details of the query as an `Entry` object from `Model`.
 4. `Parser` returns a `Command` object, which is executed by `Main`.
 5. The `Command` can communicate with the `Model` when it is executed </br>
@@ -92,19 +94,24 @@ The Seuquence Diagram below illustrates the interactions within the `Logic` comp
 ![](images/LogicSequenceDiagram.png)
 
 ### <a name="model"></a>Model Component
+
 The `Model` package consists of three sub-components: `FinanceManager`, `Entry`, and `Budget`.
+
 ##### <a name="finance"></a>Finance and Entry Components
+
 ![](images/Finance.png)
 
 The `FinanceManager` component,
+
 - stores all the entry data i.e., all `Entry` objects.
     - `NormalFinanceManager` object stores all the `Income` and `Expense` objects
     - `RecurringFinanceManager` stores all the `RecurringIncome` and `RecurringExpense` objects
 - performs action on the list of `Entry` objects (e.g., add, delete, etc.)
-- depends on the `Ui` component as some action needs confirmation from the user (e.g. For edit, 
-  after the user chooses the entry to edit, the user needs to provide the fields to be edited.)
+- depends on the `Ui` component as some action needs confirmation from the user (e.g. For edit, after the user chooses
+  the entry to edit, the user needs to provide the fields to be edited.)
 
 The `Entry` component,
+
 - stores information about the individual `Entry` object.
 - does not depend on any of the other three components.
 
@@ -132,8 +139,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 > For ease of visualization, since the logic for all the different lists are the same, we have broken it down to show
 > one example using the diagram
 
-1. When the program is executed, all the objects including the `BudgetDataManager`, `DataManagerActions`, 
-   `NormalListDataManager` and `RecurringListDataManager` would be created. 
+1. When the program is executed, all the objects including the `BudgetDataManager`, `DataManagerActions`,
+   `NormalListDataManager` and `RecurringListDataManager` would be created.
 2. The programme would then load all the stored content from the lists which records the user's previously recorded
    normal expenditure, recurring expenditure, and the spending limits they set for each category.
 3. Upon detection, missing text files, and the required directory would be created.
@@ -142,19 +149,20 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 
 ![](images/Storage.png)
 
-1. After the command is extracted from the `Parser`, `Duke` would call the respective command class. In the case of
-   the add function, the `AddCommand` class would be called.
-2. In the `AddCommand` class, after the add command has been successfully performed, a method call to 
-   `appendToEntryListTextFile` would activate the `NormalListDataManager` class for which the added entry would be 
+1. After the command is extracted from the `Parser`, `Duke` would call the respective command class. In the case of the
+   add function, the `AddCommand` class would be called.
+2. In the `AddCommand` class, after the add command has been successfully performed, a method call to
+   `appendToEntryListTextFile` would activate the `NormalListDataManager` class for which the added entry would be
    appended to an external text file.
-   
+
 **The `Storage` component:**
-1. Can save all the `recurringEntryList`, `budgetList` and the `entryList` in a text file. It is also able to read the 
+
+1. Can save all the `recurringEntryList`, `budgetList` and the `entryList` in a text file. It is also able to read the
    data from the respective text files and read them back into the corresponding objects.
 2. Has four different classes. `DataManagerActions` comprises the common components used by the other two classes,
-   `BudgetListDataManager`, `RecurringListDataManager` and `NormalListDataManager`. All of these classes inherit from 
+   `BudgetListDataManager`, `RecurringListDataManager` and `NormalListDataManager`. All of these classes inherit from
    the `DataManagerActions` class.
-   
+
 ## <a name="implementation"></a>Implementation
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
@@ -208,9 +216,10 @@ A smart and simple way to keep track of your expenses
 * <a name="local-storage"></a>**LocalStorage** - Refers to user's hard disk storage
 
 ## <a name="manual-test"></a>Instructions for manual testing
+
 > We define an 'item' as an expense/income. </br>
 > Tags in square brackets are optional
->  e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
+> e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 
 ### <a name="Adding"></a>Adding an Item
 
@@ -224,8 +233,8 @@ A smart and simple way to keep track of your expenses
 
 - Add an Expense: `add a/[amount] n/[description] d/[date] c/[categoryNumber]`
 - Add an Income: `add income a/[amount] n/[description] d/[date] c/[categoryNumber]`
-- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers,
-  additional fields can be added for greater specificity. The fields can be specified in any order.
+- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers, additional fields can
+  be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
@@ -246,14 +255,15 @@ I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 add income a/15 d/2021-12-03 n/Selling Textbooks c/7
 I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 ```
+
 **Test case 2: Adding an item with some fields specified.**
 
 **Usage:**
 
 - Add an Expense: `add [include some fields of the expense you would like to add]`
 - Add an Income: `add income [include some fields of the income you would like to add]`
-- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers,
-  additional fields can be added for greater specificity. The fields can be specified in any order.
+- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers, additional fields can
+  be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
@@ -306,18 +316,18 @@ I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
 **Usage:**
 
 - Delete an Expense or Income: `delete [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - Dummy strings between `delete` and the first tag will not affect the program.
 - We can delete both the expense and income using the same command `delete`
 
 **Expected**
 
 - If there is one item that matches the query, it asks user if the user wants to delete the found item.
-  - When user inputs `y`, it would delete the item.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
-user wants to delete from a given list.
-  - When user inputs a valid index, it would delete the item.
+    - When user inputs `y`, it would delete the item.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
+  delete from a given list.
+    - When user inputs a valid index, it would delete the item.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -346,18 +356,17 @@ I have deleted: Expense  | OTHERS | 2021-11-07 | Massage | $50.00
 **Usage:**
 
 - Delete an Expense or Income: `delete [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - Dummy strings between `delete` and the first tag will not affect the program.
 
 **Expected**
 
 - If there is one item that matches the query, it asks user if the user wants to delete the found item.
     - When user inputs `n`, it exits the delete process.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
-  user wants to delete from a given list.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
+  delete from a given list.
     - When user inputs `cancel`, it exits the delete process.
-
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -369,7 +378,6 @@ Type "y" if yes. Type "n" if not.
 n
 Ok. I have cancelled the process.
 ```
-
 
 ```
 delete d/2021-11-04
@@ -388,8 +396,8 @@ Ok. I have cancelled the process.
 
 - Query tags such that there are no entries that match all the specified fields.
 - Format: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - Dummy strings between `delete` and the first tag will not affect the program.
 - For the delete function, we can delete both the expense and income using the same command `delete`
 
@@ -403,6 +411,7 @@ Ok. I have cancelled the process.
 delete n/dryer a/382 c/1
 Hmm.. That item is not in the list.
 ```
+
 ```
 delete n/yoghurt
 Hmm.. That item is not in the list.
@@ -413,8 +422,8 @@ Hmm.. That item is not in the list.
 **Prerequisites**
 
 - The list must have items that have already been added.
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 
 **Test case 1: Editing all fields.**
 
@@ -422,17 +431,18 @@ Hmm.. That item is not in the list.
 
 - Editing an Expense: `edit [include all fields of expense you would like to edit]`
 - Editing an Income: `edit [include all fields of income you would like to edit]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 
 **CAUTION**
+
 - Do not edit the same field multiple times in one command.
 
 **Expected**
 
 - The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected entry are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected entry are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE] Example of usage and expected output:**
 
@@ -446,6 +456,7 @@ What would you like to edit?
 a/8 n/Chicken Rice c/0 d/2000-09-22
 Got it! I will update the fields accordingly!
 ```
+
 **[INCOME] Example of usage and expected output:**
 
 ```
@@ -465,17 +476,18 @@ Got it! I will update the fields accordingly!
 
 - Editing an Expense: `edit [include all fields of expense you would like to edit]`
 - Editing an Income: `edit income [include all fields of income you would like to edit]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 
 **CAUTION**
+
 - Do not edit the same field multiple times in one command.
 
 **Expected**
 
 - The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected entry are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected entry are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE] Example of usage and expected output:**
 
@@ -489,6 +501,7 @@ What would you like to edit?
 a/8 c/0 
 Got it! I will update the fields accordingly!
 ```
+
 **[INCOME] Example of usage and expected output:**
 
 ```
@@ -501,7 +514,6 @@ What would you like to edit?
 n/Part-time job
 Got it! I will update the fields accordingly!
 ```
-
 
 ### <a name="Add-recurring-item"></a>Adding a Recurring Entry
 
@@ -527,6 +539,7 @@ Got it! I will update the fields accordingly!
 addR a/90 d/2021-12-03 n/phone bills c/3 i/yeAR e/2023-04-15
 I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | YEAR | 2023-04-15
 ```
+
 **[INCOME] Example of usage and expected output:**
 
 ```
@@ -540,8 +553,8 @@ I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | 2022
 
 - Adding a Recurring Expense:`addR n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY]`
 - Adding a Recurring Income:`addR income n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY]`
-- Some fields such as `n/NAME`, `a/AMOUNT` and `i/INTERVAL` must be specified. If the user prefers,
-  additional fields can be added for greater specificity. The fields can be specified in any order.
+- Some fields such as `n/NAME`, `a/AMOUNT` and `i/INTERVAL` must be specified. If the user prefers, additional fields
+  can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
@@ -550,7 +563,7 @@ I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | 2022
 - Optional fields that are missing would be set to the default pre-determined by the program.
 
 For these examples, assume today's date is `2021-11-07` </br>
-**[EXPENSE] Example of usage and expected output:** 
+**[EXPENSE] Example of usage and expected output:**
 
 ```
 addR a/5 n/phone bills i/MOnth
@@ -569,9 +582,11 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
 **Test case 1: Deleting an existing recurring entry with some fields specified.**
 
 **Usage:**
-- Delete a Recurring Expense or Recurring Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+
+- Delete a Recurring Expense or Recurring
+  Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - Dummy strings between `deleteR` and the first tag will not affect the program.
 - We can delete both the recurring expense and recurring income using the same command `deleteR`
 
@@ -579,8 +594,8 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
 
 - If there is one item that matches the query, it asks user if the user wants to delete the found item.
     - When user inputs `y`, it would delete the item.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
-  user wants to delete from a given list.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
+  delete from a given list.
     - When user inputs a valid index, it would delete the item.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
@@ -594,6 +609,7 @@ y
 I have deleted: Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
 
 ```
+
 ```
 deleteR d/2021-12-03
 Here is the list of items containing the keyword.
@@ -609,19 +625,20 @@ I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH 
 
 **Usage:**
 
-- Delete a Recurring Expense or Recurring Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- Delete a Recurring Expense or Recurring
+  Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - Dummy strings between `deleteR` and the first tag will not affect the program.
 - For the delete function, we can delete both the expense and income using the same command `deleteR`
 
 **Expected**
 
 - If there is one item that matches the query, it asks user if the user wants to delete the found item.
-  - When user inputs `n`, it exits the delete process.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
-  user wants to delete from a given list.
-  - When user inputs `cancel`, it exits the delete process.
+    - When user inputs `n`, it exits the delete process.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
+  delete from a given list.
+    - When user inputs `cancel`, it exits the delete process.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -633,6 +650,7 @@ Type "y" if yes. Type "n" if not.
 n
 Ok. I have cancelled the process.
 ```
+
 ```
 deleteR c/3
 Here is the list of items containing the keyword.
@@ -648,10 +666,10 @@ Ok. I have cancelled the process.
 
 **Usage:**
 
-- Query tags such that there are no entries that match all the specified fields. 
+- Query tags such that there are no entries that match all the specified fields.
 - Format: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - Dummy strings between `deleteR` and the first tag will not affect the program.
 - For the delete function, we can delete both the expense and income using the same command `deleteR`
 
@@ -665,6 +683,7 @@ Ok. I have cancelled the process.
 deleteR n/dryer a/382 c/1
 Hmm.. That item is not in the list.
 ```
+
 ```
 deleteR n/yoghurt i/month
 Hmm.. That item is not in the list.
@@ -675,23 +694,23 @@ Hmm.. That item is not in the list.
 **Prerequisites**
 
 - The list must have expenses that have already been added.
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 
 **Test case 1: Editing an existing recurring item with all fields specified.**
 
 **Usage:**
 
 - Editing a Recurring item: `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
 - The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected item are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected item are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -705,6 +724,7 @@ What would you like to edit?
 a/40
 Got it! I will update the fields accordingly!
 ```
+
 ```
 editR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-10-10
 Is this what you want to edit?
@@ -715,21 +735,22 @@ What would you like to edit?
 a/100
 Got it! I will update the fields accordingly!
 ```
+
 **Test case 2: Editing an existing recurring item with some fields specified.**
 
 **Usage:**
 
 - Editing a Recurring Expense:`editR [include some fields of the recurring expense you would like to edit]`
 - Editing a Recurring Income:`editR [include some fields of the recurring income you would like to edit]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater.
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater. specificity. The
+  fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
 - The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected items are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected items are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -823,20 +844,57 @@ Slow down, you've set aside $100.00 for FOOD, but you already spent $80.01.
 **Expected**
 
 - If the entire list with all the categories and spending limits for each category would be displayed.
+- Amount spent on `Expenses` ore `RecurringExpenses` in the category for current month will be reflected on the left
+  under "Amount"
+- Budget set aside for respective category will be shown to the right of the amount spent.
 
 **Example of usage and expected output:**
+
 ```
 budget
-Here is the budget for the month.
-      FOOD       | $5.00 / $100.0
- ENTERTAINMENT   | $0.00 / Not set
- TRANSPORTATION  | $0.00 / Not set
-   HOUSEHOLD     | $0.00 / Not set
-    APPAREL      | $0.00 / Not set
-     BEAUTY      | $0.00 / Not set
-      GIFT       | $0.00 / Not set
-     OTHERS      | $23.50 / Not set
+Here is the budget for NOVEMBER 2021
+   Category    | Amount | Budget  | Percentage
+     FOOD      |  $0.00 / $100.00 | 
+ENTERTAINMENT  |  $0.00 / Not set | 
+TRANSPORTATION |  $0.00 / Not set | 
+  HOUSEHOLD    |  $0.00 / Not set | 
+   APPAREL     |  $0.00 / Not set | 
+    BEAUTY     |  $0.00 / Not set | 
+     GIFT      |  $0.00 / Not set | 
+    OTHERS     |  $0.00 / Not set | 
 ```
+
+**Test case 2: Adding an expense and see whether it reflects in monthly budget.**
+
+**Usage:**
+
+- Since we set budget of "FOOD" in the previous step, let us add an 'Expense' related to "FOOD".
+
+Step 1: Add a "Food" `Expense`: `add n/NAME a/AMOUNT c/0`, c/0 correspond to "FOOD"
+Step 2: Use the `budget` command to see if spending is reflected in the monthly budget
+
+**Expected**
+
+- Amount spent of "Food" entry will be reflected in the monthly budget overview
+
+**Example of usage and expected output:**
+
+```
+add n/burger a/10 c/0
+I've added: Expense  | FOOD | 2021-11-07 | burger | $10.00
+budget
+Here is the budget for NOVEMBER 2021
+   Category    | Amount | Budget  | Percentage
+     FOOD      | $10.00 / $100.00 | 10.00%
+ENTERTAINMENT  |  $0.00 / Not set | 
+TRANSPORTATION |  $0.00 / Not set | 
+  HOUSEHOLD    |  $0.00 / Not set | 
+   APPAREL     |  $0.00 / Not set | 
+    BEAUTY     |  $0.00 / Not set | 
+     GIFT      |  $0.00 / Not set | 
+    OTHERS     |  $0.00 / Not set | 
+```
+
 
 ### <a name="View"></a>Viewing entries
 
@@ -868,13 +926,14 @@ Income  |    INVESTMENT    | 2021-10-27 |  Sales   | $32.00
                                         Net Total: | $12.80
 Here is the information about your recurring entries:
 ```
+
 **Test case 2: View with some fields specified.**
 
 **Usage:**
 
 - `view income/expense by [Sort Type] month [month] year [year] from [Start Date] [End Date] up/ascending`
-- Any number of fields can be specified. If the user prefers, additional modifiers can be added for greater
-  specificity. The fields can be specified in any order other than `income/expense`, which has to be right after `view`.
+- Any number of fields can be specified. If the user prefers, additional modifiers can be added for greater specificity.
+  The fields can be specified in any order other than `income/expense`, which has to be right after `view`.
 
 **Expected**
 
@@ -893,6 +952,7 @@ Income  |    INVESTMENT    | 2021-10-27 | Sales | $32.00
                                      Net Total: | $32.00
 Here is the information about your recurring entries:
 ```
+
 ```
 view month 4 year 2021
 --------------------------------------------------------------------
@@ -906,6 +966,7 @@ For the year 2021:
 For the month of APRIL:
 Here is the information about your recurring entries:
 ```
+
 ```
 view from 2021-03-25 2022-01-02 by amount ascending
 --------------------------------------------------------------------
