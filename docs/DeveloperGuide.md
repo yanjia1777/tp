@@ -744,154 +744,113 @@ Got it! I will update the fields accordingly!
 
 ### <a name="View"></a>Viewing entries
 
-**Prerequisites**
+### <a name="Delete-recurring-entry"></a>Deleting a Recurring Entry
 
-- The list must have been initialized.
+1. **Prerequisites**: Multiple entries in the entry list.
 
-**Test case 1: View with no fields specified.**
+2. **Test case**: `view`
 
-**Usage:**
+   Expected:
+    - A table of all entries will be printed out.
+    
+    ```
+    view
+    Here is the list of your entries:
+      Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+    Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+    Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |    FOOD    | 2020-01-06 | Burger  |-$4.20  |       |
+                                     Net Total: |-$17.20
+    Here is the list of all recurring entries, where some were added to the above list:
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    ```
 
-- `view`
-- Invalid inputs that are not any of the below modifiers will not affect the program.
-    - `by`
-    - `month`
-    - `year`
-    - `from`
-    - `up/ascending`
+3. **Test case**: `view income`
 
-**Expected**
+   Expected:
+    - A table of all income entries will be printed out.
 
-- Program would print a message to notify the user the viewing options that have been selected.
-- A table of entries that fulfill the viewing options will be printed out.
+    ```
+    view income
+    Here is the list of your entries:
+      Type  |  Category  |    Date    | Name  | Amount | Every |   Until
+    Income  | INVESTMENT | 2021-10-27 | Sales | $32.00 |       |
+                                   Net Total: | $32.00
+    Here is the list of applicable recurring entries, where some were added to the above list:
+    ```
 
-**Example of usage and expected output:**
+4. **Test case**: `view month 4 year 2021`
 
-```
-view
-Here is the list of your entries:
-  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
-Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
-Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |    FOOD    | 2020-01-06 | Burger  |-$4.20  |       |
-                                 Net Total: |-$17.20
-Here is the list of all recurring entries, where some were added to the above list:
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-```
+   Expected:
+    - Program would print a message to notify the user the viewing options that have been selected.
+    - A table of all entries in the year 2021 in APRIL will be printed out.
 
-**Test case 2: View with some fields specified.**
+    ```
+    view month 4 year 2021
+    For the year 2021:
+    For the month of APRIL:
+    Here is the list of your entries:
+      Type  | Category |    Date    |  Name   | Amount | Every |   Until
+    Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+                                   Net Total: |-$15.00
+    Here is the list of recurring entries added to the above list:
+    Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    ```
 
-**Usage:**
+5. **Test case**: `view from 2021-03-25 2021-11-02 by amount ascending`
 
-- `view income/expense by [Sort Type] month [month] year [year] from [Start Date] [End Date] up/ascending`
-- Any number of fields can be specified. If the user prefers, additional modifiers can be added for greater specificity.
-  The fields can be specified in any order other than `income/expense`, which has to be right after `view`.
+   Expected:
+    - Program would print a message to notify the user the viewing options that have been selected.
+    - A table of all entries from 2021-03-25 to 2021-11-02 will be printed out sorted by ascending amount order.
 
-**Expected**
-
-- Program would print a message to notify the user the viewing options that have been selected.
-- A table of entries that fulfill the viewing options will be printed out.
-- Optional fields that are missing would be set to the default pre-determined by the programme.
-
-**Example of usage and expected output:**
-
-```
-view income
-Here is the list of your entries:
-  Type  |  Category  |    Date    | Name  | Amount | Every |   Until
-Income  | INVESTMENT | 2021-10-27 | Sales | $32.00 |       |
-                               Net Total: | $32.00
-Here is the list of applicable recurring entries, where some were added to the above list:
-```
-
-```
-view month 4 year 2021
-For the year 2021:
-For the month of APRIL:
-Here is the list of your entries:
-  Type  | Category |    Date    |  Name   | Amount | Every |   Until
-Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-                               Net Total: |-$15.00
-Here is the list of recurring entries added to the above list:
-Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-```
-
-```
-view from 2021-03-25 2021-11-02 by amount ascending
-Here is the list of your entries:
-Since 2021-03-25 to 2021-11-02:
-  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
-                                 Net Total: |-$13.00
-Here is the list of recurring entries added to the above list:
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-```
+    ```
+    view from 2021-03-25 2021-11-02 by amount ascending
+    Here is the list of your entries:
+    Since 2021-03-25 to 2021-11-02:
+      Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+                                     Net Total: |-$13.00
+    Here is the list of recurring entries added to the above list:
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    ```
 
 ### <a name="delete"></a>Deleting all Entries
 
-**Prerequisites**
+1. **Prerequisites**: - The list must have items that have already been added.
 
-- The list must have items that have already been added.
+2. **Test case**: `deleteAll`
 
-**Test case 1: Deleting all existing entries.**
+   Expected:
+   - It will ask user if the user wants to delete all entries in the list.
+   - When user inputs `y`, it would delete all entries in the list.
+   - When user inputs `n`, it will abort the deletion.
 
-**Usage:**
+    ```
+    deleteAll
+    Are you sure you want to delete all entries?
+    Type "y" if yes. Type "n" if not.
+    y
+    All entries successfully deleted.
+    ```
+3. **Test case**: `deleteall r`
 
-- Delete all entries: `deleteAll`
-- Invalid inputs that are not `n` , `r`, `normal` or `recurring` will not affect the program.
-
-**Expected**
-
-- It will ask user if the user wants to delete all entries in the list.
+   Expected:
+    - It will ask user if the user wants to delete all entries in the list.
     - When user inputs `y`, it would delete all entries in the list.
     - When user inputs `n`, it will abort the deletion.
 
-** Example of usage and expected output:**
-
-```
-deleteAll
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-y
-All entries successfully deleted.
-```
-
-**Test case 2:  Only deleting all normal entries or all recurring entries.**
-
-**Usage:**
-
-- Delete all expenses or all incomes: `deleteAll [normal] [recurring]`
-- `normal` and `recurring` can be substituted with `n` and `r` respectively.
-- Invalid inputs that are not `n` , `r`, `normal` or `recurring` will not affect the program.
-
-**Expected**
-
-- It will ask user if the user wants to delete all entries in the particular list.
-    - When user inputs `y`, it would delete all entries in the list.
-    - When user inputs `n`, it will abort the deletion.
-
-**Example of usage and expected output:**
-
-```
-deleteAll normal
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-y
-All entries successfully deleted.
-```
-
-```
-deleteAll r
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-n
-Delete aborted.
-```
+    ```
+    deleteall r
+    Are you sure you want to delete all entries?
+    Type "y" if yes. Type "n" if not.
+    n
+    Delete aborted.
+    ```
 
 ### <a name="Set-budget"></a>Setting budget
 
