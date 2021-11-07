@@ -953,7 +953,7 @@ TRANSPORTATION |  $0.00 / Not set |
     OTHERS     | $80.01 / Not set | 
 ```
 
-2. Test to see whether budget only includes current month's expenditure
+2. Check if budget only includes current month's expenditure
     - Prerequisites:
         - List of entries must be empty. You may use the `deleteAll` function.
         - Budget of "FOOD" is set to $100. (see previous test case).
