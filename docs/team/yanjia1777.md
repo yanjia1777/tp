@@ -21,29 +21,36 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
 
 2. Implementation of view function
 
-- Implemented `view` command and all of its corresponding modifiers.
-- Implemented sorting in view
+- Implemented `view` command, allowing users to print out all their entries that are in the list.
+  - Implemented modifier to view a certain month.
+  - Implemented modifier to view a certain year.
+  - Implemented modifier to view from a specific date period.
+- Implemented sorting in view by name, amount, date and category.
+  - Implemented sorting in ascending/descending.
 
 3. Implemented deleteAll function
 
-- Implemented the `deleteAll` function and all of its corresponding modifiers
+- Implemented the `deleteAll` function.
+  - Implemented modifiers to just delete all normal entries or all recurring entries.
 
 4. Duke
 
-- Main class structure
+- Created the Main class structure.
 
 5. Ui
 
 - Printing of entries
-- Implemented variable indentation of entries whenever it is required to be printed in `Ui`
+- Implemented variable indentation of entries whenever it is required to be printed in `Ui`.
+  - Three different indentation methods; left indent, middle indent and right indent.
+  - Indentations automatically fits the size of the longest entry in the list.
 
 
 6. Parser
 
-- User friendliness improvements
-    - multiple alternative inputs accepted such as `deleteall` and `deleteAll`
-    - parsing of each modifier separately
-- Parsing input via arguments
+- User friendliness improvements.
+    - Multiple alternative inputs accepted such as `deleteall` and `deleteAll`.
+    - Setting defaults if additional fields are omitted.
+- Parsing input via arguments.
 
 ### Contributions to the UG
 
@@ -58,6 +65,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
     - Added brief explanation of the Ui component.
     - Added the sequence diagrams for the Ui component.
 - Added manual testing portion for view function.
+- Added manual testing potion for deleteAll function.
 
 ### Contributions to team-based tasks
 
@@ -73,3 +81,4 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
 
 ### Community
 Reported bugs during PE Dry Run.
+Reviewed other's PR with non-trivial comments.
