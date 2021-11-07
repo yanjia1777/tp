@@ -1,6 +1,6 @@
 package seedu.duke.utility;
 
-import seedu.duke.entries.Entry;
+import seedu.duke.model.entries.Entry;
 
 import java.time.LocalDate;
 import java.time.Month;
