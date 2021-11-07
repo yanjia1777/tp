@@ -48,8 +48,8 @@ public class Parser {
     public static final String STRING_DESCRIPTION = "Description of item\n";
     public static final String STRING_DATE = "Date of purchase or start date of the recurring period"
             + " (2000-01-01 to 2200-12-31)\n";
-    public static final String STRING_AMOUNT = "Amount (Valid non-negative number below 1 million, " +
-            "no negative signs)\n";
+    public static final String STRING_AMOUNT = "Amount (Valid non-negative number below 1 million, "
+            + "no negative signs)\n";
     public static final String STRING_CATNUM = "Category number (0 to 7)\n";
     public static final String STRING_INTERVAL = "Interval of item (month or year in case-insensitive format e.g.,"
             + " mOnTh, year, MONTH)\n";
