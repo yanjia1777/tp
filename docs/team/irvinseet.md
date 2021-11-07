@@ -14,7 +14,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 ### Enhancements Implemented
 
-1. Implemented `Expense` class
+1. Implemented `Expense` class, a base `Model` class used extensively in the app.
 
 2. Implementation of enumerations
 
@@ -55,6 +55,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 - Added diagram of System Architecture.
 - Added documentation for `Budget` Component.
+- Added implementation and design consideration of `BudgetManager`
 - Added some user stories.
 - Added manual testing for `set` function.
 - Added manual testing for `budget` function.
