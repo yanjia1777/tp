@@ -498,10 +498,8 @@ public class Ui {
 
     //@@author irvinseet
     public void printBudgetWarningMessage(ExpenseCategory category, double spending, double limit) {
-        if (spending > 0.8 * limit && limit != 0) {
-            System.out.printf("Slow down, you've set aside $%.2f for %s, "
-                    + "but you already spent $%.2f.\n", limit, category, spending);
-        }
+        System.out.printf("Slow down, you've set aside $%.2f for %s, "
+                + "but you already spent $%.2f.\n", limit, category, spending);
     }
 
     //@@author irvinseet
