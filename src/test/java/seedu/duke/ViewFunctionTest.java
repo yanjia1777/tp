@@ -1,24 +1,24 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.commands.ViewCommand;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Income;
-import seedu.duke.entries.IncomeCategory;
-import seedu.duke.entries.Interval;
-import seedu.duke.entries.RecurringExpense;
-import seedu.duke.entries.RecurringIncome;
-import seedu.duke.exception.MintException;
-import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.finances.RecurringFinanceManager;
-import seedu.duke.parser.ViewOptions;
+import seedu.duke.model.budget.BudgetManager;
+import seedu.duke.logic.commands.ViewCommand;
+import seedu.duke.model.entries.Expense;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.model.entries.Income;
+import seedu.duke.model.entries.IncomeCategory;
+import seedu.duke.model.entries.Interval;
+import seedu.duke.model.entries.RecurringExpense;
+import seedu.duke.model.entries.RecurringIncome;
+import seedu.duke.utility.MintException;
+import seedu.duke.model.financemanager.NormalFinanceManager;
+import seedu.duke.model.financemanager.RecurringFinanceManager;
+import seedu.duke.logic.parser.ViewOptions;
 import seedu.duke.storage.BudgetDataManager;
 import seedu.duke.storage.DataManagerActions;
 import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
-import seedu.duke.utility.Ui;
+import seedu.duke.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.duke.parser.ValidityChecker.dateFormatter;
+import static seedu.duke.logic.parser.ValidityChecker.dateFormatter;
 
 class ViewFunctionTest {
 
