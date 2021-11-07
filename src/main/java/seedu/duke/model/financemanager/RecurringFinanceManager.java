@@ -87,7 +87,6 @@ public class RecurringFinanceManager extends FinanceManager {
         String choice;
         int indexToBeChanged;
         String originalEntryStr;
-        Parser parser = new Parser();
         originalEntryStr = overWriteString((RecurringEntry) entry);
         if (recurringEntryList.contains(entry)) {
             indexToBeChanged = recurringEntryList.indexOf(entry);
@@ -97,6 +96,7 @@ public class RecurringFinanceManager extends FinanceManager {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
         ValidityChecker.checkTagsFormatSpacing(choice);
+        Parser parser = new Parser();
         parser.checkDuplicateTagsForRecurringEdit(choice);
         editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));

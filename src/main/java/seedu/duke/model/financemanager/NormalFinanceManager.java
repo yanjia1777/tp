@@ -78,7 +78,6 @@ public class NormalFinanceManager extends FinanceManager {
         String choice;
         int indexToBeChanged;
         String originalEntryStr;
-        Parser parser = new Parser();
         originalEntryStr = overWriteString(entry);
         if (entryList.contains(entry)) {
             indexToBeChanged = entryList.indexOf(entry);
@@ -88,6 +87,7 @@ public class NormalFinanceManager extends FinanceManager {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
         ValidityChecker.checkTagsFormatSpacing(choice);
+        Parser parser = new Parser();
         parser.checkDuplicateTagsForNormalEdit(choice);
         editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
