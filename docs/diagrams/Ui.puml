@@ -1,4 +1,8 @@
 @startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
 package "Main" <<Rectangle>> {
 
 }
@@ -7,20 +11,20 @@ package "Logic" <<Rectangle>> {
 }
 package "Storage" <<Rectangle>> {
 }
-package "Ui" <<Rectangle>> {
-class Ui
+package Ui <<Rectangle>> {
+class "  Ui  "
 
 }
 package "Utility" <<Rectangle>> {
 }
 package "User" <<Rectangle>> {
 }
-User .right> Ui
-Main -> "1" Ui
+User .right> "  Ui  "
+Main -> "1" "  Ui  "
 Main ..> Logic
-Logic ..> Ui
+Logic ..> "  Ui  "
 Logic ..> Utility
-Storage ..> Ui
+Storage ..> "  Ui  "
 
 hide members
 @enduml

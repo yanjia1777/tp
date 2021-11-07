@@ -19,12 +19,12 @@
 - [Non-Function Requirements](#nf-req)
 - [Glossary](#glossary)
 - [Instructions for manual testing](#manual-test)
-    - [Adding an Item](#Adding)
-    - [Deleting an Item](#delete)
-    - [Editing an Item](#edit)
-    - [Adding a Recurring Item](#Add-recurring-item)
-    - [Deleting a Recurring Item](#Delete-recurring-item)
-    - [Editing a recurring item](#Edit-recurring-item)
+    - [Adding an Entry](#Adding)
+    - [Deleting an Entry](#delete)
+    - [Editing an Entry](#edit)
+    - [Adding a Recurring Entry](#Add-recurring-entry)
+    - [Deleting a Recurring Entry](#Delete-recurring-entry)
+    - [Editing a recurring Entry](#Edit-recurring-entry)
     - [Adding Spending Limits](#set)
     - [Viewing Spending Limits](#View-spending-limits)
 
@@ -216,30 +216,29 @@ A smart and simple way to keep track of your expenses
 * <a name="local-storage"></a>**LocalStorage** - Refers to user's hard disk storage
 
 ## <a name="manual-test"></a>Instructions for manual testing
-
-> We define an 'item' as an expense/income. </br>
+> We define an `Entry` as an expense/income. </br>
 > Tags in square brackets are optional
 > e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 
-### <a name="Adding"></a>Adding an Item
+### <a name="Adding"></a>Adding an `Entry`
 
 **Prerequisites**
 
 - The list must have been initialized.
 
-**Test case 1: Adding an item with all fields specified.**
+**Test case 1: Adding an `Entry` with all fields specified.**
 
 **Usage:**
 
-- Add an Expense: `add a/[amount] n/[description] d/[date] c/[categoryNumber]`
-- Add an Income: `add income a/[amount] n/[description] d/[date] c/[categoryNumber]`
-- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers, additional fields can
-  be added for greater specificity. The fields can be specified in any order.
+- Add an Expense: `add a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Add an Income: `add income a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Some fields such as `n/DESCRIPTION` and `a/AMOUNT` must be specified. If the user prefers,
+  additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the `Entry` has been added.
+- An `Entry` would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **[EXPENSE] Example of usage and expected output:**
@@ -255,20 +254,19 @@ I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 add income a/15 d/2021-12-03 n/Selling Textbooks c/7
 I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 ```
-
-**Test case 2: Adding an item with some fields specified.**
+**Test case 2: Adding an `Entry` with some fields specified.**
 
 **Usage:**
 
-- Add an Expense: `add [include some fields of the expense you would like to add]`
-- Add an Income: `add income [include some fields of the income you would like to add]`
-- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers, additional fields can
-  be added for greater specificity. The fields can be specified in any order.
+- Add an Expense: `add a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Add an Income: `add income a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Some fields such as `n/DESCRIPTION` and ` a/AMOUNT` must be specified. If the user prefers,
+  additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the `Entry` has been added.
+- An `Entry` would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **[EXPENSE] Example of usage and expected output:**
@@ -280,38 +278,38 @@ I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 
 ```
 add a/5 n/Chicken Rice c/0
-I've added: Expense  | FOOD | 2021-10-27 | Chicken Rice | $5.00
+I've added: Expense  | FOOD | 2021-11-07 | Chicken Rice | $5.00
 ```
 
 ```
 add n/Cheese Burger a/23.5
-I've added: Expense  | OTHERS | 2021-10-27 | Cheese Burger | $23.50
+I've added: Expense  | OTHERS | 2021-11-07 | Cheese Burger | $23.50
 ```
 
 **[INCOME] Example of usage and expected output:**
 
 ```
 add income a/15 d/2021-12-03 n/Selling Textbooks
-I've added: Expense  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
+I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 ```
 
 ```
 add income a/5 n/Selling Textbooks c/0
-I've added: Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
+I've added: Income  | ALLOWANCE | 2021-11-07 | Selling Textbooks | $5.00
 ```
 
 ```
 add income n/Selling Textbooks a/23.5
-I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
+I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 ```
 
-### <a name="delete"></a>Deleting an Entry
+### <a name="delete"></a>Deleting an `Entry`
 
 **Prerequisites**
 
-- The list must have items that have already been added.
+- The list must have entries that have already been added.
 
-**Test case 1: Deleting an existing item with some fields specified.**
+**Test case 1: Deleting an existing `Entry` with some fields specified.**
 
 **Usage:**
 
@@ -323,11 +321,11 @@ I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
-    - When user inputs `y`, it would delete the item.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
-  delete from a given list.
-    - When user inputs a valid index, it would delete the item.
+- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
+  - When user inputs `y`, it would delete the `Entry`.
+- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
+user wants to delete from a given list.
+  - When user inputs a valid index, it would delete the `Entry`.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -351,7 +349,7 @@ Enter the index of the item you want to delete. To cancel, type "cancel"
 I have deleted: Expense  | OTHERS | 2021-11-07 | Massage | $50.00
 ```
 
-**Test case 2: Choosing not to delete an existing entry after entering the delete command.**
+**Test case 2: Choosing not to delete an existing `Entry` after entering the delete command.**
 
 **Usage:**
 
@@ -362,10 +360,10 @@ I have deleted: Expense  | OTHERS | 2021-11-07 | Massage | $50.00
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
+- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found `Entry`.
     - When user inputs `n`, it exits the delete process.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
-  delete from a given list.
+- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the
+  user wants to delete from a given list.
     - When user inputs `cancel`, it exits the delete process.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
@@ -390,7 +388,7 @@ cancel
 Ok. I have cancelled the process.
 ```
 
-**Test case 3: Trying to delete an entry that does not exist.**
+**Test case 3: Trying to delete an `Entry` that does not exist.**
 
 **Usage:**
 
@@ -403,7 +401,7 @@ Ok. I have cancelled the process.
 
 **Expected**
 
-- It tells that the entry is not in list.
+- It tells that the `Entry` is not in list.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -417,22 +415,21 @@ delete n/yoghurt
 Hmm.. That item is not in the list.
 ```
 
-### <a name="edit"></a>Editing an Item
+### <a name="edit"></a>Editing an `Entry`
 
 **Prerequisites**
 
-- The list must have items that have already been added.
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
+- The list must have entries that have already been added.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **Test case 1: Editing all fields.**
 
 **Usage:**
 
-- Editing an Expense: `edit [include all fields of expense you would like to edit]`
-- Editing an Income: `edit [include all fields of income you would like to edit]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
+- Editing an Expense or Income: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **CAUTION**
 
@@ -440,9 +437,9 @@ Hmm.. That item is not in the list.
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected entry are updated and there would be a message printed to notify the users that the
-  changes have been made.
+- The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
+- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that
+  the changes have been made.
 
 **[EXPENSE] Example of usage and expected output:**
 
@@ -452,7 +449,7 @@ Is this what you want to edit?
     Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/8 n/Chicken Rice c/0 d/2000-09-22
 Got it! I will update the fields accordingly!
 ```
@@ -462,10 +459,10 @@ Got it! I will update the fields accordingly!
 ```
 edit income a/20 d/2021-12-03 n/Full-time job c/1
 Is this what you want to edit?
-    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 n/part-time job
 Got it! I will update the fields accordingly!
 ```
@@ -474,10 +471,9 @@ Got it! I will update the fields accordingly!
 
 **Usage:**
 
-- Editing an Expense: `edit [include all fields of expense you would like to edit]`
-- Editing an Income: `edit income [include all fields of income you would like to edit]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
+- Editing an Expense or Income: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 
 **CAUTION**
 
@@ -485,20 +481,20 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected entry are updated and there would be a message printed to notify the users that the
-  changes have been made.
+- The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
+- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that
+  the changes have been made.
 
 **[EXPENSE] Example of usage and expected output:**
 
 ```
 edit a/20 d/2021-12-03 n/Movie c/2
 Is this what you want to edit?
-    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+    Expense  | TRANSPORTATION | 2021-12-03 | Movie | $20.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
-a/8 c/0 
+What would you like to edit? Type the tag and what you want to change e.g. a/10
+a/8 c/0
 Got it! I will update the fields accordingly!
 ```
 
@@ -507,21 +503,22 @@ Got it! I will update the fields accordingly!
 ```
 edit income n/Full-time job
 Is this what you want to edit?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00
+    Income  | OTHERS | 2021-11-07 | Full-time job | $100.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 n/Part-time job
 Got it! I will update the fields accordingly!
 ```
 
-### <a name="Add-recurring-item"></a>Adding a Recurring Entry
+
+### <a name="Add-recurring-entry"></a>Adding a Recurring `Entry`
 
 **Prerequisites**
 
 - The list must have been initialized.
 
-**Test case 1: Adding a recurring entry with all fields specified.**
+**Test case 1: Adding a recurring `Entry` with all fields specified.**
 
 **Usage:**
 
@@ -530,8 +527,8 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the `Entry` has been added.
+- An `Entry` would then be added to the list.
 
 **[EXPENSE] Example of usage and expected output:**
 
@@ -547,7 +544,7 @@ addR income a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2022-04-15
 I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | 2022-04-15
 ```
 
-**Test case 2: Adding a recurring entry with some fields specified.**
+**Test case 2: Adding a recurring `Entry` with some fields specified.**
 
 **Usage:**
 
@@ -558,8 +555,8 @@ I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | 2022
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the `Entry` has been added.
+- An `Entry` would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the program.
 
 For these examples, assume today's date is `2021-11-07` </br>
@@ -577,9 +574,9 @@ addR income a/90 n/Full-time job i/MONTH e/2023-12-23
 I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 2023-12-23
 ```
 
-### <a name="Delete-recurring-item"></a>Deleting a Recurring Entry
+### <a name="Delete-recurring-entry"></a>Deleting a Recurring `Entry`
 
-**Test case 1: Deleting an existing recurring entry with some fields specified.**
+**Test case 1: Deleting an existing recurring `Entry` with some fields specified.**
 
 **Usage:**
 
@@ -592,11 +589,11 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
-    - When user inputs `y`, it would delete the item.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
-  delete from a given list.
-    - When user inputs a valid index, it would delete the item.
+- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
+    - When user inputs `y`, it would delete the `Entry`.
+- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
+  user wants to delete from a given list.
+    - When user inputs a valid index, it would delete the `Entry`.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -621,7 +618,7 @@ Enter the index of the item you want to delete. To cancel, type "cancel"
 I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
 
-**Test case 2: Choosing not to delete an existing recurring entry after entering the deleteR command.**
+**Test case 2: Choosing not to delete an existing recurring `Entry` after entering the deleteR command.**
 
 **Usage:**
 
@@ -634,11 +631,11 @@ I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH 
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
-    - When user inputs `n`, it exits the delete process.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the user wants to
-  delete from a given list.
-    - When user inputs `cancel`, it exits the delete process.
+- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found `Entry`.
+  - When user inputs `n`, it exits the delete process.
+- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the
+  user wants to delete from a given list.
+  - When user inputs `cancel`, it exits the delete process.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -662,7 +659,7 @@ cancel
 Ok. I have cancelled the process.
 ```
 
-**Test case 3: Trying to delete a recurring entry that does not exist.**
+**Test case 3: Trying to delete a recurring `Entry` that does not exist.**
 
 **Usage:**
 
@@ -675,7 +672,7 @@ Ok. I have cancelled the process.
 
 **Expected**
 
-- It tells that the entry is not in list.
+- It tells that the `Entry` is not in list.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -689,7 +686,7 @@ deleteR n/yoghurt i/month
 Hmm.. That item is not in the list.
 ```
 
-### <a name="Edit-recurring-item"></a>Editing a recurring item
+### <a name="Edit-recurring-entry"></a>Editing a recurring `Entry`
 
 **Prerequisites**
 
@@ -697,20 +694,20 @@ Hmm.. That item is not in the list.
 - At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
   fields can be specified in any order.
 
-**Test case 1: Editing an existing recurring item with all fields specified.**
+**Test case 1: Editing an existing recurring `Entry` with all fields specified.**
 
 **Usage:**
 
-- Editing a Recurring item: `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
+- Editing a Recurring Expense or Recurring Income: `editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected item are updated and there would be a message printed to notify the users that the
-  changes have been made.
+- The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
+- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that
+  the changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -720,47 +717,48 @@ Is this what you want to edit?
     Expense | FOOD | 2021-12-03 | phone bills |-$15.00 | MONTH | 2023-10-10
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/40
 Got it! I will update the fields accordingly!
 ```
 
 ```
 editR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-10-10
-Is this what you want to edit?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-What would you like to edit?
+Here is the list of items containing the keyword.
+ Index |   Type  |   Category    |    Date    |     Name      | Amount | Every |   Until
+   1   | Expense | ENTERTAINMENT | 2021-12-03 | Full-time job |-$20.00 | MONTH | 2023-10-10
+   2   | Income  |     WAGES     | 2021-12-03 | Full-time job | $20.00 | MONTH | 2023-10-10
+Enter the index of the item you want to edit. To cancel, type "cancel"
+1
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/100
 Got it! I will update the fields accordingly!
 ```
 
-**Test case 2: Editing an existing recurring item with some fields specified.**
+**Test case 2: Editing an existing recurring `Entry` with some fields specified.**
 
 **Usage:**
 
-- Editing a Recurring Expense:`editR [include some fields of the recurring expense you would like to edit]`
-- Editing a Recurring Income:`editR [include some fields of the recurring income you would like to edit]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater. specificity. The
-  fields can be specified in any order.
+- Editing a Recurring Expense or Recurring Income:`editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater.
+  specificity. The fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected items are updated and there would be a message printed to notify the users that the
-  changes have been made.
+- The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
+- The input fields of the selected entries are updated and there would be a message printed to notify the users that
+  the changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
 editR a/40 n/Netflix Subscription c/1 
 Is this what you want to edit?
-    Expense | ENTERTAINMENT | 2021-10-27 | Netflix Subscription |-$40.00 | MONTH | Forever :D
+    Expense | ENTERTAINMENT | 2021-11-07 | Netflix Subscription |-$40.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/20
 Got it! I will update the fields accordingly!
 ```
@@ -768,15 +766,14 @@ Got it! I will update the fields accordingly!
 ```
 editR n/Full-time job
 Here is the list of items containing the keyword.
-    1  Income  | WAGES | 2021-12-03 | Full-time job | $90.00 | MONTH | Forever :D
-    2  Expense | ENTERTAINMENT | 2021-10-27 | Full-time job |-$90.00 | MONTH | Forever :D
-    3  Income  | WAGES | 2021-10-27 | Full-time job | $90.00 | MONTH | Forever :D
-    4  Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | Forever :D
-    5  Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-    6  Income  | WAGES | 2021-12-03 | Full-time job | $100.00 | MONTH | Forever :D
+ Index |   Type  |   Category    |    Date    |     Name      | Amount  | Every |   Until
+   1   | Income  |     WAGES     | 2021-12-03 | Full-time job | $20.00  | MONTH | 2022-04-15
+   2   | Income  |    OTHERS     | 2021-11-07 | Full-time job | $90.00  | MONTH | 2023-12-23
+   3   | Expense | ENTERTAINMENT | 2021-12-03 | Full-time job |-$100.00 | MONTH | 2023-10-10
+   4   | Income  |     WAGES     | 2021-12-03 | Full-time job | $20.00  | MONTH | 2023-10-10
 Enter the index of the item you want to edit. To cancel, type "cancel"
 1
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 n/part-time job
 Got it! I will update the fields accordingly!
 ```
@@ -907,6 +904,13 @@ TRANSPORTATION |  $0.00 / Not set |
 **Usage:**
 
 - `view`
+- Invalid inputs that are not any of the below modifiers will not affect the program.
+  - `by`
+  - `month`
+  - `year`
+  - `from`
+  - `up/ascending`
+
 
 **Expected**
 
@@ -917,14 +921,16 @@ TRANSPORTATION |  $0.00 / Not set |
 
 ```
 view
---------------------------------------------------------------------
 Here is the list of your entries:
-  Type  |     Category     |    Date    |   Name   | Amount  | Every |   Until
-Expense |      OTHERS      | 2021-04-20 | Textbook |-$15.00 
-Expense |      OTHERS      | 2020-01-06 |  Burger  |-$4.20  
-Income  |    INVESTMENT    | 2021-10-27 |  Sales   | $32.00 
-                                        Net Total: | $12.80
-Here is the information about your recurring entries:
+  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |    FOOD    | 2020-01-06 | Burger  |-$4.20  |       |
+                                 Net Total: |-$17.20
+Here is the list of all recurring entries, where some were added to the above list:
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 ```
 
 **Test case 2: View with some fields specified.**
@@ -945,35 +951,97 @@ Here is the information about your recurring entries:
 
 ```
 view income
---------------------------------------------------------------------
 Here is the list of your entries:
-  Type  |     Category     |    Date    | Name  | Amount  | Every |   Until
-Income  |    INVESTMENT    | 2021-10-27 | Sales | $32.00 
-                                     Net Total: | $32.00
-Here is the information about your recurring entries:
+  Type  |  Category  |    Date    | Name  | Amount | Every |   Until
+Income  | INVESTMENT | 2021-10-27 | Sales | $32.00 |       |
+                               Net Total: | $32.00
+Here is the list of applicable recurring entries, where some were added to the above list:
 ```
 
 ```
 view month 4 year 2021
---------------------------------------------------------------------
 For the year 2021:
 For the month of APRIL:
 Here is the list of your entries:
-  Type  |     Category     |    Date    |   Name   | Amount  | Every |   Until
-Expense |      OTHERS      | 2021-04-20 | Textbook |-$15.00 
-                                        Net Total: |-$15.00
-For the year 2021:
-For the month of APRIL:
-Here is the information about your recurring entries:
+  Type  | Category |    Date    |  Name   | Amount | Every |   Until
+Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+                               Net Total: |-$15.00
+Here is the list of recurring entries added to the above list:
+Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 ```
 
 ```
-view from 2021-03-25 2022-01-02 by amount ascending
---------------------------------------------------------------------
+view from 2021-03-25 2021-11-02 by amount ascending
 Here is the list of your entries:
-Since 2021-03-25 to 2022-01-02:
-  Type  |     Category     |    Date    |   Name   | Amount  | Every |   Until
-Expense |      OTHERS      | 2021-04-20 | Textbook |-$15.00 
-Income  |    INVESTMENT    | 2021-10-27 |  Sales   | $32.00 
-                                        Net Total: | $17.00
+Since 2021-03-25 to 2021-11-02:
+  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+                                 Net Total: |-$13.00
+Here is the list of recurring entries added to the above list:
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+```
+
+### <a name="delete"></a>Deleting all Entries
+
+**Prerequisites**
+
+- The list must have items that have already been added.
+
+**Test case 1: Deleting all existing entries.**
+
+**Usage:**
+
+- Delete all entries: `deleteAll`
+- Invalid inputs that are not `n` , `r`, `normal` or `recurring` will not affect the program.
+
+**Expected**
+
+- It will ask user if the user wants to delete all entries in the list.
+  - When user inputs `y`, it would delete all entries in the list.
+  - When user inputs `n`, it will abort the deletion.
+
+** Example of usage and expected output:**
+
+```
+deleteAll
+Are you sure you want to delete all entries?
+Type "y" if yes. Type "n" if not.
+y
+All entries successfully deleted.
+```
+
+**Test case 2:  Only deleting all normal entries or all recurring entries.**
+
+**Usage:**
+
+- Delete all expenses or all incomes: `deleteAll [normal] [recurring]`
+- `normal` and `recurring` can be substituted with `n` and `r` respectively.
+- Invalid inputs that are not `n` , `r`, `normal` or `recurring` will not affect the program.
+
+**Expected**
+
+- It will ask user if the user wants to delete all entries in the particular list.
+  - When user inputs `y`, it would delete all entries in the list.
+  - When user inputs `n`, it will abort the deletion.
+
+
+**Example of usage and expected output:**
+
+```
+deleteAll normal
+Are you sure you want to delete all entries?
+Type "y" if yes. Type "n" if not.
+y
+All entries successfully deleted.
+```
+
+```
+deleteAll r
+Are you sure you want to delete all entries?
+Type "y" if yes. Type "n" if not.
+n
+Delete aborted.
 ```
