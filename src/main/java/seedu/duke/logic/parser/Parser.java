@@ -298,6 +298,25 @@ public class Parser {
         }
     }
 
+    //@@author Yitching
+    public void checkDuplicateTagsForNormalEdit(String userInput) throws MintException {
+        isRecurring = false;
+        try {
+            ValidityChecker.identifyDuplicateTags(this, userInput);
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
+        }
+    }
+
+    public void checkDuplicateTagsForRecurringEdit(String userInput) throws MintException {
+        isRecurring = true;
+        try {
+            ValidityChecker.identifyDuplicateTags(this, userInput);
+        } catch (MintException e) {
+            throw new MintException(e.getMessage());
+        }
+    }
+
     //@@author yanjia1777
     public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);

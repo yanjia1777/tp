@@ -87,6 +87,8 @@ public class NormalFinanceManager extends FinanceManager {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
         ValidityChecker.checkTagsFormatSpacing(choice);
+        Parser parser = new Parser();
+        parser.checkDuplicateTagsForNormalEdit(choice);
         editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt();
