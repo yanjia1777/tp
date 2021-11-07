@@ -165,7 +165,51 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 
 ## <a name="implementation"></a>Implementation
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+### BudgetManager
+
+Below is a sequence diagram of how the `BudgetManager` interacts with other classes to check if user exceeds their
+budget.
+
+![](images/BudgetWarning.png)
+Note: `XYZBudget` (`XYZ` is a placeholder for the specified budget e.g., `FoodBudget`)
+
+When `checkExceedBudget(entry,...)` is called,
+
+1) `BudgetManager` will fetch both `Entries` and `RecurringEntries` from their respective `FinanceManager`.
+    - For readability purposes, we will denote all entries as `entries` and group both `NormalFinanceManager`
+      and `RecurringFinanceManager` as `FinanceManager`.
+
+2) `BudgetManager` will then retrieve the specific `XYZBudget` corresponding to `entry`'s category.
+
+- `BudgetManager` now have reference to the specific `XYZBudget`.
+
+3) Using the same instance of `XYZBudget`, `BudgetManager` will
+    1) get monthly spending corresponding to the `entry`'s category.
+    2) get limit/budget set for `XYZBudget`, which is of `entry`'s category.
+
+4) Lastly, `BudgetManager` will check if user has exceeded their threshold for that specific category and prints a
+   warning message to the user if they have done so.
+
+#### Design
+
+Aspect: how to check whether user exceeded budget
+
+- Option 1 (current choice): iterate through the list of entries each time `checkExceedBudget(entry,...)` is called
+  and return the `amountSpent` and `spendingLimit` corresponding to the current `Entry`'s category. Only happens when
+  user `add` entries.
+    - Pros: Easy to implement. Less coupling of components.
+    - Cons: More LOC and slower runtime.
+
+- Option 2 2: instantly updates the budget's monthly spending when user `add`, `delete` or `edit` (recurring)
+  entries.
+    - Pros: Faster runtime and more responsive warning messages (such as when user `edit` the `Entry` to an overspent
+      budget.)
+    - Cons: massive coupling of components.
+
+We picked option 1 as it was in line with our goal of making our code OOP with separate components. Initially, we
+pursued option 2 and found it hard to add functionalities and do unit testing due to the coupling available. Option 2
+also meant to make the live updating work, we had to deal with 7 commands: `add`, `addR`, `delete`, `deleteR`
+, `deleteAll`, `edit` and `editR`. Hence, we went with Option 1 due to scalability.
 
 {NOT DONE}
 
@@ -216,6 +260,7 @@ A smart and simple way to keep track of your expenses
 * <a name="local-storage"></a>**LocalStorage** - Refers to user's hard disk storage
 
 ## <a name="manual-test"></a>Instructions for manual testing
+
 > We define an `Entry` as an expense/income. </br>
 > Tags in square brackets are optional
 > e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
@@ -232,8 +277,8 @@ A smart and simple way to keep track of your expenses
 
 - Add an Expense: `add a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
 - Add an Income: `add income a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
-- Some fields such as `n/DESCRIPTION` and `a/AMOUNT` must be specified. If the user prefers,
-  additional fields can be added for greater specificity. The fields can be specified in any order.
+- Some fields such as `n/DESCRIPTION` and `a/AMOUNT` must be specified. If the user prefers, additional fields can be
+  added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
@@ -254,14 +299,15 @@ I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 add income a/15 d/2021-12-03 n/Selling Textbooks c/7
 I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 ```
+
 **Test case 2: Adding an `Entry` with some fields specified.**
 
 **Usage:**
 
 - Add an Expense: `add a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
 - Add an Income: `add income a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
-- Some fields such as `n/DESCRIPTION` and ` a/AMOUNT` must be specified. If the user prefers,
-  additional fields can be added for greater specificity. The fields can be specified in any order.
+- Some fields such as `n/DESCRIPTION` and ` a/AMOUNT` must be specified. If the user prefers, additional fields can be
+  added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
@@ -322,10 +368,10 @@ I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 **Expected**
 
 - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
-  - When user inputs `y`, it would delete the `Entry`.
-- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
-user wants to delete from a given list.
-  - When user inputs a valid index, it would delete the `Entry`.
+    - When user inputs `y`, it would delete the `Entry`.
+- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the user wants
+  to delete from a given list.
+    - When user inputs a valid index, it would delete the `Entry`.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -362,8 +408,8 @@ I have deleted: Expense  | OTHERS | 2021-11-07 | Massage | $50.00
 
 - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found `Entry`.
     - When user inputs `n`, it exits the delete process.
-- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the
-  user wants to delete from a given list.
+- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the user
+  wants to delete from a given list.
     - When user inputs `cancel`, it exits the delete process.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
@@ -420,16 +466,16 @@ Hmm.. That item is not in the list.
 **Prerequisites**
 
 - The list must have entries that have already been added.
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 
 **Test case 1: Editing all fields.**
 
 **Usage:**
 
 - Editing an Expense or Income: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 
 **CAUTION**
 
@@ -438,8 +484,8 @@ Hmm.. That item is not in the list.
 **Expected**
 
 - The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
-- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE] Example of usage and expected output:**
 
@@ -472,8 +518,8 @@ Got it! I will update the fields accordingly!
 **Usage:**
 
 - Editing an Expense or Income: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 
 **CAUTION**
 
@@ -482,8 +528,8 @@ Got it! I will update the fields accordingly!
 **Expected**
 
 - The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
-- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE] Example of usage and expected output:**
 
@@ -510,7 +556,6 @@ What would you like to edit? Type the tag and what you want to change e.g. a/10
 n/Part-time job
 Got it! I will update the fields accordingly!
 ```
-
 
 ### <a name="Add-recurring-entry"></a>Adding a Recurring `Entry`
 
@@ -591,8 +636,8 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
 
 - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
     - When user inputs `y`, it would delete the `Entry`.
-- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
-  user wants to delete from a given list.
+- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the user wants
+  to delete from a given list.
     - When user inputs a valid index, it would delete the `Entry`.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
@@ -632,10 +677,10 @@ I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH 
 **Expected**
 
 - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found `Entry`.
-  - When user inputs `n`, it exits the delete process.
-- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the
-  user wants to delete from a given list.
-  - When user inputs `cancel`, it exits the delete process.
+    - When user inputs `n`, it exits the delete process.
+- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the user
+  wants to delete from a given list.
+    - When user inputs `cancel`, it exits the delete process.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -698,16 +743,17 @@ Hmm.. That item is not in the list.
 
 **Usage:**
 
-- Editing a Recurring Expense or Recurring Income: `editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater
-  specificity. The fields can be specified in any order.
+- Editing a Recurring Expense or Recurring
+  Income: `editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
+  fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
 - The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
-- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected `Entry` are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -739,16 +785,17 @@ Got it! I will update the fields accordingly!
 
 **Usage:**
 
-- Editing a Recurring Expense or Recurring Income:`editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater.
-  specificity. The fields can be specified in any order.
+- Editing a Recurring Expense or Recurring
+  Income:`editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater. specificity. The
+  fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
 
 **Expected**
 
 - The user would be prompted to choose their `Entry` to edit if there are multiple entries or confirm their edit.
-- The input fields of the selected entries are updated and there would be a message printed to notify the users that
-  the changes have been made.
+- The input fields of the selected entries are updated and there would be a message printed to notify the users that the
+  changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -809,7 +856,7 @@ Budget for FOOD set to $100.00
 - Add spending limit to desired category: `set c/CATEGORY_NUMBER a/AMOUNT`
 - All fields must be specified
 - Now, add an `Expense` or `RecurringExpense` which will bring your monthly spending in its respective category to 80%
-of the budget set aside.
+  of the budget set aside.
 
 **Expected**
 
@@ -892,7 +939,6 @@ TRANSPORTATION |  $0.00 / Not set |
     OTHERS     |  $0.00 / Not set | 
 ```
 
-
 ### <a name="View"></a>Viewing entries
 
 **Prerequisites**
@@ -905,12 +951,11 @@ TRANSPORTATION |  $0.00 / Not set |
 
 - `view`
 - Invalid inputs that are not any of the below modifiers will not affect the program.
-  - `by`
-  - `month`
-  - `year`
-  - `from`
-  - `up/ascending`
-
+    - `by`
+    - `month`
+    - `year`
+    - `from`
+    - `up/ascending`
 
 **Expected**
 
@@ -1000,8 +1045,8 @@ Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 **Expected**
 
 - It will ask user if the user wants to delete all entries in the list.
-  - When user inputs `y`, it would delete all entries in the list.
-  - When user inputs `n`, it will abort the deletion.
+    - When user inputs `y`, it would delete all entries in the list.
+    - When user inputs `n`, it will abort the deletion.
 
 ** Example of usage and expected output:**
 
@@ -1024,9 +1069,8 @@ All entries successfully deleted.
 **Expected**
 
 - It will ask user if the user wants to delete all entries in the particular list.
-  - When user inputs `y`, it would delete all entries in the list.
-  - When user inputs `n`, it will abort the deletion.
-
+    - When user inputs `y`, it would delete all entries in the list.
+    - When user inputs `n`, it will abort the deletion.
 
 **Example of usage and expected output:**
 

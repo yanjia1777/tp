@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 //@@author irvinseet
 public class BudgetManager {
+    public static final int SPENDING_NOT_SET = 0;
+    public static final double THRESHOLD_PERCENTAGE = 0.8;
     ArrayList<Budget> budgetList;
     FoodBudget foodBudget = new FoodBudget(0);
     EntertainmentBudget entertainmentBudget = new EntertainmentBudget(0);
@@ -78,7 +80,13 @@ public class BudgetManager {
             Budget budget = budgetManager.getMonthlyBudgetFromCategory(categoryOfCurrentEntry);
             double amountSpent = budget.getMonthlySpending(entries, recurringEntries);
             double spendingLimit = budget.getLimit();
-            ui.printBudgetWarningMessage(categoryOfCurrentEntry, amountSpent, spendingLimit);
+            if (isExceedBudget(amountSpent, spendingLimit)) {
+                ui.printBudgetWarningMessage(categoryOfCurrentEntry, amountSpent, spendingLimit);
+            }
         }
+    }
+
+    public boolean isExceedBudget(double amountSpent, double spendingLimit) {
+        return amountSpent > THRESHOLD_PERCENTAGE * spendingLimit && spendingLimit != SPENDING_NOT_SET;
     }
 }
