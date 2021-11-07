@@ -1,7 +1,7 @@
 package seedu.duke.utility;
 
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.RecurringEntry;
+import seedu.duke.model.entries.Entry;
+import seedu.duke.model.entries.RecurringEntry;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
