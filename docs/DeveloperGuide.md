@@ -33,12 +33,11 @@
 ## <a name="acknowledgements"></a>Acknowledgements
 
 - Inspiration for App Idea and OOP Structure:
-- Inspiration for User Guide and Developer Guide: AddressBook (Level 2) <br />
-  https://se-education.org/addressbook-level3/DeveloperGuide.html <br/>
-  https://se-education.org/addressbook-level3/UserGuide.html
+- Inspiration for User Guide and Developer Guide: AddressBook (Level 2) 
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the
-original source as well}
+  https://se-education.org/addressbook-level3/DeveloperGuide.html 
+
+  https://se-education.org/addressbook-level3/UserGuide.html
 
 ## <a name="design"></a>Design
 
@@ -81,16 +80,16 @@ Here is a (partial) class diagram of the `Logic` component.
 How the `Logic` component works:
 
 1. When `Logic` is called upon to parse a command, it uses `Parser` class to parse the user command.
-2. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its </br >
+2. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its 
    subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying through `ValidityChecker` class.
 3. `Parser` encapsulates the details of the query as an `Entry` object from `Model`.
 4. `Parser` returns a `Command` object, which is executed by `Main`.
-5. The `Command` can communicate with the `Model` when it is executed </br>
+5. The `Command` can communicate with the `Model` when it is executed 
 6. The `Command` saves the resulting data by using the `Storage`.
 7. The result is printed to the user by the `Ui`.
    (e.g. to add a recurring entry)
 
-The Seuquence Diagram below illustrates the interactions within the `Logic` component for the </br>
+The Seuquence Diagram below illustrates the interactions within the `Logic` component for the 
 `parseCommand("add n/movie a/12")` API call.
 
 ![](images/LogicSequenceDiagram.png)
@@ -264,7 +263,8 @@ A smart and simple way to keep track of your expenses
 
 ## <a name="manual-test"></a>Instructions for manual testing
 
-> We define an `Entry` as an expense/income. </br>
+> We define an `Entry` as an expense/income. 
+
 > Tags in square brackets are optional
 > e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 
@@ -565,7 +565,8 @@ I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | 2022
 - An `Entry` would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the program.
 
-For these examples, assume today's date is `2021-11-07` </br>
+For these examples, assume today's date is `2021-11-07` 
+
 **[EXPENSE] Example of usage and expected output:**
 
 ```
