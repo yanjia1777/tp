@@ -148,7 +148,7 @@ public class Parser {
     }
 
     private void setAmountViaAmountStr(String amountStr) {
-        this.amount = Double.parseDouble(amountStr);
+        this.amount = amountTo2SF(amountStr);
     }
 
     private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
@@ -209,7 +209,7 @@ public class Parser {
             this.amountStr = description;
             break;
         case "c":
-            this.catNumStr = description.split(" ",2) [0];
+            this.catNumStr = description.split(" ", 2)[0];
             this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
@@ -253,6 +253,15 @@ public class Parser {
     }
 
     //@@author irvinseet
+    /**
+     * Parse user input based on tags specified and set fields accordingly to the tags.
+     * Tags are of format " x/", where x can be any alphabet and there should be a space in front of it.
+     * Pattern matching is done by regular expressions to ensure flexibility of the program.
+     *
+     * @param userInput The String that we want to parse
+     * @throws MintException when user did not follow the correct tagging format, did not provide mandatory tags
+     *                       or included invalid tags.
+     */
     private void parseInputByTagsLoop(String userInput) throws MintException {
         String tagType;
         String description;
@@ -313,18 +322,22 @@ public class Parser {
 
 
     //@@author irvinseet
+    private double amountTo2SF(String amountStr) {
+        return Math.round(Double.parseDouble(amountStr) * 100.0) / 100.0;
+    }
+    
     private Expense createExpenseObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
-        amount = Double.parseDouble(amountStr);
+        amount = amountTo2SF(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         expenseCategory = ExpenseCategory.values()[catNum];
         return new Expense(name, date, amount, expenseCategory);
     }
-
+    
     //@@author yanjia1777
     private Income createIncomeObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
-        amount = Double.parseDouble(amountStr);
+        amount = amountTo2SF(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         incomeCategory = IncomeCategory.values()[catNum];
         return new Income(name, date, amount, incomeCategory);
@@ -334,7 +347,7 @@ public class Parser {
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
-            amount = Double.parseDouble(amountStr);
+            amount = amountTo2SF(amountStr);
             int catNum = Integer.parseInt(catNumStr);
             expenseCategory = ExpenseCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
@@ -348,7 +361,7 @@ public class Parser {
     private RecurringIncome createRecurringIncomeObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
-            amount = Double.parseDouble(amountStr);
+            amount = amountTo2SF(amountStr);
             int catNum = Integer.parseInt(catNumStr);
             incomeCategory = IncomeCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
@@ -382,7 +395,7 @@ public class Parser {
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
+            Entry entry = createIncomeObject();
             assert Objects.requireNonNull(validTags).size() >= 1 : "There should be at least one valid tag";
             return new DeleteCommand(validTags, entry);
         } catch (MintException e) {
@@ -411,7 +424,7 @@ public class Parser {
             initIntervalStr();
             initEndDateStr();
             ArrayList<String> validTags = parseInputByTags(userInput);
-            Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
+            Entry entry = createIncomeObject();
             assert validTags.size() >= 1 : "There should be at least one valid tag";
             return new EditCommand(validTags, entry);
         } catch (MintException e) {
@@ -446,8 +459,7 @@ public class Parser {
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            RecurringEntry entry = (type == Type.Income)
-                    ? createRecurringIncomeObject() : createRecurringExpenseObject();
+            RecurringEntry entry = createRecurringIncomeObject();
             return new DeleteRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
@@ -464,8 +476,7 @@ public class Parser {
             isRecurring = true;
             ArrayList<String> validTags = parseInputByTags(userInput);
             assert validTags.size() >= 1 : "There should be at least one valid tag";
-            RecurringEntry entry = (type == Type.Income)
-                    ? createRecurringIncomeObject() : createRecurringExpenseObject();
+            RecurringEntry entry = createRecurringIncomeObject();
             return new EditRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
@@ -489,8 +500,7 @@ public class Parser {
      * Prepares the user input by splitting it into the respective fields to overwrite existing recurring expense.
      *
      * @param entry Entry type variable, casted to RecurringEntry type, that contains all the attributes of the
-     *     recurring expense.
-     *
+     *              recurring expense.
      * @return returns a HashMap containing all the different attributes in String.
      */
     public HashMap<String, String> prepareRecurringEntryToAmendForEdit(Entry entry) {
@@ -501,7 +511,7 @@ public class Parser {
         LocalDate endDate = recurringEntry.getEndDate();
         Interval interval = recurringEntry.getInterval();
         String dateStr = date.toString();
-        String amountStr = Double.toString(amount);
+        String amountStr = String.valueOf(amountTo2SF(Double.toString(amount)));
         String endDateStr = endDate.toString();
         String intervalStr = interval.toString();
         String catNumStr = String.valueOf(entry.getCategory().ordinal());
@@ -518,7 +528,6 @@ public class Parser {
      * Prepares the user input by splitting it into the respective fields to overwrite existing expense.
      *
      * @param entry Entry type variable that contains all the attributes of the expense.
-     *
      * @return returns a HashMap containing all the different attributes in String.
      */
     public HashMap<String, String> prepareEntryToAmendForEdit(Entry entry) {
@@ -527,7 +536,7 @@ public class Parser {
         double amount = entry.getAmount();
         String catNumStr = String.valueOf(entry.getCategory().ordinal());
         String dateStr = date.toString();
-        String amountStr = Double.toString(amount);
+        String amountStr = String.valueOf(amountTo2SF(Double.toString(amount)));
         String[] entryFieldsToAdd = {name, dateStr, amountStr, catNumStr};
         String[] entryFieldKeys = {"name", "date", "amount", "catNum"};
         HashMap<String, String> entryFields = new HashMap<>();
@@ -541,12 +550,11 @@ public class Parser {
      * Conversion of attributes from string to their respective data types.
      *
      * @param entryFields HashMap containing all the String type attributes.
-     * @param type refers to whether it is an expense or an income.
-     *
+     * @param type        refers to whether it is an expense or an income.
      * @return returns the new RecurringEntry to overwrite the old RecurringEntry.
      */
     public RecurringEntry convertRecurringEntryToRespectiveTypes(HashMap<String, String> entryFields,
-                                                                   Type type) throws MintException {
+            Type type) throws MintException {
         String name = entryFields.get("name");
         String dateStr = entryFields.get("date");
         String amountStr = entryFields.get("amount");
@@ -555,7 +563,7 @@ public class Parser {
         String endDateStr = entryFields.get("endDate");
 
         LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        double amount = Double.parseDouble(amountStr);
+        double amount = amountTo2SF(amountStr);
         LocalDate endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
         int pos = Integer.parseInt(catNumStr);
         ValidityChecker.checkValidCatNum(pos);
@@ -572,19 +580,18 @@ public class Parser {
      * Conversion of attributes from string to their respective data types.
      *
      * @param entryFields HashMap containing all the String type attributes.
-     * @param type refers to whether it is an expense or an income.
-     *
+     * @param type        refers to whether it is an expense or an income.
      * @return returns the new Entry to overwrite the old Entry.
      */
     public Entry convertEntryToRespectiveTypes(HashMap<String, String> entryFields,
-                                                                 Type type) throws MintException {
+            Type type) throws MintException {
         String name = entryFields.get("name");
         String dateStr = entryFields.get("date");
         String amountStr = entryFields.get("amount");
         String catNumStr = entryFields.get("catNum");
 
         LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        double amount = Double.parseDouble(amountStr);
+        double amount = amountTo2SF(amountStr);
         int pos = Integer.parseInt(catNumStr);
         ValidityChecker.checkValidCatNum(pos);
         Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
@@ -613,6 +620,7 @@ public class Parser {
         }
     }
 
+    //@@author pos0414
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
         switch (command) {

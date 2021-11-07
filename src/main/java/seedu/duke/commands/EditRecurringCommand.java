@@ -14,6 +14,7 @@ import seedu.duke.utility.Ui;
 
 import java.util.ArrayList;
 
+//@@author pos0414
 public class EditRecurringCommand extends Command {
     private Entry query;
     ArrayList<String> tags;
