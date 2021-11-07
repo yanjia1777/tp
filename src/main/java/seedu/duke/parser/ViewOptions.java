@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+//@@author yanjia1777
 public class ViewOptions {
     public String sortType;
     public boolean onlyExpense = false;
@@ -18,9 +18,9 @@ public class ViewOptions {
     public LocalDate endDate = null;
     public Month month;
     public int year = 0;
-    public boolean isViewFrom;
     public boolean isViewAll = true;
     public boolean isAscending = false;
+    public boolean isViewExpenseOrIncome = false;
 
     public ViewOptions(String[] argumentArrayInput) throws MintException {
         ArrayList<String>  argumentArray = new ArrayList<>(Arrays.asList(argumentArrayInput));
@@ -37,12 +37,14 @@ public class ViewOptions {
     public void expenseCheck(ArrayList<String> argumentArray) {
         if (argumentArray.contains("expense")) {
             onlyExpense = true;
+            isViewExpenseOrIncome = true;
         }
     }
 
     public void incomeCheck(ArrayList<String> argumentArray) {
         if (argumentArray.contains("income")) {
             onlyIncome = true;
+            isViewExpenseOrIncome = true;
         }
     }
 

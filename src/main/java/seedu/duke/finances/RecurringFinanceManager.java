@@ -37,6 +37,7 @@ public class RecurringFinanceManager extends FinanceManager {
         recurringEntryList.add(entry);
     }
 
+    //@@author pos0414
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags,
                                                   Entry query) throws MintException {
@@ -76,11 +77,20 @@ public class RecurringFinanceManager extends FinanceManager {
         recurringEntryList.remove(entry);
     }
 
+    //@@author Yitching
+    /**
+     * Calls all the methods required for edit.
+     *
+     * @param entry Entry type variable, casted to RecurringEntry type, that contains all the attributes of the entry.
+     *
+     * @return returns an ArrayList containing the string to be overwritten in the external text file and the new
+     *     string to overwrite the old string in the external text file.
+     */
     @Override
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged = 0;
-        String originalEntryStr = "";
+        int indexToBeChanged;
+        String originalEntryStr;
         originalEntryStr = overWriteString((RecurringEntry) entry);
         if (recurringEntryList.contains(entry)) {
             indexToBeChanged = recurringEntryList.indexOf(entry);
@@ -96,6 +106,14 @@ public class RecurringFinanceManager extends FinanceManager {
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
     }
 
+    /**
+     * Splits user input into the respective fields via tags.
+     *
+     * @param index the index of the recurringEntryList to be edited.
+     * @param choice user input containing the fields user wishes to edit.
+     * @param entry Entry type variable, casted to RecurringEntry, that contains all the attributes of the \
+     *     recurring expense.
+     */
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
             RecurringEntry recurringEntry = (RecurringEntry) entry;
@@ -140,6 +158,13 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks validity of the new entry to be used to overwrite the old entry.
+     *
+     * @param index the index of the recurringEntryList to be edited.
+     * @param entryFields HashMap containing all the String type attributes.
+     * @param type refers to whether it is an expense or an income.
+     */
     private void setEditedEntry(int index, HashMap<String, String> entryFields, Type type) throws MintException {
         Parser parser = new Parser();
         String name = entryFields.get("name");
@@ -151,17 +176,9 @@ public class RecurringFinanceManager extends FinanceManager {
 
         ValidityChecker.checkValidityOfFieldsInNormalListTxt("expense", name, dateStr, amountStr, catNumStr);
         ValidityChecker.checkValidityOfFieldsInRecurringListTxt(intervalStr, endDateStr);
+        ValidityChecker.checkInvalidEndDate(endDateStr, dateStr);
         RecurringEntry recurringEntry = parser.convertRecurringEntryToRespectiveTypes(entryFields, type);
         recurringEntryList.set(index, recurringEntry);
-    }
-
-    public String getStringToUpdate(int index) {
-        Entry entry = recurringEntryList.get(index);
-        RecurringEntry recurringEntry = (RecurringEntry) entry;
-        return recurringEntry.getType() + "|" + recurringEntry.getCategory().ordinal()
-                + "|" + recurringEntry.getDate() + "|" + recurringEntry.getName()
-                + "|" + recurringEntry.getAmount() + "|" + recurringEntry.getInterval()
-                + "|" + recurringEntry.getEndDate();
     }
 
     public static String overWriteString(RecurringEntry entry) {
@@ -183,6 +200,7 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    //@@author pos0414
     public LocalDate createLocalDateWithYearMonth(YearMonth yearMonth, int day) {
         assert day >= 1 && day <= 31 : "Day should be within 1 - 31";
         String dateToString = yearMonth.toString() + "-" + day;
@@ -400,6 +418,7 @@ public class RecurringFinanceManager extends FinanceManager {
         appendEntryBetweenTwoDates(entryList, dummyList, earliestDate, LocalDate.now());
     }
 
+    //@@author yanjia1777
     public void deleteAll() {
         recurringEntryList.clear();
     }

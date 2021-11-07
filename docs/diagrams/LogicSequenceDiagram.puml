@@ -8,14 +8,13 @@ end box
 box Logic
 Participant ":Parser" as Parser
 Participant ":ValidityChecker" as Valid
-Participant ":DeleteCommand" as DeleteCommand
+Participant "cmd:AddCommand" as DeleteCommand
 end box
-
-
 
 box Model
 Participant ":NormalFinanceManager" as NormalFinanceManager
-Participant "query:Entry" as Entry
+Participant "e:Entry" as Entry
+Participant ":BudgetManager" as Budget
 end box
 
 box Storage
@@ -23,18 +22,19 @@ Participant ":NormalListDataManager" as NormalListDataManager
 end box
 
 activate Duke
-Duke -> Parser : parseCommand(userInput)
+Duke -> Parser : parseCommand("add n/movie a/12")
 activate Parser
 
-Parser -> Parser : parseInputByTags(userInput)
+Parser -> Parser : prepareAddEntry("add n/movie a/12")
 activate Parser
-Parser -> Valid : checkExistenceAndValidityOfTags(parser, userInput)
+Parser -> Parser : parseInputByTags("add n/movie a/12")
+activate Parser
+Parser -> Valid : checkExistenceAndValidityOfTags(parser, "add n/movie a/12")
 activate Valid
 Valid --> Parser : validTags
 deactivate Valid
 
-
-Parser --> Parser : validTags
+Parser --> Parser
 deactivate Parser
 Parser -> Parser : createIncomeObject()
 
@@ -43,35 +43,46 @@ create Entry
 
 Parser -> Entry : create
 activate Entry
-Entry --> Parser : query
+Entry --> Parser : e
 deactivate Entry
-Parser --> Parser : query
+Parser --> Parser : e
 deactivate Parser
 
 create DeleteCommand
-Parser -> DeleteCommand : DeleteCommand(validTags, query)
+Parser -> DeleteCommand : AddCommand(e)
 activate DeleteCommand
-DeleteCommand --> Parser
+DeleteCommand --> Parser : cmd
 deactivate DeleteCommand
-Parser --> Duke
+Parser --> Parser : cmd
+deactivate Parser
+Parser --> Duke : cmd
+
 deactivate Parser
 
 Duke -> DeleteCommand : execute(...)
+
 activate DeleteCommand
-DeleteCommand -> NormalFinanceManager : deleteByKeyword(validTags, query)
+DeleteCommand -> NormalFinanceManager : addEntry(e)
 activate NormalFinanceManager
-NormalFinanceManager --> DeleteCommand : deletedEntry
-DeleteCommand -> NormalListDataManager : deleteLineInTextFile(stringToDelete)
+NormalFinanceManager --> DeleteCommand
+deactivate NormalFinanceManager
+
+DeleteCommand -> NormalListDataManager : appendToEntryListTextFile(e)
 activate NormalListDataManager
 NormalListDataManager --> DeleteCommand
 deactivate NormalListDataManager
 
-deactivate NormalFinanceManager
 
-DeleteCommand -> Ui : printEntryDeleted(deletedEntry)
+DeleteCommand -> Ui : printEntryAdded(e)
+
 activate Ui
 Ui --> DeleteCommand
 deactivate Ui
+DeleteCommand -> Budget : checkExceedBudget(e, ...)
+activate Budget
+Budget --> DeleteCommand
+deactivate Budget
+
 DeleteCommand --> Duke
 deactivate DeleteCommand
 destroy DeleteCommand
