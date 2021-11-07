@@ -2,7 +2,6 @@ package seedu.duke.commands;
 
 import seedu.duke.budget.BudgetManager;
 
-import seedu.duke.exception.MintException;
 import seedu.duke.finances.NormalFinanceManager;
 import seedu.duke.finances.RecurringFinanceManager;
 import seedu.duke.storage.BudgetDataManager;
@@ -11,6 +10,7 @@ import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Ui;
 
+//@@author yanjia1777
 public class DeleteAllCommand extends Command {
     private final boolean isNormal;
     private final boolean isRecurring;

@@ -18,6 +18,7 @@ import seedu.duke.entries.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//@@author yanjia1777
 public class ViewCommand extends Command {
     private final ViewOptions viewOptions;
 
@@ -51,7 +52,10 @@ public class ViewCommand extends Command {
 
         double total = calculateTotal(outputArray);
         int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
-        ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1], indentations[2], isViewAll,
+        int catIndentation = indentations[0];
+        int nameIndentation = indentations[1];
+        int amountIndentation = indentations[2];
+        ui.printViewRecurring(recurringOutputArray, catIndentation, nameIndentation, amountIndentation, isViewAll,
                 isViewExpenseOrIncome);
     }
 

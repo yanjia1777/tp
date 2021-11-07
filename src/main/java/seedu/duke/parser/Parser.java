@@ -35,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,9 +56,6 @@ public class Parser {
     public static final String STRING_END_DATE = "End date of the recurring period (should be after the start date"
             + " but within valid range)\n";
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
-    public static final int CAT_NUM_FOOD_INT = 0;
-    public static final int CAT_NUM_OTHERS_INT = 7;
-    public static final String CAT_NUM_FOOD = "0";
     public static final String CAT_NUM_OTHERS = "7";
     public static final String ADD_ENTRY = "add";
     public static final String ADD_RECURRING = "addR";
@@ -73,7 +71,6 @@ public class Parser {
     public static final String DELETEALL2 = "deleteall";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
-    private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
     public static final String SPACE = "\\s+";
     protected String command;
     protected String name;
@@ -93,7 +90,6 @@ public class Parser {
     protected boolean isRecurring = false;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
@@ -129,7 +125,6 @@ public class Parser {
         return tagType;
     }
 
-    //@@author irvinseet
     public String getDescription(String userInput, int currentTagIndex) {
         String description;
         description = userInput.substring(currentTagIndex + 3).trim();
@@ -199,17 +194,6 @@ public class Parser {
             return IncomeCategory.OTHERS;
         default:
             throw new MintException(ERROR_INVALID_CATNUM);
-        }
-    }
-
-    private Interval setIntervalViaString(String interval) throws MintException {
-        switch (interval) {
-        case "MONTHLY":
-            return Interval.MONTH;
-        case "YEARLY":
-            return Interval.YEAR;
-        default:
-            throw new MintException("Invalid interval");
         }
     }
 
@@ -305,6 +289,7 @@ public class Parser {
         }
     }
 
+    //@@author yanjia1777
     public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);
         if (argumentsArray.length > 1 && Objects.equals(argumentsArray[1], "income")) {
@@ -336,6 +321,7 @@ public class Parser {
         return new Expense(name, date, amount, expenseCategory);
     }
 
+    //@@author yanjia1777
     private Income createIncomeObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
@@ -344,6 +330,7 @@ public class Parser {
         return new Income(name, date, amount, incomeCategory);
     }
 
+    //@@author pos0414
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
@@ -403,16 +390,19 @@ public class Parser {
         }
     }
 
+    //@@author yanjia1777
     private Command prepareView(String userInput) {
         try {
             parseInputByArguments(userInput);
             ViewOptions viewOptions = new ViewOptions(argumentsArray);
+            logger.log(Level.INFO, "User execute view");
             return new ViewCommand(viewOptions);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
         }
     }
 
+    //@@author pos0414
     private Command prepareEditEntry(String userInput) {
         try {
             initDateStr();
@@ -482,6 +472,7 @@ public class Parser {
         }
     }
 
+    //@@author irvinseet
     private Command prepareSetBudget(String userInput) {
         try {
             parseInputByTags(userInput);
@@ -604,7 +595,7 @@ public class Parser {
         }
     }
 
-    //@@author
+    //@@author yanjia1777
     public Command prepareDeleteAll(String userInput) {
         try {
             parseInputByArguments(userInput);
@@ -621,7 +612,6 @@ public class Parser {
             return new InvalidCommand(e.getMessage());
         }
     }
-
 
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
