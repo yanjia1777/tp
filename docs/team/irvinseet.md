@@ -16,7 +16,6 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 1. Implemented base classes
 
-- Implemented `Entry` class, which is then inherited by other classes in later part of the code.
 - Implemented `Expense` class.
 
 2. Implementation of enumerations
@@ -34,7 +33,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 - `help` message
 - `Budget`-related messages
-- check for unsafe user input using regex.
+- Handled unsafe user input using regex.
 
 5. Parser
 
@@ -44,7 +43,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
     - `dateFormatter` which takes
       in [10 different formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
     - `parseInputByTags` which parse user inputs by tags regardless of order using regex.
-- setting categories of entries
+- Setting categories of entries
 
 ### Contributions to the UG
 
@@ -67,10 +66,10 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
     - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application
 
-
 ### Review/mentoring contributions
 
 - Reviewed PRs and ensured overall code quality/formatting was up to standard
 
 ### Community
+
 Reported bugs during PE Dry Run.
