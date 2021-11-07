@@ -25,6 +25,8 @@
     - [Adding a Recurring Entry](#Add-recurring-entry)
     - [Deleting a Recurring Entry](#Delete-recurring-entry)
     - [Editing a recurring Entry](#Edit-recurring-entry)
+    - [Viewing entries](#View)
+    - [Deleting all entries](#deleteAll)
     - [Setting Budget](#Set-budget)
     - [Viewing Budget](#View-budget)
 
@@ -744,8 +746,6 @@ Got it! I will update the fields accordingly!
 
 ### <a name="View"></a>Viewing entries
 
-### <a name="Delete-recurring-entry"></a>Deleting a Recurring Entry
-
 1. **Prerequisites**: Multiple entries in the entry list.
 
 2. **Test case**: `view`
@@ -819,7 +819,7 @@ Got it! I will update the fields accordingly!
     Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
     ```
 
-### <a name="delete"></a>Deleting all Entries
+### <a name="deleteAll"></a>Deleting all Entries
 
 1. **Prerequisites**: - The list must have items that have already been added.
 
@@ -837,11 +837,27 @@ Got it! I will update the fields accordingly!
     y
     All entries successfully deleted.
     ```
-3. **Test case**: `deleteall r`
+
+3. **Test case**: `deleteAll normal`
 
    Expected:
     - It will ask user if the user wants to delete all entries in the list.
-    - When user inputs `y`, it would delete all entries in the list.
+    - When user inputs `y`, it would delete all normal entries in the list.
+    - When user inputs `n`, it will abort the deletion.
+
+    ```
+    deleteAll normal
+    Are you sure you want to delete all entries?
+    Type "y" if yes. Type "n" if not.
+    y
+    All entries successfully deleted.
+    ```
+
+4. **Test case**: `deleteall r`
+
+   Expected:
+    - It will ask user if the user wants to delete all entries in the list.
+    - When user inputs `y`, it would delete all recurring entries in the list.
     - When user inputs `n`, it will abort the deletion.
 
     ```
