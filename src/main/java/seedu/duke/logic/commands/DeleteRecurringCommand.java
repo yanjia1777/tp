@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class DeleteRecurringCommand extends Command {
     private final Entry query;
     private final ArrayList<String> tags;
+    final boolean isDelete = true;
 
     public DeleteRecurringCommand(ArrayList<String> tags, Entry query) {
         this.query = query;
@@ -31,7 +32,7 @@ public class DeleteRecurringCommand extends Command {
             RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             DeleteCommand dummyDeleteCommand = new DeleteCommand(tags, query);
-            Entry entryToDelete = dummyDeleteCommand.determineEntryToDelete(recurringFinanceManager, ui);
+            Entry entryToDelete = dummyDeleteCommand.determineEntryToProcess(recurringFinanceManager, ui, isDelete);
             if (entryToDelete != null) {
                 recurringFinanceManager.deleteEntry(entryToDelete);
                 String stringToDelete = RecurringFinanceManager.overWriteString((RecurringEntry) entryToDelete);
