@@ -53,12 +53,10 @@ Apart from `Main`, Mint comprises six main components, namely:
 
 - `Ui`: The UI of the App 
 - `Logic`: Make sense of user input and execute command
-- `Model`: Holds the data of the App
-- `DataManager`: Reads from and writes to [`LocalStorage`](#local-storage).
+- `Model`: Holds the data of the App and performs actions on the data.
+- `Storage`: Reads from and writes to [`LocalStorage`](#local-storage).
 
-The components interact with each other, as shown in the sequence diagram below.
-
-![](images/ArchitectureSequenceDiagram.png)
+The four components interact with each other.
 
 ### <a name="text-ui"></a>Ui Component
 
@@ -73,7 +71,7 @@ The Ui component,
 * outputs entries requested by the user.
 
 ### <a name="logic"></a>Logic Component
-Here's a (partial) class diagram of the `Logic` component.
+Here is a (partial) class diagram of the `Logic` component.
 
 ![](images/Logic.png)
 
@@ -88,24 +86,30 @@ subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying th
 7. The result is printed to the user by the `Ui`.
    (e.g. to add a recurring entry)
 
-The Seuquence Diagram below illustrates the interactions within the `Logic` component for the</br>
-`parseCommand("delete a/12")` API call.
+The Seuquence Diagram below illustrates the interactions within the `Logic` component for the </br>
+`parseCommand("add n/movie a/12")` API call.
+
 ![](images/LogicSequenceDiagram.png)
+
 ### <a name="model"></a>Model Component
-The `Model` package consists of two components: `Finance` and `Budget`.
-##### <a name="finance"></a>Finance Component
+The `Model` package consists of three sub-components: `FinanceManager`, `Entry`, and `Budget`.
+##### <a name="finance"></a>Finance and Entry Components
 ![](images/Finance.png)
 
-The `Finance` component,
-- stores all the entry data i.e., all `Entry` objects (which are contained in `FinancialManager` object).
-  - `NormalFinanceManager` object stores all the `Income` and `Expense` objects
-  - `RecurringFinanceManager` stores all the `RecurringIncome` and `RecurringExpense` objects
+The `FinanceManager` component,
+- stores all the entry data i.e., all `Entry` objects.
+    - `NormalFinanceManager` object stores all the `Income` and `Expense` objects
+    - `RecurringFinanceManager` stores all the `RecurringIncome` and `RecurringExpense` objects
 - performs action on the list of `Entry` objects (e.g., add, delete, etc.)
-- depends on Ui component as some action needs confirmation from the user (e.g. For delete, </br>
-if there are multiple entries that match the tags the user specified, the user needs to choose which one to delete.)
+- depends on the `Ui` component as some action needs confirmation from the user (e.g. For edit, 
+  after the user chooses the entry to edit, the user needs to provide the fields to be edited.)
+
+The `Entry` component,
+- stores information about the individual `Entry` object.
+- does not depend on any of the other three components.
+
 #### <a name="budget"></a>Budget Component
 
-#### <a name="budget"></a>Budget
 ![](images/Budget.png)
 
 The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of the seven `ExpenseCategory`'s.
@@ -116,9 +120,7 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
     - when user want to set budget for a specific category
     - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or 
       `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
-
-### <a name="contact-list"></a>ExpenseList
-
+    
 ### <a name="storage"></a>Storage Component
 
 **How the `Storage` component works:**
@@ -180,11 +182,14 @@ A smart and simple way to keep track of your expenses
 |v1.0|user|delete expense|remove entries that I no longer need|
 |v1.0|user|view past expenses|keep track of my spending|
 |v1.0|user|edit past expenses|avoid deleting the entire expense if I only made a small error while keying it in|
+|v2.0|user|categorize expenses|see which areas I am overspending|
 |v2.0|user|set spending limit|cut down on unnecessary spending|
-|v2.0|user|sort spending by amount|see which expenditure is taking up the budget|
-|v2.0|user|find a particular Expense by name|locate an Expense without having to go through the entire list|
-|v2.0|user|add recurring expenses|keep track of them and take them into account every month|
 |v2.0|user|add income|better estimate my spending capacity|
+|v2.0|user|sort spending by amount|see which expenditure is taking up the budget|
+|v2.0|user|find a particular entry by name, amount or any detail|locate an Entry without having to go through the entire list|
+|v2.0|user|add subscriptions/incomes|keep track of them and automatically take them into account every month or year|
+|v2.0|user|view total money I have |see if I have saved enough for the future.|
+|v2.0|user|filter entries by date or type|see cash flow in a particular period|
 
 ## <a name="nf-req"></a>Non-Functional Requirements
 
@@ -201,7 +206,9 @@ A smart and simple way to keep track of your expenses
 * <a name="local-storage"></a>**LocalStorage** - Refers to user's hard disk storage
 
 ## <a name="manual-test"></a>Instructions for manual testing
-> We define an 'item' as an expense/income
+> We define an 'item' as an expense/income. </br>
+> Tags in square brackets are optional
+>  e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 
 ### <a name="Adding"></a>Adding an Item
 
@@ -280,28 +287,31 @@ add income n/Selling Textbooks a/23.5
 I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
 ```
 
-### <a name="delete"></a>Deleting an Item
+### <a name="delete"></a>Deleting an Entry
 
 **Prerequisites**
 
 - The list must have items that have already been added.
 
-**Test case 1: Deleting an existing item with some fields specified. Only one item
-exists that matches all the fields specified.**
+**Test case 1: Deleting an existing item with some fields specified.**
 
 **Usage:**
 
-- Delete an Expense: `delete [include some fields of the expense you would like to delete]`
-- Delete an Income: `delete income [include some fields of the income you would like to delete]`
+- Delete an Expense or Income: `delete [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
+- Dummy strings between `delete` and the first tag will not affect the program.
+- We can delete both the expense and income using the same command `delete`
 
 **Expected**
 
-- It asks user if the user wants to delete the found item.
-- When user inputs y, it would delete the item.
+- If there is one item that matches the query, it asks user if the user wants to delete the found item.
+  - When user inputs `y`, it would delete the item.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the
+user wants to delete from a given list.
+  - When user inputs a valid index, it would delete the item.
 
-**[EXPENSE] Example of usage and expected output:**
+**[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
 delete n/Movie c/1
@@ -311,52 +321,84 @@ Type "y" if yes. Type "n" if not.
 y
 I have deleted: Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
 ```
-**[INCOME] Example of usage and expected output:**
 
 ```
-delete income n/Selling Textbooks c/0
-Is this what you want to delete?
-    Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
+delete hahaha n/mas
+Here is the list of items containing the keyword.
+ Index |   Type  | Category |    Date    |        Name         | Amount  | Every |   Until
+   1   | Income  |   GIFT   | 2021-12-25 | Christmas allowance | $200.00 |       |
+   2   | Expense |  OTHERS  | 2021-11-07 |       Massage       |-$50.00  |       |
+Enter the index of the item you want to delete. To cancel, type "cancel"
+2
+I have deleted: Expense  | OTHERS | 2021-11-07 | Massage | $50.00
 ```
 
-**Test case 2: Choosing not to delete an existing item after entering the delete command.**
+**Test case 2: Choosing not to delete an existing entry after entering the delete command.**
 
 **Usage:**
 
-- Delete an Expense: `delete [include some fields of the expense you would like to delete]`
-- Delete an Income: `delete income [include some fields of the income you would like to delete]`
+- Delete an Expense or Income: `delete [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
+- Dummy strings between `delete` and the first tag will not affect the program.
 
 **Expected**
 
-- It asks user if the user wants to delete the found item.
-- When user inputs n, it exits the delete process.
+- If there is one item that matches the query, it asks user if the user wants to delete the found item.
+    - When user inputs `n`, it exits the delete process.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the
+  user wants to delete from a given list.
+    - When user inputs `cancel`, it exits the delete process.
 
-**[EXPENSE] Example of usage and expected output:**
+
+**[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
-delete a/90 d/2021-12-03 n/phone bills c/3 
+delete n/taxi d/2021-11-04
 Is this what you want to delete?
-    Expense |    HOUSEHOLD     | 2021-12-03 |   phone bills    |-$90.00
-Type "y" if yes. Type "n" if not.
-n
-Ok. I have cancelled the process.
-```
-**[INCOME] Example of usage and expected output:**
-
-```
-delete income a/90 d/2021-12-03 n/collecting phone bills c/3 
-Is this what you want to delete?
-    Income  | INTEREST | 2021-12-03 | collecting phone bills | $90.00
+    Expense  | TRANSPORTATION | 2021-11-04 | Taxi | $6.99
 Type "y" if yes. Type "n" if not.
 n
 Ok. I have cancelled the process.
 ```
 
+
+```
+delete d/2021-11-04
+Here is the list of items containing the keyword.
+ Index |   Type  |  Category  |    Date    |  Name  | Amount | Every |   Until
+   1   | Income  | INVESTMENT | 2021-11-04 |  Taxi  | $6.99  |       |
+   2   | Expense |    FOOD    | 2021-11-04 | Burger |-$7.12  |       |
+Enter the index of the item you want to delete. To cancel, type "cancel"
+cancel
+Ok. I have cancelled the process.
+```
+
+**Test case 3: Trying to delete an entry that does not exist.**
+
+**Usage:**
+
+- Query tags such that there are no entries that match all the specified fields.
+- Format: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
+- Dummy strings between `delete` and the first tag will not affect the program.
+- For the delete function, we can delete both the expense and income using the same command `delete`
+
+**Expected**
+
+- It tells that the entry is not in list.
+
+**[EXPENSE and INCOME] Example of usage and expected output:**
+
+```
+delete n/dryer a/382 c/1
+Hmm.. That item is not in the list.
+```
+```
+delete n/yoghurt
+Hmm.. That item is not in the list.
+```
 
 ### <a name="edit"></a>Editing an Item
 
@@ -453,228 +495,171 @@ Got it! I will update the fields accordingly!
 ```
 
 
-### <a name="Add-recurring-item"></a>Adding a Recurring Item
+### <a name="Add-recurring-item"></a>Adding a Recurring Entry
 
 **Prerequisites**
 
 - The list must have been initialized.
 
-**Test case 1: Adding an existing recurring item with all fields specified.**
+**Test case 1: Adding a recurring entry with all fields specified.**
 
 **Usage:**
 
-- Adding a Recurring Expense:`addR a/[amount] n/[description] c/[category] i/[interval] e/[end date] d/[start date]`
-- Adding a Recurring Income:`addR income a/[amount] n/[description] c/[category] i/[interval] e/[end date]
-  d/[start date]`
-- Some fields such as `n/[description]`, `a/[amount]` and `i/[interval]` must be specified. If the user prefers,
+- Adding a Recurring Expense:`addR n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY]`
+- Adding a Recurring Income:`addR income n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY]`
+
+**Expected**
+
+- Program would print a message to notify the user that the item has been added.
+- An item would then be added to the list.
+
+**[EXPENSE] Example of usage and expected output:**
+
+```
+addR a/90 d/2021-12-03 n/phone bills c/3 i/yeAR e/2023-04-15
+I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | YEAR | 2023-04-15
+```
+**[INCOME] Example of usage and expected output:**
+
+```
+addR income a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2022-04-15
+I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | 2022-04-15
+```
+
+**Test case 2: Adding a recurring entry with some fields specified.**
+
+**Usage:**
+
+- Adding a Recurring Expense:`addR n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY]`
+- Adding a Recurring Income:`addR income n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY]`
+- Some fields such as `n/NAME`, `a/AMOUNT` and `i/INTERVAL` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
 
 - Program would print a message to notify the user that the item has been added.
 - An item would then be added to the list.
-- Optional fields that are missing would be set to the default pre-determined by the programme.
+- Optional fields that are missing would be set to the default pre-determined by the program.
 
-**[EXPENSE] Example of usage and expected output:**
+For these examples, assume today's date is `2021-11-07` </br>
+**[EXPENSE] Example of usage and expected output:** 
 
 ```
-addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH e/2023-04-15
-I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
+addR a/5 n/phone bills i/MOnth
+I've added: Expense | OTHERS | 2021-11-07 | phone bills |-$5.00 | MONTH | Forever :D
 ```
+
 **[INCOME] Example of usage and expected output:**
 
 ```
-addR income a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-04-15
-I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+addR income a/90 n/Full-time job i/MONTH e/2023-12-23
+I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 2023-12-23
 ```
 
-**Test case 2: Adding an existing recurring item with some fields specified.**
+### <a name="Delete-recurring-item"></a>Deleting a Recurring Entry
+
+**Test case 1: Deleting an existing recurring entry with some fields specified.**
 
 **Usage:**
-
-- Adding a Recurring Expense:`addR [include some fields of the expense you would like to add as recurring expense]`
-- Adding a Recurring Income:`addR income [include some fields of the expense you would like to add as
-  recurring expense]`
-- Some fields such as `n/[description]`, `a/[amount]` and `i/[interval]` must be specified. If the user prefers,
-  additional fields can be added for greater specificity. The fields can be specified in any order.
-
-**Expected**
-
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
-- Optional fields that are missing would be set to the default pre-determined by the programme.
-
-**[EXPENSE] Example of usage and expected output:**
-
-```
-addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
-I've added: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
-```
-```
-addR a/5 n/phone bills c/3 i/MONTH
-I've added: Expense | HOUSEHOLD | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
-```
-```
-addR a/5 n/phone bills d/2021-10-10 i/MONTH
-I've added: Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
-```
-**[INCOME] Example of usage and expected output:**
-
-```
-addR income a/90 d/2021-12-03 n/Full-time job c/1 i/MONTH
-I've added: Income  | WAGES | 2021-12-03 | Full-time job | $90.00 | MONTH | Forever :D
-```
-```
-addR income a/90 n/Full-time job c/1 i/MONTH
-I've added: Income  | WAGES | 2021-10-27 | Full-time job | $90.00 | MONTH | Forever :D
-```
-```
-addR income a/90 n/Full-time job d/2021-10-10 i/MONTH
-I've added: Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | Forever :D
-```
-
-### <a name="Delete-recurring-item"></a>Deleting a Recurring Item
-
-**Prerequisites**
-
-- The list must have been initialized.
-
-**Test case 1: Deleting an existing recurring item with all fields specified.**
-
-**Usage:**
-
-- Deleting a Recurring Expense: `deleteR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval]
-  e/[endDate]`
-- Deleting a Recurring Income: `deleteR income a/[amount] n/[description] d/[date] c/[categoryNumber] i/[interval]
-  e/[endDate]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater.
+- Delete a Recurring Expense or Recurring Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
-- For the delete function, we can delete both the expense and income using the same command `deleteR`
+- Dummy strings between `deleteR` and the first tag will not affect the program.
+- We can delete both the recurring expense and recurring income using the same command `deleteR`
 
 **Expected**
 
-- It asks user if the user wants to delete the found item.
-- When user inputs y, it deletes the item.
+- If there is one item that matches the query, it asks user if the user wants to delete the found item.
+    - When user inputs `y`, it would delete the item.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the
+  user wants to delete from a given list.
+    - When user inputs a valid index, it would delete the item.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
-deleteR a/90 d/2021-12-03 n/phone bills c/4 i/MONTH e/2023-04-15
+deleteR n/netflix a/26
 Is this what you want to delete?
-    Expense | APPAREL | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
+    Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
 Type "y" if yes. Type "n" if not.
 y
-I have deleted: Expense | APPAREL | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
+I have deleted: Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
+
 ```
 ```
-deleteR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-04-15
-Is this what you want to delete?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
+deleteR d/2021-12-03
+Here is the list of items containing the keyword.
+ Index |   Type  |   Category    |    Date    |    Name     | Amount | Every |   Until
+   1   | Expense |   HOUSEHOLD   | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
+   2   | Expense | ENTERTAINMENT | 2021-12-03 |   Netflix   |-$26.00 | MONTH | 2023-04-15
+Enter the index of the item you want to delete. To cancel, type "cancel"
+1
+I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
 ```
 
-**Test case 2: Deleting an existing recurring item with some fields specified.**
+**Test case 2: Choosing not to delete an existing recurring entry after entering the deleteR command.**
 
 **Usage:**
 
-- Deleting a Recurring Expense: `deleteR [include some fields of the recurring expense you would like to delete]`
-- Deleting a Recurring Income: `deleteR income [include some fields of the recurring Income you would like to delete]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater.
+- Delete a Recurring Expense or Recurring Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
+- Dummy strings between `deleteR` and the first tag will not affect the program.
 - For the delete function, we can delete both the expense and income using the same command `deleteR`
-
 
 **Expected**
 
-- It asks user if the user wants to delete the found item.
-- When user inputs y, it deletes the item.
+- If there is one item that matches the query, it asks user if the user wants to delete the found item.
+  - When user inputs `n`, it exits the delete process.
+- If there are multiple items that match the query, it asks the user to choose the index of item that the
+  user wants to delete from a given list.
+  - When user inputs `cancel`, it exits the delete process.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
 ```
-deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
+deleteR n/net
 Is this what you want to delete?
-    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
-```
-```
-deleteR a/5 n/phone bills c/4 i/MONTH
-Is this what you want to delete?
-    Expense | APPAREL | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Expense | APPAREL | 2021-10-27 | phone bills |-$5.00 | MONTH | Forever :D
-```
-```
-deleteR a/5 n/phone bills d/2021-10-10 i/MONTH
-Is this what you want to delete?
-    Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Expense | OTHERS | 2021-10-10 | phone bills |-$5.00 | MONTH | Forever :D
-```
-```
-deleteR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH
-Is this what you want to delete?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-```
-```
-deleteR a/20 n/Full-time job c/1 i/MONTH
-Is this what you want to delete?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-```
-```
-deleteR a/20 n/Full-time job d/2021-10-10 i/MONTH
-Is this what you want to delete?
-    Income  | OTHERS | 2021-10-10 | Full-time job | $20.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Income  | OTHERS | 2021-10-10 | Full-time job | $20.00 | MONTH | Forever :D
-```
-
-**Test case 3: Choosing not to delete an existing expense after entering the delete command.**
-
-**Usage:**
-
-- Deleting a Recurring Expense: `deleteR [include some fields of the recurring expense you would like to delete]`
-- Deleting a Recurring Income: `deleteR income [include some fields of the recurring Income you would like to delete]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater.
-  specificity. The fields can be specified in any order.
-- For the delete function, we can delete both the expense and income using the same command `deleteR`
-
-
-**Expected**
-
-- It asks user if the user wants to delete the found item.
-- When user inputs n, it exits the delete process.
-
-**[EXPENSE and INCOME] Example of usage and expected output:**
-
-```
-deleteR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
-Is this what you want to delete?
-    Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | Forever :D
+    Income | ENTERTAINMENT | 2021-12-03 | Netflix refund | $26.00 | MONTH | 2023-04-15
 Type "y" if yes. Type "n" if not.
 n
 Ok. I have cancelled the process.
 ```
 ```
-deleteR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH
-Is this what you want to delete?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-n
+deleteR c/3
+Here is the list of items containing the keyword.
+ Index |   Type  | Category  |    Date    |    Name     | Amount | Every |   Until
+   1   | Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
+   2   | Expense | HOUSEHOLD | 2021-11-03 |    dryer    |-$30.00 | MONTH | 2023-04-15
+Enter the index of the item you want to delete. To cancel, type "cancel"
+cancel
 Ok. I have cancelled the process.
+```
+
+**Test case 3: Trying to delete a recurring entry that does not exist.**
+
+**Usage:**
+
+- Query tags such that there are no entries that match all the specified fields. 
+- Format: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
+- At least one field must be specified. If the user prefers, additional tags can be added for greater
+  specificity. The fields can be specified in any order.
+- Dummy strings between `deleteR` and the first tag will not affect the program.
+- For the delete function, we can delete both the expense and income using the same command `deleteR`
+
+**Expected**
+
+- It tells that the entry is not in list.
+
+**[EXPENSE and INCOME] Example of usage and expected output:**
+
+```
+deleteR n/dryer a/382 c/1
+Hmm.. That item is not in the list.
+```
+```
+deleteR n/yoghurt i/month
+Hmm.. That item is not in the list.
 ```
 
 ### <a name="Edit-recurring-item"></a>Editing a recurring item

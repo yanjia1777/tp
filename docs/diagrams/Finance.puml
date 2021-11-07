@@ -1,35 +1,38 @@
 @startuml
-package "Finance" <<Rectangle>> {
-package "finances" <<Rectangle>> {
-abstract class  "FinanceManager"
+hide circle
+skinparam classAttributeIconSize 0
+skinparam groupInheritance 2
+package "FinanceManager" <<Rectangle>> {
+class  "{abstract}\nFinanceManager"
 class NormalFinanceManager
 class RecurringFinanceManager
 }
 
-package "entries" <<Rectangle>> {
-abstract class Entry
-abstract class RecurringEntry
-class Income
-class Expense
+package "Entry" <<Rectangle>> {
+
+class "{abstract}\nRecurringEntry"
 class RecurringExpense
 class RecurringIncome
+class "{abstract}\nEntry"
+class Income
+class Expense
 }
 
-RecurringFinanceManager -u-|> FinanceManager
-NormalFinanceManager -u-|> FinanceManager
+RecurringFinanceManager -u-|> "{abstract}\nFinanceManager"
+NormalFinanceManager -u-|> "{abstract}\nFinanceManager"
 
-RecurringEntry -u-|> Entry
-RecurringIncome -u-|> RecurringEntry
-RecurringExpense -u-|> RecurringEntry
-Income -u--|> Entry
-Expense -u--|> Entry
+
 
 RecurringFinanceManager ----> "*" RecurringIncome
 RecurringFinanceManager ----> "*" RecurringExpense
 NormalFinanceManager ----> "*" Income
 NormalFinanceManager ----> "*" Expense
 
+"{abstract}\nRecurringEntry" -u-|> "{abstract}\nEntry"
+RecurringIncome -u-|> "{abstract}\nRecurringEntry"
+RecurringExpense -u-|> "{abstract}\nRecurringEntry"
+Income -u--|> "{abstract}\nEntry"
+Expense -u--|> "{abstract}\nEntry"
 
-}
 hide members
 @enduml
