@@ -10,7 +10,6 @@ finances.
 
 Using this guide, you will be able to navigate the app and use all of its functionalities through
 step-by-step-instructions.
-:bulb:
 
 ## Table of Contents
 
@@ -32,6 +31,7 @@ step-by-step-instructions.
     - [Setting budget](#set)
     - [View monthly budget ](#budget)
     - [Exiting the program](#exit)
+- [Available tag formats](#tagormat)
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
 - [Command Summary](#command-summary)
@@ -74,9 +74,7 @@ Refer to the [Features Section](#features) below for details of each comm
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
 4. Mint is now at your service!
 
-
 ## <a name="tagFormat"></a>Acceptable tag formats
-
 
 |Tag | Description |Format | Example of input |
 |--------|----|-------------------|-------------|
@@ -88,7 +86,6 @@ Refer to the [Features Section](#features) below for details of each comm
 | `e/END_DATE` | End date of the recurring period. One will not receive or pay for the entry from this date.| Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31` that is after the `d/DATE`. If the end date is not specified, the default date set would be forever (`2200-12-31`) | `e/2016-02-13`, `e/2016-2-13`  |
 
 ---
-
 
 ## <a name="dateFormat"></a>Acceptable date formats
 
@@ -109,16 +106,16 @@ Example: 5th Jaunary 2020
 
 ## <a name="categoryList"></a>Available categories
 
-|Category tag | Category name |
-|--------|----------|
-| c/0 | Food |
-| c/1 | Entertainment
-| c/2| Transportation
-| c/3 | Household
-| c/4 | Apparel
-| c/5 | Beauty
-| c/6 | Gift
-| c/7 | Others
+|Category tag | Expense Category | Income Category
+|--------|----------|----------|
+| c/0 | Food | Allowance
+| c/1 | Entertainment | Wages
+| c/2| Transportation | Salary
+| c/3 | Household | Interest
+| c/4 | Apparel | Investment
+| c/5 | Beauty | Commission
+| c/6 | Gift | Gift
+| c/7 | Others | Others
 
 ---
 
@@ -127,14 +124,14 @@ Example: 5th Jaunary 2020
 ---
 
 
-Notes about the following list of commands:
+:bulb: Notes about the following list of commands:
 
 - Items in square brackets are optional.
 
   e.g `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 - Parameters with tags or optional modifiers can be in any order.
 
-  e.g. if the command specifies `n/NAME` `a/AMOUNT`, `a/AMOUNT` `n/NAME` is also acceptable.
+  e.g. if the command specifies `n/NAME` `a/AMOUNT`, the order `a/AMOUNT` `n/NAME` is also acceptable.
 - If a parameter is expected only once in the command but if you specify it multiple times, only the last occurrence of
   the parameter will be taken.
 
@@ -145,28 +142,33 @@ Notes about the following list of commands:
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 ---
-## <a name="recurringNote"></a>
-Notes about recurring entries:
 
-- Recurring entries will be recurred on the same day as the `DATE` if the interval is `MONTH`; same day and month if
-  the interval is `YEAR`
+## <a name="recurringNote"></a>
+
+:bulb: Notes about recurring entries:
+
+- Recurring entries will be recurred on the same day as the `DATE` if the interval is `MONTH`; same day and month if the
+  interval is `YEAR`
 - If the`END_DATE` of the recurring entry is before the next recurring date, it will not be recurred on that next
   recurring date.
-- If the day is not available on some months or years, it will automatically be rounded down.
-- Example:
-    - Netflix monthly subscription starts on `2021-09-21` and ends on `2030-03-20`.
-        - `DATE` is `2021-03-21`; `INTERVAL` is `MONTH`; `END_DATE` is `2030-03-20`.
-        - It will be billed on `2021-09-21`, `2021-10-21`, and so on until `2030-02-21`.
-    - Nintendo yearly subscription starts on `2020-02-29` and ends on `2023-01-15`.
-        - `DATE` is `2020-02-29`;`INTERVAL` is `YEAR`; `END_DATE` is `2023-01-15`.
-        - It will be billed on `2020-02-29`, `2021-02-28`, and `2022-02-28` only.
-        - As February 29th is not available on non-Leap years, the date was rounded down to 
-      February 28th for those years.
-        - As `2023-01-15` is before the next recurring date of `2023-02-28`, it will not be recurred on `2023-02-28`.
-  - The school starts to give monthly allowance on `2021-08-31` until `2023-08-31`.
-      - `DATE` is `2021-08-31`; `INTERVAL` is `MONTH`; `END_DATE` is `2023-08-31`.
-      - It will be received on `2021-08-31`, `2021-09-30`, and so on until `2023-08-31`.
-      - As 31st is not available on September, the day was rounded down to 30th.
+- If the day is not available on some months or years, it will automatically be rounded down. 
+  
+Examples:
+- Netflix monthly subscription starts on `2021-09-21` and ends on `2030-03-20`.
+    - `DATE` is `2021-03-21`; `INTERVAL` is `MONTH`; `END_DATE` is `2030-03-20`.
+    - It will be billed on `2021-09-21`, `2021-10-21`, and so on until `2030-02-21`.
+    
+- Nintendo yearly subscription starts on `2020-02-29` and ends on `2023-01-15`.
+    - `DATE` is `2020-02-29`;`INTERVAL` is `YEAR`; `END_DATE` is `2023-01-15`.
+    - It will be billed on `2020-02-29`, `2021-02-28`, and `2022-02-28` only.
+    - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those
+  years.
+    - As `2023-01-15` is before the next recurring date of `2023-02-28`, it will not be recurred on `2023-02-28`.
+
+- The school starts to give monthly allowance on `2021-08-31` until `2023-08-31`.
+    - `DATE` is `2021-08-31`; `INTERVAL` is `MONTH`; `END_DATE` is `2023-08-31`.
+    - It will be received on `2021-08-31`, `2021-09-30`, and so on until `2023-08-31`.
+    - As 31st is not available on September, the day was rounded down to 30th.
 
 ---
 
@@ -184,7 +186,7 @@ Format: `add [income] n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]`
 
 - Adds an entry of the specified `NAME`, `DATE`, `AMOUNT` and `CATEGORY_NUMBER`
 - If `income` is included after `add`, entry will be an income entry, else it will be an expense entry.
-- Refer to [acceptable tag formats](#dateFormat) for more information about tag definitions and formats.
+- Refer to [acceptable tag formats](#tagFormat) for more information about tag definitions and formats.
 
 Examples:
 
@@ -212,7 +214,7 @@ Format: `addR [income] n/NAME a/AMOUNT i/INTERVAL [d/DATE] [c/CATEGORY_NUMBER] [
 
 - Adds an entry of the specified `NAME`, `DATE`, `AMOUNT`, `INTERVAL`, `END_DATE` and `CATEGORY_NUMBER`
 - If `income` is included after `add`, entry will be an income entry, else it will be an expense entry.
-- Refer to [acceptable tag formats](#dateFormat) for more information about tag definitions and formats.
+- Refer to [acceptable tag formats](#tagFormat) for more information about tag definitions and formats.
 
 Examples:
 
@@ -249,22 +251,23 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
 - `up(optional)` or `ascending(optional)` if appended with sort, will sort the list in ascending , else the default will
   sort the list in descending order.
 - In addition to the normal entries, recurring entries will also be shown on the list.
-  - Depending on the above options, recurring entries will be automatically added to the entries' list according to the 
-  recurring period.
-  - Refer to [notes about recurring entries](#recurringNote) for more information on what criteria the automatic addition
-  will be based on.
-  - If no date options are specified correctly, it will default to viewing recurring entries up to current date.
-  - There will be a separate list at the bottom to show the original recurring entries.
-    - If neither date options nor expense/income options are specified, the separate list will show all recurring 
-    entries.
-    - If expense/income options are specified but not date options, the separate list will show applicable recurring
-    entries, where some may not have been added to the entries' list.
-    - If date options are specified correctly, the separate list will only show recurring entries that were added to
-    the entries' list.
-  - For more information about why the `view` works this way, refer to [Frequently Asked Questions](#faq).
+    - Depending on the above options, recurring entries will be automatically added to the entries' list according to
+      the recurring period.
+    - Refer to [notes about recurring entries](#recurringNote) for more information on what criteria the automatic
+      addition will be based on.
+    - If no date options are specified correctly, it will default to viewing recurring entries up to current date.
+    - There will be a separate list at the bottom to show the original recurring entries.
+        - If neither date options nor expense/income options are specified, the separate list will show all recurring
+          entries.
+        - If expense/income options are specified but not date options, the separate list will show applicable recurring
+          entries, where some may not have been added to the entries' list.
+        - If date options are specified correctly, the separate list will only show recurring entries that were added to
+          the entries' list.
+    - For more information about why the `view` works this way, refer to [Frequently Asked Questions](#faq).
 
 Examples:
 Assume today's date is `2021-11-06`
+
 - `view`
 - `view income`
 - `view month 4 year 2021`
@@ -349,7 +352,7 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
     - If there is 1  `Expense` or `Income` matching the query, the program will prompt the user to confirm the deletion
       of that  `Expense` or `Income` .
 - Deletes an entry of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
-- Refer to [acceptable tag formats](#dateFormat) for more information about tag definitions and formats.
+- Refer to [acceptable tag formats](#tagFormat) for more information about tag definitions and formats.
 
 Examples:
 
@@ -395,7 +398,7 @@ Format: `deleteR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [
     - If there is 1  `RecurringExpense` or `RecurringIncome` matching the query, the program will prompt the user to
       confirm the deletion of that  `Expense` or `Income` .
 - Deletes an entry of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
-- Refer to [acceptable tag formats](#dateFormat) for more information about tag definitions and formats.
+- Refer to [acceptable tag formats](#tagFormat) for more information about tag definitions and formats.
 
 Examples:
 
@@ -476,7 +479,7 @@ Format: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]`
       to edit that entry.
     - If there is more than 1 `Expense` or `Income` matching the query, the program will return a list for the user to
       choose from. The user would then have to confirm if they wish to edit the entry.
-- Refer to [acceptable tag formats](#dateFormat) for more information about tag definitions and formats.
+- Refer to [acceptable tag formats](#tagFormat) for more information about tag definitions and formats.
 
 Examples:
 
@@ -526,7 +529,7 @@ Format: `editR [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER] [i/INTERVAL] [e/
       to edit that entry.
     - If there is more than 1 `Expense` or `Income` matching the query, the program will return a list for the user to
       choose from. The user would then have to confirm if they wish to edit the entry.
-- Refer to [acceptable tag formats](#dateFormat) for more information about tag definitions and formats.
+- Refer to [acceptable tag formats](#tagFormat) for more information about tag definitions and formats.
 
 Examples:
 
@@ -591,7 +594,7 @@ Set budget for individual categories>
 Format: `set c/CATEGORY_NUMBER a/AMOUNT`
 
 - `set` takes in 2 mandatory fields, `c/CATEGORY_NUMBER` and `a/AMOUNT`.
-- `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.5 is $4.50.
+- `AMOUNT` is in dollars. Numbers after the decimal point are in cents. Eg. 4.50 is $4.50.
 - `CATEGORY_NUMBER` is any integer from 0 to 7. Please refer to the [available categories](#categoryList).
 
 Example: If you want to set budget for "FOOD" to $100, type `set c/0 a/100`, as `c/0` correspond to "FOOD".
