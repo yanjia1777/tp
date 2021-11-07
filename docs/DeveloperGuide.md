@@ -977,7 +977,7 @@ n
 Delete aborted.
 ```
 
-### <a name="Set-budget"></a>Setting Budgets
+### <a name="Set-budget"></a>Setting budget
 
 1. Setting a budget with valid fields
     - Test case: `set c/0 a/100`
