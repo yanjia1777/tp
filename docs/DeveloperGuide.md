@@ -354,7 +354,8 @@ I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 
 1. **Prerequisites**: List all entries using the `view` command. Multiple entries in the list.
 
-2. **Test case**: `delete n/Movie c/1` </br>
+2. **Test case**: `delete n/Movie c/1` 
+
     Expected:
    - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
      - Input `y`, then it would delete the `Entry` and tell that it is deleted.
@@ -386,7 +387,8 @@ I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
        Hmm.. That item is not in the list.
      ```
      
-3. **Test case**: `delete d/2021-11-04` </br>
+3. **Test case**: `delete d/2021-11-04` 
+
 Expected:
    - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
      - Input `n`, then it exits the delete process.
@@ -580,7 +582,8 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
 
 1. **Prerequisites**: List all entries using the `view` command. Multiple recurring entries in the second list.
 
-2. **Test case**: `deleteR n/Netflix i/month` </br>
+2. **Test case**: `deleteR n/Netflix i/month` 
+
    Expected:
     - If there is one Recurring `Entry` that matches the query, it asks user if the user wants to delete the found recurring Entry.
         - Input `y`, then it would delete the recurring `Entry` and tell that it is deleted.
@@ -612,7 +615,8 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
         Hmm.. That item is not in the list.
       ```
 
-3. **Test case**: `deleteR e/2023-04-15` </br>
+3. **Test case**: `deleteR e/2023-04-15` 
+
    Expected:
     - If there is one recurring `Entry` that matches the query, it asks user if the user wants to delete the found recurring `Entry`.
         - Input `n`, then it exits the delete process.
