@@ -34,10 +34,6 @@ for use via a Command Line Interface (CLI).
   - What it does: indents the entries based on the longest entry of the current list.
   - Justification: This feature improves the product significantly as it allows for the label of all entries to line up with each other, allowing users to view the entries in a much more efficient and clear manner.
   - Highlights: It was challenging to implement as the indentations vary based on the longest entry in the entire list. The indentations could be left indent, middle indent or right indent based on the context of the label to improve the user-experience. The indentation are also done automatically and had to be calculated beforehand before printing of the entries.
-
-- **Enhancement**: Implemented validity checking of parsed entries' fields for some commands.
-  - What it does: checks if parsed name, amount, date, end date, interval of the entries are valid and checks
-    if mandatory fields are specified and valid.
   
 - **Code contributed**: [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=totalCommits&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-25&tabOpen=true&tabType=authorship&tabAuthor=yanjia1777&tabRepo=AY2122S1-CS2113T-W11-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
 
