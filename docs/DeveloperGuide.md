@@ -25,8 +25,8 @@
     - [Adding a Recurring Entry](#Add-recurring-entry)
     - [Deleting a Recurring Entry](#Delete-recurring-entry)
     - [Editing a recurring Entry](#Edit-recurring-entry)
-    - [Adding Spending Limits](#set)
-    - [Viewing Spending Limits](#View-spending-limits)
+    - [Setting Budget](#set)
+    - [Viewing Budget](#budget)
 
 ## <a name="acknowledgements"></a>Acknowledgements
 
@@ -171,9 +171,10 @@ Below is a sequence diagram of how the `BudgetManager` interacts with other clas
 budget.
 
 ![](images/BudgetWarning.png)
+
 Note: `XYZBudget` (`XYZ` is a placeholder for the specified budget e.g., `FoodBudget`)
 
-When `checkExceedBudget(entry,...)` is called,
+When `checkExceedBudget(entry,...)` is called, assuming `entry` is of type `Expense`,
 
 1) `BudgetManager` will fetch both `Entries` and `RecurringEntries` from their respective `FinanceManager`.
     - For readability purposes, we will denote all entries as `entries` and group both `NormalFinanceManager`
@@ -194,8 +195,8 @@ When `checkExceedBudget(entry,...)` is called,
 
 Aspect: how to check whether user exceeded budget
 
-- Option 1 (current choice): iterate through the list of entries each time `checkExceedBudget(entry,...)` is called
-  and return the `amountSpent` and `spendingLimit` corresponding to the current `Entry`'s category. Only happens when
+- Option 1 (current choice): iterate through the list of entries each time `checkExceedBudget(entry,...)` is called and
+  return the `amountSpent` and `spendingLimit` corresponding to the current `Entry`'s category. Only happens when
   user `add` entries.
     - Pros: Easy to implement. Less coupling of components.
     - Cons: More LOC and slower runtime.
@@ -265,7 +266,7 @@ A smart and simple way to keep track of your expenses
 > Tags in square brackets are optional
 > e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 
-### <a name="Adding"></a>Adding an `Entry`
+### <a name="Adding"></a>Adding an Entry
 
 **Prerequisites**
 
@@ -349,7 +350,7 @@ add income n/Selling Textbooks a/23.5
 I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 ```
 
-### <a name="delete"></a>Deleting an `Entry`
+### <a name="delete"></a>Deleting an Entry
 
 **Prerequisites**
 
@@ -461,7 +462,7 @@ delete n/yoghurt
 Hmm.. That item is not in the list.
 ```
 
-### <a name="edit"></a>Editing an `Entry`
+### <a name="edit"></a>Editing an Entry
 
 **Prerequisites**
 
@@ -557,7 +558,7 @@ n/Part-time job
 Got it! I will update the fields accordingly!
 ```
 
-### <a name="Add-recurring-entry"></a>Adding a Recurring `Entry`
+### <a name="Add-recurring-entry"></a>Adding a Recurring Entry
 
 **Prerequisites**
 
@@ -619,7 +620,7 @@ addR income a/90 n/Full-time job i/MONTH e/2023-12-23
 I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 2023-12-23
 ```
 
-### <a name="Delete-recurring-entry"></a>Deleting a Recurring `Entry`
+### <a name="Delete-recurring-entry"></a>Deleting a Recurring Entry
 
 **Test case 1: Deleting an existing recurring `Entry` with some fields specified.**
 
@@ -731,7 +732,7 @@ deleteR n/yoghurt i/month
 Hmm.. That item is not in the list.
 ```
 
-### <a name="Edit-recurring-entry"></a>Editing a recurring `Entry`
+### <a name="Edit-recurring-entry"></a>Editing a recurring Entry
 
 **Prerequisites**
 
@@ -825,77 +826,54 @@ n/part-time job
 Got it! I will update the fields accordingly!
 ```
 
-### <a name="set"></a>Adding Spending Limits
+### <a name="set"></a>Setting Budgets
 
-**Prerequisites**
-
-- The list must have expenses that have already been added.
-
-**Test case 1: Adding a spending limit.**
-
-**Usage:**
-
-- Add spending limit to desired category: `set c/CATEGORY_NUMBER a/AMOUNT`
-- All fields must be specified
-
-**Expected**
-
-- If added correctly, a spending limit would be applied to the desired category.
-
-**Example of usage and expected output:**
+1. Setting a budget with valid fields
+    - Test case: `set c/0 a/100`
+    - Expected: A message to show that specified budget is successfully set to amount specified.
 
 ```
-set c/0 a/100
 Budget for FOOD set to $100.00
 ```
 
-**Test case 2: Adding an item that exceeds 80% of spending limit.**
-
-**Usage:**
-
-- Add spending limit to desired category: `set c/CATEGORY_NUMBER a/AMOUNT`
-- All fields must be specified
-- Now, add an `Expense` or `RecurringExpense` which will bring your monthly spending in its respective category to 80%
-  of the budget set aside.
-
-**Expected**
-
-- If added correctly, a warning message should appear to warn the user to watch their spending
-
-**Example of usage and expected output:**
+2. Setting a budget with invalid category number
+    - Test case: `set c/-1 a/100`.
+    - Expected: An error message to remind users that category number ranges from `0` to `7`.
 
 ```
-set c/0 a/100
+Please enter a valid category number! c/0 to c/7
+```
+
+3. Setting a budget and adding an expense that exceeds 80% of the budget set
+    - Prerequisite: List of entries must be empty. You may use the `deleteAll` function.
+    - Test case (2 steps process):
+        - First, key in `set c/0 a/100`.
+        - Then, key in `add n/haidilao c/0 a/80.01`
+    - Expected: A message warning user to slow down their spending.
+
+```
 Budget for FOOD set to $100.00
-add n/haidilao c/0 a/80.01
+```
+
+```
 I've added: Expense  | FOOD | 2021-11-07 | haidilao | $80.01
 Slow down, you've set aside $100.00 for FOOD, but you already spent $80.01.
 ```
 
-### <a name="View-spending-limits"></a>Viewing Spending Limits
+### <a name="budget"></a>Viewing budget
 
-**Prerequisites**
-
-- Assuming list of entries is empty. (use `deleteAll` function to have an empty list).
-- Assuming only budget of "Food" is set to $100 in the previous step.
-
-**Test case 1: Viewing a spending limit.**
-
-**Usage:**
-
-- View spending limits for each category: `budget`
-
-**Expected**
-
-- If the entire list with all the categories and spending limits for each category would be displayed.
-- Amount spent on `Expenses` ore `RecurringExpenses` in the category for current month will be reflected on the left
-  under "Amount"
-- Budget set aside for respective category will be shown to the right of the amount spent.
-
-**Example of usage and expected output:**
+1. Set a budget and view the list of budgets
+    - Prerequisite: List of entries must be empty. You may use the `deleteAll` function. Assume no budget set yet.
+    - Test case (2 steps process):
+        - Key in `set c/0 a/100`.
+        - Then, key in `budget`.
+    - Expected: A list of budgets will be printed.
 
 ```
-budget
+Budget for FOOD set to $100.00
+```
+
+```
 Here is the budget for NOVEMBER 2021
    Category    | Amount | Budget  | Percentage
      FOOD      |  $0.00 / $100.00 | 
@@ -905,38 +883,39 @@ TRANSPORTATION |  $0.00 / Not set |
    APPAREL     |  $0.00 / Not set | 
     BEAUTY     |  $0.00 / Not set | 
      GIFT      |  $0.00 / Not set | 
-    OTHERS     |  $0.00 / Not set | 
+    OTHERS     | $80.01 / Not set | 
 ```
 
-**Test case 2: Adding an expense and see whether it reflects in monthly budget.**
-
-**Usage:**
-
-- Since we set budget of "FOOD" in the previous step, let us add an 'Expense' related to "FOOD".
-
-Step 1: Add a "Food" `Expense`: `add n/NAME a/AMOUNT c/0`, c/0 correspond to "FOOD"
-Step 2: Use the `budget` command to see if spending is reflected in the monthly budget
-
-**Expected**
-
-- Amount spent of "Food" entry will be reflected in the monthly budget overview
-
-**Example of usage and expected output:**
+2. Test to see whether budget only includes current month's expenditure
+    - Prerequisites:
+        - List of entries must be empty. You may use the `deleteAll` function.
+        - Budget of "FOOD" is set to $100. (see previous test case).
+    - Test case (3 steps process):
+        - Key in `add n/current expense a/100`.
+        - Then, key in `add n/old expense d/2020-01-01 a/200`.
+        - Then, key in `budget` to view current month's spending and budget.
+    - Expected: Only entries that took place in current month will be calculated in the monthly spending. "current
+      expense" will be added into the caculations while "old expense" is not.
 
 ```
-add n/burger a/10 c/0
-I've added: Expense  | FOOD | 2021-11-07 | burger | $10.00
-budget
+I've added: Expense | OTHERS | 2021-11-07 | current expense | $100.00
+```
+
+```
+I've added: Expense | OTHERS | 2020-01-01 | old expense | $200.00
+```
+
+```
 Here is the budget for NOVEMBER 2021
-   Category    | Amount | Budget  | Percentage
-     FOOD      | $10.00 / $100.00 | 10.00%
-ENTERTAINMENT  |  $0.00 / Not set | 
-TRANSPORTATION |  $0.00 / Not set | 
-  HOUSEHOLD    |  $0.00 / Not set | 
-   APPAREL     |  $0.00 / Not set | 
-    BEAUTY     |  $0.00 / Not set | 
-     GIFT      |  $0.00 / Not set | 
-    OTHERS     |  $0.00 / Not set | 
+   Category    |  Amount | Budget  | Percentage
+     FOOD      |   $0.00 / $100.00 | 
+ENTERTAINMENT  |   $0.00 / Not set | 
+TRANSPORTATION |   $0.00 / Not set | 
+  HOUSEHOLD    |   $0.00 / Not set | 
+   APPAREL     |   $0.00 / Not set | 
+    BEAUTY     |   $0.00 / Not set | 
+     GIFT      |   $0.00 / Not set | 
+    OTHERS     | $100.00 / Not set | 
 ```
 
 ### <a name="View"></a>Viewing entries
@@ -965,17 +944,14 @@ TRANSPORTATION |  $0.00 / Not set |
 **Example of usage and expected output:**
 
 ```
-view
-Here is the list of your entries:
-  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
-Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
-Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |    FOOD    | 2020-01-06 | Burger  |-$4.20  |       |
-                                 Net Total: |-$17.20
-Here is the list of all recurring entries, where some were added to the above list:
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+
+view Here is the list of your entries:
+Type | Category | Date | Name | Amount | Every | Until Income | INVESTMENT | 2021-10-27 | Sales | $32.00 | | Expense |
+BEAUTY | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02 Expense | BEAUTY | 2021-05-04 | Massage |-$15.00 | MONTH |
+2021-07-02 Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02 Expense | FOOD | 2020-01-06 | Burger
+|-$4.20 | | Net Total: |-$17.20 Here is the list of all recurring entries, where some were added to the above list:
+Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+
 ```
 
 **Test case 2: View with some fields specified.**
@@ -995,38 +971,34 @@ Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 **Example of usage and expected output:**
 
 ```
-view income
-Here is the list of your entries:
-  Type  |  Category  |    Date    | Name  | Amount | Every |   Until
-Income  | INVESTMENT | 2021-10-27 | Sales | $32.00 |       |
-                               Net Total: | $32.00
-Here is the list of applicable recurring entries, where some were added to the above list:
+
+view income Here is the list of your entries:
+Type | Category | Date | Name | Amount | Every | Until Income | INVESTMENT | 2021-10-27 | Sales | $32.00 | | Net Total:
+| $32.00 Here is the list of applicable recurring entries, where some were added to the above list:
+
 ```
 
 ```
-view month 4 year 2021
-For the year 2021:
+
+view month 4 year 2021 For the year 2021:
 For the month of APRIL:
 Here is the list of your entries:
-  Type  | Category |    Date    |  Name   | Amount | Every |   Until
-Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-                               Net Total: |-$15.00
-Here is the list of recurring entries added to the above list:
-Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Type | Category | Date | Name | Amount | Every | Until Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH |
+2021-07-02 Net Total: |-$15.00 Here is the list of recurring entries added to the above list:
+Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+
 ```
 
 ```
-view from 2021-03-25 2021-11-02 by amount ascending
-Here is the list of your entries:
+
+view from 2021-03-25 2021-11-02 by amount ascending Here is the list of your entries:
 Since 2021-03-25 to 2021-11-02:
-  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
-                                 Net Total: |-$13.00
-Here is the list of recurring entries added to the above list:
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Type | Category | Date | Name | Amount | Every | Until Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH |
+2021-07-02 Expense | BEAUTY | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02 Expense | BEAUTY | 2021-06-04 | Massage
+|-$15.00 | MONTH | 2021-07-02 Income | INVESTMENT | 2021-10-27 | Sales | $32.00 | | Net Total: |-$13.00 Here is the list
+of recurring entries added to the above list:
+Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+
 ```
 
 ### <a name="delete"></a>Deleting all Entries
@@ -1051,11 +1023,10 @@ Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 ** Example of usage and expected output:**
 
 ```
-deleteAll
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-y
-All entries successfully deleted.
+
+deleteAll Are you sure you want to delete all entries? Type "y" if yes. Type "n" if not. y All entries successfully
+deleted.
+
 ```
 
 **Test case 2:  Only deleting all normal entries or all recurring entries.**
@@ -1075,17 +1046,14 @@ All entries successfully deleted.
 **Example of usage and expected output:**
 
 ```
-deleteAll normal
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-y
-All entries successfully deleted.
+
+deleteAll normal Are you sure you want to delete all entries? Type "y" if yes. Type "n" if not. y All entries
+successfully deleted.
+
 ```
 
 ```
-deleteAll r
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-n
-Delete aborted.
+
+deleteAll r Are you sure you want to delete all entries? Type "y" if yes. Type "n" if not. n Delete aborted.
+
 ```
