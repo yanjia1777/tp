@@ -266,25 +266,25 @@ I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
 ```
 add a/5 n/Chicken Rice c/0
-I've added: Expense  | FOOD | 2021-10-27 | Chicken Rice | $5.00
+I've added: Expense  | FOOD | 2021-11-07 | Chicken Rice | $5.00
 ```
 ```
 add n/Cheese Burger a/23.5
-I've added: Expense  | OTHERS | 2021-10-27 | Cheese Burger | $23.50
+I've added: Expense  | OTHERS | 2021-11-07 | Cheese Burger | $23.50
 ```
 **[INCOME] Example of usage and expected output:**
 
 ```
 add income a/15 d/2021-12-03 n/Selling Textbooks
-I've added: Expense  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
+I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 ```
 ```
 add income a/5 n/Selling Textbooks c/0
-I've added: Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
+I've added: Income  | ALLOWANCE | 2021-11-07 | Selling Textbooks | $5.00
 ```
 ```
 add income n/Selling Textbooks a/23.5
-I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
+I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 ```
 
 ### <a name="delete"></a>Deleting an Entry
@@ -434,7 +434,7 @@ Is this what you want to edit?
     Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/8 n/Chicken Rice c/0 d/2000-09-22
 Got it! I will update the fields accordingly!
 ```
@@ -443,10 +443,10 @@ Got it! I will update the fields accordingly!
 ```
 edit income a/20 d/2021-12-03 n/Full-time job c/1
 Is this what you want to edit?
-    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+    Income  | WAGES | 2021-12-03 | Full-time job | $20.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 n/part-time job
 Got it! I will update the fields accordingly!
 ```
@@ -474,11 +474,11 @@ Got it! I will update the fields accordingly!
 ```
 edit a/20 d/2021-12-03 n/Movie c/2
 Is this what you want to edit?
-    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
+    Expense  | TRANSPORTATION | 2021-12-03 | Movie | $20.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
-a/8 c/0 
+What would you like to edit? Type the tag and what you want to change e.g. a/10
+a/8 c/0
 Got it! I will update the fields accordingly!
 ```
 **[INCOME] Example of usage and expected output:**
@@ -486,10 +486,10 @@ Got it! I will update the fields accordingly!
 ```
 edit income n/Full-time job
 Is this what you want to edit?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00
+    Income  | OTHERS | 2021-11-07 | Full-time job | $100.00
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 n/Part-time job
 Got it! I will update the fields accordingly!
 ```
@@ -693,20 +693,23 @@ Is this what you want to edit?
     Expense | FOOD | 2021-12-03 | phone bills |-$15.00 | MONTH | 2023-10-10
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/40
 Got it! I will update the fields accordingly!
 ```
 ```
 editR a/20 d/2021-12-03 n/Full-time job c/1 i/MONTH e/2023-10-10
-Is this what you want to edit?
-    Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-Type "y" if yes. Type "n" if not.
-y
-What would you like to edit?
+Here is the list of items containing the keyword.
+ Index |   Type  |   Category    |    Date    |     Name      | Amount | Every |   Until
+   1   | Expense | ENTERTAINMENT | 2021-12-03 | Full-time job |-$20.00 | MONTH | 2023-10-10
+   2   | Income  |     WAGES     | 2021-12-03 | Full-time job | $20.00 | MONTH | 2023-10-10
+Enter the index of the item you want to edit. To cancel, type "cancel"
+1
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/100
 Got it! I will update the fields accordingly!
 ```
+
 **Test case 2: Editing an existing recurring item with some fields specified.**
 
 **Usage:**
@@ -728,25 +731,24 @@ Got it! I will update the fields accordingly!
 ```
 editR a/40 n/Netflix Subscription c/1 
 Is this what you want to edit?
-    Expense | ENTERTAINMENT | 2021-10-27 | Netflix Subscription |-$40.00 | MONTH | Forever :D
+    Expense | ENTERTAINMENT | 2021-11-07 | Netflix Subscription |-$40.00 | MONTH | Forever :D
 Type "y" if yes. Type "n" if not.
 y
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 a/20
 Got it! I will update the fields accordingly!
 ```
 ```
 editR n/Full-time job
 Here is the list of items containing the keyword.
-    1  Income  | WAGES | 2021-12-03 | Full-time job | $90.00 | MONTH | Forever :D
-    2  Expense | ENTERTAINMENT | 2021-10-27 | Full-time job |-$90.00 | MONTH | Forever :D
-    3  Income  | WAGES | 2021-10-27 | Full-time job | $90.00 | MONTH | Forever :D
-    4  Income  | OTHERS | 2021-10-10 | Full-time job | $90.00 | MONTH | Forever :D
-    5  Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | Forever :D
-    6  Income  | WAGES | 2021-12-03 | Full-time job | $100.00 | MONTH | Forever :D
+ Index |   Type  |   Category    |    Date    |     Name      | Amount  | Every |   Until
+   1   | Income  |     WAGES     | 2021-12-03 | Full-time job | $20.00  | MONTH | 2022-04-15
+   2   | Income  |    OTHERS     | 2021-11-07 | Full-time job | $90.00  | MONTH | 2023-12-23
+   3   | Expense | ENTERTAINMENT | 2021-12-03 | Full-time job |-$100.00 | MONTH | 2023-10-10
+   4   | Income  |     WAGES     | 2021-12-03 | Full-time job | $20.00  | MONTH | 2023-10-10
 Enter the index of the item you want to edit. To cancel, type "cancel"
 1
-What would you like to edit?
+What would you like to edit? Type the tag and what you want to change e.g. a/10
 n/part-time job
 Got it! I will update the fields accordingly!
 ```
