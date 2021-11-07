@@ -109,6 +109,8 @@ public class RecurringFinanceManager extends FinanceManager {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
         ValidityChecker.checkTagsFormatSpacing(choice);
+        Parser parser = new Parser();
+        parser.checkDuplicateTagsForRecurringEdit(choice);
         editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString((RecurringEntry) recurringEntryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt();

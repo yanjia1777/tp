@@ -224,8 +224,9 @@ public class ValidityChecker {
         ArrayList<String> invalidTags = new ArrayList<>();
         String[] tags = parser.isRecurring
                 ? new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG, SPACED_AMOUNT_TAG,
-                SPACED_CATEGORY_TAG, SPACED_INTERVAL_TAG, SPACED_END_DATE_TAG}
+                    SPACED_CATEGORY_TAG, SPACED_INTERVAL_TAG, SPACED_END_DATE_TAG}
                 : new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG, SPACED_AMOUNT_TAG, SPACED_CATEGORY_TAG};
+
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
         for (String tag : tags) {
