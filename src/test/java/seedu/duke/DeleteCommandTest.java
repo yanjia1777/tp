@@ -23,9 +23,10 @@ public class DeleteCommandTest {
     NormalFinanceManager normalFinanceManager = new NormalFinanceManager();
     ArrayList<Entry> entryList = normalFinanceManager.entryList;
     Ui uiStub = new UiStub();
+    boolean isDelete = true;
 
     @Test
-    public void determineEntryToDelete_multipleExpenseMatch_success() {
+    public void determineEntryToProcess_multipleExpenseMatch_success() {
         LocalDate date = LocalDate.parse("2021-10-17");
         Expense targetEntry = new Expense("Cocoa", date, 3.9, ExpenseCategory.FOOD);
         Expense dummyEntry = new Expense("Nada de coco", date, 5.0, ExpenseCategory.FOOD);
@@ -37,7 +38,7 @@ public class DeleteCommandTest {
 
         DeleteCommand command = new DeleteCommand(tags, query);
         try {
-            Entry entryToDelete = command.determineEntryToDelete(normalFinanceManager, uiStub);
+            Entry entryToDelete = command.determineEntryToProcess(normalFinanceManager, uiStub, isDelete);
             assertEquals(entryToDelete, targetEntry);
         } catch (MintException e) {
             e.printStackTrace();
@@ -47,7 +48,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void determineEntryToDelete_queryCategory_successFindingIncome() {
+    public void determineEntryToProcess_queryCategory_successFindingIncome() {
         LocalDate date = LocalDate.parse("2021-10-17");
         Expense dummyEntry = new Expense("yam", date, 7.1, ExpenseCategory.FOOD);
         Income targetEntry = new Income("bonus", date, 3.9, IncomeCategory.ALLOWANCE);
@@ -60,7 +61,7 @@ public class DeleteCommandTest {
 
         DeleteCommand command = new DeleteCommand(tags, query);
         try {
-            Entry entryToDelete = command.determineEntryToDelete(normalFinanceManager, uiStub);
+            Entry entryToDelete = command.determineEntryToProcess(normalFinanceManager, uiStub, isDelete);
             assertEquals(entryToDelete, targetEntry);
         } catch (MintException e) {
             e.printStackTrace();
@@ -71,7 +72,7 @@ public class DeleteCommandTest {
 
 
     @Test
-    public void determineEntryToDelete_singleExpenseMatch_findTargetSuccess() {
+    public void determineEntryToProcess_singleExpenseMatch_findTargetSuccess() {
         LocalDate date = LocalDate.parse("2021-10-17");
         Expense targetEntry = new Expense("jelly", date, 3.9, ExpenseCategory.FOOD);
         Expense dummyEntry = new Expense("belly", date, 5.0, ExpenseCategory.OTHERS);
@@ -83,7 +84,7 @@ public class DeleteCommandTest {
 
         DeleteCommand command = new DeleteCommand(tags, query);
         try {
-            Entry entryToDelete = command.determineEntryToDelete(normalFinanceManager, uiStub);
+            Entry entryToDelete = command.determineEntryToProcess(normalFinanceManager, uiStub, isDelete);
             assertEquals(entryToDelete, targetEntry);
         } catch (MintException e) {
             e.printStackTrace();
@@ -93,7 +94,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void determineEntryToDelete_bothExpenseAndIncomeMatch_findTargetSuccess() {
+    public void determineEntryToProcess_bothExpenseAndIncomeMatch_findTargetSuccess() {
         LocalDate date = LocalDate.parse("2021-10-17");
         Expense dummyEntry = new Expense("bonus round of burger", date, 3.9, ExpenseCategory.FOOD);
         Income targetEntry = new Income("bonus", date, 3.9, IncomeCategory.SALARY);
@@ -106,7 +107,7 @@ public class DeleteCommandTest {
 
         DeleteCommand command = new DeleteCommand(tags, query);
         try {
-            Entry entryToDelete = command.determineEntryToDelete(normalFinanceManager, uiStub);
+            Entry entryToDelete = command.determineEntryToProcess(normalFinanceManager, uiStub, isDelete);
             assertEquals(entryToDelete, targetEntry);
         } catch (MintException e) {
             e.printStackTrace();
@@ -116,7 +117,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void determineEntryToDelete_cancelSingleMatch_cancelSuccess() {
+    public void determineEntryToProcess_cancelSingleMatch_cancelSuccess() {
         LocalDate date = LocalDate.parse("2021-10-17");
         Expense targetEntry = new Expense("jelly", date, 7.0, ExpenseCategory.FOOD);
         Expense dummyEntry = new Expense("bean", date, 5.0, ExpenseCategory.FOOD);
@@ -128,7 +129,7 @@ public class DeleteCommandTest {
 
         DeleteCommand command = new DeleteCommand(tags, query);
         try {
-            Entry entryToDelete = command.determineEntryToDelete(normalFinanceManager, uiStub);
+            Entry entryToDelete = command.determineEntryToProcess(normalFinanceManager, uiStub, isDelete);
             assertNull(entryToDelete);
         } catch (MintException e) {
             e.printStackTrace();
@@ -138,7 +139,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void determineEntryToDelete_queryAmountAndCancelMultipleMatch_cancelSuccess() {
+    public void determineEntryToProcess_queryAmountAndCancelMultipleMatch_cancelSuccess() {
         LocalDate date = LocalDate.parse("2021-10-17");
         Expense targetEntry = new Expense("jelly", date, 100.0, ExpenseCategory.FOOD);
         Expense dummyEntry = new Expense("bean", date, 100.0, ExpenseCategory.FOOD);
@@ -150,7 +151,7 @@ public class DeleteCommandTest {
 
         DeleteCommand command = new DeleteCommand(tags, query);
         try {
-            Entry entryToDelete = command.determineEntryToDelete(normalFinanceManager, uiStub);
+            Entry entryToDelete = command.determineEntryToProcess(normalFinanceManager, uiStub, isDelete);
             assertNull(entryToDelete);
         } catch (MintException e) {
             e.printStackTrace();
