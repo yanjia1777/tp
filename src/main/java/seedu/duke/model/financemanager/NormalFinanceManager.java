@@ -38,16 +38,16 @@ public class NormalFinanceManager extends FinanceManager {
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
             switch (tag.trim()) {
-            case "n/":
+            case NAME_TAG:
                 filteredList = Filter.filterEntryByName(query.getName(), filteredList);
                 break;
-            case "d/":
+            case DATE_TAG:
                 filteredList = Filter.filterEntryByDate(query.getDate(), filteredList);
                 break;
-            case "a/":
+            case AMOUNT_TAG:
                 filteredList = Filter.filterEntryByAmount(query.getAmount(), filteredList);
                 break;
-            case "c/":
+            case CATEGORY_TAG:
                 filteredList = Filter.filterEntryByCategory(query.getCategory().ordinal(), filteredList);
                 break;
             default:
@@ -110,21 +110,21 @@ public class NormalFinanceManager extends FinanceManager {
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
-                if (word.contains(NAME_SEPARATOR)) {
+                if (word.contains(NAME_TAG)) {
                     count++;
                     String name = nonEmptyNewDescription(word);
                     entryFields.put("name", name);
-                } else if (word.contains(DATE_SEPARATOR)) {
+                } else if (word.contains(DATE_TAG)) {
                     count++;
-                    String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String dateStr = word.substring(word.indexOf(DATE_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("date", dateStr);
-                } else if (word.contains(AMOUNT_SEPARATOR)) {
+                } else if (word.contains(AMOUNT_TAG)) {
                     count++;
-                    String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String amountStr = word.substring(word.indexOf(AMOUNT_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("amount",amountStr);
-                } else if (word.contains(CATEGORY_SEPARATOR)) {
+                } else if (word.contains(CATEGORY_TAG)) {
                     count++;
-                    String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String catNumStr = word.substring(word.indexOf(CATEGORY_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("catNum", catNumStr);
                 }
             }

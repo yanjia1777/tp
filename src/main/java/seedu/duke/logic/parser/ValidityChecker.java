@@ -28,6 +28,18 @@ public class ValidityChecker {
     public static final String invalidForwardSlash = "(.*)[0-9a-zA-Z/\\-.][0-9/\\-.]/(.*)";
     public static final String forwardSlashWithoutTagType = "(.*)[ \\-.]/(.*)";
     public static final double AMOUNT_LIMIT = 1000000.0;
+    public static final String SPACED_NAME_TAG = " n/";
+    public static final String SPACED_AMOUNT_TAG = " a/";
+    public static final String SPACED_DATE_TAG = " d/";
+    public static final String SPACED_CATEGORY_TAG = " c/";
+    public static final String SPACED_INTERVAL_TAG = " i/";
+    public static final String SPACED_END_DATE_TAG = " e/";
+    public static final String NAME_TAG = "n/";
+    public static final String AMOUNT_TAG = "a/";
+    public static final String DATE_TAG = "d/";
+    public static final String CATEGORY_TAG = "c/";
+    public static final String INTERVAL_TAG = "i/";
+    public static final String END_DATE_TAG = "e/";
 
     //@@author irvinseet
     public static DateTimeFormatter dateFormatter
@@ -135,8 +147,8 @@ public class ValidityChecker {
     }
 
     static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
-        String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
-                : new String[]{"n/", "d/", "a/", "c/"};
+        String[] tags = parser.isRecurring ? new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG, INTERVAL_TAG,
+                END_DATE_TAG} : new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG};
 
         for (String tag : tags) {
             int count = 0;
@@ -155,30 +167,31 @@ public class ValidityChecker {
             String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = parser.isRecurring ? new String[]{" n/", " d/", " a/", " c/", " i/", " e/"}
-                : new String[]{" n/", " d/", " a/", " c/"};
+        String[] tags = parser.isRecurring ? new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG,
+                SPACED_AMOUNT_TAG, SPACED_CATEGORY_TAG, SPACED_INTERVAL_TAG, SPACED_END_DATE_TAG}
+                : new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG, SPACED_AMOUNT_TAG, SPACED_CATEGORY_TAG};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
         for (String tag : tags) {
             try {
                 if (userInput.contains(tag)) {
-                    switch (tag.trim()) {
-                    case "n/":
+                    switch (tag) {
+                    case SPACED_NAME_TAG:
                         checkEmptyName(parser.name);
                         break;
-                    case "d/":
+                    case SPACED_DATE_TAG:
                         checkInvalidDate(parser.dateStr);
                         break;
-                    case "a/":
+                    case SPACED_AMOUNT_TAG:
                         checkInvalidAmount(parser.amountStr);
                         break;
-                    case "c/":
+                    case SPACED_CATEGORY_TAG:
                         checkInvalidCatNum(parser.catNumStr);
                         break;
-                    case "i/":
+                    case SPACED_INTERVAL_TAG:
                         checkInvalidInterval(parser.intervalStr);
                         break;
-                    case "e/":
+                    case SPACED_END_DATE_TAG:
                         checkInvalidEndDate(parser.endDateStr, parser.dateStr);
                         break;
                     default:
@@ -206,13 +219,13 @@ public class ValidityChecker {
             String[] mandatoryTags;
             switch (parser.command) {
             case "add":
-                mandatoryTags = new String[]{" n/", " a/"};
+                mandatoryTags = new String[]{SPACED_NAME_TAG, SPACED_AMOUNT_TAG};
                 break;
             case "addR":
-                mandatoryTags = new String[]{" n/", " a/", " i/"};
+                mandatoryTags = new String[]{SPACED_NAME_TAG, SPACED_AMOUNT_TAG, SPACED_INTERVAL_TAG};
                 break;
             case "set":
-                mandatoryTags = new String[]{" c/", " a/"};
+                mandatoryTags = new String[]{SPACED_CATEGORY_TAG, SPACED_AMOUNT_TAG};
                 break;
             default:
                 mandatoryTags = new String[]{};

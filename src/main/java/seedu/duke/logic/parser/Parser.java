@@ -389,8 +389,6 @@ public class Parser {
             initDateStr();
             initCatNumStr();
             initAmountStr();
-            initIntervalStr();
-            initEndDateStr();
             ArrayList<String> validTags = parseInputByTags(userInput);
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
@@ -421,8 +419,6 @@ public class Parser {
             initDateStr();
             initCatNumStr();
             initAmountStr();
-            initIntervalStr();
-            initEndDateStr();
             ArrayList<String> validTags = parseInputByTags(userInput);
             Entry entry = createIncomeObject();
             assert validTags.size() >= 1 : "There should be at least one valid tag";
