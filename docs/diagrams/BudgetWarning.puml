@@ -33,28 +33,5 @@ opt isExceedBudget
     ui --> user : warning message
     deactivate ui
     end
-
-
-
-
-
-
-'
-'-> duke : add command
-'activate duke
-'
-'duke -> addCommand : execute(normalFinanceManager:NormalFinanceManager...):Command
-'activate addCommand
-'
-'addCommand -> normalListDataManager : appendToEntryTextFIle (entry:Entry)
-'activate normalListDataManager
-'normalListDataManager --> addCommand
-'deactivate normalListDataManager
-'
-'addCommand --> duke
-'deactivate addCommand
-'
-'return
-
-
 @enduml
+    
