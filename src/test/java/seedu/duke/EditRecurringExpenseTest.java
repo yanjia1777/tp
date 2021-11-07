@@ -1,21 +1,21 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.commands.EditRecurringCommand;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.Interval;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.RecurringExpense;
-import seedu.duke.exception.MintException;
-import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.finances.RecurringFinanceManager;
+import seedu.duke.model.budget.BudgetManager;
+import seedu.duke.logic.commands.EditRecurringCommand;
+import seedu.duke.model.entries.Entry;
+import seedu.duke.model.entries.Interval;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.model.entries.RecurringExpense;
+import seedu.duke.utility.MintException;
+import seedu.duke.model.financemanager.NormalFinanceManager;
+import seedu.duke.model.financemanager.RecurringFinanceManager;
 import seedu.duke.storage.BudgetDataManager;
 import seedu.duke.storage.DataManagerActions;
 import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
-import seedu.duke.utility.Ui;
-import seedu.duke.utility.UiStub;
+import seedu.duke.ui.Ui;
+import seedu.duke.ui.UiStub;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.duke.parser.ValidityChecker.dateFormatter;
+import static seedu.duke.logic.parser.ValidityChecker.dateFormatter;
 
 public class EditRecurringExpenseTest {
 

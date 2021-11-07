@@ -1,17 +1,17 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.budget.Budget;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.commands.SetBudgetCommand;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.finances.RecurringFinanceManager;
+import seedu.duke.model.budget.Budget;
+import seedu.duke.model.budget.BudgetManager;
+import seedu.duke.logic.commands.SetBudgetCommand;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.model.financemanager.NormalFinanceManager;
+import seedu.duke.model.financemanager.RecurringFinanceManager;
 import seedu.duke.storage.BudgetDataManager;
 import seedu.duke.storage.DataManagerActions;
 import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
-import seedu.duke.utility.Ui;
+import seedu.duke.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
