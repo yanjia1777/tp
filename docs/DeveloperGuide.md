@@ -25,6 +25,8 @@
     - [Adding a Recurring Entry](#Add-recurring-entry)
     - [Deleting a Recurring Entry](#Delete-recurring-entry)
     - [Editing a recurring Entry](#Edit-recurring-entry)
+    - [Viewing entries](#View)
+    - [Deleting all entries](#deleteAll)
     - [Setting Budget](#Set-budget)
     - [Viewing Budget](#View-budget)
 
@@ -266,7 +268,7 @@ A smart and simple way to keep track of your expenses
 > Tags in square brackets are optional
 > e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 
-### <a name="Adding"></a>Adding an Entry
+### <a name="Adding"></a>Adding an `Entry`
 
 **Prerequisites**
 
@@ -350,119 +352,77 @@ add income n/Selling Textbooks a/23.5
 I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 ```
 
-### <a name="delete"></a>Deleting an Entry
+### <a name="delete"></a>Deleting an `Entry`
 
-**Prerequisites**
+1. **Prerequisites**: List all entries using the `view` command. Multiple entries in the list.
 
-- The list must have entries that have already been added.
+2. **Test case**: `delete n/Movie c/1` 
 
-**Test case 1: Deleting an existing `Entry` with some fields specified.**
+    Expected:
+   - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
+     - Input `y`, then it would delete the `Entry` and tell that it is deleted.
+     ```
+       delete n/Movie c/1
+       Is this what you want to delete?
+           Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
+       Type "y" if yes. Type "n" if not.
+       y
+       I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
+     ```
+     
+   - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
+   user wants to delete from a given list.
+     - Enter `2`, then it would delete the second `Entry` shown and tell that it is deleted.
+     ```
+       delete n/movie c/1
+       Here is the list of items containing the keyword.
+        Index |   Type  |   Category    |    Date    |      Name       | Amount | Every |   Until
+          1   | Expense | ENTERTAINMENT | 2021-12-25 | Christmas Movie |-$15.00 |       |
+          2   | Expense | ENTERTAINMENT | 2021-11-03 |      Movie      |-$20.00 |       |
+        Enter the index of the item you want to delete. To cancel, type "cancel"
+        2
+        I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
+     ```
+   - If there is no entry that matches the query, it tells that there is no matching `Entry` in the list.
+     ```
+       delete n/movie c/1
+       Hmm.. That item is not in the list.
+     ```
+     
+3. **Test case**: `delete d/2021-11-04` 
 
-**Usage:**
+Expected:
+   - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
+     - Input `n`, then it exits the delete process.
+     ```
+       delete d/2021-11-04
+       Is this what you want to delete?
+          Expense  | TRANSPORTATION | 2021-11-04 | Taxi | $6.99
+       Type "y" if yes. Type "n" if not.
+       n
+       Ok. I have cancelled the process.
+     ```
+   
+   - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
+     user wants to delete from a given list.
+     - Input `cancel`, then it exits the delete process.
+     ```
+       delete d/2021-11-04
+       Here is the list of items containing the keyword.
+        Index |   Type  |  Category  |    Date    |  Name  | Amount | Every |   Until
+          1   | Income  | INVESTMENT | 2021-11-04 |  Taxi  | $6.99  |       |
+          2   | Expense |    FOOD    | 2021-11-04 | Burger |-$7.12  |       |
+       Enter the index of the item you want to delete. To cancel, type "cancel"
+       cancel
+       Ok. I have cancelled the process.
+     ```
+   - If there is no entry that matches the query, it tells that there is no match in the list.
+     ```
+       delete d/2021-11-04
+       Hmm.. That item is not in the list.
+     ```
 
-- Delete an Expense or Income: `delete [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
-- Dummy strings between `delete` and the first tag will not affect the program.
-- We can delete both the expense and income using the same command `delete`
-
-**Expected**
-
-- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
-    - When user inputs `y`, it would delete the `Entry`.
-- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the user wants
-  to delete from a given list.
-    - When user inputs a valid index, it would delete the `Entry`.
-
-**[EXPENSE and INCOME] Example of usage and expected output:**
-
-```
-delete n/Movie c/1
-Is this what you want to delete?
-    Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Expense  | ENTERTAINMENT | 2021-12-03 | Movie | $20.00
-```
-
-```
-delete hahaha n/mas
-Here is the list of items containing the keyword.
- Index |   Type  | Category |    Date    |        Name         | Amount  | Every |   Until
-   1   | Income  |   GIFT   | 2021-12-25 | Christmas allowance | $200.00 |       |
-   2   | Expense |  OTHERS  | 2021-11-07 |       Massage       |-$50.00  |       |
-Enter the index of the item you want to delete. To cancel, type "cancel"
-2
-I have deleted: Expense  | OTHERS | 2021-11-07 | Massage | $50.00
-```
-
-**Test case 2: Choosing not to delete an existing `Entry` after entering the delete command.**
-
-**Usage:**
-
-- Delete an Expense or Income: `delete [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
-- Dummy strings between `delete` and the first tag will not affect the program.
-
-**Expected**
-
-- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found `Entry`.
-    - When user inputs `n`, it exits the delete process.
-- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the user
-  wants to delete from a given list.
-    - When user inputs `cancel`, it exits the delete process.
-
-**[EXPENSE and INCOME] Example of usage and expected output:**
-
-```
-delete n/taxi d/2021-11-04
-Is this what you want to delete?
-    Expense  | TRANSPORTATION | 2021-11-04 | Taxi | $6.99
-Type "y" if yes. Type "n" if not.
-n
-Ok. I have cancelled the process.
-```
-
-```
-delete d/2021-11-04
-Here is the list of items containing the keyword.
- Index |   Type  |  Category  |    Date    |  Name  | Amount | Every |   Until
-   1   | Income  | INVESTMENT | 2021-11-04 |  Taxi  | $6.99  |       |
-   2   | Expense |    FOOD    | 2021-11-04 | Burger |-$7.12  |       |
-Enter the index of the item you want to delete. To cancel, type "cancel"
-cancel
-Ok. I have cancelled the process.
-```
-
-**Test case 3: Trying to delete an `Entry` that does not exist.**
-
-**Usage:**
-
-- Query tags such that there are no entries that match all the specified fields.
-- Format: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
-- Dummy strings between `delete` and the first tag will not affect the program.
-- For the delete function, we can delete both the expense and income using the same command `delete`
-
-**Expected**
-
-- It tells that the `Entry` is not in list.
-
-**[EXPENSE and INCOME] Example of usage and expected output:**
-
-```
-delete n/dryer a/382 c/1
-Hmm.. That item is not in the list.
-```
-
-```
-delete n/yoghurt
-Hmm.. That item is not in the list.
-```
-
-### <a name="edit"></a>Editing an Entry
+### <a name="edit"></a>Editing an `Entry`
 
 **Prerequisites**
 
@@ -622,117 +582,75 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
 
 ### <a name="Delete-recurring-entry"></a>Deleting a Recurring Entry
 
-**Test case 1: Deleting an existing recurring `Entry` with some fields specified.**
+1. **Prerequisites**: List all entries using the `view` command. Multiple recurring entries in the second list.
 
-**Usage:**
+2. **Test case**: `deleteR n/Netflix i/month` 
 
-- Delete a Recurring Expense or Recurring
-  Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
-- Dummy strings between `deleteR` and the first tag will not affect the program.
-- We can delete both the recurring expense and recurring income using the same command `deleteR`
+   Expected:
+    - If there is one Recurring `Entry` that matches the query, it asks user if the user wants to delete the found recurring Entry.
+        - Input `y`, then it would delete the recurring `Entry` and tell that it is deleted.
+      ```
+      deleteR n/netflix i/month
+      Is this what you want to delete?
+          Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
+      Type "y" if yes. Type "n" if not.
+      y
+      I have deleted: Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
+      ```
 
-**Expected**
+    - If there are multiple recurring entries that match the query, it asks the user to choose the index of Entry that the
+      user wants to delete from a given list.
+        - Enter `1`, then it would delete the first recurring `Entry` shown and tell that it is deleted.
+      ```
+        deleteR n/netflix i/month
+        Here is the list of items containing the keyword.
+         Index |   Type  |   Category    |    Date    |      Name       | Amount | Every |   Until
+           1   | Expense | ENTERTAINMENT | 2021-11-04 |     Netflix     |-$26.00 | MONTH | 2023-04-15
+           2   | Expense | ENTERTAINMENT | 2021-11-04 | Netflix goodies |-$13.00 | MONTH | 2025-03-15
+        Enter the index of the item you want to delete. To cancel, type "cancel"
+        1
+        I have deleted: Expense | ENTERTAINMENT | 2021-11-04 | Netflix |-$26.00 | MONTH | 2023-04-15
+      ```
+    - If there is no entry that matches the query, it tells that there is no match in the list.
+      ```
+        deleteR n/netflix i/month
+        Hmm.. That item is not in the list.
+      ```
 
-- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
-    - When user inputs `y`, it would delete the `Entry`.
-- If there are multiple entries that match the query, it asks the user to choose the index of Entry that the user wants
-  to delete from a given list.
-    - When user inputs a valid index, it would delete the `Entry`.
+3. **Test case**: `deleteR e/2023-04-15` 
 
-**[EXPENSE and INCOME] Example of usage and expected output:**
+   Expected:
+    - If there is one recurring `Entry` that matches the query, it asks user if the user wants to delete the found recurring `Entry`.
+        - Input `n`, then it exits the delete process.
+      ```
+        deleteR e/2023-04-15
+        Is this what you want to delete?
+            Expense | HOUSEHOLD | 2021-10-03 | phone bills |-$26.00 | MONTH | 2023-04-15
+        Type "y" if yes. Type "n" if not.
+        n
+        Ok. I have cancelled the process.
+      ```
 
-```
-deleteR n/netflix a/26
-Is this what you want to delete?
-    Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
-Type "y" if yes. Type "n" if not.
-y
-I have deleted: Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
+    - If there are multiple recurring entries that match the query, it asks the user to choose the index of recurring `Entry` that the
+      user wants to delete from a given list.
+        - Input `cancel`, then it exits the delete process.
+      ```
+       deleteR e/2023-04-15
+       Here is the list of items containing the keyword.
+        Index |   Type  | Category  |    Date    |    Name     | Amount | Every |   Until
+          1   | Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$26.00 | MONTH | 2023-04-15
+          2   | Income  | ALLOWANCE | 2021-06-03 | stationary  |-$90.00 | YEAR  | 2023-04-15
+       Enter the index of the item you want to delete. To cancel, type "cancel"
+       cancel
+       Ok. I have cancelled the process.
+      ```
+    - If there is no recurring entry that matches the query, it tells that there is no match in the list.
+      ```
+        deleteR e/2023-04-15
+        Hmm.. That item is not in the list.
+      ```
 
-```
-
-```
-deleteR d/2021-12-03
-Here is the list of items containing the keyword.
- Index |   Type  |   Category    |    Date    |    Name     | Amount | Every |   Until
-   1   | Expense |   HOUSEHOLD   | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
-   2   | Expense | ENTERTAINMENT | 2021-12-03 |   Netflix   |-$26.00 | MONTH | 2023-04-15
-Enter the index of the item you want to delete. To cancel, type "cancel"
-1
-I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
-```
-
-**Test case 2: Choosing not to delete an existing recurring `Entry` after entering the deleteR command.**
-
-**Usage:**
-
-- Delete a Recurring Expense or Recurring
-  Income: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL] `
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
-- Dummy strings between `deleteR` and the first tag will not affect the program.
-- For the delete function, we can delete both the expense and income using the same command `deleteR`
-
-**Expected**
-
-- If there is one `Entry` that matches the query, it asks user if the user wants to delete the found `Entry`.
-    - When user inputs `n`, it exits the delete process.
-- If there are multiple entries that match the query, it asks the user to choose the index of `Entry` that the user
-  wants to delete from a given list.
-    - When user inputs `cancel`, it exits the delete process.
-
-**[EXPENSE and INCOME] Example of usage and expected output:**
-
-```
-deleteR n/net
-Is this what you want to delete?
-    Income | ENTERTAINMENT | 2021-12-03 | Netflix refund | $26.00 | MONTH | 2023-04-15
-Type "y" if yes. Type "n" if not.
-n
-Ok. I have cancelled the process.
-```
-
-```
-deleteR c/3
-Here is the list of items containing the keyword.
- Index |   Type  | Category  |    Date    |    Name     | Amount | Every |   Until
-   1   | Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH | 2023-04-15
-   2   | Expense | HOUSEHOLD | 2021-11-03 |    dryer    |-$30.00 | MONTH | 2023-04-15
-Enter the index of the item you want to delete. To cancel, type "cancel"
-cancel
-Ok. I have cancelled the process.
-```
-
-**Test case 3: Trying to delete a recurring `Entry` that does not exist.**
-
-**Usage:**
-
-- Query tags such that there are no entries that match all the specified fields.
-- Format: `deleteR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
-- At least one field must be specified. If the user prefers, additional tags can be added for greater specificity. The
-  fields can be specified in any order.
-- Dummy strings between `deleteR` and the first tag will not affect the program.
-- For the delete function, we can delete both the expense and income using the same command `deleteR`
-
-**Expected**
-
-- It tells that the `Entry` is not in list.
-
-**[EXPENSE and INCOME] Example of usage and expected output:**
-
-```
-deleteR n/dryer a/382 c/1
-Hmm.. That item is not in the list.
-```
-
-```
-deleteR n/yoghurt i/month
-Hmm.. That item is not in the list.
-```
-
-### <a name="Edit-recurring-entry"></a>Editing a recurring Entry
+### <a name="Edit-recurring-entry"></a>Editing a recurring `Entry`
 
 **Prerequisites**
 
@@ -828,154 +746,127 @@ Got it! I will update the fields accordingly!
 
 ### <a name="View"></a>Viewing entries
 
-**Prerequisites**
+1. **Prerequisites**: Multiple entries in the entry list.
 
-- The list must have been initialized.
+2. **Test case**: `view`
 
-**Test case 1: View with no fields specified.**
+   Expected:
+    - A table of all entries will be printed out.
+    
+    ```
+    view
+    Here is the list of your entries:
+      Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+    Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+    Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |    FOOD    | 2020-01-06 | Burger  |-$4.20  |       |
+                                     Net Total: |-$17.20
+    Here is the list of all recurring entries, where some were added to the above list:
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    ```
 
-**Usage:**
+3. **Test case**: `view income`
 
-- `view`
-- Invalid inputs that are not any of the below modifiers will not affect the program.
-    - `by`
-    - `month`
-    - `year`
-    - `from`
-    - `up/ascending`
+   Expected:
+    - A table of all income entries will be printed out.
 
-**Expected**
+    ```
+    view income
+    Here is the list of your entries:
+      Type  |  Category  |    Date    | Name  | Amount | Every |   Until
+    Income  | INVESTMENT | 2021-10-27 | Sales | $32.00 |       |
+                                   Net Total: | $32.00
+    Here is the list of applicable recurring entries, where some were added to the above list:
+    ```
 
-- Program would print a message to notify the user the viewing options that have been selected.
-- A table of entries that fulfill the viewing options will be printed out.
+4. **Test case**: `view month 4 year 2021`
 
-**Example of usage and expected output:**
+   Expected:
+    - Program would print a message to notify the user the viewing options that have been selected.
+    - A table of all entries in the year 2021 in APRIL will be printed out.
 
-```
-view
-Here is the list of your entries:
-  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
-Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
-Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |    FOOD    | 2020-01-06 | Burger  |-$4.20  |       |
-                                 Net Total: |-$17.20
-Here is the list of all recurring entries, where some were added to the above list:
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-```
+    ```
+    view month 4 year 2021
+    For the year 2021:
+    For the month of APRIL:
+    Here is the list of your entries:
+      Type  | Category |    Date    |  Name   | Amount | Every |   Until
+    Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+                                   Net Total: |-$15.00
+    Here is the list of recurring entries added to the above list:
+    Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    ```
 
-**Test case 2: View with some fields specified.**
+5. **Test case**: `view from 2021-03-25 2021-11-02 by amount ascending`
 
-**Usage:**
+   Expected:
+    - Program would print a message to notify the user the viewing options that have been selected.
+    - A table of all entries from 2021-03-25 to 2021-11-02 will be printed out sorted by ascending amount order.
 
-- `view income/expense by [Sort Type] month [month] year [year] from [Start Date] [End Date] up/ascending`
-- Any number of fields can be specified. If the user prefers, additional modifiers can be added for greater specificity.
-  The fields can be specified in any order other than `income/expense`, which has to be right after `view`.
+    ```
+    view from 2021-03-25 2021-11-02 by amount ascending
+    Here is the list of your entries:
+    Since 2021-03-25 to 2021-11-02:
+      Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+                                     Net Total: |-$13.00
+    Here is the list of recurring entries added to the above list:
+    Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+    ```
 
-**Expected**
+### <a name="deleteAll"></a>Deleting all Entries
 
-- Program would print a message to notify the user the viewing options that have been selected.
-- A table of entries that fulfill the viewing options will be printed out.
-- Optional fields that are missing would be set to the default pre-determined by the programme.
+1. **Prerequisites**: - The list must have items that have already been added.
 
-**Example of usage and expected output:**
+2. **Test case**: `deleteAll`
 
-```
-view income
-Here is the list of your entries:
-  Type  |  Category  |    Date    | Name  | Amount | Every |   Until
-Income  | INVESTMENT | 2021-10-27 | Sales | $32.00 |       |
-                               Net Total: | $32.00
-Here is the list of applicable recurring entries, where some were added to the above list:
-```
+   Expected:
+   - It will ask user if the user wants to delete all entries in the list.
+   - When user inputs `y`, it would delete all entries in the list.
+   - When user inputs `n`, it will abort the deletion.
 
-```
-view month 4 year 2021
-For the year 2021:
-For the month of APRIL:
-Here is the list of your entries:
-  Type  | Category |    Date    |  Name   | Amount | Every |   Until
-Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-                               Net Total: |-$15.00
-Here is the list of recurring entries added to the above list:
-Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-```
+    ```
+    deleteAll
+    Are you sure you want to delete all entries?
+    Type "y" if yes. Type "n" if not.
+    y
+    All entries successfully deleted.
+    ```
 
-```
-view from 2021-03-25 2021-11-02 by amount ascending
-Here is the list of your entries:
-Since 2021-03-25 to 2021-11-02:
-  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
-Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
-                                 Net Total: |-$13.00
-Here is the list of recurring entries added to the above list:
-Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-```
+3. **Test case**: `deleteAll normal`
 
-### <a name="delete"></a>Deleting all Entries
-
-**Prerequisites**
-
-- The list must have items that have already been added.
-
-**Test case 1: Deleting all existing entries.**
-
-**Usage:**
-
-- Delete all entries: `deleteAll`
-- Invalid inputs that are not `n` , `r`, `normal` or `recurring` will not affect the program.
-
-**Expected**
-
-- It will ask user if the user wants to delete all entries in the list.
-    - When user inputs `y`, it would delete all entries in the list.
+   Expected:
+    - It will ask user if the user wants to delete all entries in the list.
+    - When user inputs `y`, it would delete all normal entries in the list.
     - When user inputs `n`, it will abort the deletion.
 
-** Example of usage and expected output:**
+    ```
+    deleteAll normal
+    Are you sure you want to delete all entries?
+    Type "y" if yes. Type "n" if not.
+    y
+    All entries successfully deleted.
+    ```
 
-```
-deleteAll
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-y
-All entries successfully deleted.
-```
+4. **Test case**: `deleteall r`
 
-**Test case 2:  Only deleting all normal entries or all recurring entries.**
-
-**Usage:**
-
-- Delete all expenses or all incomes: `deleteAll [normal] [recurring]`
-- `normal` and `recurring` can be substituted with `n` and `r` respectively.
-- Invalid inputs that are not `n` , `r`, `normal` or `recurring` will not affect the program.
-
-**Expected**
-
-- It will ask user if the user wants to delete all entries in the particular list.
-    - When user inputs `y`, it would delete all entries in the list.
+   Expected:
+    - It will ask user if the user wants to delete all entries in the list.
+    - When user inputs `y`, it would delete all recurring entries in the list.
     - When user inputs `n`, it will abort the deletion.
 
-**Example of usage and expected output:**
-
-```
-deleteAll normal
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-y
-All entries successfully deleted.
-```
-
-```
-deleteAll r
-Are you sure you want to delete all entries?
-Type "y" if yes. Type "n" if not.
-n
-Delete aborted.
-```
+    ```
+    deleteall r
+    Are you sure you want to delete all entries?
+    Type "y" if yes. Type "n" if not.
+    n
+    Delete aborted.
+    ```
 
 ### <a name="Set-budget"></a>Setting budget
 
