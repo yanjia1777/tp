@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 //@@author pos0414
 
 /**
- * Class that deals with filtering out the entries that match the user query of fields
+ * Class that deals with filtering out the entries that match the user query of fields.
  */
 public class Filter {
     /**
-     * Return a list of entries whose names contain queried name string
+     * Return a list of entries whose names contain queried name string.
      * @param name Queried name string
      * @param listToFilter List of entries to check
      * @return Filtered list of entries whose names contain queried name string
@@ -29,7 +29,7 @@ public class Filter {
     }
 
     /**
-     * Return a list of entries whose dates are same as the queried date
+     * Return a list of entries whose dates are same as the queried date.
      * @param date Queried date
      * @param listToFilter List of entries to check
      * @return Filtered list of entries whose dates are same as the queried date
@@ -43,7 +43,7 @@ public class Filter {
     }
 
     /**
-     * Return a list of entries whose end dates are same as the queried date
+     * Return a list of entries whose end dates are same as the queried date.
      * @param endDate Queried date
      * @param listToFilter List of entries to check
      * @return Filtered list of entries whose end dates are same as the queried date
@@ -57,7 +57,7 @@ public class Filter {
     }
 
     /**
-     * Return a list of entries whose intervals are same as the queried interval
+     * Return a list of entries whose intervals are same as the queried interval.
      * @param interval Queried interval
      * @param listToFilter List of entries to check
      * @return Filtered list of entries whose intervals are same as the queried ineterval
@@ -71,7 +71,7 @@ public class Filter {
     }
 
     /**
-     * Return a list of entries whose amounts are same as the queried amount(double)
+     * Return a list of entries whose amounts are same as the queried amount(double).
      * @param amount Queried amount (double)
      * @param listToFilter List of entries to check
      * @return Filtered list of entries whose amounts are same as the queried amount
@@ -85,7 +85,7 @@ public class Filter {
     }
 
     /**
-     * Return a list of entries whose category numbers are same as the queried category number
+     * Return a list of entries whose category numbers are same as the queried category number.
      * @param category Queried category number
      * @param listToFilter List of entries to check
      * @return Filtered list of entries whose category numbers are same as the queried category number

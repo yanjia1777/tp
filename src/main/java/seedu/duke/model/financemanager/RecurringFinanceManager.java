@@ -469,7 +469,7 @@ public class RecurringFinanceManager extends FinanceManager {
 
     /**
      * Checks if a given LocalDate is between the recurring period (startRecurringDate to endRecurringDate) as well as
-     * between the query period (startDate to endDate)
+     * between the query period (startDate to endDate).
      * @param currentDate LocalDate to be checked if ii is between the two periods
      * @param startDate Starting date of the query period
      * @param endDate Ending date of the query period

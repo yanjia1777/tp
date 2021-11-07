@@ -23,7 +23,7 @@ public class AddRecurringCommand extends Command {
     }
 
     /**
-     *
+     *Adds a recurring to the list and saves the data to local data file.
      * @param normalFinanceManager Not used here, for general use in command classes
      * @param recurringFinanceManager Used to save data for normal entries' list
      * @param budgetManager Not used here, for general use in command classes

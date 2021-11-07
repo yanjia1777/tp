@@ -8,7 +8,7 @@ import java.util.logging.Level;
 
 //@@author pos0414
 /**
- * Class used to log information
+ * Class used to log information.
  */
 public class MintLogger {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

@@ -51,9 +51,8 @@ public class ValidityChecker {
             + "[dd MMM yyyy][d MMM yyyy][dd MMM yy][d MMM yy]");
 
     //@@author pos0414
-
     /**
-     * Check if given string is empty/blank
+     * Check if given string is empty/blank.
      * @param name Name in string
      * @throws MintException Name is empty
      */
@@ -66,7 +65,7 @@ public class ValidityChecker {
     }
 
     /**
-     * Check if given amount is a non-number or too large (> 1M)
+     * Check if given amount is a non-number or too large (>= 1M).
      * @param amountStr Amount in string
      * @throws MintException When amountStr is empty, non-number, or too large
      */
@@ -83,7 +82,7 @@ public class ValidityChecker {
     }
 
     /**
-     * Check if given date is before year 2000, after year 2200, or invalid date
+     * Check if given date is before year 2000, after year 2200, or invalid date.
      * @param dateStr Date in string
      * @throws MintException When given date is before year 2000, after year 2200, or invalid form of date
      */
@@ -211,7 +210,7 @@ public class ValidityChecker {
     }
 
     /**
-     * Checks the validity of the fields(Tags) the user entered, and returns the valid tags
+     * Checks the validity of the fields(Tags) the user entered, and returns the valid tags.
      * @param parser Parser object that contains the string parsed forms of the fields
      * @param userInput User input String
      * @param mandatoryTags Must-have tags required by commands

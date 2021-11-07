@@ -214,7 +214,7 @@ public class Ui {
     //@@author pos0414
 
     /**
-     * Return True if user says "y", false if user says "n"
+     * Return True if user says "y", false if user says "n".
      * @return True if user says "y", false if user says "n"
      */
     public boolean isConfirmed() {
