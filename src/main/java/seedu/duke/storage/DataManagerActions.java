@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 //@@author Yitching
 public class DataManagerActions {
-    public static final int NUMBER_OF_CATEGORIES = 8;
-    public static final String REGEX_TO_REPLACE = "[\\p{Alpha}, [\\p{Punct}&&[^.]]+]";
     public static final String TEXT_DELIMITER = "|";
     public static final String NORMAL_FILE_PATH = "data" + File.separator + "Mint.txt";
     public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
@@ -66,7 +64,7 @@ public class DataManagerActions {
      * @param filesToCreate arrayList containing all the paths of the files that need to be created.
      */
     private void createNewFiles(String[] filesToCreate) throws IOException, MintException {
-        Boolean isPrinted = false;
+        boolean isPrinted = false;
         for (String file: filesToCreate) {
             assert (file != null);
             File myObj = new File(file);

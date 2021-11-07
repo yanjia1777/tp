@@ -37,6 +37,7 @@ public class RecurringFinanceManager extends FinanceManager {
         recurringEntryList.add(entry);
     }
 
+    //@@author pos0414
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags,
                                                   Entry query) throws MintException {
@@ -88,8 +89,8 @@ public class RecurringFinanceManager extends FinanceManager {
     @Override
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged = 0;
-        String originalEntryStr = "";
+        int indexToBeChanged;
+        String originalEntryStr;
         originalEntryStr = overWriteString((RecurringEntry) entry);
         if (recurringEntryList.contains(entry)) {
             indexToBeChanged = recurringEntryList.indexOf(entry);
@@ -180,16 +181,6 @@ public class RecurringFinanceManager extends FinanceManager {
         recurringEntryList.set(index, recurringEntry);
     }
 
-    //@@author
-    public String getStringToUpdate(int index) {
-        Entry entry = recurringEntryList.get(index);
-        RecurringEntry recurringEntry = (RecurringEntry) entry;
-        return recurringEntry.getType() + "|" + recurringEntry.getCategory().ordinal()
-                + "|" + recurringEntry.getDate() + "|" + recurringEntry.getName()
-                + "|" + recurringEntry.getAmount() + "|" + recurringEntry.getInterval()
-                + "|" + recurringEntry.getEndDate();
-    }
-
     public static String overWriteString(RecurringEntry entry) {
         return entry.getType() + "|" + entry.getCategory().ordinal() + "|" + entry.getDate() + "|" + entry.getName()
                 + "|" + entry.getAmount() + "|" + entry.getInterval() + "|" + entry.getEndDate();
@@ -209,6 +200,7 @@ public class RecurringFinanceManager extends FinanceManager {
         }
     }
 
+    //@@author pos0414
     public LocalDate createLocalDateWithYearMonth(YearMonth yearMonth, int day) {
         assert day >= 1 && day <= 31 : "Day should be within 1 - 31";
         String dateToString = yearMonth.toString() + "-" + day;
@@ -426,6 +418,7 @@ public class RecurringFinanceManager extends FinanceManager {
         appendEntryBetweenTwoDates(entryList, dummyList, earliestDate, LocalDate.now());
     }
 
+    //@@author yanjia1777
     public void deleteAll() {
         recurringEntryList.clear();
     }
