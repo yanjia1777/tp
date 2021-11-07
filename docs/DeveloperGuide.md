@@ -852,14 +852,17 @@ Got it! I will update the fields accordingly!
 **Example of usage and expected output:**
 
 ```
-
-view Here is the list of your entries:
-Type | Category | Date | Name | Amount | Every | Until Income | INVESTMENT | 2021-10-27 | Sales | $32.00 | | Expense |
-BEAUTY | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02 Expense | BEAUTY | 2021-05-04 | Massage |-$15.00 | MONTH |
-2021-07-02 Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02 Expense | FOOD | 2020-01-06 | Burger
-|-$4.20 | | Net Total: |-$17.20 Here is the list of all recurring entries, where some were added to the above list:
-Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-
+view
+Here is the list of your entries:
+  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |    FOOD    | 2020-01-06 | Burger  |-$4.20  |       |
+                                 Net Total: |-$17.20
+Here is the list of all recurring entries, where some were added to the above list:
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 ```
 
 **Test case 2: View with some fields specified.**
@@ -879,34 +882,38 @@ Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 **Example of usage and expected output:**
 
 ```
-
-view income Here is the list of your entries:
-Type | Category | Date | Name | Amount | Every | Until Income | INVESTMENT | 2021-10-27 | Sales | $32.00 | | Net Total:
-| $32.00 Here is the list of applicable recurring entries, where some were added to the above list:
-
+view income
+Here is the list of your entries:
+  Type  |  Category  |    Date    | Name  | Amount | Every |   Until
+Income  | INVESTMENT | 2021-10-27 | Sales | $32.00 |       |
+                               Net Total: | $32.00
+Here is the list of applicable recurring entries, where some were added to the above list:
 ```
 
 ```
-
-view month 4 year 2021 For the year 2021:
+view month 4 year 2021
+For the year 2021:
 For the month of APRIL:
 Here is the list of your entries:
-Type | Category | Date | Name | Amount | Every | Until Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH |
-2021-07-02 Net Total: |-$15.00 Here is the list of recurring entries added to the above list:
-Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-
+  Type  | Category |    Date    |  Name   | Amount | Every |   Until
+Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+                               Net Total: |-$15.00
+Here is the list of recurring entries added to the above list:
+Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 ```
 
 ```
-
-view from 2021-03-25 2021-11-02 by amount ascending Here is the list of your entries:
+view from 2021-03-25 2021-11-02 by amount ascending
+Here is the list of your entries:
 Since 2021-03-25 to 2021-11-02:
-Type | Category | Date | Name | Amount | Every | Until Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH |
-2021-07-02 Expense | BEAUTY | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02 Expense | BEAUTY | 2021-06-04 | Massage
-|-$15.00 | MONTH | 2021-07-02 Income | INVESTMENT | 2021-10-27 | Sales | $32.00 | | Net Total: |-$13.00 Here is the list
-of recurring entries added to the above list:
-Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
-
+  Type  |  Category  |    Date    |  Name   | Amount | Every |   Until
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-05-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Expense |   BEAUTY   | 2021-06-04 | Massage |-$15.00 | MONTH | 2021-07-02
+Income  | INVESTMENT | 2021-10-27 |  Sales  | $32.00 |       |
+                                 Net Total: |-$13.00
+Here is the list of recurring entries added to the above list:
+Expense |   BEAUTY   | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 ```
 
 ### <a name="delete"></a>Deleting all Entries
@@ -931,10 +938,11 @@ Expense | BEAUTY | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
 ** Example of usage and expected output:**
 
 ```
-
-deleteAll Are you sure you want to delete all entries? Type "y" if yes. Type "n" if not. y All entries successfully
-deleted.
-
+deleteAll
+Are you sure you want to delete all entries?
+Type "y" if yes. Type "n" if not.
+y
+All entries successfully deleted.
 ```
 
 **Test case 2:  Only deleting all normal entries or all recurring entries.**
@@ -954,16 +962,19 @@ deleted.
 **Example of usage and expected output:**
 
 ```
-
-deleteAll normal Are you sure you want to delete all entries? Type "y" if yes. Type "n" if not. y All entries
-successfully deleted.
-
+deleteAll normal
+Are you sure you want to delete all entries?
+Type "y" if yes. Type "n" if not.
+y
+All entries successfully deleted.
 ```
 
 ```
-
-deleteAll r Are you sure you want to delete all entries? Type "y" if yes. Type "n" if not. n Delete aborted.
-
+deleteAll r
+Are you sure you want to delete all entries?
+Type "y" if yes. Type "n" if not.
+n
+Delete aborted.
 ```
 
 ### <a name="Set-budget"></a>Setting Budgets
