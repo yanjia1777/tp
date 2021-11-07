@@ -1,6 +1,5 @@
 package seedu.duke.utility;
 
-//@@author pos0414
 public class MintException extends Exception {
     public static final String LINE_SEPARATOR = System.lineSeparator();
     public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
