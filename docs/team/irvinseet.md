@@ -18,30 +18,30 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 2. Implementation of enumerations
 
-- `ExpenseCategory` and `IncomeCategory` which allows the user to assign a category to their entries to easily query
+  - `ExpenseCategory` and `IncomeCategory` which allows the user to assign a category to their entries to easily query
   their data or set budgets.
-- Printing of category list when user key in `cat`
+  - Printing of category list when user key in `cat`
 
 3. Implemented budget setting -`Budget`: base class which allows user to set spending limit and fetch spending related
    to respective budgets.
 
-- `BudgetManager` which handles all `Budget`-related actions such as fetching monthly spending and limit.
+  - `BudgetManager` which handles all `Budget`-related actions such as fetching monthly spending and limit.
 
 4. Ui
 
-- `help` message.
-- `Budget`-related messages.
-- Check and handled unsafe user input using regex.
+  - `help` message.
+  - `Budget`-related messages.
+  - Check and handled unsafe user input using regex.
 
 5. Parser
 
-- User friendliness improvements
-    - initialisation of fields when user do not specify some of the fields. e.g, `date` initialised to `LocalDate.now()`
-      and `category` initialised to `OTHERS`
-    - `dateFormatter` which takes.
-      in [10 different formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
-    - `parseInputByTags` which parse user inputs by tags regardless of order using regex.
-- Setting categories of entries.
+  - User friendliness improvements
+      - initialisation of fields when user do not specify some of the fields. e.g, `date` initialised to `LocalDate.now()`
+        and `category` initialised to `OTHERS`
+      - `dateFormatter` which takes.
+        in [10 different formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
+      - `parseInputByTags` which parse user inputs by tags regardless of order using regex.
+  - Setting categories of entries.
 
 ### Contributions to the UG
 
