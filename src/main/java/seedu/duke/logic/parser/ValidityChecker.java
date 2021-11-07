@@ -147,8 +147,9 @@ public class ValidityChecker {
     }
 
     static void identifyDuplicateTags(Parser parser, String userInput) throws MintException {
-        String[] tags = parser.isRecurring ? new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG, INTERVAL_TAG,
-                END_DATE_TAG} : new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG};
+        String[] tags = parser.isRecurring
+                ? new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG, INTERVAL_TAG, END_DATE_TAG}
+                : new String[]{NAME_TAG, DATE_TAG, AMOUNT_TAG, CATEGORY_TAG};
 
         for (String tag : tags) {
             int count = 0;
@@ -167,8 +168,9 @@ public class ValidityChecker {
             String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
-        String[] tags = parser.isRecurring ? new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG,
-                SPACED_AMOUNT_TAG, SPACED_CATEGORY_TAG, SPACED_INTERVAL_TAG, SPACED_END_DATE_TAG}
+        String[] tags = parser.isRecurring
+                ? new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG, SPACED_AMOUNT_TAG,
+                SPACED_CATEGORY_TAG, SPACED_INTERVAL_TAG, SPACED_END_DATE_TAG}
                 : new String[]{SPACED_NAME_TAG, SPACED_DATE_TAG, SPACED_AMOUNT_TAG, SPACED_CATEGORY_TAG};
         List<String> mandatoryTagsToBeChecked = Arrays.asList(mandatoryTags);
 
