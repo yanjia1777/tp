@@ -511,7 +511,7 @@ public class Parser {
         LocalDate endDate = recurringEntry.getEndDate();
         Interval interval = recurringEntry.getInterval();
         String dateStr = date.toString();
-        String amountStr = Double.toString(amount);
+        String amountStr = String.valueOf(amountTo2SF(Double.toString(amount)));
         String endDateStr = endDate.toString();
         String intervalStr = interval.toString();
         String catNumStr = String.valueOf(entry.getCategory().ordinal());
@@ -536,7 +536,7 @@ public class Parser {
         double amount = entry.getAmount();
         String catNumStr = String.valueOf(entry.getCategory().ordinal());
         String dateStr = date.toString();
-        String amountStr = Double.toString(amount);
+        String amountStr = String.valueOf(amountTo2SF(Double.toString(amount)));
         String[] entryFieldsToAdd = {name, dateStr, amountStr, catNumStr};
         String[] entryFieldKeys = {"name", "date", "amount", "catNum"};
         HashMap<String, String> entryFields = new HashMap<>();
