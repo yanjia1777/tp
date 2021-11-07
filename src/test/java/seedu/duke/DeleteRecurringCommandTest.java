@@ -33,17 +33,23 @@ public class DeleteRecurringCommandTest {
     RecurringListDataManager dummyRecurringListDataManager = new RecurringListDataManager();
     BudgetDataManager dummyBudgetDataManager = new BudgetDataManager();
 
+    RecurringExpense targetEntry;
+    RecurringExpense dummyEntry;
+    LocalDate date = LocalDate.parse("2021-10-17");
+    LocalDate endDate = LocalDate.parse("2022-10-17");
 
-    @Test
-    public void execute_multipleExpenseMatch_success() {
-        LocalDate date = LocalDate.parse("2021-10-17");
-        LocalDate endDate = LocalDate.parse("2022-10-17");
+    public void setup() {
         RecurringExpense targetEntry = new RecurringExpense("Cocoa", date, 3.9, ExpenseCategory.FOOD,
                 Interval.YEAR, endDate);
         RecurringExpense dummyEntry = new RecurringExpense("Nada de coco", date, 5.0, ExpenseCategory.FOOD,
-                Interval.YEAR, endDate);
+                Interval.MONTH, endDate);
         entryList.add(targetEntry);
         entryList.add(dummyEntry);
+    }
+
+    @Test
+    public void execute_multipleExpenseMatch_success() {
+        setup();
         ArrayList<String> tags = new ArrayList<>();
         tags.add("n/");
         Entry query = new RecurringExpense("coco", null, 0.0, null, null, null);
@@ -60,14 +66,7 @@ public class DeleteRecurringCommandTest {
 
     @Test
     public void execute_queryIntervalSingleMatch_deleteTargetSuccess() {
-        LocalDate date = LocalDate.parse("2021-10-17");
-        LocalDate endDate = LocalDate.parse("2022-10-17");
-        RecurringExpense targetEntry = new RecurringExpense("Cocoa", date, 3.9, ExpenseCategory.FOOD,
-                Interval.YEAR, endDate);
-        RecurringExpense dummyEntry = new RecurringExpense("Nada de coco", date, 5.0, ExpenseCategory.FOOD,
-                Interval.MONTH, endDate);
-        entryList.add(targetEntry);
-        entryList.add(dummyEntry);
+        setup();
         ArrayList<String> tags = new ArrayList<>();
         tags.add("i/");
         Entry query = new RecurringExpense(null, null, 0.0, null, Interval.YEAR, null);
@@ -84,14 +83,7 @@ public class DeleteRecurringCommandTest {
 
     @Test
     public void execute_queryEndDateMultipleMatch_deleteTargetSuccess() {
-        LocalDate date = LocalDate.parse("2021-10-17");
-        LocalDate endDate = LocalDate.parse("2022-10-17");
-        RecurringExpense targetEntry = new RecurringExpense("Cocoa", date, 3.9, ExpenseCategory.FOOD,
-                Interval.YEAR, endDate);
-        RecurringExpense dummyEntry = new RecurringExpense("Nada de coco", date, 5.0, ExpenseCategory.FOOD,
-                Interval.MONTH, endDate);
-        entryList.add(targetEntry);
-        entryList.add(dummyEntry);
+        setup();
         ArrayList<String> tags = new ArrayList<>();
         tags.add("e/");
         Entry query = new RecurringExpense(null, null, 0.0, null, null, endDate);
@@ -108,14 +100,7 @@ public class DeleteRecurringCommandTest {
 
     @Test
     public void execute_queryNameAndAmountSingleMatch_deleteTargetSuccess() {
-        LocalDate date = LocalDate.parse("2021-10-17");
-        LocalDate endDate = LocalDate.parse("2022-10-17");
-        RecurringExpense targetEntry = new RecurringExpense("Cocoa", date, 3.9, ExpenseCategory.FOOD,
-                Interval.YEAR, endDate);
-        RecurringExpense dummyEntry = new RecurringExpense("Nada de coco", date, 5.0, ExpenseCategory.FOOD,
-                Interval.MONTH, endDate);
-        entryList.add(targetEntry);
-        entryList.add(dummyEntry);
+        setup();
         ArrayList<String> tags = new ArrayList<>();
         tags.add("n/");
         tags.add("a/");
