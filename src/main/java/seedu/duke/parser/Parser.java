@@ -56,9 +56,6 @@ public class Parser {
     public static final String STRING_END_DATE = "End date of the recurring period (should be after the start date"
             + " but within valid range)\n";
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
-    public static final int CAT_NUM_FOOD_INT = 0;
-    public static final int CAT_NUM_OTHERS_INT = 7;
-    public static final String CAT_NUM_FOOD = "0";
     public static final String CAT_NUM_OTHERS = "7";
     public static final String ADD_ENTRY = "add";
     public static final String ADD_RECURRING = "addR";
@@ -74,7 +71,6 @@ public class Parser {
     public static final String DELETEALL2 = "deleteall";
     public static final String HELP = "help";
     public static final String EXIT = "exit";
-    private static final String ERROR_MISSING_PARAMS = "Seems like you forgot to include your tags";
     public static final String SPACE = "\\s+";
     protected String command;
     protected String name;
@@ -94,7 +90,6 @@ public class Parser {
     protected boolean isRecurring = false;
     protected String[] argumentsArray;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final String FILE_PATH = "data" + File.separator + "Mint.txt";
     public static DateTimeFormatter dateFormatter
             = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy-M-dd][yyyy-MM-d][yyyy-M-d]"
             + "[dd-MM-yyyy][d-MM-yyyy][d-M-yyyy][dd-M-yyyy]"
@@ -304,7 +299,6 @@ public class Parser {
         }
     }
 
-    //@@author yanjia1777
     public Entry checkType() {
         if (Objects.equals(argumentsArray[1], "income")) {
             return createIncomeObject();
@@ -327,6 +321,7 @@ public class Parser {
         return new Expense(name, date, amount, expenseCategory);
     }
 
+    //@@author yanjia1777
     private Income createIncomeObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
         amount = Double.parseDouble(amountStr);
@@ -387,7 +382,7 @@ public class Parser {
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
+            Entry entry = createIncomeObject();
             assert Objects.requireNonNull(validTags).size() >= 1 : "There should be at least one valid tag";
             return new DeleteCommand(validTags, entry);
         } catch (MintException e) {
@@ -416,7 +411,7 @@ public class Parser {
             initIntervalStr();
             initEndDateStr();
             ArrayList<String> validTags = parseInputByTags(userInput);
-            Entry entry = (type == Type.Income) ? createIncomeObject() : createExpenseObject();
+            Entry entry = createIncomeObject();
             assert validTags.size() >= 1 : "There should be at least one valid tag";
             return new EditCommand(validTags, entry);
         } catch (MintException e) {
@@ -451,8 +446,7 @@ public class Parser {
             if (argumentsArray.length <= 1) {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
             }
-            RecurringEntry entry = (type == Type.Income)
-                    ? createRecurringIncomeObject() : createRecurringExpenseObject();
+            RecurringEntry entry = createRecurringIncomeObject();
             return new DeleteRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
@@ -469,8 +463,7 @@ public class Parser {
             isRecurring = true;
             ArrayList<String> validTags = parseInputByTags(userInput);
             assert validTags.size() >= 1 : "There should be at least one valid tag";
-            RecurringEntry entry = (type == Type.Income)
-                    ? createRecurringIncomeObject() : createRecurringExpenseObject();
+            RecurringEntry entry = createRecurringIncomeObject();
             return new EditRecurringCommand(validTags, entry);
         } catch (MintException e) {
             return new InvalidCommand(e.getMessage());
@@ -618,6 +611,7 @@ public class Parser {
         }
     }
 
+    //@@author pos0414
     public Command parseCommand(String userInput) {
         this.command = parserExtractCommand(userInput);
         switch (command) {

@@ -19,9 +19,7 @@ import java.util.regex.Pattern;
 public class Ui {
     protected static final String INDENT = "    ";
     public static final String SOLID_LINE = "_______________________________________________________________________\n";
-    public static final String LINE = "    ____________________________________________________________";
     public static final String SUCCESSFUL_EDIT_MESSAGE = "Got it! I will update the fields accordingly!";
-    protected static final String LINE_SEPARATOR = System.lineSeparator();
     public static final int MIN_NAME_INDENTATION = 4;
     public static final int MIN_AMOUNT_INDENTATION = 5;
     public static final int MIN_SPENDING_INDENTATION = 6;

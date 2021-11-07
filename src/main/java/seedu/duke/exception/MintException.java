@@ -3,9 +3,6 @@ package seedu.duke.exception;
 //@@author pos0414
 public class MintException extends Exception {
     public static final String LINE_SEPARATOR = System.lineSeparator();
-    public static final String ERROR_INVALID_NUMBER = "Invalid number entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DATE_EDIT = "Invalid date entered! Unable to edit expense.";
-    public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
     public static final String ERROR_INVALID_SORTTYPE = "Please input how you want the list to be sorted.";
     public static final String ERROR_NO_DELIMETER = "Invalid command entered!";
     public static final String ERROR_NO_NAME = "Please add the description of the item!";

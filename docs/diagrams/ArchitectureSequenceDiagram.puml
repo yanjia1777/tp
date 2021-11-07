@@ -25,7 +25,9 @@ end box
 activate Duke
 Duke -> Ui: readUserInput()
 activate Ui
-User -> Ui : delete n/burger
+User -> Ui : delete n/burger a/15 d/2021-10-17
+activate Ui
+deactivate Ui
 Ui --> Duke
 deactivate Ui
 Duke -> Parser : parseCommand(userInput)
@@ -52,7 +54,7 @@ User -> Ui : 3
 Ui --> NormalFinanceManager
 deactivate Ui
 create Entry
-NormalFinanceManager -> Entry : create entry
+NormalFinanceManager -> Entry : create EntryToBeDeleted
 activate Entry
 Entry --> NormalFinanceManager
 deactivate Entry
@@ -69,7 +71,9 @@ NormalListDataManager --> DeleteCommand
 deactivate NormalListDataManager
 DeleteCommand -> Ui : printEntryDeleted(deletedEntry)
 activate Ui
-Ui --> User
+Ui -> User
+Ui --> DeleteCommand
+
 deactivate Ui
 DeleteCommand --> Duke
 deactivate DeleteCommand
