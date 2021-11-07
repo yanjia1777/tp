@@ -20,7 +20,7 @@ public enum Interval {
         case "YEAR":
             return YEAR;
         default:
-            throw new MintException("You entered invalid interval");
+            throw new MintException(MintException.ERROR_INVALID_INTERVAL);
         }
     }
 }

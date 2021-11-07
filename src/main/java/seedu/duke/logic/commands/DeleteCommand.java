@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class DeleteCommand extends Command {
     private final Entry query;
     private final ArrayList<String> tags;
-    public static final int SIZE_NO_MATCH = 0;
-    public static final int SIZE_ONE_MATCH = 1;
-    boolean isDelete = true;
+    static final int SIZE_NO_MATCH = 0;
+    static final int SIZE_ONE_MATCH = 1;
+    final boolean isDelete = true;
 
     public DeleteCommand(ArrayList<String> tags, Entry query) {
         this.query = query;
@@ -33,7 +33,7 @@ public class DeleteCommand extends Command {
             NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
             RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
-            Entry entryToDelete = determineEntryToDelete(normalFinanceManager, ui);
+            Entry entryToDelete = determineEntryToProcess(normalFinanceManager, ui, isDelete);
             if (entryToDelete != null) {
                 normalFinanceManager.deleteEntry(entryToDelete);
                 String stringToDelete = NormalFinanceManager.overWriteString(entryToDelete);
@@ -45,7 +45,7 @@ public class DeleteCommand extends Command {
         }
     }
 
-    public Entry determineEntryToDelete(FinanceManager financeManager, Ui ui) throws MintException {
+    public Entry determineEntryToProcess(FinanceManager financeManager, Ui ui, boolean isDelete) throws MintException {
         try {
             ArrayList<Entry> filteredList = financeManager.filterEntryByKeywords(tags, query);
             switch (filteredList.size()) {
@@ -53,16 +53,16 @@ public class DeleteCommand extends Command {
                 ui.printNoMatchingEntryMessage();
                 return null;
             case SIZE_ONE_MATCH:
-                return confirmToDeleteOneMatch(filteredList, ui);
+                return confirmToProcessOneMatch(filteredList, ui, isDelete);
             default:
-                return confirmToDeleteMultipleMatch(filteredList, ui);
+                return confirmToProcessMultipleMatch(filteredList, ui, isDelete);
             }
         } catch (MintException e) {
             throw new MintException(e.getMessage());
         }
     }
 
-    public Entry confirmToDeleteOneMatch(ArrayList<Entry> filteredList, Ui ui) {
+    public Entry confirmToProcessOneMatch(ArrayList<Entry> filteredList, Ui ui, boolean isDelete) {
         if (ui.isConfirmedToDeleteOrEdit(filteredList.get(0), isDelete)) {
             return filteredList.get(0);
         } else {
@@ -71,7 +71,7 @@ public class DeleteCommand extends Command {
         }
     }
 
-    public Entry confirmToDeleteMultipleMatch(ArrayList<Entry> filteredList, Ui ui) {
+    public Entry confirmToProcessMultipleMatch(ArrayList<Entry> filteredList, Ui ui, boolean isDelete) {
         ui.viewGivenList(filteredList);
         int index = ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
         if (index >= 0) {
