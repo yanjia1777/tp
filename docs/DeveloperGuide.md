@@ -113,14 +113,15 @@ The `Entry` component,
 ![](images/Budget.png)
 
 The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of the seven `ExpenseCategory`'s.
+
 - `Budget` is an abstract class
 - `XYZBudget`(`XYZ` is a placeholder for the specified budget e.g., `FoodBudget`), inherits `Budget` and its attributes.
 - `BudgetManager` stores a list of the seven `ExpenseCategory`'s.
 - Currently, `BudgetManager` only interacts in 2 ways
     - when user want to set budget for a specific category
-    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or 
+    - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or
       `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
-    
+
 ### <a name="storage"></a>Storage Component
 
 **How the `Storage` component works:**
@@ -163,6 +164,7 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 ## <a name="scope"></a>Product scope
 
 ### <a name="target"></a>Target user profile
+
 - has a need to track their expenses and savings
 - prefer desktop apps over other types
 - can type fast
@@ -260,28 +262,34 @@ I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **[EXPENSE] Example of usage and expected output:**
+
 ```
 add a/15 d/2021-12-03 n/Textbook
 I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 ```
+
 ```
 add a/5 n/Chicken Rice c/0
 I've added: Expense  | FOOD | 2021-10-27 | Chicken Rice | $5.00
 ```
+
 ```
 add n/Cheese Burger a/23.5
 I've added: Expense  | OTHERS | 2021-10-27 | Cheese Burger | $23.50
 ```
+
 **[INCOME] Example of usage and expected output:**
 
 ```
 add income a/15 d/2021-12-03 n/Selling Textbooks
 I've added: Expense  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 ```
+
 ```
 add income a/5 n/Selling Textbooks c/0
 I've added: Income  | ALLOWANCE | 2021-10-27 | Selling Textbooks | $5.00
 ```
+
 ```
 add income n/Selling Textbooks a/23.5
 I've added: Income  | OTHERS | 2021-10-27 | Selling Textbooks | $23.50
@@ -735,6 +743,7 @@ What would you like to edit?
 a/20
 Got it! I will update the fields accordingly!
 ```
+
 ```
 editR n/Full-time job
 Here is the list of items containing the keyword.
@@ -750,6 +759,7 @@ What would you like to edit?
 n/part-time job
 Got it! I will update the fields accordingly!
 ```
+
 ### <a name="set"></a>Adding Spending Limits
 
 **Prerequisites**
@@ -760,7 +770,7 @@ Got it! I will update the fields accordingly!
 
 **Usage:**
 
-- Add spending limit to desired category: `set c/[catNum] a/[amount]`
+- Add spending limit to desired category: `set c/CATEGORY_NUMBER a/AMOUNT`
 - All fields must be specified
 
 **Expected**
@@ -768,15 +778,41 @@ Got it! I will update the fields accordingly!
 - If added correctly, a spending limit would be applied to the desired category.
 
 **Example of usage and expected output:**
+
 ```
 set c/0 a/100
 Budget for FOOD set to $100.00
 ```
+
+**Test case 2: Adding an item that exceeds 80% of spending limit.**
+
+**Usage:**
+
+- Add spending limit to desired category: `set c/CATEGORY_NUMBER a/AMOUNT`
+- All fields must be specified
+- Now, add an `Expense` or `RecurringExpense` which will bring your monthly spending in its respective category to 80%
+of the budget set aside.
+
+**Expected**
+
+- If added correctly, a warning message should appear to warn the user to watch their spending
+
+**Example of usage and expected output:**
+
+```
+set c/0 a/100
+Budget for FOOD set to $100.00
+add n/haidilao c/0 a/80.01
+I've added: Expense  | FOOD | 2021-11-07 | haidilao | $80.01
+Slow down, you've set aside $100.00 for FOOD, but you already spent $80.01.
+```
+
 ### <a name="View-spending-limits"></a>Viewing Spending Limits
 
 **Prerequisites**
 
-- The list must have expenses that have already been added.
+- Assuming list of entries is empty. (use `deleteAll` function to have an empty list).
+- Assuming only budget of "Food" is set to $100 in the previous step.
 
 **Test case 1: Viewing a spending limit.**
 
