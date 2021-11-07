@@ -220,9 +220,9 @@ A smart and simple way to keep track of your expenses
 
 **Usage:**
 
-- Add an Expense: `add a/[amount] n/[description] d/[date] c/[categoryNumber]`
-- Add an Income: `add income a/[amount] n/[description] d/[date] c/[categoryNumber]`
-- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers,
+- Add an Expense: `add a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Add an Income: `add income a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Some fields such as `n/DESCRIPTION` and `a/AMOUNT` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
@@ -248,9 +248,9 @@ I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 
 **Usage:**
 
-- Add an Expense: `add [include some fields of the expense you would like to add]`
-- Add an Income: `add income [include some fields of the income you would like to add]`
-- Some fields such as `n/[description]` and `a/[amount]` must be specified. If the user prefers,
+- Add an Expense: `add a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Add an Income: `add income a/AMOUNT n/DESCRIPTION [d/DATE] [c/CATEGORY]`
+- Some fields such as `n/DESCRIPTION` and ` a/AMOUNT` must be specified. If the user prefers,
   additional fields can be added for greater specificity. The fields can be specified in any order.
 
 **Expected**
@@ -412,8 +412,7 @@ Hmm.. That item is not in the list.
 
 **Usage:**
 
-- Editing an Expense: `edit [include all fields of expense you would like to edit]`
-- Editing an Income: `edit [include all fields of income you would like to edit]`
+- Editing an Expense or Income: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
@@ -455,8 +454,7 @@ Got it! I will update the fields accordingly!
 
 **Usage:**
 
-- Editing an Expense: `edit [include all fields of expense you would like to edit]`
-- Editing an Income: `edit income [include all fields of income you would like to edit]`
+- Editing an Expense or Income: `edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
@@ -674,7 +672,7 @@ Hmm.. That item is not in the list.
 
 **Usage:**
 
-- Editing a Recurring item: `editR a/[amount] n/[description] d/[date] c/[categoryNumber] i/[Interval] e/[end date]`
+- Editing a Recurring Expense or Recurring Income: `editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
@@ -714,8 +712,7 @@ Got it! I will update the fields accordingly!
 
 **Usage:**
 
-- Editing a Recurring Expense:`editR [include some fields of the recurring expense you would like to edit]`
-- Editing a Recurring Income:`editR [include some fields of the recurring income you would like to edit]`
+- Editing a Recurring Expense or Recurring Income:`editR [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY] [e/END_DATE] [i/INTERVAL]`
 - At least one field must be specified. If the user prefers, additional tags can be added for greater.
   specificity. The fields can be specified in any order.
 - For the edit function, we can edit both the expense and income using the same command `editR`
