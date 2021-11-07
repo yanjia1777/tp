@@ -1,16 +1,16 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.Logic.commands.DeleteCommand;
-import seedu.duke.Model.entries.Entry;
-import seedu.duke.Model.entries.Expense;
-import seedu.duke.Model.entries.ExpenseCategory;
-import seedu.duke.Model.entries.Income;
-import seedu.duke.Model.entries.IncomeCategory;
-import seedu.duke.Utility.MintException;
-import seedu.duke.Model.financeManager.NormalFinanceManager;
-import seedu.duke.Ui.Ui;
-import seedu.duke.Ui.UiStub;
+import seedu.duke.logic.commands.DeleteCommand;
+import seedu.duke.model.entries.Entry;
+import seedu.duke.model.entries.Expense;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.model.entries.Income;
+import seedu.duke.model.entries.IncomeCategory;
+import seedu.duke.utility.MintException;
+import seedu.duke.model.financemanager.NormalFinanceManager;
+import seedu.duke.ui.Ui;
+import seedu.duke.ui.UiStub;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

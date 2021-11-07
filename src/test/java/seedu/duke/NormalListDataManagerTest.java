@@ -4,12 +4,12 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import seedu.duke.Model.entries.Entry;
-import seedu.duke.Model.entries.Expense;
-import seedu.duke.Model.entries.ExpenseCategory;
-import seedu.duke.Model.financeManager.NormalFinanceManager;
-import seedu.duke.Storage.DataManagerActions;
-import seedu.duke.Storage.NormalListDataManager;
+import seedu.duke.model.entries.Entry;
+import seedu.duke.model.entries.Expense;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.model.financemanager.NormalFinanceManager;
+import seedu.duke.storage.DataManagerActions;
+import seedu.duke.storage.NormalListDataManager;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.duke.Logic.parser.ValidityChecker.dateFormatter;
+import static seedu.duke.logic.parser.ValidityChecker.dateFormatter;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NormalListDataManagerTest {

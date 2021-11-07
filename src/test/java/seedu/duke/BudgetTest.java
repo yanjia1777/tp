@@ -1,16 +1,16 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.Model.budget.Budget;
-import seedu.duke.Model.budget.BudgetManager;
-import seedu.duke.Model.entries.Expense;
-import seedu.duke.Model.entries.ExpenseCategory;
-import seedu.duke.Model.entries.Interval;
-import seedu.duke.Model.entries.RecurringExpense;
-import seedu.duke.Utility.MintException;
-import seedu.duke.Model.financeManager.NormalFinanceManager;
-import seedu.duke.Model.financeManager.RecurringFinanceManager;
-import seedu.duke.Ui.Ui;
+import seedu.duke.model.budget.Budget;
+import seedu.duke.model.budget.BudgetManager;
+import seedu.duke.model.entries.Expense;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.model.entries.Interval;
+import seedu.duke.model.entries.RecurringExpense;
+import seedu.duke.utility.MintException;
+import seedu.duke.model.financemanager.NormalFinanceManager;
+import seedu.duke.model.financemanager.RecurringFinanceManager;
+import seedu.duke.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

@@ -1,12 +1,12 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.Utility.MintException;
-import seedu.duke.Logic.parser.ValidityChecker;
+import seedu.duke.utility.MintException;
+import seedu.duke.logic.parser.ValidityChecker;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.duke.Logic.parser.ValidityChecker.checkValidityOfFieldsInNormalListTxt;
-import static seedu.duke.Logic.parser.ValidityChecker.checkValidityOfFieldsInRecurringListTxt;
+import static seedu.duke.logic.parser.ValidityChecker.checkValidityOfFieldsInNormalListTxt;
+import static seedu.duke.logic.parser.ValidityChecker.checkValidityOfFieldsInRecurringListTxt;
 
 public class ListValidityCheckerTest {
 

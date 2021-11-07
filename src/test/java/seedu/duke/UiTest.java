@@ -1,8 +1,8 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.Model.entries.ExpenseCategory;
-import seedu.duke.Ui.Ui;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
