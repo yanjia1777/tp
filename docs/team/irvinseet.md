@@ -14,7 +14,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 ### Enhancements Implemented
 
-1. Implemented `Expense` class.
+1. Implemented `Expense` class, a base `Model` class used extensively in the app.
 
 2. Implementation of enumerations
 
@@ -25,44 +25,47 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 3. Implemented budget setting -`Budget`: base class which allows user to set spending limit and fetch spending related
    to respective budgets.
 
-- `BudgetManager` which handles all `Budget`-related actions.
+- `BudgetManager` which handles all `Budget`-related actions such as fetching monthly spending and limit.
 
 4. Ui
 
-- `help` message
-- `Budget`-related messages
-- Handled unsafe user input using regex.
+- `help` message.
+- `Budget`-related messages.
+- Check and handled unsafe user input using regex.
 
 5. Parser
 
 - User friendliness improvements
     - initialisation of fields when user do not specify some of the fields. e.g, `date` initialised to `LocalDate.now()`
       and `category` initialised to `OTHERS`
-    - `dateFormatter` which takes
+    - `dateFormatter` which takes.
       in [10 different formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
     - `parseInputByTags` which parse user inputs by tags regardless of order using regex.
-- Setting categories of entries
+- Setting categories of entries.
 
 ### Contributions to the UG
 
-- Converted UG into markdown
-- Introduction of the app
-- Added table of "Acceptable date formats"
-- Added table of "Available categories"
-- Updated documentation formatting and overall readability
+- Converted UG into markdown.
+- Introduction of the app.
+- Added table of "Acceptable date formats".
+- Added table of "Available categories".
+- Updated documentation formatting and overall readability.
 
 ### Contributions to the DG
 
-- Added diagram of System Architecture
-- Added documentation for `Budget` Component
-- Added some user stories
+- Added diagram of System Architecture.
+- Added documentation for `Budget` Component.
+- Added implementation and design consideration of `BudgetManager`
+- Added some user stories.
+- Added manual testing for `set` function.
+- Added manual testing for `budget` function.
 
 ### Contributions to team-based tasks
 
-- Hosted meetings and set general direction during ideation phases (V1.0, V2.0, V2.1)
-- Set up the Github team organisation and repository
+- Hosted meetings and set general direction during ideation phases (V1.0, V2.0, V2.1).
+- Set up the Github team organisation and repository.
 - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
-    - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application
+    - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
 
 ### Review/mentoring contributions
 
@@ -70,4 +73,5 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinsee
 
 ### Community
 
-Reported bugs during PE Dry Run.
+- Reported bugs during PE Dry Run.
+- Reviewed other's PR with non-trivial comments.

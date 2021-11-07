@@ -1,9 +1,8 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Income;
-import seedu.duke.parser.Parser;
+import seedu.duke.model.entries.ExpenseCategory;
+import seedu.duke.logic.parser.Parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
