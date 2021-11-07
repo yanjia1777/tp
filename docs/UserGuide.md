@@ -353,6 +353,7 @@ Format: `delete [n/NAME] [d/DATE] [a/AMOUNT] [c/CATEGORY_NUMBER]`
       of that  `Expense` or `Income` .
 - Deletes an entry of the specified `NAME`, `DATE`, `AMOUNT`, or `CATEGORY_NUMBER`
 - Refer to [acceptable tag formats](#tagFormat) for more information about tag definitions and formats.
+- Dummy strings between `delete` and the first tag will not affect the program.
 
 Examples:
 
