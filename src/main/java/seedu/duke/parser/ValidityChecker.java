@@ -92,6 +92,12 @@ public class ValidityChecker {
     }
 
     //@@author irvinseet
+    /**
+     * Check validity of category number specified by user. Category number should fall in the range of 0 to 7
+     *
+     * @param catNumStr String of category number passed in by user
+     * @throws MintException When user enter a number outside the range or did not give a proper number format
+     */
     public static void checkInvalidCatNum(String catNumStr) throws MintException {
         try {
             int catNumInt = Integer.parseInt(catNumStr);
@@ -133,7 +139,7 @@ public class ValidityChecker {
         String[] tags = parser.isRecurring ? new String[]{"n/", "d/", "a/", "c/", "i/", "e/"}
                 : new String[]{"n/", "d/", "a/", "c/"};
 
-        for (String tag: tags) {
+        for (String tag : tags) {
             int count = 0;
             Pattern pattern = Pattern.compile(tag);
             Matcher matcher = pattern.matcher(userInput);
@@ -147,7 +153,7 @@ public class ValidityChecker {
     }
 
     static ArrayList<String> identifyValidTags(Parser parser, String userInput,
-                                               String[] mandatoryTags) throws MintException {
+            String[] mandatoryTags) throws MintException {
         ArrayList<String> validTags = new ArrayList<>();
         ArrayList<String> invalidTags = new ArrayList<>();
         String[] tags = parser.isRecurring ? new String[]{" n/", " d/", " a/", " c/", " i/", " e/"}
@@ -233,14 +239,14 @@ public class ValidityChecker {
     /**
      * Checks validity of fields in the Normal List for edit method and data storage methods.
      *
-     * @param type string containing information on whether it is an expense or income
-     * @param name string containing description of expense
-     * @param date string containing the date of expense.
+     * @param type   string containing information on whether it is an expense or income
+     * @param name   string containing description of expense
+     * @param date   string containing the date of expense.
      * @param amount string containing the amount spent on the expense.
      * @param catNum string of category number representing different categories
      */
     public static void checkValidityOfFieldsInNormalListTxt(String type, String name, String date, String amount,
-                                                            String catNum) throws MintException {
+            String catNum) throws MintException {
         if (!((type.equalsIgnoreCase("Income") || type.equalsIgnoreCase("Expense")))) {
             throw new MintException("Invalid type detected!");
         }
@@ -267,8 +273,8 @@ public class ValidityChecker {
      * Checks validity of additional fields in the Recurring List for edit method and data storage methods.
      *
      * @param interval string containing the interval of the recurring expense.
-     * @param endDate Entry type arrayList, casted to RecurringEntry type, that stores the all the
-     *     recurring expenses.
+     * @param endDate  Entry type arrayList, casted to RecurringEntry type, that stores the all the
+     *                 recurring expenses.
      */
     public static void checkValidityOfFieldsInRecurringListTxt(String interval, String endDate) throws MintException {
         try {
@@ -307,8 +313,14 @@ public class ValidityChecker {
         }
     }
 
-
     //@@author irvinseet
+    /**
+     * Check validity of the use forward slash ("/") in user input.
+     * Forward slash ("/") is strictly used for tagging and should follow the format of " x/", where x can be a letter.
+     *
+     * @param userInput string of raw input keyed in by user.
+     * @throws MintException When user did not follow the proper tag format
+     */
     public static void checkTagsFormatSpacing(String userInput) throws MintException {
         if (userInput.matches(userTagNoSpace)) {
             throw new MintException(MintException.ERROR_NO_SPACE_BEFORE_TAGS);
