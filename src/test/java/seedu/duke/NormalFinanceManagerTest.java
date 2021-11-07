@@ -5,21 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Income;
-import seedu.duke.entries.IncomeCategory;
-import seedu.duke.exception.MintException;
-import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.parser.Parser;
+import seedu.duke.Model.entries.Entry;
+import seedu.duke.Model.entries.Expense;
+import seedu.duke.Model.entries.ExpenseCategory;
+import seedu.duke.Model.entries.Income;
+import seedu.duke.Model.entries.IncomeCategory;
+import seedu.duke.Utility.MintException;
+import seedu.duke.Model.financeManager.NormalFinanceManager;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static seedu.duke.parser.ValidityChecker.dateFormatter;
+import static seedu.duke.Logic.parser.ValidityChecker.dateFormatter;
 
 class NormalFinanceManagerTest {
     NormalFinanceManager financeManager = new NormalFinanceManager();

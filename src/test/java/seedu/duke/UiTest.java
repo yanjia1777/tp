@@ -1,10 +1,9 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.utility.Ui;
+import seedu.duke.Model.entries.ExpenseCategory;
+import seedu.duke.Ui.Ui;
 
-import javax.sound.midi.SysexMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 

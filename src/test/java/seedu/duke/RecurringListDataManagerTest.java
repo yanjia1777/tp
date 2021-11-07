@@ -4,13 +4,13 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.RecurringExpense;
-import seedu.duke.entries.Interval;
-import seedu.duke.finances.RecurringFinanceManager;
-import seedu.duke.storage.DataManagerActions;
-import seedu.duke.storage.RecurringListDataManager;
+import seedu.duke.Model.entries.Entry;
+import seedu.duke.Model.entries.ExpenseCategory;
+import seedu.duke.Model.entries.RecurringExpense;
+import seedu.duke.Model.entries.Interval;
+import seedu.duke.Model.financeManager.RecurringFinanceManager;
+import seedu.duke.Storage.DataManagerActions;
+import seedu.duke.Storage.RecurringListDataManager;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.duke.parser.ValidityChecker.dateFormatter;
+import static seedu.duke.Logic.parser.ValidityChecker.dateFormatter;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RecurringListDataManagerTest {

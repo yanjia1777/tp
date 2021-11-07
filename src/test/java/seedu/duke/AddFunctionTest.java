@@ -1,23 +1,23 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.budget.Budget;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.commands.Command;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Income;
-import seedu.duke.entries.IncomeCategory;
-import seedu.duke.exception.MintException;
-import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.finances.RecurringFinanceManager;
-import seedu.duke.parser.Parser;
-import seedu.duke.storage.BudgetDataManager;
-import seedu.duke.storage.DataManagerActions;
-import seedu.duke.storage.NormalListDataManager;
-import seedu.duke.storage.RecurringListDataManager;
-import seedu.duke.utility.Ui;
+import seedu.duke.Model.budget.Budget;
+import seedu.duke.Model.budget.BudgetManager;
+import seedu.duke.Logic.commands.Command;
+import seedu.duke.Model.entries.Entry;
+import seedu.duke.Model.entries.Expense;
+import seedu.duke.Model.entries.ExpenseCategory;
+import seedu.duke.Model.entries.Income;
+import seedu.duke.Model.entries.IncomeCategory;
+import seedu.duke.Utility.MintException;
+import seedu.duke.Model.financeManager.NormalFinanceManager;
+import seedu.duke.Model.financeManager.RecurringFinanceManager;
+import seedu.duke.Logic.parser.Parser;
+import seedu.duke.Storage.BudgetDataManager;
+import seedu.duke.Storage.DataManagerActions;
+import seedu.duke.Storage.NormalListDataManager;
+import seedu.duke.Storage.RecurringListDataManager;
+import seedu.duke.Ui.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.duke.parser.ValidityChecker.dateFormatter;
+import static seedu.duke.Logic.parser.ValidityChecker.dateFormatter;
 
 class AddFunctionTest {
 

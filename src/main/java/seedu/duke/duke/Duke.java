@@ -1,16 +1,16 @@
 package seedu.duke.duke;
 
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.commands.Command;
-import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.finances.RecurringFinanceManager;
-import seedu.duke.parser.Parser;
-import seedu.duke.storage.BudgetDataManager;
-import seedu.duke.storage.DataManagerActions;
-import seedu.duke.storage.NormalListDataManager;
-import seedu.duke.storage.RecurringListDataManager;
-import seedu.duke.utility.MintLogger;
-import seedu.duke.utility.Ui;
+import seedu.duke.Model.budget.BudgetManager;
+import seedu.duke.Logic.commands.Command;
+import seedu.duke.Model.financeManager.NormalFinanceManager;
+import seedu.duke.Model.financeManager.RecurringFinanceManager;
+import seedu.duke.Logic.parser.Parser;
+import seedu.duke.Storage.BudgetDataManager;
+import seedu.duke.Storage.DataManagerActions;
+import seedu.duke.Storage.NormalListDataManager;
+import seedu.duke.Storage.RecurringListDataManager;
+import seedu.duke.Utility.MintLogger;
+import seedu.duke.Ui.Ui;
 
 
 import java.util.logging.Level;

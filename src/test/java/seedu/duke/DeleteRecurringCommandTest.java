@@ -1,20 +1,20 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.budget.BudgetManager;
-import seedu.duke.commands.DeleteRecurringCommand;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Interval;
-import seedu.duke.entries.RecurringExpense;
-import seedu.duke.finances.NormalFinanceManager;
-import seedu.duke.finances.RecurringFinanceManager;
-import seedu.duke.storage.BudgetDataManager;
-import seedu.duke.storage.DataManagerActions;
-import seedu.duke.storage.NormalListDataManager;
-import seedu.duke.storage.RecurringListDataManager;
-import seedu.duke.utility.Ui;
-import seedu.duke.utility.UiStub;
+import seedu.duke.Model.budget.BudgetManager;
+import seedu.duke.Logic.commands.DeleteRecurringCommand;
+import seedu.duke.Model.entries.Entry;
+import seedu.duke.Model.entries.ExpenseCategory;
+import seedu.duke.Model.entries.Interval;
+import seedu.duke.Model.entries.RecurringExpense;
+import seedu.duke.Model.financeManager.NormalFinanceManager;
+import seedu.duke.Model.financeManager.RecurringFinanceManager;
+import seedu.duke.Storage.BudgetDataManager;
+import seedu.duke.Storage.DataManagerActions;
+import seedu.duke.Storage.NormalListDataManager;
+import seedu.duke.Storage.RecurringListDataManager;
+import seedu.duke.Ui.Ui;
+import seedu.duke.Ui.UiStub;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

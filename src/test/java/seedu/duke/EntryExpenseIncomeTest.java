@@ -1,10 +1,10 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.entries.Expense;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.Income;
-import seedu.duke.entries.IncomeCategory;
+import seedu.duke.Model.entries.Expense;
+import seedu.duke.Model.entries.ExpenseCategory;
+import seedu.duke.Model.entries.Income;
+import seedu.duke.Model.entries.IncomeCategory;
 
 import java.time.LocalDate;
 

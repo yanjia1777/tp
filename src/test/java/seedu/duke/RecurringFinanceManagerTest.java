@@ -4,19 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import seedu.duke.entries.Entry;
-import seedu.duke.entries.ExpenseCategory;
-import seedu.duke.entries.IncomeCategory;
-import seedu.duke.entries.Interval;
-import seedu.duke.entries.RecurringExpense;
-import seedu.duke.entries.RecurringIncome;
-import seedu.duke.exception.MintException;
-import seedu.duke.finances.RecurringFinanceManager;
+import seedu.duke.Model.entries.Entry;
+import seedu.duke.Model.entries.ExpenseCategory;
+import seedu.duke.Model.entries.IncomeCategory;
+import seedu.duke.Model.entries.Interval;
+import seedu.duke.Model.entries.RecurringExpense;
+import seedu.duke.Model.entries.RecurringIncome;
+import seedu.duke.Utility.MintException;
+import seedu.duke.Model.financeManager.RecurringFinanceManager;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
-import static seedu.duke.parser.ValidityChecker.dateFormatter;
+import static seedu.duke.Logic.parser.ValidityChecker.dateFormatter;
 
 class RecurringFinanceManagerTest {
     RecurringFinanceManager financeManager = new RecurringFinanceManager();
