@@ -9,7 +9,7 @@ for use via a Command Line Interface (CLI).
 
 ### Code Contributed
 
-The code written by me (`seetohyitching`) can be
+The code written by me (`Yitching`) can be
 found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=totalCommits&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-25&tabOpen=true&tabType=authorship&zFR=false&tabAuthor=Yitching&tabRepo=AY2122S1-CS2113T-W11-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
 
 ### Enhancements Implemented
@@ -43,12 +43,13 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
 - Added documentation for the storage component under the Design section. 
   - Added brief explanation of the storage component.
   - Added the sequence diagrams for the storage component.
-- Added manual testing portion for add, delete and edit functions.
+- Added manual testing skeleton and specific details for add and edit functions.
 - Added some user stories.
 
 ### Contributions to team-based tasks
 
 - Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
+- Identified some bugs to be fixed.
 - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
     - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
 

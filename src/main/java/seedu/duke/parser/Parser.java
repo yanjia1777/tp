@@ -209,7 +209,7 @@ public class Parser {
             this.amountStr = description;
             break;
         case "c":
-            this.catNumStr = description.split(" ",2) [0];
+            this.catNumStr = description.split(" ", 2)[0];
             this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
@@ -253,6 +253,15 @@ public class Parser {
     }
 
     //@@author irvinseet
+    /**
+     * Parse user input based on tags specified and set fields accordingly to the tags.
+     * Tags are of format " x/", where x can be any alphabet and there should be a space in front of it.
+     * Pattern matching is done by regular expressions to ensure flexibility of the program.
+     *
+     * @param userInput The String that we want to parse
+     * @throws MintException when user did not follow the correct tagging format, did not provide mandatory tags
+     *                       or included invalid tags.
+     */
     private void parseInputByTagsLoop(String userInput) throws MintException {
         String tagType;
         String description;
@@ -487,8 +496,7 @@ public class Parser {
      * Prepares the user input by splitting it into the respective fields to overwrite existing recurring expense.
      *
      * @param entry Entry type variable, casted to RecurringEntry type, that contains all the attributes of the
-     *     recurring expense.
-     *
+     *              recurring expense.
      * @return returns a HashMap containing all the different attributes in String.
      */
     public HashMap<String, String> prepareRecurringEntryToAmendForEdit(Entry entry) {
@@ -516,7 +524,6 @@ public class Parser {
      * Prepares the user input by splitting it into the respective fields to overwrite existing expense.
      *
      * @param entry Entry type variable that contains all the attributes of the expense.
-     *
      * @return returns a HashMap containing all the different attributes in String.
      */
     public HashMap<String, String> prepareEntryToAmendForEdit(Entry entry) {
@@ -539,12 +546,11 @@ public class Parser {
      * Conversion of attributes from string to their respective data types.
      *
      * @param entryFields HashMap containing all the String type attributes.
-     * @param type refers to whether it is an expense or an income.
-     *
+     * @param type        refers to whether it is an expense or an income.
      * @return returns the new RecurringEntry to overwrite the old RecurringEntry.
      */
     public RecurringEntry convertRecurringEntryToRespectiveTypes(HashMap<String, String> entryFields,
-                                                                   Type type) throws MintException {
+            Type type) throws MintException {
         String name = entryFields.get("name");
         String dateStr = entryFields.get("date");
         String amountStr = entryFields.get("amount");
@@ -570,12 +576,11 @@ public class Parser {
      * Conversion of attributes from string to their respective data types.
      *
      * @param entryFields HashMap containing all the String type attributes.
-     * @param type refers to whether it is an expense or an income.
-     *
+     * @param type        refers to whether it is an expense or an income.
      * @return returns the new Entry to overwrite the old Entry.
      */
     public Entry convertEntryToRespectiveTypes(HashMap<String, String> entryFields,
-                                                                 Type type) throws MintException {
+            Type type) throws MintException {
         String name = entryFields.get("name");
         String dateStr = entryFields.get("date");
         String amountStr = entryFields.get("amount");
