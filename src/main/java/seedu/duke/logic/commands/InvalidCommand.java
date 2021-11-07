@@ -10,6 +10,9 @@ import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.ui.Ui;
 
 //@@author pos0414
+/**
+ * Command class used when the user input invalid command.
+ */
 public class InvalidCommand extends Command {
     private final String message;
 

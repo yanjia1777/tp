@@ -47,11 +47,11 @@ class RecurringFinanceManagerTest {
     @Test
     public void deleteEntry_RecurringIncome_success() {
         String name = "Salary";
-        LocalDate date = LocalDate.parse("2021-12-23", dateFormatter);
+        LocalDate date = LocalDate.parse("2021-02-28", dateFormatter);
         Double amount = 10000.0;
         IncomeCategory category = IncomeCategory.SALARY;
         Interval interval = Interval.MONTH;
-        LocalDate endDate = LocalDate.parse("2022-12-23", dateFormatter);
+        LocalDate endDate = LocalDate.parse("2024-05-23", dateFormatter);
 
         entryList.add(new RecurringIncome(name, date, amount, category,interval, endDate));
         RecurringIncome query = new RecurringIncome(name, date, amount, category, interval, endDate);

@@ -12,6 +12,9 @@ import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.ui.Ui;
 
 //@@author pos0414
+/**
+ * Command class used for adding a RecurringEntry to the list.
+ */
 public class AddRecurringCommand extends Command {
     private final Entry entry;
 
@@ -19,6 +22,17 @@ public class AddRecurringCommand extends Command {
         this.entry = entry;
     }
 
+    /**
+     *Adds a recurring to the list and saves the data to local data file.
+     * @param normalFinanceManager Not used here, for general use in command classes
+     * @param recurringFinanceManager Used to save data for normal entries' list
+     * @param budgetManager Not used here, for general use in command classes
+     * @param normalListDataManager Not used here, for general use in command classes
+     * @param dataManagerActions Not used here, for general use in command classes
+     * @param recurringListDataManager Used to save data of the added recurring entry
+     * @param budgetDataManager Not used here, for general use in command classes
+     * @param ui User interaction point
+     */
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
             RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,

@@ -363,6 +363,12 @@ public class Parser {
     }
 
     //@@author pos0414
+
+    /**
+     * Creates a RecurringExpense object by parsing the string form of fields.
+     * @return RecurringExpense object
+     * @throws MintException When exception thrown while parsing
+     */
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
@@ -377,6 +383,11 @@ public class Parser {
         return new RecurringExpense(name, date, amount, expenseCategory, interval, endDate);
     }
 
+    /**
+     * Creates a RecurringIncome object by parsing the string form of fields.
+     * @return RecurringIncome object
+     * @throws MintException When exception thrown while parsing
+     */
     private RecurringIncome createRecurringIncomeObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
@@ -391,6 +402,11 @@ public class Parser {
         return new RecurringIncome(name, date, amount, incomeCategory, interval, endDate);
     }
 
+    /**
+     * Prepare to add a normal entry by initializing & parsing fields.
+     * @param userInput User input string
+     * @return Command object for adding normal entry
+     */
     private Command prepareAddEntry(String userInput) {
         try {
             initDateStr();
@@ -403,6 +419,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepare to delete a normal entry by initializing, parsing, and identifying fields that user queried.
+     * @param userInput User input string
+     * @return Command object for deleting normal entry
+     */
     private Command prepareDeleteEntry(String userInput) {
         try {
             initDateStr();
@@ -433,6 +454,11 @@ public class Parser {
     }
 
     //@@author pos0414
+    /**
+     * Prepare to edit normal entry by initializing, parsing, and identifying fields that user queried.
+     * @param userInput User input string
+     * @return Command object for editing normal entry
+     */
     private Command prepareEditEntry(String userInput) {
         try {
             initDateStr();
@@ -447,6 +473,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepare to add a recurring entry by initializing & parsing fields.
+     * @param userInput User input string
+     * @return Command object for adding recurring entry
+     */
     private Command prepareAddRecurringEntry(String userInput) {
         try {
             initDateStr();
@@ -462,6 +493,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepare to delete a recurring entry by initializing, parsing, and identifying fields that user queried.
+     * @param userInput User input string
+     * @return Command object for deleting recurring entry
+     */
     private Command prepareDeleteRecurringEntry(String userInput) {
         try {
             initDateStr();
@@ -481,6 +517,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepare to edit recurring entry by initializing, parsing, and identifying fields that user queried.
+     * @param userInput User input string
+     * @return Command object for editing recurring entry
+     */
     private Command prepareEditRecurringEntry(String userInput) {
         try {
             initDateStr();
