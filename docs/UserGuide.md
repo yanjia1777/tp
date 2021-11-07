@@ -242,7 +242,7 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
 - `SORTTYPE` can be any of the following types: `name`, `date`, `amount`, `category`
 - `MONTH(optional)` can be any number from 1 to 12.
 - If `MONTH` is not specified, the default will be the current month.
-- `YEAR(optional)` can be any 4-digit number from 1000 to 9999.
+- `YEAR(optional)` can be any 4-digit number from 2000 to 2200.
 - If `YEAR` is not specified, the default will be the current year.
 - `STARTDATE(optional)` and `ENDDATE(optional)` can be any of the [acceptable date formats](#dateFormat).
 - If `STARTDATE` is specified but `ENDDATE` is not specified, the default `ENDDATE` set would be the current date.
@@ -649,6 +649,7 @@ Please refresh page if table is not rendered properly.
 |view categories | `cat` | 
 |set | `set` `c/CATEGORY_NUMBER` `a/AMOUNT`| 
 |budget | `budget` |
+|deleteAll | `deleteAll` `[income]` `[expense]` |
 |help | `help` | 
 |exit | `exit` |
 
