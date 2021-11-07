@@ -11,7 +11,6 @@ import seedu.duke.logic.parser.ValidityChecker;
 import seedu.duke.logic.parser.ViewOptions;
 import seedu.duke.utility.Filter;
 import seedu.duke.ui.Ui;
-import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -25,10 +24,9 @@ import java.util.logging.Logger;
 public class RecurringFinanceManager extends FinanceManager {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public static final String END_DATE_SEPARATOR = "e/";
-    public static final String INTERVAL_SEPARATOR = "i/";
+    public static final String END_DATE_TAG = "e/";
+    public static final String INTERVAL_TAG = "i/";
     public ArrayList<Entry> recurringEntryList = new ArrayList<>();
-    public static final String RECURRING_FILE_PATH = "data" + File.separator + "MintRecurring.txt";
 
 
     public void addEntry(Entry entry) throws MintException {
@@ -50,22 +48,22 @@ public class RecurringFinanceManager extends FinanceManager {
         RecurringEntry queryToSearch = (RecurringEntry) query;
         for (String tag : tags) {
             switch (tag.trim()) {
-            case "n/":
+            case NAME_TAG:
                 filteredList = Filter.filterEntryByName(queryToSearch.getName(), filteredList);
                 break;
-            case "d/":
+            case DATE_TAG:
                 filteredList = Filter.filterEntryByDate(queryToSearch.getDate(), filteredList);
                 break;
-            case "a/":
+            case AMOUNT_TAG:
                 filteredList = Filter.filterEntryByAmount(queryToSearch.getAmount(), filteredList);
                 break;
-            case "c/":
+            case CATEGORY_TAG:
                 filteredList = Filter.filterEntryByCategory(queryToSearch.getCategory().ordinal(), filteredList);
                 break;
-            case "i/":
+            case INTERVAL_TAG:
                 filteredList = Filter.filterEntryByInterval(queryToSearch.getInterval().label, filteredList);
                 break;
-            case "e/":
+            case END_DATE_TAG:
                 filteredList = Filter.filterEntryByEndDate(queryToSearch.getEndDate(), filteredList);
                 break;
             default:
@@ -134,28 +132,28 @@ public class RecurringFinanceManager extends FinanceManager {
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
-                if (word.contains(NAME_SEPARATOR)) {
+                if (word.contains(NAME_TAG)) {
                     String name = nonEmptyNewDescription(word);
                     entryFields.put("name", name);
                     count++;
-                } else if (word.contains(DATE_SEPARATOR)) {
-                    String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                } else if (word.contains(DATE_TAG)) {
+                    String dateStr = word.substring(word.indexOf(DATE_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("date", dateStr);
                     count++;
-                } else if (word.contains(AMOUNT_SEPARATOR)) {
-                    String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                } else if (word.contains(AMOUNT_TAG)) {
+                    String amountStr = word.substring(word.indexOf(AMOUNT_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("amount",amountStr);
                     count++;
-                } else if (word.contains(CATEGORY_SEPARATOR)) {
-                    String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                } else if (word.contains(CATEGORY_TAG)) {
+                    String catNumStr = word.substring(word.indexOf(CATEGORY_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("catNum", catNumStr);
                     count++;
-                } else if (word.contains(END_DATE_SEPARATOR)) {
-                    String endDateStr = word.substring(word.indexOf(END_DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                } else if (word.contains(END_DATE_TAG)) {
+                    String endDateStr = word.substring(word.indexOf(END_DATE_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("endDate", endDateStr);
                     count++;
-                } else if (word.contains(INTERVAL_SEPARATOR)) {
-                    String intervalStr = word.substring(word.indexOf(INTERVAL_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                } else if (word.contains(INTERVAL_TAG)) {
+                    String intervalStr = word.substring(word.indexOf(INTERVAL_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("interval", intervalStr);
                     count++;
                 }

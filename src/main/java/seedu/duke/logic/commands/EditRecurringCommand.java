@@ -13,11 +13,11 @@ import seedu.duke.ui.Ui;
 
 import java.util.ArrayList;
 
-//@@author pos0414
+//@@author Yitching
 public class EditRecurringCommand extends Command {
     private Entry query;
     ArrayList<String> tags;
-
+    final boolean isDelete = false;
 
     public EditRecurringCommand(ArrayList<String> tags, Entry query) {
         this.query = query;
@@ -30,8 +30,8 @@ public class EditRecurringCommand extends Command {
             NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
             RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
-            EditCommand dummyEditCommand = new EditCommand(tags, query);
-            Entry entryToEdit = dummyEditCommand.determineEntryToEdit(recurringFinanceManager, ui);
+            DeleteCommand dummyDeleteCommand = new DeleteCommand(tags, query);
+            Entry entryToEdit = dummyDeleteCommand.determineEntryToProcess(recurringFinanceManager, ui, isDelete);
             if (entryToEdit != null) {
                 ArrayList<String> list = recurringFinanceManager.editEntry(entryToEdit);
                 String stringToOverwrite = list.get(0);
