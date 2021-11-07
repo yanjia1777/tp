@@ -27,6 +27,9 @@ for use via a Command Line Interface (CLI).
   - What it does: `Entry` class is the base class for all other classes. `Income` class inherits from the `Entry` class. Each instance
     stores information about the entry or income respectively.
 
+- **New Feature**: Implemented main class `Duke` structure and `exit` function
+  - What it does: starts up the program, prints a startup message and allows user to input commands. On input of `exit`, application stops reading user input and terminates.
+
 - **Enhancement**: Implemented variable indentation for printing of entries.
   - What it does: indents the entries based on the longest entry of the current list.
   - Justification: This feature improves the product significantly as it allows for the label of all entries to line up with each other, allowing users to view the entries in a much more efficient and clear manner.
