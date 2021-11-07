@@ -13,7 +13,7 @@ import seedu.duke.storage.NormalListDataManager;
 import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.utility.Ui;
 
-
+//@@author irvinseet
 public class SetBudgetCommand extends Command {
     private final ExpenseCategory category;
     private final double amount;
@@ -25,9 +25,10 @@ public class SetBudgetCommand extends Command {
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
-                        RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
-                        NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
-                        RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
+            RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
+            NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
+            RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
+        assert (amount < 1000000 && amount >= 0);
         budgetManager.setBudget(category, amount);
         budgetDataManager.writeToBudgetTextFile(budgetManager.getBudgetList());
         ui.printSetBudget(category, amount);

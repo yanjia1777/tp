@@ -14,44 +14,32 @@ import seedu.duke.utility.Ui;
 
 import java.util.ArrayList;
 
+//@@author pos0414
 public class DeleteRecurringCommand extends Command {
     private final Entry query;
     private final ArrayList<String> tags;
-    private final boolean isDeleteAll;
 
-    public DeleteRecurringCommand(ArrayList<String> tags, Entry query, boolean isDeleteAll) {
+    public DeleteRecurringCommand(ArrayList<String> tags, Entry query) {
         this.query = query;
         this.tags = tags;
-        this.isDeleteAll = isDeleteAll;
     }
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
-                        RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
-                        NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
-                        RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
+            RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
+            NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
+            RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
-            if (isDeleteAll) {
-                deleteAll(recurringFinanceManager, recurringListDataManager);
-                return;
+            DeleteCommand dummyDeleteCommand = new DeleteCommand(tags, query);
+            Entry entryToDelete = dummyDeleteCommand.determineEntryToDelete(recurringFinanceManager, ui);
+            if (entryToDelete != null) {
+                recurringFinanceManager.deleteEntry(entryToDelete);
+                String stringToDelete = RecurringFinanceManager.overWriteString((RecurringEntry) entryToDelete);
+                recurringListDataManager.deleteLineInTextFile(stringToDelete);
+                ui.printEntryDeleted(entryToDelete);
             }
-            Entry deletedEntry = recurringFinanceManager.deleteEntryByKeywords(tags, query);
-            String stringToDelete = RecurringFinanceManager.overWriteString((RecurringEntry) deletedEntry);
-            recurringListDataManager.deleteLineInTextFile(stringToDelete);
-            ui.printEntryDeleted(deletedEntry);
         } catch (MintException e) {
             ui.printError(e);
-        }
-    }
-
-    public void deleteAll(RecurringFinanceManager recurringFinanceManager,
-                          RecurringListDataManager recurringListDataManager) {
-        if (Ui.isConfirmDeleteAll()) {
-            recurringFinanceManager.deleteAll();
-            recurringListDataManager.deleteAll();
-            Ui.deleteAllConfirmation();
-        } else {
-            Ui.deleteAborted();
         }
     }
 }

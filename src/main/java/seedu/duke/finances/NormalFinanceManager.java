@@ -8,12 +8,14 @@ import seedu.duke.parser.ValidityChecker;
 import seedu.duke.utility.Filter;
 import seedu.duke.utility.Ui;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NormalFinanceManager extends FinanceManager {
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public ArrayList<Entry> entryList;
 
@@ -29,41 +31,13 @@ public class NormalFinanceManager extends FinanceManager {
         return entryList;
     }
 
+    //@@author pos0414
     @Override
-    public Entry chooseEntryByKeywords(ArrayList<String> tags, boolean isDelete, Entry query) throws MintException {
-        ArrayList<Entry> filteredList = filterEntryByKeywords(tags, query);
-        Entry entry;
-        if (filteredList.size() == 0) {
-            throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST);
-
-        } else if (filteredList.size() == 1) {
-            Entry onlyEntry = filteredList.get(0);
-            if (Ui.isConfirmedToDeleteOrEdit(onlyEntry, isDelete)) {
-                entry = onlyEntry;
-            } else {
-                throw new MintException("Ok. I have cancelled the process.");
-            }
-            return entry;
-        }
-
-        Ui.viewGivenList(filteredList);
-        try {
-            int index = Ui.chooseItemToDeleteOrEdit(filteredList, isDelete);
-            if (index >= 0) {
-                entry = filteredList.get(index);
-            } else {
-                throw new MintException("Ok. I have cancelled the process.");
-            }
-        } catch (MintException e) {
-            throw new MintException(e.getMessage());
-        }
-        return entry;
-    }
-
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
+        assert tags.size() > 0 : "There should be more than one tag to be queried";
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
-            switch (tag) {
+            switch (tag.trim()) {
             case "n/":
                 filteredList = Filter.filterEntryByName(query.getName(), filteredList);
                 break;
@@ -85,15 +59,25 @@ public class NormalFinanceManager extends FinanceManager {
 
     @Override
     public void deleteEntry(Entry entry) {
-        //logger.log(Level.INFO, "User deleted expense: " + entry);
+        assert entryList.contains(entry) : "entryList should contain the entry to delete.";
+        logger.log(Level.INFO, "User deleted entry: " + entry);
         entryList.remove(entry);
     }
 
+    //@@author Yitching
+    /**
+     * Calls all the methods required for edit.
+     *
+     * @param entry Entry type variable that contains all the attributes of the expense.
+     *
+     * @return returns an ArrayList containing the string to be overwritten in the external text file and the new
+     *     string to overwrite the old string in the external text file.
+     */
     @Override
     public ArrayList<String> editEntry(Entry entry) throws MintException {
         String choice;
-        int indexToBeChanged = 0;
-        String originalEntryStr = "";
+        int indexToBeChanged;
+        String originalEntryStr;
         originalEntryStr = overWriteString(entry);
         if (entryList.contains(entry)) {
             indexToBeChanged = entryList.indexOf(entry);
@@ -102,13 +86,20 @@ public class NormalFinanceManager extends FinanceManager {
             //                logger.log(Level.INFO, "User entered invalid entry");
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
+        ValidityChecker.checkTagsFormatSpacing(choice);
         editSpecifiedEntry(choice, indexToBeChanged, entry);
-
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt();
         return new ArrayList<>(Arrays.asList(originalEntryStr, newEntryStr));
     }
 
+    /**
+     * Splits user input into the respective fields via tags.
+     *
+     * @param index the index of the entryList to be edited.
+     * @param choice user input containing the fields user wishes to edit.
+     * @param entry Entry type variable that contains all the attributes of the expense.
+     */
     @Override
     public void amendEntry(int index, ArrayList<String> choice, Entry entry) throws MintException {
         try {
@@ -123,18 +114,15 @@ public class NormalFinanceManager extends FinanceManager {
                     count++;
                     String name = nonEmptyNewDescription(word);
                     entryFields.put("name", name);
-                }
-                if (word.contains(DATE_SEPARATOR)) {
+                } else if (word.contains(DATE_SEPARATOR)) {
                     count++;
                     String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("date", dateStr);
-                }
-                if (word.contains(AMOUNT_SEPARATOR)) {
+                } else if (word.contains(AMOUNT_SEPARATOR)) {
                     count++;
                     String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("amount",amountStr);
-                }
-                if (word.contains(CATEGORY_SEPARATOR)) {
+                } else if (word.contains(CATEGORY_SEPARATOR)) {
                     count++;
                     String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
                     entryFields.put("catNum", catNumStr);
@@ -149,6 +137,13 @@ public class NormalFinanceManager extends FinanceManager {
         }
     }
 
+    /**
+     * Checks validity of the new entry to be used to overwrite the old entry.
+     *
+     * @param index the index of the entryList to be edited.
+     * @param entryFields HashMap containing all the String type attributes.
+     * @param type refers to whether it is an expense or an income.
+     */
     private void setEditedEntry(int index, HashMap<String, String> entryFields, Type type) throws MintException {
         Parser parser = new Parser();
         String name = entryFields.get("name");
@@ -161,6 +156,7 @@ public class NormalFinanceManager extends FinanceManager {
         entryList.set(index, entry);
     }
 
+    //@@author yanjia1777
     public ArrayList<Entry> getCopyOfArray() {
         ArrayList<Entry> outputArray;
         outputArray = new ArrayList<>(entryList);

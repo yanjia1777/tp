@@ -1,5 +1,6 @@
 package seedu.duke.entries;
 
+//@@author irvinseet
 public enum ExpenseCategory {
     FOOD,
     ENTERTAINMENT,

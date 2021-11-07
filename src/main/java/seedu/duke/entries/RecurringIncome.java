@@ -3,6 +3,7 @@ package seedu.duke.entries;
 import java.time.LocalDate;
 import java.util.Objects;
 
+//@@author pos0414
 public class RecurringIncome extends RecurringEntry {
     protected IncomeCategory category;
 
@@ -37,7 +38,7 @@ public class RecurringIncome extends RecurringEntry {
         }
         return getType() + "  | " + getCategory().toString() + " | " + getDate() + " | "
                 + getName() + " | $" + String.format("%,.2f", getAmount()) + " | " + getInterval().label
-                + " | " + "Forever :D";
+                + " | " + getEndDate();
     }
 
     //@@author nipafx-reusedS

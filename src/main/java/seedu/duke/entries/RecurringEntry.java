@@ -2,6 +2,7 @@ package seedu.duke.entries;
 
 import java.time.LocalDate;
 
+//@@author pos0414
 public abstract class RecurringEntry extends Entry {
     private Interval interval;
     private LocalDate endDate;

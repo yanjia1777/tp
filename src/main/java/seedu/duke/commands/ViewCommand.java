@@ -18,6 +18,7 @@ import seedu.duke.entries.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//@@author yanjia1777
 public class ViewCommand extends Command {
     private final ViewOptions viewOptions;
 
@@ -27,28 +28,37 @@ public class ViewCommand extends Command {
 
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
-                        RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
-                        NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
-                        RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
+            RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
+            NormalListDataManager normalListDataManager, DataManagerActions dataManagerActions,
+            RecurringListDataManager recurringListDataManager, BudgetDataManager budgetDataManager, Ui ui) {
         try {
             ArrayList<Entry> outputArray;
             ArrayList<Entry> recurringOutputArray = new ArrayList<>();
 
             outputArray = normalFinanceManager.getCopyOfArray();
             outputArray = recurringFinanceManager.appendEntryForView(viewOptions, outputArray, recurringOutputArray);
-
-            outputArray.sort(Sorter.compareByDate);
-            recurringOutputArray.sort(Sorter.compareByDate);
-            applyModifiers(outputArray);
-            applyRecurringModifiers(recurringOutputArray);
-
-            double total = calculateTotal(outputArray);
-            int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
-            ui.printViewRecurring(recurringOutputArray, indentations[0], indentations[1]);
+            view(outputArray, recurringOutputArray, ui, viewOptions.isViewAll, viewOptions.isViewExpenseOrIncome);
         } catch (MintException e) {
             ui.printError(e);
         }
     }
+
+    public void view(ArrayList<Entry> outputArray, ArrayList<Entry> recurringOutputArray,
+                     Ui ui, boolean isViewAll, boolean isViewExpenseOrIncome) throws MintException {
+        outputArray.sort(Sorter.compareByDate);
+        recurringOutputArray.sort(Sorter.compareByDate);
+        applyModifiers(outputArray);
+        applyRecurringModifiers(recurringOutputArray);
+
+        double total = calculateTotal(outputArray);
+        int[] indentations = ui.printView(outputArray, viewOptions.fromDate, viewOptions.endDate, total);
+        int catIndentation = indentations[0];
+        int nameIndentation = indentations[1];
+        int amountIndentation = indentations[2];
+        ui.printViewRecurring(recurringOutputArray, catIndentation, nameIndentation, amountIndentation, isViewAll,
+                isViewExpenseOrIncome);
+    }
+
 
     public void applyModifiers(ArrayList<Entry> outputArray) throws MintException {
         if (viewOptions.onlyExpense) {
