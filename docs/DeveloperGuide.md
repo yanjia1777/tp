@@ -19,12 +19,12 @@
 - [Non-Function Requirements](#nf-req)
 - [Glossary](#glossary)
 - [Instructions for manual testing](#manual-test)
-    - [Adding an Item](#Adding)
-    - [Deleting an Item](#delete)
-    - [Editing an Item](#edit)
-    - [Adding a Recurring Item](#Add-recurring-item)
-    - [Deleting a Recurring Item](#Delete-recurring-item)
-    - [Editing a recurring item](#Edit-recurring-item)
+    - [Adding an Entry](#Adding)
+    - [Deleting an Entry](#delete)
+    - [Editing an Entry](#edit)
+    - [Adding a Recurring Entry](#Add-recurring-entry)
+    - [Deleting a Recurring Entry](#Delete-recurring-entry)
+    - [Editing a recurring Entry](#Edit-recurring-entry)
     - [Adding Spending Limits](#set)
     - [Viewing Spending Limits](#View-spending-limits)
 
@@ -206,17 +206,17 @@ A smart and simple way to keep track of your expenses
 * <a name="local-storage"></a>**LocalStorage** - Refers to user's hard disk storage
 
 ## <a name="manual-test"></a>Instructions for manual testing
-> We define an 'item' as an expense/income. </br>
+> We define an 'Entry' as an expense/income. </br>
 > Tags in square brackets are optional
 >  e.g., `n/NAME [d/DATE]` can be used as `n/burger d/2021-10-20` or as `n/burger`
 
-### <a name="Adding"></a>Adding an Item
+### <a name="Adding"></a>Adding an Entry
 
 **Prerequisites**
 
 - The list must have been initialized.
 
-**Test case 1: Adding an item with all fields specified.**
+**Test case 1: Adding an Entry with all fields specified.**
 
 **Usage:**
 
@@ -227,8 +227,8 @@ A smart and simple way to keep track of your expenses
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the Entry has been added.
+- An Entry would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **[EXPENSE] Example of usage and expected output:**
@@ -244,7 +244,7 @@ I've added: Expense  | OTHERS | 2021-12-03 | Textbook | $15.00
 add income a/15 d/2021-12-03 n/Selling Textbooks c/7
 I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 ```
-**Test case 2: Adding an item with some fields specified.**
+**Test case 2: Adding an Entry with some fields specified.**
 
 **Usage:**
 
@@ -255,8 +255,8 @@ I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the Entry has been added.
+- An Entry would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the programme.
 
 **[EXPENSE] Example of usage and expected output:**
@@ -291,9 +291,9 @@ I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 
 **Prerequisites**
 
-- The list must have items that have already been added.
+- The list must have Entries that have already been added.
 
-**Test case 1: Deleting an existing item with some fields specified.**
+**Test case 1: Deleting an existing Entry with some fields specified.**
 
 **Usage:**
 
@@ -305,11 +305,11 @@ I've added: Income  | OTHERS | 2021-11-07 | Selling Textbooks | $23.50
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
-  - When user inputs `y`, it would delete the item.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
+- If there is one Entry that matches the query, it asks user if the user wants to delete the found Entry.
+  - When user inputs `y`, it would delete the Entry.
+- If there are multiple Entries that match the query, it asks the user to choose the index of Entry that the
 user wants to delete from a given list.
-  - When user inputs a valid index, it would delete the item.
+  - When user inputs a valid index, it would delete the Entry.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -344,9 +344,9 @@ I have deleted: Expense  | OTHERS | 2021-11-07 | Massage | $50.00
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
+- If there is one Entry that matches the query, it asks user if the user wants to delete the found Entry.
     - When user inputs `n`, it exits the delete process.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
+- If there are multiple Entries that match the query, it asks the user to choose the index of Entry that the
   user wants to delete from a given list.
     - When user inputs `cancel`, it exits the delete process.
 
@@ -400,11 +400,11 @@ delete n/yoghurt
 Hmm.. That item is not in the list.
 ```
 
-### <a name="edit"></a>Editing an Item
+### <a name="edit"></a>Editing an Entry
 
 **Prerequisites**
 
-- The list must have items that have already been added.
+- The list must have Entries that have already been added.
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
@@ -421,7 +421,7 @@ Hmm.. That item is not in the list.
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
+- The user would be prompted to choose their Entry to edit if there are multiple Entries or confirm their edit.
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
   the changes have been made.
 
@@ -463,7 +463,7 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
+- The user would be prompted to choose their Entry to edit if there are multiple Entries or confirm their edit.
 - The input fields of the selected entry are updated and there would be a message printed to notify the users that
   the changes have been made.
 
@@ -493,7 +493,7 @@ Got it! I will update the fields accordingly!
 ```
 
 
-### <a name="Add-recurring-item"></a>Adding a Recurring Entry
+### <a name="Add-recurring-entry"></a>Adding a Recurring Entry
 
 **Prerequisites**
 
@@ -508,8 +508,8 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the Entry has been added.
+- An Entry would then be added to the list.
 
 **[EXPENSE] Example of usage and expected output:**
 
@@ -535,8 +535,8 @@ I've added: Income  | WAGES | 2021-12-03 | Full-time job | $20.00 | MONTH | 2022
 
 **Expected**
 
-- Program would print a message to notify the user that the item has been added.
-- An item would then be added to the list.
+- Program would print a message to notify the user that the Entry has been added.
+- An Entry would then be added to the list.
 - Optional fields that are missing would be set to the default pre-determined by the program.
 
 For these examples, assume today's date is `2021-11-07` </br>
@@ -554,7 +554,7 @@ addR income a/90 n/Full-time job i/MONTH e/2023-12-23
 I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 2023-12-23
 ```
 
-### <a name="Delete-recurring-item"></a>Deleting a Recurring Entry
+### <a name="Delete-recurring-entry"></a>Deleting a Recurring Entry
 
 **Test case 1: Deleting an existing recurring entry with some fields specified.**
 
@@ -567,11 +567,11 @@ I've added: Income  | OTHERS | 2021-11-07 | Full-time job | $90.00 | MONTH | 202
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
-    - When user inputs `y`, it would delete the item.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
+- If there is one Entry that matches the query, it asks user if the user wants to delete the found Entry.
+    - When user inputs `y`, it would delete the Entry.
+- If there are multiple Entries that match the query, it asks the user to choose the index of Entry that the
   user wants to delete from a given list.
-    - When user inputs a valid index, it would delete the item.
+    - When user inputs a valid index, it would delete the Entry.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
 
@@ -607,9 +607,9 @@ I have deleted: Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$90.00 | MONTH 
 
 **Expected**
 
-- If there is one item that matches the query, it asks user if the user wants to delete the found item.
+- If there is one Entry that matches the query, it asks user if the user wants to delete the found Entry.
   - When user inputs `n`, it exits the delete process.
-- If there are multiple items that match the query, it asks the user to choose the index of item that the
+- If there are multiple Entries that match the query, it asks the user to choose the index of Entry that the
   user wants to delete from a given list.
   - When user inputs `cancel`, it exits the delete process.
 
@@ -660,7 +660,7 @@ deleteR n/yoghurt i/month
 Hmm.. That item is not in the list.
 ```
 
-### <a name="Edit-recurring-item"></a>Editing a recurring item
+### <a name="Edit-recurring-entry"></a>Editing a recurring Entry
 
 **Prerequisites**
 
@@ -668,7 +668,7 @@ Hmm.. That item is not in the list.
 - At least one field must be specified. If the user prefers, additional tags can be added for greater
   specificity. The fields can be specified in any order.
 
-**Test case 1: Editing an existing recurring item with all fields specified.**
+**Test case 1: Editing an existing recurring Entry with all fields specified.**
 
 **Usage:**
 
@@ -679,8 +679,8 @@ Hmm.. That item is not in the list.
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected item are updated and there would be a message printed to notify the users that
+- The user would be prompted to choose their Entry to edit if there are multiple Entries or confirm their edit.
+- The input fields of the selected Entry are updated and there would be a message printed to notify the users that
   the changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
@@ -708,7 +708,7 @@ a/100
 Got it! I will update the fields accordingly!
 ```
 
-**Test case 2: Editing an existing recurring item with some fields specified.**
+**Test case 2: Editing an existing recurring Entry with some fields specified.**
 
 **Usage:**
 
@@ -719,8 +719,8 @@ Got it! I will update the fields accordingly!
 
 **Expected**
 
-- The user would be prompted to choose their item to edit if there are multiple items or confirm their edit.
-- The input fields of the selected items are updated and there would be a message printed to notify the users that
+- The user would be prompted to choose their Entry to edit if there are multiple Entries or confirm their edit.
+- The input fields of the selected Entries are updated and there would be a message printed to notify the users that
   the changes have been made.
 
 **[EXPENSE and INCOME] Example of usage and expected output:**
