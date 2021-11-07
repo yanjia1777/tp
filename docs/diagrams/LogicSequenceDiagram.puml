@@ -36,7 +36,7 @@ deactivate Valid
 
 Parser --> Parser
 deactivate Parser
-Parser -> Parser : createIncomeObject()
+Parser -> Parser : createExpenseObject()
 
 activate Parser
 create Entry
