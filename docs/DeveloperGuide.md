@@ -89,7 +89,7 @@ How the `Logic` component works:
 7. The result is printed to the user by the `Ui`.
    (e.g. to add a recurring entry)
 
-The Seuquence Diagram below illustrates the interactions within the `Logic` component for the 
+The Sequence Diagram below illustrates the interactions within the `Logic` component for the 
 `parseCommand("add n/movie a/12")` API call.
 
 ![](images/LogicSequenceDiagram.png)
