@@ -148,7 +148,7 @@ public class Parser {
     }
 
     private void setAmountViaAmountStr(String amountStr) {
-        this.amount = Double.parseDouble(amountStr);
+        this.amount = amountTo2SF(amountStr);
     }
 
     private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
@@ -322,18 +322,22 @@ public class Parser {
 
 
     //@@author irvinseet
+    private double amountTo2SF(String amountStr) {
+        return Math.round(Double.parseDouble(amountStr) * 100.0) / 100.0;
+    }
+    
     private Expense createExpenseObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
-        amount = Double.parseDouble(amountStr);
+        amount = amountTo2SF(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         expenseCategory = ExpenseCategory.values()[catNum];
         return new Expense(name, date, amount, expenseCategory);
     }
-
+    
     //@@author yanjia1777
     private Income createIncomeObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
-        amount = Double.parseDouble(amountStr);
+        amount = amountTo2SF(amountStr);
         int catNum = Integer.parseInt(catNumStr);
         incomeCategory = IncomeCategory.values()[catNum];
         return new Income(name, date, amount, incomeCategory);
@@ -343,7 +347,7 @@ public class Parser {
     private RecurringExpense createRecurringExpenseObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
-            amount = Double.parseDouble(amountStr);
+            amount = amountTo2SF(amountStr);
             int catNum = Integer.parseInt(catNumStr);
             expenseCategory = ExpenseCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
@@ -357,7 +361,7 @@ public class Parser {
     private RecurringIncome createRecurringIncomeObject() throws MintException {
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
-            amount = Double.parseDouble(amountStr);
+            amount = amountTo2SF(amountStr);
             int catNum = Integer.parseInt(catNumStr);
             incomeCategory = IncomeCategory.values()[catNum];
             interval = Interval.determineInterval(intervalStr);
@@ -559,7 +563,7 @@ public class Parser {
         String endDateStr = entryFields.get("endDate");
 
         LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        double amount = Double.parseDouble(amountStr);
+        double amount = amountTo2SF(amountStr);
         LocalDate endDate = LocalDate.parse(endDateStr, ValidityChecker.dateFormatter);
         int pos = Integer.parseInt(catNumStr);
         ValidityChecker.checkValidCatNum(pos);
@@ -587,7 +591,7 @@ public class Parser {
         String catNumStr = entryFields.get("catNum");
 
         LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
-        double amount = Double.parseDouble(amountStr);
+        double amount = amountTo2SF(amountStr);
         int pos = Integer.parseInt(catNumStr);
         ValidityChecker.checkValidCatNum(pos);
         Enum category = type == Type.Expense ? ExpenseCategory.values()[pos] : IncomeCategory.values()[pos];
