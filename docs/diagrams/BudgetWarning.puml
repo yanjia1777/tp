@@ -1,0 +1,37 @@
+@startuml
+!include Style.puml
+
+participant ":BudgetManager" as budgetManager
+participant ":FinanceManager" as financeManager
+participant ":XYZBudget" as xyzBudget
+participant ":Ui" as ui
+actor User as user
+
+-> budgetManager : checkExceedBudget(entry, ...)
+activate budgetManager
+
+budgetManager -> financeManager : getEntryList()
+activate financeManager
+return entries
+
+budgetManager -> xyzBudget : getMonthlyBudgetFromCategory(entry.getCategory())
+activate xyzBudget
+return xyzBudget
+
+budgetManager -> xyzBudget : getMonthlySpending(entries)
+activate xyzBudget
+return amountSpent
+
+budgetManager -> xyzBudget : getLimit()
+activate xyzBudget
+return spendingLimit
+
+opt isExceedBudget
+
+    budgetManager -> ui :printBudgetWarningMessage(budget.getCategory(), ...)
+    activate ui
+    ui --> user : warning message
+    deactivate ui
+    end
+@enduml
+    
