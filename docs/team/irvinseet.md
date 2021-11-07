@@ -66,14 +66,14 @@ for use via a Command Line Interface (CLI).
     - Hosted meetings and set general direction during ideation phases (V1.0, V2.0, V2.1).
     - Set up the Github team organisation and repository.
     - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
-        - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
+        - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in
+          application.
     - Constantly pushed to enhance user-friendliness of our app.
 
 - **Community**:
-    - PRs reviewed: [#42](https://github.com/nus-cs2113-AY2122S1/tp/pull/42),
+    - PR reviewed: [#42](https://github.com/nus-cs2113-AY2122S1/tp/pull/42),
 
-    - Reported bugs and suggestions for other teams in the class: [#4](https://github.com/irvinseet/ped/issues/4),
-      [#3](https://github.com/irvinseet/ped/issues/3),
+    - Reported bugs and suggestions for other teams in the class: [Here](https://github.com/irvinseet/ped/issues)
 
 - **Contributions to the UG**
     - Converted UG from Google Docs draft into markdown.
