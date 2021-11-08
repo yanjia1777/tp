@@ -17,7 +17,12 @@ step-by-step-instructions.
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
     - [[For users new to CLI] Changing the Directory](#changingTheDirectory)
+- [Prerequisites before using Mint](#know)
+  - [Available tag formats](#tagFormat)
+  - [Available date formats](#dateFormat)
+  - [List of categories](#categoryList)
 - [Features](#features)
+<<<<<<< HEAD
     - [Viewing help](#help)
     - [Adding entries](#add)
     - [Adding recurring entries](#addR)
@@ -34,6 +39,23 @@ step-by-step-instructions.
 - [Available tag formats](#tagFormat)
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
+=======
+  - [Notes about commands](#commandNote)
+  - [Notes about recurring entries](#recurringNote)
+  - [Viewing help](#help)
+  - [Adding entries](#add)
+  - [Adding recurring entries](#addR)
+  - [Viewing entries](#view)
+  - [Deleting entries](#delete)
+  - [Deleting recurring entries](#deleteR)
+  - [Deleting all entries](#deleteAll)
+  - [Editing entries](#edit)
+  - [Editing recurring entries](#editR)
+  - [Viewing categories](#cat)
+  - [Setting budget](#set)
+  - [View monthly budget ](#budget)
+  - [Exiting the program](#exit)
+>>>>>>> upstream/master
 - [Command Summary](#command-summary)
 - [Frequently Asked Questions](#faq)
 
@@ -74,7 +96,10 @@ Refer to the [Features Section](#features) below for details of each comm
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
 4. Mint is now at your service!
 
-## <a name="tagFormat"></a>Acceptable tag formats
+## <a name="know"></a>Prerequisites before using Mint
+
+
+### <a name="tagFormat"></a>Acceptable tag formats
 
 |Tag | Description |Format | Example of input |
 |--------|----|-------------------|-------------|
@@ -87,7 +112,7 @@ Refer to the [Features Section](#features) below for details of each comm
 
 ---
 
-## <a name="dateFormat"></a>Acceptable date formats
+### <a name="dateFormat"></a>Acceptable date formats
 
 Example: 5th Jaunary 2020
 
@@ -104,7 +129,7 @@ Example: 5th Jaunary 2020
 | dd MMM yyyy (for MMM, capitalise only the first letter, e.g. Jan) | 05 Jan 2020 |
 | d MMM yyyy (for MMM, capitalise only the first letter, e.g. Jan) | 5 Jan 2020 |
 
-## <a name="categoryList"></a>Available categories
+### <a name="categoryList"></a>Available categories
 
 |Category tag | Expense Category | Income Category
 |--------|----------|----------|
@@ -124,7 +149,7 @@ Example: 5th Jaunary 2020
 ---
 
 
-Notes about the following list of commands:
+### <a name="commandNote"></a> Notes about the commands
 
 - Items in square brackets are optional.
 
@@ -148,9 +173,7 @@ Notes about the following list of commands:
 
 ---
 
-## <a name="recurringNote"></a>
-
-Notes about recurring entries:
+### <a name="recurringNote"></a> Notes about recurring entries
 
 - Recurring entries will be recurred on the same day as the `DATE` if the interval is `MONTH`; same day and month if the
   interval is `YEAR`
@@ -167,7 +190,12 @@ Examples:
 - Nintendo yearly subscription starts on `2020-02-29` and ends on `2023-01-15`.
     - `DATE` is `2020-02-29`;`INTERVAL` is `YEAR`; `END_DATE` is `2023-01-15`.
     - It will be billed on `2020-02-29`, `2021-02-28`, and `2022-02-28` only.
+<<<<<<< HEAD
     - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those years.
+=======
+    - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those
+      years.
+>>>>>>> upstream/master
     - As `2023-01-15` is before the next recurring date of `2023-02-28`, it will not be recurred on `2023-02-28`.
 
 - The school starts to give monthly allowance on `2021-08-31` until `2023-08-31`.

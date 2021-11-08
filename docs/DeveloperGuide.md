@@ -92,7 +92,7 @@ How the `Logic` component works:
 The Sequence Diagram below illustrates the interactions within the `Logic` component for the 
 `parseCommand("add n/movie a/12")` API call. For detailed implementation of `Parser` class, refer to [Implementation](#implementation) section.
 
-![](images/CaptureLogicSequence.png)
+![](images/CaptureLogicSequence.PNG)
 
 > As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
 > command's case, unused arguments are represented as `..` to focus on the used arguments.
@@ -174,7 +174,7 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
 The Sequence Diagram below illustrates the detailed interactions within the `Logic` component, focusing on `Parser` class,
 for the `parseCommand("add n/movie a/12")` API call.
 
-![](images/CaptureParserSequence.png)
+![](images/CaptureParserSequence.PNG)
 
 When `parseCommand("add n/movie a/12")` is called,
 
