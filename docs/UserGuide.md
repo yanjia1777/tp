@@ -135,7 +135,7 @@ Note:
 ---
 
 
-### <a name="commandNote"></a> Notes about the commands
+### <a name="commandNote"></a> Notes about commands
 
 - Items in square brackets are optional.
 
