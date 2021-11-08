@@ -651,7 +651,9 @@ Format: `exit`
 
 Expected Output:
 
-- `Bye! Thanks for using Mint. See you soon :D`
+```
+Bye! Thanks for using Mint. See you soon :D
+```
 
 ## <a name="Commannd Summary"></a>Command Summary
 
