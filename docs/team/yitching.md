@@ -5,7 +5,11 @@
 **Mint** is an all-in-one money managing app that helps you track your daily expense and set budgets. It is optimized
 for use via a Command Line Interface (CLI).
 
-**Contribution**: The code written by me (`Yitching`) can be
+## Summary of Contributions
+
+### Code Contributed
+
+The code written by me (`Yitching`) can be
 found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=totalCommits&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-25&tabOpen=true&tabType=authorship&zFR=false&tabAuthor=Yitching&tabRepo=AY2122S1-CS2113T-W11-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
 
 ### Enhancements Implemented
@@ -27,7 +31,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
   - Highlights: Implementing this part of the code was fun especially since it was an opportunity to try out a new data structure that I 
     have not really tried before. 
 
-- **New Feature**: Implemented the `storage` function for recurring, budget and normal expense list
+- **New Feature**: Implemented the `storage` function for recurring and normal expense list
   - What it does: The storage function saves the data immediately after an action is performed.
   - Justification: This function is important as our application is an expense tracker. Given the nature of our program, it would
     only make sense to save the expenses or incomes set by the user so that they would not have to key in the entry and restart
@@ -39,28 +43,40 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
     such that only valid entries are loaded into the program when it is used.
   - Highlights: This enhancement was a little difficult to implement initially as it was difficult figuring out how to defend an external file effectively. Some
     of the bugs encountered were also unexpected which did catch me off guard initially. 
-    
+
+- **New Feature**: Implemented `storage` function for budget list
+  - What it does: Implemented the `storage` function such that the spending limit for each category would be stored.
+
 - **Enhancement**: Ui
   - Justification: Added `edit` function related messages in the Ui class for more OOP.  
 
-- **Contributions to the UG**:
-  - Added the QuickStart portion of the User Guide.
-  - Added documentation for the edit function in the User Guide.
+### Contributions to the UG
 
-- **Contributions to the DG**:
-  - Added documentation for the storage component under the Design section. 
-    - Added brief explanation of the storage component.
-    - Added the sequence diagrams for the storage component.
-  - Added manual testing skeleton and specific details for add and edit functions.
-  - Added some user stories.
-- **Contributions to team-based tasks**:
-  - Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
-  - Identified some bugs to be fixed.
-  - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
-      - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
+- Added the QuickStart portion of the User Guide.
+- Added documentation for the edit function in the User Guide.
 
-- **Review/mentoring contributions**:
-  - Reviewed PRs and ensured overall code quality/formatting was up to standard.
-- **Community**
-  - PR reviewed: [Here](https://github.com/nus-cs2113-AY2122S1/tp/pull/25/files/969ac6a3a4b737bbf9839bb634ca90680d4ee988)
-  - Reported bugs and suggestions for other teams in the class: [Here](https://github.com/Yitching/ped/issues)
+### Contributions to the DG
+
+- Added documentation for the storage component under the Design section. 
+  - Added brief explanation of the storage component.
+  - Added the sequence diagrams for the storage component.
+- Added manual testing skeleton and specific details for add and edit functions.
+- Added some user stories.
+
+### Contributions to team-based tasks
+
+- Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
+- Identified some bugs to be fixed.
+- Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
+    - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
+
+
+### Review/mentoring contributions
+
+- Reviewed PRs and ensured overall code quality/formatting was up to standard.
+
+### Community
+
+- PR reviewed: [Here](https://github.com/nus-cs2113-AY2122S1/tp/pull/25/files/969ac6a3a4b737bbf9839bb634ca90680d4ee988)
+
+- Reported bugs and suggestions for other teams in the class: [Here](https://github.com/Yitching/ped/issues)
