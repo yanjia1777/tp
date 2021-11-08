@@ -326,6 +326,8 @@ Income  |   ALLOWANCE    | 2021-08-31 |      Allowance      | $1.00   | MONTH | 
 Expense |     OTHERS     | 2020-02-29 |      Nintendo       |-$19.99  | YEAR  | 2023-01-15
 ```
 
+<div style="page-break-after: always;"></div>
+
 ```
 view income
 Here is the list of your entries:
@@ -366,6 +368,8 @@ Income  |   ALLOWANCE   | 2021-08-31 | Allowance | $1.00  | MONTH | 2023-08-31
 Expense | ENTERTAINMENT | 2021-09-21 |  Netflix  |-$12.00 | MONTH | 2030-02-20
 Expense |    OTHERS     | 2020-02-29 | Nintendo  |-$19.99 | YEAR  | 2023-01-15
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="delete"></a>Deleting an entry: `delete`
 
@@ -414,6 +418,8 @@ Enter the index of the item you want to delete. To cancel, type "cancel"
 I have deleted: Income  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="deleteR"></a>Deleting a recurring entry: `deleteR`
 
 Deletes an existing recurring entry.
@@ -460,6 +466,8 @@ Enter the index of the item you want to delete. To cancel, type "cancel"
 I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forever :D
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="delete"></a>Deleting all entries: `deleteAll`
 
 Deletes all existing entries.
@@ -494,6 +502,8 @@ Type "y" if yes. Type "n" if not.
 y
 All entries successfully deleted.
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="edit"></a>Editing an entry: `edit`
 
@@ -545,6 +555,8 @@ c/7
 Got it! I will update the fields accordingly!
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="editR"></a>Editing a recurring entry: `editR`
 
 Edits an existing recurring entry
@@ -595,6 +607,8 @@ a/5
 Got it! I will update the fields accordingly!
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="cat"></a>View available categories: `cat`
 
 Shows a list of all available categories and its corresponding tag number.
@@ -634,6 +648,8 @@ Expected Output:
 Budget for FOOD set to $100.00
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="budget"></a>View monthly budget: `budget`
 
 View monthly spending and budget for current month
@@ -666,6 +682,7 @@ Expected Output:
 ```
 Bye! Thanks for using Mint. See you soon :D
 ```
+<div style="page-break-after: always;"></div>
 
 ## <a name="Commannd Summary"></a>Command Summary
 
@@ -687,6 +704,8 @@ Please refresh page if table is not rendered properly.
 |help | `help` | 
 |exit | `exit` |
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="faq"></a>Frequently Asked Questions
 
 - Why are users allowed to make recurring entries' `END_DATE` shorter than the `INTERVAL` (e.g., set monthly `Expense`'s 
@@ -706,7 +725,7 @@ but specifying filter options like `view month 12` only show entries that are ad
   be able to see those that start in the future unless they specify to view those dates. `view` is meant to be a simple tool
   to view all entries, including recurring entries.
 
-![](images/FAQRecurring.PNG)
+![](images/FAQrecurring.PNG)
 
 This image explains what the entries' list and separate list indicate.
   
