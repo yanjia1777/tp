@@ -45,7 +45,7 @@ Parser --> Duke : cmd
 
 deactivate Parser
 
-Duke -> DeleteCommand : execute(nfm,..,bm,nldm,..,ui)
+Duke -> DeleteCommand : execute(nfm,...,bm,nldm,...,ui)
 
 activate DeleteCommand
 DeleteCommand -> NormalFinanceManager : addEntry(e)
@@ -64,7 +64,7 @@ DeleteCommand -> Ui : printEntryAdded(e)
 activate Ui
 Ui --> DeleteCommand
 deactivate Ui
-DeleteCommand -> Budget : checkExceedBudget(e, ...)
+DeleteCommand -> Budget : checkExceedBudget(e,...)
 activate Budget
 Budget --> DeleteCommand
 deactivate Budget
