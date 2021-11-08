@@ -1,4 +1,4 @@
-# irvinseet's Project Portfolio Page
+# Seet Ting Yang Irvin's Project Portfolio Page
 
 ## Overview
 
@@ -7,71 +7,76 @@ for use via a Command Line Interface (CLI).
 
 ## Summary of Contributions
 
-### Code Contributed
+- **New Feature**: Implemented budget setting
+    - What it does: `Budget`: base class which allows user to set spending limit and fetch spending related to
+      respective budgets. `BudgetManager` which handles all `Budget`-related actions such as fetching monthly spending
+      and limit.
 
-The code written by me (`irvinseet`) can be
-found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinseet&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
+- **New Feature**: Implemented categories' enumeration: `ExpenseCategory` and `IncomeCategory`
+    - What it does: Assigned category to entries.
+    - Justification: Allow user to easily assign categories to their entry for housekeeping purposes.
 
-### Enhancements Implemented
+- **New Feature**: Implemented skeleton and formatting of help message in Ui
+    - What it does: Prints a summary of all commands available.
+    - Justification: Help users old and new navigate the app efficiently.
 
-1. Implemented `Expense` class, a base `Model` class used extensively in the app.
+- **Enhancement**: Handled unsafe user input
+    - What it does: 2 layered defense system. First, check for any invalid characters. Then, check if valid characters
+      are used in correct manner.
+    - Justification: This feature improves the product significantly as there are customized messages to tell the user
+      which part of their input went wrong.
+    - Highlights: It was not easy to find the correct regex pattern to match as they are many factors to consider, such
+      as optional tags.
 
-2. Implementation of enumerations
+- **Enhancement**: Allow users to key in entries without specify `date` or `category`
+    - What it does: initialisation of fields when user do not specify some fields. e.g, `date` initialised
+      to `LocalDate.now()` and `category` initialised to `OTHERS`
+    - Justification: It may be tedious for user to type out the entirety of the entry. Users using expense tracking app
+      mostly key in their expenses on the same day. Also, they may want to key in quickly and then edit the relevant
+      fields in their own time.
 
-- `ExpenseCategory` and `IncomeCategory` which allows the user to assign a category to their entries to easily query
-  their data or set budgets.
-- Printing of category list when user key in `cat`
+<div style="page-break-after: always;"></div>
 
-3. Implemented budget setting -`Budget`: base class which allows user to set spending limit and fetch spending related
-   to respective budgets.
+- **Enhancement**: Allow users to key in entries
+  in [10 different date formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
+    - What it does: User can type in date in any of the 10 given formats and our program can identify it correctly.
+    - Justification: Different users have different preference in terms of keying in date.
 
-- `BudgetManager` which handles all `Budget`-related actions such as fetching monthly spending and limit.
+- **Enhancement**: Implemented a parsing fuction that reads input correctly despite jumbled up tags
+    - What it does: `parseInputByTags` method, a one-size-fits-all which parse user inputs by tags regardless of order
+      using regex. As tags are essential to our app, it is for many functions.
+    - Justification: Users do not have to worry about following a "strict" format. Improves user experience
 
-4. Ui
+- **Code
+  contributed**: [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=irvinseet&sort=groupTitle&sortWithin=title&since=2021-09-25&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false)
 
-- `help` message.
-- `Budget`-related messages.
-- Check and handled unsafe user input using regex.
+- **Project management**:
+    - Set up iterations `v1.0` - `v2.1`on GitHub.
+    - Set up Issue Trackers on GitHub.
 
-5. Parser
+- **Contributions to team-based tasks**
+    - Hosted meetings and set general direction during ideation phases (V1.0, V2.0, V2.1).
+    - Set up the Github team organisation and repository.
+    - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
+        - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in
+          application.
 
-- User friendliness improvements
-    - initialisation of fields when user do not specify some of the fields. e.g, `date` initialised to `LocalDate.now()`
-      and `category` initialised to `OTHERS`
-    - `dateFormatter` which takes.
-      in [10 different formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
-    - `parseInputByTags` which parse user inputs by tags regardless of order using regex.
-- Setting categories of entries.
+- **Community**:
+    - PR reviewed: [#42](https://github.com/nus-cs2113-AY2122S1/tp/pull/42),
+    - Reported bugs and suggestions for other teams in the class: [Here](https://github.com/irvinseet/ped/issues)
 
-### Contributions to the UG
+- **Contributions to the UG**
+    - Converted UG from Google Docs draft into markdown.
+    - Added Introduction of the app.
+    - Added table of "Acceptable date formats".
+    - Added table of "Available categories".
+    - Updated documentation formatting and overall readability.
 
-- Converted UG into markdown.
-- Introduction of the app.
-- Added table of "Acceptable date formats".
-- Added table of "Available categories".
-- Updated documentation formatting and overall readability.
+- **Contributions to the DG**
+    - Added diagram of System Architecture.
+    - Added documentation for `Budget` Component.
+    - Added implementation and design consideration of `BudgetManager`.
+    - Added some user stories.
+    - Added manual testing for `set` function.
+    - Added manual testing for `budget` function.
 
-### Contributions to the DG
-
-- Added diagram of System Architecture.
-- Added documentation for `Budget` Component.
-- Added implementation and design consideration of `BudgetManager`
-- Added some user stories.
-- Added manual testing for `set` function.
-- Added manual testing for `budget` function.
-
-### Contributions to team-based tasks
-
-- Hosted meetings and set general direction during ideation phases (V1.0, V2.0, V2.1).
-- Set up the Github team organisation and repository.
-- Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
-    - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
-
-### Review/mentoring contributions
-
-- Reviewed PRs and ensured overall code quality/formatting was up to standard
-
-### Community
-
-- Reported bugs during PE Dry Run.
-- Reviewed other's PR with non-trivial comments.
