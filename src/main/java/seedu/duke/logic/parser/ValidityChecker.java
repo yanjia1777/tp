@@ -75,7 +75,7 @@ public class ValidityChecker {
         if (isEmpty || !isDoubleWithoutLetters) {
             throw new MintException(MintException.ERROR_INVALID_AMOUNT);
         }
-        double amount = Double.parseDouble(amountStr);
+        double amount = Math.round(Double.parseDouble(amountStr) * 100.0) / 100.0;
         if (amount >= AMOUNT_LIMIT) {
             throw new MintException(MintException.ERROR_AMOUNT_TOO_LARGE);
         }
