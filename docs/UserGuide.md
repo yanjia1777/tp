@@ -302,6 +302,8 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
           the entries' list.
     - For more information about why the `view` works this way, refer to [Frequently Asked Questions](#faq).
 
+<div style="page-break-after: always;"></div>
+
 Examples:
 Assume today's date is `2021-11-06`
 
