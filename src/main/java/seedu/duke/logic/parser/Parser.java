@@ -45,7 +45,7 @@ public class Parser {
     public static final String STRING_EMPTY = "";
     public static final String SEPARATOR = ". ";
     public static final String STRING_INCLUDE = "Please include the following in your command or make them valid: \n";
-    public static final String STRING_DESCRIPTION = "Description of item\n";
+    public static final String STRING_DESCRIPTION = "Name(Description) of item\n";
     public static final String STRING_DATE = "Date of purchase or start date of the recurring period"
             + " (2000-01-01 to 2200-12-31)\n";
     public static final String STRING_AMOUNT = "Amount (Valid non-negative number below 1 million (after automatically"
