@@ -436,7 +436,8 @@ A smart and simple way to keep track of your expenses
     cancel
     Ok. I have cancelled the process.
     ```
-   
+    <div style="page-break-after: always;"></div>
+
    - If there is no entry that matches the query, it tells that there is no match in the list.
     
     ```
@@ -484,8 +485,9 @@ A smart and simple way to keep track of your expenses
     n/ARCADE
     Got it! I will update the fields accordingly!
     ```
+    <div style="page-break-after: always;"></div>
 
-    - If there are no entries that match the query, then it would print a message to inform the user that.
+     - If there are no entries that match the query, then it would print a message to inform the user that.
     
     ```
     edit a/20 d/2021-12-03 n/Movie c/1
