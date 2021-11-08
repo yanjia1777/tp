@@ -712,7 +712,7 @@ Please refresh page if table is not rendered properly.
 |view categories | `cat` | 
 |set | `set` `c/CATEGORY_NUMBER` `a/AMOUNT`| 
 |budget | `budget` |
-|deleteAll | `deleteAll` `[income]` `[expense]` |
+|deleteAll | `deleteAll` `[normal]` `[recurring]` |
 |help | `help` | 
 |exit | `exit` |
 
