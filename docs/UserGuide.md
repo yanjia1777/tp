@@ -20,25 +20,25 @@ step-by-step-instructions.
     - [Running the Programme](#runningTheProgramme)
     - [[For users new to CLI] Changing the Directory](#changingTheDirectory)
 - [Prerequisites before using Mint](#know)
-  - [Available tag formats](#tagFormat)
-  - [Available date formats](#dateFormat)
-  - [List of categories](#categoryList)
+    - [Available tag formats](#tagFormat)
+    - [Available date formats](#dateFormat)
+    - [List of categories](#categoryList)
 - [Features](#features)
-  - [Notes about commands](#commandNote)
-  - [Notes about recurring entries](#recurringNote)
-  - [Viewing help](#help)
-  - [Adding entries](#add)
-  - [Adding recurring entries](#addR)
-  - [Viewing entries](#view)
-  - [Deleting entries](#delete)
-  - [Deleting recurring entries](#deleteR)
-  - [Deleting all entries](#deleteAll)
-  - [Editing entries](#edit)
-  - [Editing recurring entries](#editR)
-  - [Viewing categories](#cat)
-  - [Setting budget](#set)
-  - [View monthly budget ](#budget)
-  - [Exiting the program](#exit)
+    - [Notes about commands](#commandNote)
+    - [Notes about recurring entries](#recurringNote)
+    - [Viewing help](#help)
+    - [Adding entries](#add)
+    - [Adding recurring entries](#addR)
+    - [Viewing entries](#view)
+    - [Deleting entries](#delete)
+    - [Deleting recurring entries](#deleteR)
+    - [Deleting all entries](#deleteAll)
+    - [Editing entries](#edit)
+    - [Editing recurring entries](#editR)
+    - [Viewing categories](#cat)
+    - [Setting budget](#set)
+    - [View monthly budget ](#budget)
+    - [Exiting the program](#exit)
 - [Command Summary](#command-summary)
 - [Frequently Asked Questions](#faq)
 
@@ -85,7 +85,6 @@ Refer to the [Features Section](#features) below for details of each comm
 
 ## <a name="know"></a>Prerequisites before using Mint
 
-
 ### <a name="tagFormat"></a>Acceptable tag formats
 
 |Tag | Description |Format | Example of input |
@@ -119,8 +118,9 @@ Example: 5th Jaunary 2020
 | d MMM yyyy (for MMM, capitalise only the first letter, e.g. Jan) | 5 Jan 2020 |
 
 Note:
+
 - day must be between '1' to '31'.
-- if user give a day that is not supposed to exist, day will be rounded down. 
+- if user give a day that is not supposed to exist, day will be rounded down.
     - e.g. `2021-09-31` will be received as `2021-09-30` , as September only has 30 days.
 
 <div style="page-break-after: always;"></div>
@@ -140,10 +140,11 @@ Note:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="features"></a>Features
 
 ---
-
 
 ### <a name="commandNote"></a> Notes about commands
 
@@ -169,6 +170,11 @@ Note:
 
 ---
 
+
+<div style="page-break-after: always;"></div>
+
+---
+
 ### <a name="recurringNote"></a> Notes about recurring entries
 
 - Recurring entries will be recurred on the same day as the `DATE` if the interval is `MONTH`; same day and month if the
@@ -186,8 +192,7 @@ Examples:
 - Nintendo yearly subscription starts on `2020-02-29` and ends on `2023-01-15`.
     - `DATE` is `2020-02-29`;`INTERVAL` is `YEAR`; `END_DATE` is `2023-01-15`.
     - It will be billed on `2020-02-29`, `2021-02-28`, and `2022-02-28` only.
-    - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those
-      years.
+    - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those years.
     - As `2023-01-15` is before the next recurring date of `2023-02-28`, it will not be recurred on `2023-02-28`.
 
 - The school starts to give monthly allowance on `2021-08-31` until `2023-08-31`.
@@ -197,13 +202,13 @@ Examples:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="help"></a>Viewing help: `help`
 
 Shows a list of possible user commands
 
 Format: `help`
-
-<div style="page-break-after: always;"></div>
 
 ## <a name="add"></a>Adding entries: `add`
 
@@ -233,6 +238,8 @@ add income n/Sales a/34 d/2021-02-19 c/1
 I've added: Income  | WAGES | 2021-02-19 | Sales | $34.00
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="addR"></a>Adding Recurring Entries: `addR`
 
 Adds an expense or income to your tracker
@@ -260,10 +267,12 @@ addR income a/10000 n/salary d/2021-10-10 i/mOnTh
 I've added: Income  | OTHERS | 2021-10-10 | salary | $10,000.00 | MONTH | Forever :D
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="view"></a>Viewing entries: `view`
 
-Shows a list of all the entries, each with the associated `NAME`, `CATEGORY_NUMBER`, `DATE`, and `AMOUNT` 
-(`INTERVAL` and `END_DATE` also for recurring entries.) 
+Shows a list of all the entries, each with the associated `NAME`, `CATEGORY_NUMBER`, `DATE`, and `AMOUNT`
+(`INTERVAL` and `END_DATE` also for recurring entries.)
 
 Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from STARTDATE [ENDDATE]] [up/ascending]`
 
@@ -285,10 +294,10 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
       addition will be based on.
     - If no date options are specified correctly, it will default to viewing recurring entries up to current date.
     - There will be a separate list at the bottom to show the original recurring entries.
-        - If neither date options nor `[expense]`/`[income]` options are specified, the separate list will show all recurring
-          entries.
-        - If `[expense]`/`[income]` options are specified but not date options, the separate list will show applicable recurring
-          entries, where some may not have been added to the entries' list.
+        - If neither date options nor `[expense]`/`[income]` options are specified, the separate list will show all
+          recurring entries.
+        - If `[expense]`/`[income]` options are specified but not date options, the separate list will show applicable
+          recurring entries, where some may not have been added to the entries' list.
         - If date options are specified correctly, the separate list will only show recurring entries that were added to
           the entries' list.
     - For more information about why the `view` works this way, refer to [Frequently Asked Questions](#faq).
@@ -339,6 +348,8 @@ Here is the list of applicable recurring entries, where some were added to the a
 Income  | ALLOWANCE | 2021-08-31 |      Allowance      | $1.00   | MONTH | 2023-08-31
 ```
 
+<div style="page-break-after: always;"></div>
+
 ```
 view month 4 year 2021
 For the year 2021:
@@ -366,6 +377,8 @@ Income  |   ALLOWANCE   | 2021-08-31 | Allowance | $1.00  | MONTH | 2023-08-31
 Expense | ENTERTAINMENT | 2021-09-21 |  Netflix  |-$12.00 | MONTH | 2030-02-20
 Expense |    OTHERS     | 2020-02-29 | Nintendo  |-$19.99 | YEAR  | 2023-01-15
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="delete"></a>Deleting an entry: `delete`
 
@@ -401,6 +414,8 @@ y
 I have deleted: Expense  | OTHERS | 2012-09-21 | Textbook | $40.00
 ```
 
+<div style="page-break-after: always;"></div>
+
 - If user query matches more than 1 `Expense` or `Income` in the list
 
 ```
@@ -413,6 +428,8 @@ Enter the index of the item you want to delete. To cancel, type "cancel"
 1
 I have deleted: Income  | OTHERS | 2020-04-20 | Cheese Burger | $4.20
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="deleteR"></a>Deleting a recurring entry: `deleteR`
 
@@ -460,6 +477,8 @@ Enter the index of the item you want to delete. To cancel, type "cancel"
 I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forever :D
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="delete"></a>Deleting all entries: `deleteAll`
 
 Deletes all existing entries.
@@ -494,6 +513,8 @@ Type "y" if yes. Type "n" if not.
 y
 All entries successfully deleted.
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="edit"></a>Editing an entry: `edit`
 
@@ -530,6 +551,8 @@ a/14
 Got it! I will update the fields accordingly!
 ```
 
+<div style="page-break-after: always;"></div>
+
 - If user query matches more than 1 `Expense` or `Income` in the list
 
 ```
@@ -544,6 +567,8 @@ What would you like to edit?
 c/7
 Got it! I will update the fields accordingly!
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="editR"></a>Editing a recurring entry: `editR`
 
@@ -580,6 +605,8 @@ n/NETFLIX
 Got it! I will update the fields accordingly!
 ```
 
+<div style="page-break-after: always;"></div>
+
 - If user query matches more than 1 `Expense` or `Income` in the list
 
 ```
@@ -594,6 +621,8 @@ What would you like to edit?
 a/5
 Got it! I will update the fields accordingly!
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="cat"></a>View available categories: `cat`
 
@@ -634,6 +663,8 @@ Expected Output:
 Budget for FOOD set to $100.00
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="budget"></a>View monthly budget: `budget`
 
 View monthly spending and budget for current month
@@ -667,6 +698,8 @@ Expected Output:
 Bye! Thanks for using Mint. See you soon :D
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="Commannd Summary"></a>Command Summary
 
 Please refresh page if table is not rendered properly.
@@ -683,30 +716,35 @@ Please refresh page if table is not rendered properly.
 |view categories | `cat` | 
 |set | `set` `c/CATEGORY_NUMBER` `a/AMOUNT`| 
 |budget | `budget` |
-|deleteAll | `deleteAll` `[income]` `[expense]` |
+|deleteAll | `deleteAll` `[normal]` `[recurring]` |
 |help | `help` | 
 |exit | `exit` |
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="faq"></a>Frequently Asked Questions
 
-- Why are users allowed to make recurring entries' `END_DATE` shorter than the `INTERVAL` (e.g., set monthly `Expense`'s 
-`DATE` as `2021-11-04` and `END_DATE` as `2021-11-15`)?
-  - This is so that users can use the `END_DATE` as a reminder to themselves to cancel subscriptions or be aware of the 
-  end of receiving fixed incomes.
+- Why are users allowed to make recurring entries' `END_DATE` shorter than the `INTERVAL` (e.g., set monthly `Expense`'s
+  `DATE` as `2021-11-04` and `END_DATE` as `2021-11-15`)?
+    - This is so that users can use the `END_DATE` as a reminder to themselves to cancel subscriptions or be aware of
+      the end of receiving fixed incomes.
 
-- Why does simply entering `view` without date options show all the normal entries for  recurring entries only up to today's date in the entries' list?
-  - This is because if users do not specify the `END_DATE`, default is set to `2200-12-31`(forever). Thus, if we show all the recurring entries that are added,
-  recurring entries with `END_DATE` set as forever will show all recurring until `2200-12-31` which would hinder the users from viewing important, recent entries.
-  
-- Why does simply entering `view` show recurring entries that are not added to the entries' list still shown in the separate list,
-but specifying filter options like `view month 12` only show entries that are added to the entries' list in the separate list?
-  - This is because users may have recurring entries that start in the future. Only entering `view` without filter options
-  show recurring entries up to today's date. Thus, if only the entries that are added to the entries' list are shown in the 
-  separate list, recurring entries that have not started yet would never be shown in the separate list, and users will not
-  be able to see those that start in the future unless they specify to view those dates. `view` is meant to be a simple tool
-  to view all entries, including recurring entries.
+- Why does simply entering `view` without date options show all the normal entries for recurring entries only up to
+  today's date in the entries' list?
+    - This is because if users do not specify the `END_DATE`, default is set to `2200-12-31`(forever). Thus, if we show
+      all the recurring entries that are added, recurring entries with `END_DATE` set as forever will show all recurring
+      until `2200-12-31` which would hinder the users from viewing important, recent entries.
 
-![](images/FAQRecurring.PNG)
+- Why does simply entering `view` show recurring entries that are not added to the entries' list still shown in the
+  separate list, but specifying filter options like `view month 12` only show entries that are added to the entries'
+  list in the separate list?
+    - This is because users may have recurring entries that start in the future. Only entering `view` without filter
+      options show recurring entries up to today's date. Thus, if only the entries that are added to the entries' list
+      are shown in the separate list, recurring entries that have not started yet would never be shown in the separate
+      list, and users will not be able to see those that start in the future unless they specify to view those
+      dates. `view` is meant to be a simple tool to view all entries, including recurring entries.
+
+![](images/FAQrecurring.PNG)
 
 This image explains what the entries' list and separate list indicate.
   

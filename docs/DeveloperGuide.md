@@ -85,6 +85,7 @@ The Sequence Diagram below illustrates the interactions of `Ui` component with t
 > As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
 > command's case, unused arguments are represented as `..` to focus on the used arguments.
 
+<div style="page-break-after: always;"></div>
 
 ### <a name="logic"></a>Logic Component
 
@@ -189,6 +190,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
    `BudgetListDataManager`, `RecurringListDataManager` and `NormalListDataManager`. All of these classes inherit from
    the `DataManagerActions` class.
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="implementation"></a>Implementation
 
 ### Parser
@@ -271,6 +274,8 @@ also meant to make the live updating work, we had to deal with 7 commands: `add`
 
 A smart and simple way to keep track of your expenses
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="stories"></a>User Stories
 
 |Version| As a ... | I want to ... | So that I can ...|
@@ -334,6 +339,8 @@ A smart and simple way to keep track of your expenses
     add income a/15 d/2021-12-03 n/Selling Textbooks c/7
     I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
     ```
+   
+<div style="page-break-after: always;"></div>
 
 4. **Test case**: `add a/15 d/2021-12-03 n/Textbook`
 
@@ -375,9 +382,11 @@ A smart and simple way to keep track of your expenses
     y
     I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
     ```
-     
-   - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
-   user wants to delete from a given list.
+   
+     <div style="page-break-after: always;"></div>
+
+    - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
+   user wants to delete from a given list. 
      - Enter `2`, then it would delete the second `Entry` shown and tell that it is deleted.
     
     ```
@@ -427,7 +436,8 @@ A smart and simple way to keep track of your expenses
     cancel
     Ok. I have cancelled the process.
     ```
-   
+    <div style="page-break-after: always;"></div>
+
    - If there is no entry that matches the query, it tells that there is no match in the list.
     
     ```
@@ -475,8 +485,9 @@ A smart and simple way to keep track of your expenses
     n/ARCADE
     Got it! I will update the fields accordingly!
     ```
+    <div style="page-break-after: always;"></div>
 
-    - If there are no entries that match the query, then it would print a message to inform the user that.
+     - If there are no entries that match the query, then it would print a message to inform the user that.
     
     ```
     edit a/20 d/2021-12-03 n/Movie c/1
@@ -565,6 +576,8 @@ A smart and simple way to keep track of your expenses
     addR a/5 n/phone bills i/MOnth
     I've added: Expense | OTHERS | 2021-11-08 | phone bills |-$5.00 | MONTH | Forever :D
     ```
+     <div style="page-break-after: always;"></div>
+
 
 5. **Test case**: `addR income a/90 n/Full-time job i/MONTH e/2023-12-23`
 
@@ -656,6 +669,7 @@ A smart and simple way to keep track of your expenses
    deleteR e/2023-04-15
    Hmm.. That item is not in the list.
    ```
+     <div style="page-break-after: always;"></div>
 
 ### <a name="Edit-recurring-entry"></a>Editing a recurring `Entry`
 
@@ -747,6 +761,7 @@ A smart and simple way to keep track of your expenses
     Hmm.. That item is not in the list.
     ```
 
+     <div style="page-break-after: always;"></div>
 
 ### <a name="View"></a>Viewing entries
 
