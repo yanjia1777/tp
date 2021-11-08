@@ -923,8 +923,8 @@ A smart and simple way to keep track of your expenses
         - A message warning user to slow down their spending, since the threshold is 80% of the limit set.
     
         ```
-        I've added: Expense | FOOD | 2021-11-07 | haidilao | $80.01 Slow down, you've set aside $100.00 for FOOD, but
-        you already spent $80.01.
+        I've added: Expense | FOOD | 2021-11-07 | haidilao | $80.01 
+        Slow down, you've set aside $100.00 for FOOD, but you already spent $80.01.
         ```
 
 ### <a name="View-budget"></a>Viewing budget
