@@ -35,9 +35,9 @@
 - Inspiration for App Idea and OOP Structure:
 - Inspiration for User Guide and Developer Guide: AddressBook (Level 2) 
 
-  https://se-education.org/addressbook-level3/DeveloperGuide.html 
+  [https://se-education.org/addressbook-level3/DeveloperGuide.html](https://se-education.org/addressbook-level3/DeveloperGuide.html ) 
 
-  https://se-education.org/addressbook-level3/UserGuide.html
+  [https://se-education.org/addressbook-level3/UserGuide.html](https://se-education.org/addressbook-level3/UserGuide.html)
 
 ## <a name="design"></a>Design
 
@@ -842,92 +842,67 @@ A smart and simple way to keep track of your expenses
 
 ### <a name="Set-budget"></a>Setting budget
 
-1. Setting a budget with valid fields
-    - Test case: `set c/0 a/100`
-    - Expected: A message to show that specified budget is successfully set to amount specified.
+1. **Prerequisites**: List of entries must be empty. You may use the `deleteAll` function.
 
-```
-Budget for FOOD set to $100.00
-```
+2. **Test case**: `set c/0 a/100`
 
-2. Setting a budget with invalid category number
-    - Test case: `set c/-1 a/100`.
-    - Expected: An error message to remind users that category number ranges from `0` to `7`.
+   Expected:
+    - A message to show that specified budget is successfully set to amount specified.
 
-```
-Please enter a valid category number! c/0 to c/7
-```
+    ```
+    Budget for FOOD set to $100.00
+    ```
 
-3. Setting a budget and adding an expense that exceeds 80% of the budget set
-    - Prerequisite: List of entries must be empty. You may use the `deleteAll` function.
-    - Test case (2 steps process):
-        - First, key in `set c/0 a/100`.
+3. **Test case**: `set c/0 a/100`, then `add n/haidilao c/0 a/80.01`.
+    - First, key in `set c/0 a/100`.
+
+   Expected:
+    - A message to show that specified budget is successfully set to amount specified.
+
+         ```
+         Budget for FOOD set to $100.00
+         ```
+
         - Then, key in `add n/haidilao c/0 a/80.01`
-    - Expected: A message warning user to slow down their spending.
 
-```
-Budget for FOOD set to $100.00
-```
+   Expected:
+    - A message warning user to slow down their spending, since the threshold is 80% of the limit set.
 
-```
-I've added: Expense  | FOOD | 2021-11-07 | haidilao | $80.01
-Slow down, you've set aside $100.00 for FOOD, but you already spent $80.01.
-```
+      ```
+      I've added: Expense | FOOD | 2021-11-07 | haidilao | $80.01 Slow down, you've set aside $100.00 for FOOD, but
+       you already spent $80.01.
+      ```
 
 ### <a name="View-budget"></a>Viewing budget
 
-1. Set a budget and view the list of budgets
-    - Prerequisite: List of entries must be empty. You may use the `deleteAll` function. Assume no budget set yet.
-    - Test case (2 steps process):
-        - Key in `set c/0 a/100`.
-        - Then, key in `budget`.
-    - Expected: A list of budgets will be printed.
+1. **Prerequisites**:
+    - List of entries must be empty. You may use the `deleteAll` function.
+    - Assume no budget set yet.
 
-```
-Budget for FOOD set to $100.00
-```
+2. **Test case**: `set c/0 a/100`, then `budget`.
+    - First, key in `set c/0 a/100`.
 
-```
-Here is the budget for NOVEMBER 2021
-   Category    | Amount | Budget  | Percentage
-     FOOD      |  $0.00 / $100.00 | 
-ENTERTAINMENT  |  $0.00 / Not set | 
-TRANSPORTATION |  $0.00 / Not set | 
-  HOUSEHOLD    |  $0.00 / Not set | 
-   APPAREL     |  $0.00 / Not set | 
-    BEAUTY     |  $0.00 / Not set | 
-     GIFT      |  $0.00 / Not set | 
-    OTHERS     | $80.01 / Not set | 
-```
+   Expected:
+    - A message to show that specified budget is successfully set to amount specified.
 
-2. Check if budget only includes current month's expenditure
-    - Prerequisites:
-        - List of entries must be empty. You may use the `deleteAll` function.
-        - Budget of "FOOD" is set to $100. (see previous test case).
-    - Test case (3 steps process):
-        - Key in `add n/current expense a/100`.
-        - Then, key in `add n/old expense d/2020-01-01 a/200`.
-        - Then, key in `budget` to view current month's spending and budget.
-    - Expected: Only entries that took place in current month will be calculated in the monthly spending. "current
-      expense" will be added into the caculations while "old expense" is not.
+         ```
+         Budget for FOOD set to $100.00
+         ```
 
-```
-I've added: Expense | OTHERS | 2021-11-07 | current expense | $100.00
-```
+    - Then, key in `budget`
 
-```
-I've added: Expense | OTHERS | 2020-01-01 | old expense | $200.00
-```
-
-```
-Here is the budget for NOVEMBER 2021
-   Category    |  Amount | Budget  | Percentage
-     FOOD      |   $0.00 / $100.00 | 
-ENTERTAINMENT  |   $0.00 / Not set | 
-TRANSPORTATION |   $0.00 / Not set | 
-  HOUSEHOLD    |   $0.00 / Not set | 
-   APPAREL     |   $0.00 / Not set | 
-    BEAUTY     |   $0.00 / Not set | 
-     GIFT      |   $0.00 / Not set | 
-    OTHERS     | $100.00 / Not set | 
-```
+   Expected:
+    - A list of budgets will be printed.
+    ```
+    Here is the budget for NOVEMBER 2021
+       Category    | Amount | Budget  | Percentage
+         FOOD      |  $0.00 / $100.00 | 
+    ENTERTAINMENT  |  $0.00 / Not set | 
+    TRANSPORTATION |  $0.00 / Not set | 
+      HOUSEHOLD    |  $0.00 / Not set | 
+       APPAREL     |  $0.00 / Not set | 
+        BEAUTY     |  $0.00 / Not set | 
+         GIFT      |  $0.00 / Not set | 
+        OTHERS     | $80.01 / Not set | 
+    ```
+   
