@@ -43,31 +43,24 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
 - **Enhancement**: Ui
   - Justification: Added `edit` function related messages in the Ui class for more OOP.  
 
-**Contributions to the UG**: 
+- **Contributions to the UG**:
+  - Added the QuickStart portion of the User Guide.
+  - Added documentation for the edit function in the User Guide.
 
-- Added the QuickStart portion of the User Guide.
-- Added documentation for the edit function in the User Guide.
+- **Contributions to the DG**:
+  - Added documentation for the storage component under the Design section. 
+    - Added brief explanation of the storage component.
+    - Added the sequence diagrams for the storage component.
+  - Added manual testing skeleton and specific details for add and edit functions.
+  - Added some user stories.
+- **Contributions to team-based tasks**:
+  - Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
+  - Identified some bugs to be fixed.
+  - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
+      - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
 
-**Contributions to the DG**:
-
-- Added documentation for the storage component under the Design section. 
-  - Added brief explanation of the storage component.
-  - Added the sequence diagrams for the storage component.
-- Added manual testing skeleton and specific details for add and edit functions.
-- Added some user stories.
-
-**Contributions to team-based tasks**:
-
-- Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
-- Identified some bugs to be fixed.
-- Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
-    - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
-
-
-**Review/mentoring contributions**:
-
-- Reviewed PRs and ensured overall code quality/formatting was up to standard.
-
-**Community**
-- PR reviewed: [Here](https://github.com/nus-cs2113-AY2122S1/tp/pull/25/files/969ac6a3a4b737bbf9839bb634ca90680d4ee988)
-- Reported bugs and suggestions for other teams in the class: [Here](https://github.com/Yitching/ped/issues)
+- **Review/mentoring contributions**:
+  - Reviewed PRs and ensured overall code quality/formatting was up to standard.
+- **Community**
+  - PR reviewed: [Here](https://github.com/nus-cs2113-AY2122S1/tp/pull/25/files/969ac6a3a4b737bbf9839bb634ca90680d4ee988)
+  - Reported bugs and suggestions for other teams in the class: [Here](https://github.com/Yitching/ped/issues)
