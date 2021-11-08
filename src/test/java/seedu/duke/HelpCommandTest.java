@@ -38,7 +38,7 @@ public class HelpCommandTest {
         helpCommand.execute(normalFinanceManager, recurringFinanceManager, budgetManager, normalListDataManager,
                 dataManagerActions, recurringListDataManager, budgetDataManager, ui);
 
-        String expectedOutput = "Available tags: n/name d/date a/AMOUNT c/CATEGORY_NUMBER i/interval e/endDate\n"
+        String expectedOutput = "Available tags: n/NAME d/DATE a/AMOUNT c/CATEGORY_NUMBER i/INTERVAL e/END_DATE\n"
                 + "Order of tags does not matter.\n"
                 + "Square brackets \"[ ]\" identifies an optional argument.\n"
                 + "List of commands available.\n"
@@ -48,23 +48,23 @@ public class HelpCommandTest {
                 + INDENT + "Add expense. Example: add n/chicken rice a/3.50 d/2021-09-30 c/1\n"
                 + "- add income n/NAME a/AMOUNT [d/DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Add income. Example: add income n/payday a/400 d/2021-10-10 c/1\n"
-                + "- delete [n/{keyword}] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
+                + "- delete [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Delete entries using keyword search. Needs at least 1 tag. Example: delete n/chicken\n"
-                + "- edit [n/{keyword}] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
+                + "- edit [n/NAME] [a/AMOUNT] [d/DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Edit entries using keyword search. Needs at least 1 tag. Example: edit n/chicken\n"
                 + SOLID_LINE
                 + "RECURRING EXPENSES AND INCOME. Type \"cat\" to view category number.\n"
                 + "Similar to keying in entries, but includes interval(mandatory for adding), endDate(optional)\n"
                 + "Commands requires a \"R\", \n"
                 + "e.g. addR, addR income, deleteR, editR\n\n"
-                + "- addR n/NAME a/AMOUNT i/INTERVAL [d/START_DATE] [e/END_DATE] [c/CATEGORY_NUMBER] \n"
+                + "- addR n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY_NUMBER] \n"
                 + INDENT + "Add recurring expenses. Example: add n/spotify subscription a/10 i/MONTH d/2021-09-30 c/1\n"
-                + "- addR income n/NAME a/AMOUNT i/INTERVAL [d/START_DATE] [e/END_DATE] [c/CATEGORY_NUMBER]\n"
-                + INDENT + "Add recurring income. Example: add n/payday a/400 i/MONTH d/2021-10-10 c/1\n"
-                + "- deleteR [n/{keyword}] [i/INTERVAL] [d/START_DATE] [e/END_DATE] [c/CATEGORY_NUMBER]\n"
+                + "- addR income n/NAME a/AMOUNT i/INTERVAL [d/DATE] [e/END_DATE] [c/CATEGORY_NUMBER]\n"
+                + INDENT + "Add recurring income. Example: add n/payday a/400 i/year d/2021-10-10 c/1\n"
+                + "- deleteR [n/NAME] [a/AMOUNT] [i/INTERVAL] [d/DATE] [e/END_DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Delete recurring entries using keyword search. Needs at least 1 tag. "
                 + "Example: deleteR n/spotify\n"
-                + "- editR [n/{keyword}] [a/AMOUNT] [d/DATE] [c/category number]\n"
+                + "- editR [n/NAME] [a/AMOUNT] [i/INTERVAL] [d/DATE] [e/END_DATE] [c/CATEGORY_NUMBER]\n"
                 + INDENT + "Edit recurring entries using keyword search. Needs at least 1 tag. "
                 + "Example: editR n/spotify\n"
                 + SOLID_LINE
@@ -74,7 +74,7 @@ public class HelpCommandTest {
                 + INDENT + "If no modifiers are specified, it defaults to deleting all entries regardless of type.\n"
                 + SOLID_LINE
                 + "BUDGETING. Type \"cat\" to view category number.\n"
-                + "- set c/category number a/AMOUNT\n"
+                + "- set c/CATEGORY_NUMBER a/AMOUNT\n"
                 + INDENT + "Set spending limit for individual category. Example: set c/0 100\n"
                 + "- budget\n"
                 + INDENT + "View current month's expenditure and budget\n"
