@@ -182,6 +182,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
    `appendToEntryListTextFile` would activate the `NormalListDataManager` class for which the added entry would be
    appended to an external text file.
 
+<div style="page-break-after: always;"></div>
+
 **The `Storage` component:**
 
 1. Can save all the `recurringEntryList`, `budgetList` and the `entryList` in a text file. It is also able to read the
@@ -818,6 +820,8 @@ A smart and simple way to keep track of your expenses
     Expense |  BEAUTY  | 2021-04-04 | Massage |-$15.00 | MONTH | 2021-07-02
     ```
 
+<div style="page-break-after: always;"></div>
+
 5. **Test case**: `view from 2021-03-25 2021-11-02 by amount ascending`
 
    Expected:
@@ -886,6 +890,9 @@ A smart and simple way to keep track of your expenses
     n
     Delete aborted.
     ```
+
+<div style="page-break-after: always;"></div>
+
 
 ### <a name="Set-budget"></a>Setting budget
 
