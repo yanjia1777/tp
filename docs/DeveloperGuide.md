@@ -84,7 +84,7 @@ The Sequence Diagram below illustrates the interactions of `Ui` component with t
 
 > As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
 > command's case, unused arguments are represented as `..` to focus on the used arguments.
->>>>>>> upstream/master
+
 
 ### <a name="logic"></a>Logic Component
 
