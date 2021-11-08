@@ -75,7 +75,16 @@ The Ui component,
 * pass them either to the `Logic` component or `Storage` component.
 * outputs entries requested by the user.
 
+
 <div style="page-break-after: always;"></div>
+
+The Sequence Diagram below illustrates the interactions of `Ui` component with the `Logic` component and the user for the `view` command. For detailed implementation of `Logic` class, refer to [Logic](#logic) section.
+
+![](images/UiSequenceDiagram.png)
+
+> As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
+> command's case, unused arguments are represented as `..` to focus on the used arguments.
+>>>>>>> upstream/master
 
 ### <a name="logic"></a>Logic Component
 
