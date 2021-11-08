@@ -30,6 +30,8 @@
     - [Setting Budget](#Set-budget)
     - [Viewing Budget](#View-budget)
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="acknowledgements"></a>Acknowledgements
 
 - Inspiration for App Idea and OOP Structure:
