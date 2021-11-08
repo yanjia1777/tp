@@ -110,6 +110,11 @@ Example: 5th Jaunary 2020
 | dd MMM yyyy (for MMM, capitalise only the first letter, e.g. Jan) | 05 Jan 2020 |
 | d MMM yyyy (for MMM, capitalise only the first letter, e.g. Jan) | 5 Jan 2020 |
 
+Note:
+- day must be between '1' to '31'.
+- if user give a day that is not supposed to exist, day will be rounded down. 
+    - e.g. `2021-09-31` will be received as `2021-09-30` , as September only has 30 days.
+
 ### <a name="categoryList"></a>Available categories
 
 |Category tag | Expense Category | Income Category
