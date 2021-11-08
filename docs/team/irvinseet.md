@@ -12,9 +12,6 @@ for use via a Command Line Interface (CLI).
       respective budgets. `BudgetManager` which handles all `Budget`-related actions such as fetching monthly spending
       and limit.
 
-- **New Feature**: Implemented base class for expenses
-    - What it does: Basic building block of our app. Each instance stores information about the expense.
-
 - **New Feature**: Implemented categories' enumeration: `ExpenseCategory` and `IncomeCategory`
     - What it does: Assigned category to entries.
     - Justification: Allow user to easily assign categories to their entry for housekeeping purposes.
@@ -27,12 +24,10 @@ for use via a Command Line Interface (CLI).
     - What it does: 2 layered defense system. First, check for any invalid characters. Then, check if valid characters
       are used in correct manner.
     - Justification: This feature improves the product significantly as there are customized messages to tell the user
-      which part of their input went wrong. It is not uncommon for users to mess up the inputs. We want to ensure that
-      user's carelessness will not reduce their enjoyment while using our app.
+      which part of their input went wrong. 
     - Highlights: It was not easy to find the correct regex pattern to match as they are many factors to consider, such
       as optional tags.
-
-
+      
 - **Enhancement**: Allow users to key in entries without specify `date` or `category`
     - What it does: initialisation of fields when user do not specify some fields. e.g, `date` initialised
       to `LocalDate.now()` and `category` initialised to `OTHERS`
