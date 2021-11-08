@@ -695,5 +695,6 @@ but specifying filter options like `view month 12` only show entries that are ad
   to view all entries, including recurring entries.
 
 ![](images/FAQRecurring.PNG)
+
 This image explains what the entries' list and separate list indicate.
   
