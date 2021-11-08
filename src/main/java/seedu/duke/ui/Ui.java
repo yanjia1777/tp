@@ -111,8 +111,10 @@ public class Ui {
                 + "VIEWING ENTRIES\n"
                 + "- Format: view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from STARTDATE [ENDDATE]]"
                 + "[up/ascending]\n"
-                + INDENT + "View expenses sorted by name, date, amount or category, in ascending or descending order.\n"
-                + INDENT + "View a certain month or year or specific date range.\n"
+                + INDENT + "View entries sorted by name, date, amount or category, in ascending or descending order. "
+                + "Example: view by amount ascending\n"
+                + INDENT + "View a certain month or year or specific date range. "
+                + "Example: view month 5 year 2021 from 2021-05-10\n"
                 + SOLID_LINE
                 + "BUDGETING. Type \"cat\" to view category number.\n"
                 + "- set c/CATEGORY_NUMBER a/AMOUNT\n"
