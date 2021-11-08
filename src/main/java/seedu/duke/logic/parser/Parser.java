@@ -618,7 +618,7 @@ public class Parser {
         String catNumStr = String.valueOf(entry.getCategory().ordinal());
         String[] entryFieldsToAdd = {name, dateStr, amountStr, endDateStr, intervalStr, catNumStr};
         String[] entryFieldKeys = {NAME_KEYWORD, DATE_KEYWORD, AMOUNT_KEYWORD,
-                    END_DATE_KEYWORD, INTERVAL_KEYWORD, CAT_NUM_KEYWORD};
+            END_DATE_KEYWORD, INTERVAL_KEYWORD, CAT_NUM_KEYWORD};
         HashMap<String, String> entryFields = new HashMap<>();
         for (int index = 0; index < entryFieldsToAdd.length; index++) {
             entryFields.put(entryFieldKeys[index], entryFieldsToAdd[index]);
