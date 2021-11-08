@@ -202,7 +202,7 @@ Aspect: how to check whether user exceeded budget
     - Pros: Easy to implement. Less coupling of components.
     - Cons: More LOC and slower runtime.
 
-- Option 2 2: instantly updates the budget's monthly spending when user `add`, `delete` or `edit` (recurring)
+- Option 2: instantly updates the budget's monthly spending when user `add`, `delete` or `edit` (recurring)
   entries.
     - Pros: Faster runtime and more responsive warning messages (such as when user `edit` the `Entry` to an overspent
       budget.)
@@ -213,7 +213,6 @@ pursued option 2 and found it hard to add functionalities and do unit testing du
 also meant to make the live updating work, we had to deal with 7 commands: `add`, `addR`, `delete`, `deleteR`
 , `deleteAll`, `edit` and `editR`. Hence, we went with Option 1 due to scalability.
 
-{NOT DONE}
 
 ## <a name="scope"></a>Product scope
 
