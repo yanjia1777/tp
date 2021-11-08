@@ -17,23 +17,26 @@ step-by-step-instructions.
     - [Setting Up](#settingUp)
     - [Running the Programme](#runningTheProgramme)
     - [[For users new to CLI] Changing the Directory](#changingTheDirectory)
+- [Prerequisites before using Mint](#know)
+  - [Available tag formats](#tagFormat)
+  - [Available date formats](#dateFormat)
+  - [List of categories](#categoryList)
 - [Features](#features)
-    - [Viewing help](#help)
-    - [Adding entries](#add)
-    - [Adding recurring entries](#addR)
-    - [Viewing entries](#view)
-    - [Deleting entries](#delete)
-    - [Deleting recurring entries](#deleteR)
-    - [Deleting all entries](#deleteAll)
-    - [Editing entries](#edit)
-    - [Editing recurring entries](#editR)
-    - [Viewing categories](#cat)
-    - [Setting budget](#set)
-    - [View monthly budget ](#budget)
-    - [Exiting the program](#exit)
-- [Available tag formats](#tagormat)
-- [Available date formats](#dateFormat)
-- [List of categories](#categoryList)
+  - [Notes about commands](#commandNote)
+  - [Notes about recurring entries](#recurringNote)
+  - [Viewing help](#help)
+  - [Adding entries](#add)
+  - [Adding recurring entries](#addR)
+  - [Viewing entries](#view)
+  - [Deleting entries](#delete)
+  - [Deleting recurring entries](#deleteR)
+  - [Deleting all entries](#deleteAll)
+  - [Editing entries](#edit)
+  - [Editing recurring entries](#editR)
+  - [Viewing categories](#cat)
+  - [Setting budget](#set)
+  - [View monthly budget ](#budget)
+  - [Exiting the program](#exit)
 - [Command Summary](#command-summary)
 - [Frequently Asked Questions](#faq)
 
@@ -74,7 +77,10 @@ Refer to the [Features Section](#features) below for details of each comm
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
 4. Mint is now at your service!
 
-## <a name="tagFormat"></a>Acceptable tag formats
+## <a name="know"></a>Prerequisites before using Mint
+
+
+### <a name="tagFormat"></a>Acceptable tag formats
 
 |Tag | Description |Format | Example of input |
 |--------|----|-------------------|-------------|
@@ -87,7 +93,7 @@ Refer to the [Features Section](#features) below for details of each comm
 
 ---
 
-## <a name="dateFormat"></a>Acceptable date formats
+### <a name="dateFormat"></a>Acceptable date formats
 
 Example: 5th Jaunary 2020
 
@@ -104,7 +110,7 @@ Example: 5th Jaunary 2020
 | dd MMM yyyy (for MMM, capitalise only the first letter, e.g. Jan) | 05 Jan 2020 |
 | d MMM yyyy (for MMM, capitalise only the first letter, e.g. Jan) | 5 Jan 2020 |
 
-## <a name="categoryList"></a>Available categories
+### <a name="categoryList"></a>Available categories
 
 |Category tag | Expense Category | Income Category
 |--------|----------|----------|
@@ -124,7 +130,7 @@ Example: 5th Jaunary 2020
 ---
 
 
-Notes about the following list of commands:
+### <a name="commandNote"></a> Notes about the commands
 
 - Items in square brackets are optional.
 
@@ -148,26 +154,24 @@ Notes about the following list of commands:
 
 ---
 
-## <a name="recurringNote"></a>
-
-Notes about recurring entries:
+### <a name="recurringNote"></a> Notes about recurring entries
 
 - Recurring entries will be recurred on the same day as the `DATE` if the interval is `MONTH`; same day and month if the
   interval is `YEAR`
 - If the`END_DATE` of the recurring entry is before the next recurring date, it will not be recurred on that next
   recurring date.
-- If the day is not available on some months or years, it will automatically be rounded down. 
-  
+- If the day is not available on some months or years, it will automatically be rounded down.
+
 Examples:
 - Netflix monthly subscription starts on `2021-09-21` and ends on `2030-03-20`.
     - `DATE` is `2021-03-21`; `INTERVAL` is `MONTH`; `END_DATE` is `2030-03-20`.
     - It will be billed on `2021-09-21`, `2021-10-21`, and so on until `2030-02-21`.
-    
+
 - Nintendo yearly subscription starts on `2020-02-29` and ends on `2023-01-15`.
     - `DATE` is `2020-02-29`;`INTERVAL` is `YEAR`; `END_DATE` is `2023-01-15`.
     - It will be billed on `2020-02-29`, `2021-02-28`, and `2022-02-28` only.
     - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those
-  years.
+      years.
     - As `2023-01-15` is before the next recurring date of `2023-02-28`, it will not be recurred on `2023-02-28`.
 
 - The school starts to give monthly allowance on `2021-08-31` until `2023-08-31`.
