@@ -124,7 +124,7 @@ Example: 5th Jaunary 2020
 ---
 
 
-:bulb: Notes about the following list of commands:
+Notes about the following list of commands:
 
 - Items in square brackets are optional.
 
@@ -145,7 +145,7 @@ Example: 5th Jaunary 2020
 
 ## <a name="recurringNote"></a>
 
-:bulb: Notes about recurring entries:
+Notes about recurring entries:
 
 - Recurring entries will be recurred on the same day as the `DATE` if the interval is `MONTH`; same day and month if the
   interval is `YEAR`
