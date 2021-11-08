@@ -8,7 +8,7 @@ participant ":NormalListDataManager" as normalListDataManager
 -> duke : add command
 activate duke
 
-duke -> addCommand : execute(normalFinanceManager:NormalFinanceManager...):Command
+duke -> addCommand : execute(normalFinanceManager:NormalFinanceManager,...):Command
 activate addCommand
 
 addCommand -> normalListDataManager : appendToEntryTextFIle (entry:Entry)

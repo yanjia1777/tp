@@ -30,6 +30,8 @@
     - [Setting Budget](#Set-budget)
     - [Viewing Budget](#View-budget)
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="acknowledgements"></a>Acknowledgements
 
 - Inspiration for App Idea and OOP Structure:
@@ -49,6 +51,8 @@ The above **System Architecture** diagram shows the high-level design of Mint.
 
 On launch, the `Main` class initialises the app components in the correct sequence and links them up with each other, in
 the correct sequence.
+
+<div style="page-break-after: always;"></div>
 
 Apart from `Main`, Mint comprises six main components, namely:
 
@@ -70,6 +74,17 @@ The Ui component,
 * takes in user inputs.
 * pass them either to the `Logic` component or `Storage` component.
 * outputs entries requested by the user.
+
+
+<div style="page-break-after: always;"></div>
+
+The Sequence Diagram below illustrates the interactions of `Ui` component with the `Logic` component and the user for the `view` command. For detailed implementation of `Logic` class, refer to [Logic](#logic) section.
+
+![](images/UiSequenceDiagram.png)
+
+> As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
+> command's case, unused arguments are represented as `..` to focus on the used arguments.
+
 
 ### <a name="logic"></a>Logic Component
 
@@ -98,6 +113,8 @@ The Sequence Diagram below illustrates the interactions within the `Logic` compo
 > command's case, unused arguments are represented as `...` to focus on the used arguments. Same reason for `checkExceedBudget` applies.
 > This also applies for the sequence diagrams in the following sections.
 
+<div style="page-break-after: always;"></div>
+
 ### <a name="model"></a>Model Component
 
 The `Model` package consists of three sub-components: `FinanceManager`, `Entry`, and `Budget`.
@@ -114,6 +131,8 @@ The `FinanceManager` component,
 - performs action on the list of `Entry` objects (e.g., add, delete, etc.)
 - depends on the `Ui` component as some action needs confirmation from the user (e.g. For edit, after the user chooses
   the entry to edit, the user needs to provide the fields to be edited.)
+
+<div style="page-break-after: always;"></div>
 
 The `Entry` component,
 
@@ -133,6 +152,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
     - when user want to set budget for a specific category
     - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or
       `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
+
+<div style="page-break-after: always;"></div>
 
 ### <a name="storage"></a>Storage Component
 
@@ -345,66 +366,74 @@ A smart and simple way to keep track of your expenses
     Expected:
    - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
      - Input `y`, then it would delete the `Entry` and tell that it is deleted.
-     ```
-       delete n/Movie c/1
-       Is this what you want to delete?
-           Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
-       Type "y" if yes. Type "n" if not.
-       y
-       I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
-     ```
+     
+    ```
+    delete n/Movie c/1
+    Is this what you want to delete?
+        Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
+    Type "y" if yes. Type "n" if not.
+    y
+    I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
+    ```
      
    - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
    user wants to delete from a given list.
      - Enter `2`, then it would delete the second `Entry` shown and tell that it is deleted.
-     ```
-       delete n/movie c/1
-       Here is the list of items containing the keyword.
-        Index |   Type  |   Category    |    Date    |      Name       | Amount | Every |   Until
-          1   | Expense | ENTERTAINMENT | 2021-12-25 | Christmas Movie |-$15.00 |       |
-          2   | Expense | ENTERTAINMENT | 2021-11-03 |      Movie      |-$20.00 |       |
-        Enter the index of the item you want to delete. To cancel, type "cancel"
-        2
-        I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
-     ```
+    
+    ```
+   delete n/movie c/1
+   Here is the list of items containing the keyword.
+    Index |   Type  |   Category    |    Date    |      Name       | Amount | Every |   Until
+      1   | Expense | ENTERTAINMENT | 2021-12-25 | Christmas Movie |-$15.00 |       |
+      2   | Expense | ENTERTAINMENT | 2021-11-03 |      Movie      |-$20.00 |       |
+    Enter the index of the item you want to delete. To cancel, type "cancel"
+    2
+    I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
+    ```
+   
    - If there is no entry that matches the query, it tells that there is no matching `Entry` in the list.
-     ```
-       delete n/movie c/1
-       Hmm.. That item is not in the list.
-     ```
+     
+    ```
+    delete n/movie c/1
+    Hmm.. That item is not in the list.
+    ```
      
 3. **Test case**: `delete d/2021-11-04` 
 
-Expected:
-   - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
-     - Input `n`, then it exits the delete process.
-     ```
-       delete d/2021-11-04
-       Is this what you want to delete?
-          Expense  | TRANSPORTATION | 2021-11-04 | Taxi | $6.99
-       Type "y" if yes. Type "n" if not.
-       n
-       Ok. I have cancelled the process.
-     ```
+    Expected:
+    - If there is one `Entry` that matches the query, it asks user if the user wants to delete the found Entry.
+        - Input `n`, then it exits the delete process.
+       
+    ```
+    delete d/2021-11-04
+    Is this what you want to delete?
+       Expense  | TRANSPORTATION | 2021-11-04 | Taxi | $6.99
+    Type "y" if yes. Type "n" if not.
+    n
+    Ok. I have cancelled the process.
+    ```
    
    - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
      user wants to delete from a given list.
      - Input `cancel`, then it exits the delete process.
-     ```
-       delete d/2021-11-04
-       Here is the list of items containing the keyword.
-        Index |   Type  |  Category  |    Date    |  Name  | Amount | Every |   Until
-          1   | Income  | INVESTMENT | 2021-11-04 |  Taxi  | $6.99  |       |
-          2   | Expense |    FOOD    | 2021-11-04 | Burger |-$7.12  |       |
-       Enter the index of the item you want to delete. To cancel, type "cancel"
-       cancel
-       Ok. I have cancelled the process.
-     ```
+    
+    ```
+    delete d/2021-11-04
+    Here is the list of items containing the keyword.
+     Index |   Type  |  Category  |    Date    |  Name  | Amount | Every |   Until
+       1   | Income  | INVESTMENT | 2021-11-04 |  Taxi  | $6.99  |       |
+       2   | Expense |    FOOD    | 2021-11-04 | Burger |-$7.12  |       |
+    Enter the index of the item you want to delete. To cancel, type "cancel"
+    cancel
+    Ok. I have cancelled the process.
+    ```
+   
    - If there is no entry that matches the query, it tells that there is no match in the list.
-     ```
-       delete d/2021-11-04
-       Hmm.. That item is not in the list.
-     ```
+    
+    ```
+    delete d/2021-11-04
+    Hmm.. That item is not in the list.
+    ```
 
 ### <a name="edit"></a>Editing an `Entry`
 
@@ -428,6 +457,7 @@ Expected:
     a/8 n/Chicken Rice c/0 d/2000-09-22
     Got it! I will update the fields accordingly!
     ```
+   
     - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
     user wants to edit from a given list.
        - The user can then input the index of the entry that he/she wishes to edit.
@@ -491,6 +521,7 @@ Expected:
     ```
    
    - If there are no entries that match the query, then it would print a message to inform the user that.
+    
     ```
     edit a/20 d/2021-12-03 n/Full-time job c/1
     Hmm.. That item is not in the list.
@@ -557,66 +588,74 @@ Expected:
    Expected:
     - If there is one Recurring `Entry` that matches the query, it asks user if the user wants to delete the found recurring Entry.
         - Input `y`, then it would delete the recurring `Entry` and tell that it is deleted.
-      ```
-      deleteR n/netflix i/month
-      Is this what you want to delete?
-          Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
-      Type "y" if yes. Type "n" if not.
-      y
-      I have deleted: Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
-      ```
+    
+   ```
+   deleteR n/netflix i/month
+   Is this what you want to delete?
+       Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
+   Type "y" if yes. Type "n" if not.
+   y
+   I have deleted: Expense | ENTERTAINMENT | 2021-12-03 | Netflix |-$26.00 | MONTH | 2023-04-15
+   ```
 
     - If there are multiple recurring entries that match the query, it asks the user to choose the index of Entry that the
       user wants to delete from a given list.
         - Enter `1`, then it would delete the first recurring `Entry` shown and tell that it is deleted.
-      ```
-        deleteR n/netflix i/month
-        Here is the list of items containing the keyword.
-         Index |   Type  |   Category    |    Date    |      Name       | Amount | Every |   Until
-           1   | Expense | ENTERTAINMENT | 2021-11-04 |     Netflix     |-$26.00 | MONTH | 2023-04-15
-           2   | Expense | ENTERTAINMENT | 2021-11-04 | Netflix goodies |-$13.00 | MONTH | 2025-03-15
-        Enter the index of the item you want to delete. To cancel, type "cancel"
-        1
-        I have deleted: Expense | ENTERTAINMENT | 2021-11-04 | Netflix |-$26.00 | MONTH | 2023-04-15
-      ```
-    - If there is no entry that matches the query, it tells that there is no match in the list.
-      ```
-        deleteR n/netflix i/month
-        Hmm.. That item is not in the list.
-      ```
+    
+   ```
+   deleteR n/netflix i/month
+   Here is the list of items containing the keyword.
+    Index |   Type  |   Category    |    Date    |      Name       | Amount | Every |   Until
+      1   | Expense | ENTERTAINMENT | 2021-11-04 |     Netflix     |-$26.00 | MONTH | 2023-04-15
+      2   | Expense | ENTERTAINMENT | 2021-11-04 | Netflix goodies |-$13.00 | MONTH | 2025-03-15
+   Enter the index of the item you want to delete. To cancel, type "cancel"
+   1
+   I have deleted: Expense | ENTERTAINMENT | 2021-11-04 | Netflix |-$26.00 | MONTH | 2023-04-15
+   ```
+  
+   - If there is no entry that matches the query, it tells that there is no match in the list.
+    
+   ```
+   deleteR n/netflix i/month
+   Hmm.. That item is not in the list.
+   ```
 
 3. **Test case**: `deleteR e/2023-04-15` 
 
    Expected:
     - If there is one recurring `Entry` that matches the query, it asks user if the user wants to delete the found recurring `Entry`.
         - Input `n`, then it exits the delete process.
-      ```
-        deleteR e/2023-04-15
-        Is this what you want to delete?
-            Expense | HOUSEHOLD | 2021-10-03 | phone bills |-$26.00 | MONTH | 2023-04-15
-        Type "y" if yes. Type "n" if not.
-        n
-        Ok. I have cancelled the process.
-      ```
+        
+   ```
+   deleteR e/2023-04-15
+   Is this what you want to delete?
+       Expense | HOUSEHOLD | 2021-10-03 | phone bills |-$26.00 | MONTH | 2023-04-15
+   Type "y" if yes. Type "n" if not.
+   n
+   Ok. I have cancelled the process.
+   ```
 
     - If there are multiple recurring entries that match the query, it asks the user to choose the index of recurring `Entry` that the
       user wants to delete from a given list.
         - Input `cancel`, then it exits the delete process.
-      ```
-       deleteR e/2023-04-15
-       Here is the list of items containing the keyword.
-        Index |   Type  | Category  |    Date    |    Name     | Amount | Every |   Until
-          1   | Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$26.00 | MONTH | 2023-04-15
-          2   | Income  | ALLOWANCE | 2021-06-03 | stationary  |-$90.00 | YEAR  | 2023-04-15
-       Enter the index of the item you want to delete. To cancel, type "cancel"
-       cancel
-       Ok. I have cancelled the process.
-      ```
+    
+   ```
+   deleteR e/2023-04-15
+   Here is the list of items containing the keyword.
+    Index |   Type  | Category  |    Date    |    Name     | Amount | Every |   Until
+      1   | Expense | HOUSEHOLD | 2021-12-03 | phone bills |-$26.00 | MONTH | 2023-04-15
+      2   | Income  | ALLOWANCE | 2021-06-03 | stationary  |-$90.00 | YEAR  | 2023-04-15
+   Enter the index of the item you want to delete. To cancel, type "cancel"
+   cancel
+   Ok. I have cancelled the process.
+   ```
+   
     - If there is no recurring entry that matches the query, it tells that there is no match in the list.
-      ```
-        deleteR e/2023-04-15
-        Hmm.. That item is not in the list.
-      ```
+   
+   ```
+   deleteR e/2023-04-15
+   Hmm.. That item is not in the list.
+   ```
 
 ### <a name="Edit-recurring-entry"></a>Editing a recurring `Entry`
 
@@ -658,6 +697,7 @@ Expected:
     ```
 
     - If there are no entries that match the query, then it would print a message to inform the user that.
+    
     ```
     editR a/15 n/phone bills d/2021-12-03 c/0 i/MONTH e/2023-10-10
     Hmm.. That item is not in the list.
@@ -701,6 +741,7 @@ Expected:
     ```
 
     - If there are no entries that match the query, then it would print a message to inform the user that.
+    
     ```
     editR n/Full-time job
     Hmm.. That item is not in the list.
@@ -833,92 +874,68 @@ Expected:
 
 ### <a name="Set-budget"></a>Setting budget
 
-1. Setting a budget with valid fields
-    - Test case: `set c/0 a/100`
-    - Expected: A message to show that specified budget is successfully set to amount specified.
+1. **Prerequisites**: List of entries must be empty. You may use the `deleteAll` function.
 
-```
-Budget for FOOD set to $100.00
-```
+2. **Test case**: `set c/0 a/100`
 
-2. Setting a budget with invalid category number
-    - Test case: `set c/-1 a/100`.
-    - Expected: An error message to remind users that category number ranges from `0` to `7`.
+    Expected:
+    - A message to show that specified budget is successfully set to amount specified.
 
-```
-Please enter a valid category number! c/0 to c/7
-```
+    ```
+    Budget for FOOD set to $100.00
+    ```
 
-3. Setting a budget and adding an expense that exceeds 80% of the budget set
-    - Prerequisite: List of entries must be empty. You may use the `deleteAll` function.
-    - Test case (2 steps process):
-        - First, key in `set c/0 a/100`.
-        - Then, key in `add n/haidilao c/0 a/80.01`
-    - Expected: A message warning user to slow down their spending.
+3. **Test case**: `set c/0 a/100`, then `add n/haidilao c/0 a/80.01`.
+    - First, key in `set c/0 a/100`.
 
-```
-Budget for FOOD set to $100.00
-```
+        Expected:
+        - A message to show that specified budget is successfully set to amount specified.
+    
+        ```
+        Budget for FOOD set to $100.00
+        ```
 
-```
-I've added: Expense  | FOOD | 2021-11-07 | haidilao | $80.01
-Slow down, you've set aside $100.00 for FOOD, but you already spent $80.01.
-```
+    - Then, key in `add n/haidilao c/0 a/80.01`
+
+        Expected:
+        - A message warning user to slow down their spending, since the threshold is 80% of the limit set.
+    
+        ```
+        I've added: Expense | FOOD | 2021-11-07 | haidilao | $80.01 Slow down, you've set aside $100.00 for FOOD, but
+        you already spent $80.01.
+        ```
 
 ### <a name="View-budget"></a>Viewing budget
 
-1. Set a budget and view the list of budgets
-    - Prerequisite: List of entries must be empty. You may use the `deleteAll` function. Assume no budget set yet.
-    - Test case (2 steps process):
-        - Key in `set c/0 a/100`.
-        - Then, key in `budget`.
-    - Expected: A list of budgets will be printed.
+1. **Prerequisites**:
+    - List of entries must be empty. You may use the `deleteAll` function.
+    - Assume no budget set yet.
 
-```
-Budget for FOOD set to $100.00
-```
+2. **Test case**: `set c/0 a/100`, then `budget`.
+    - First, key in `set c/0 a/100`.
 
-```
-Here is the budget for NOVEMBER 2021
-   Category    | Amount | Budget  | Percentage
-     FOOD      |  $0.00 / $100.00 | 
-ENTERTAINMENT  |  $0.00 / Not set | 
-TRANSPORTATION |  $0.00 / Not set | 
-  HOUSEHOLD    |  $0.00 / Not set | 
-   APPAREL     |  $0.00 / Not set | 
-    BEAUTY     |  $0.00 / Not set | 
-     GIFT      |  $0.00 / Not set | 
-    OTHERS     | $80.01 / Not set | 
-```
+        Expected:
+        - A message to show that specified budget is successfully set to amount specified.
+    
+        ```
+        Budget for FOOD set to $100.00
+        ```
 
-2. Check if budget only includes current month's expenditure
-    - Prerequisites:
-        - List of entries must be empty. You may use the `deleteAll` function.
-        - Budget of "FOOD" is set to $100. (see previous test case).
-    - Test case (3 steps process):
-        - Key in `add n/current expense a/100`.
-        - Then, key in `add n/old expense d/2020-01-01 a/200`.
-        - Then, key in `budget` to view current month's spending and budget.
-    - Expected: Only entries that took place in current month will be calculated in the monthly spending. "current
-      expense" will be added into the caculations while "old expense" is not.
+    - Then, key in `budget`
 
-```
-I've added: Expense | OTHERS | 2021-11-07 | current expense | $100.00
-```
-
-```
-I've added: Expense | OTHERS | 2020-01-01 | old expense | $200.00
-```
-
-```
-Here is the budget for NOVEMBER 2021
-   Category    |  Amount | Budget  | Percentage
-     FOOD      |   $0.00 / $100.00 | 
-ENTERTAINMENT  |   $0.00 / Not set | 
-TRANSPORTATION |   $0.00 / Not set | 
-  HOUSEHOLD    |   $0.00 / Not set | 
-   APPAREL     |   $0.00 / Not set | 
-    BEAUTY     |   $0.00 / Not set | 
-     GIFT      |   $0.00 / Not set | 
-    OTHERS     | $100.00 / Not set | 
-```
+        Expected:
+        - A list of budgets will be printed.
+        
+        ```
+        Here is the budget for NOVEMBER 2021
+           Category    | Amount | Budget  | Percentage
+             FOOD      |  $0.00 / $100.00 | 
+        ENTERTAINMENT  |  $0.00 / Not set | 
+        TRANSPORTATION |  $0.00 / Not set | 
+          HOUSEHOLD    |  $0.00 / Not set | 
+           APPAREL     |  $0.00 / Not set | 
+            BEAUTY     |  $0.00 / Not set | 
+             GIFT      |  $0.00 / Not set | 
+            OTHERS     | $80.01 / Not set | 
+        ```
+   
