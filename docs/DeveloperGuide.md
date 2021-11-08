@@ -95,7 +95,8 @@ The Sequence Diagram below illustrates the interactions within the `Logic` compo
 ![](images/CaptureLogicSequence.PNG)
 
 > As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
-> command's case, unused arguments are represented as `..` to focus on the used arguments. Same reason for `checkExceedBudget` applies.
+> command's case, unused arguments are represented as `...` to focus on the used arguments. Same reason for `checkExceedBudget` applies.
+> This also applies for the sequence diagrams in the following sections.
 
 ### <a name="model"></a>Model Component
 
