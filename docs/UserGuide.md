@@ -11,6 +11,8 @@ finances.
 Using this guide, you will be able to navigate the app and use all of its functionalities through
 step-by-step-instructions.
 
+<div style="page-break-after: always;"></div>
+
 ## Table of Contents
 
 - [Quick Start](#quickStart)
@@ -77,6 +79,8 @@ Refer to the [Features Section](#features) below for details of each comm
 3. Go back to your Command Line Interface and enter the command `cd [paste what you copied here]`
 4. Mint is now at your service!
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="know"></a>Prerequisites before using Mint
 
 
@@ -92,6 +96,8 @@ Refer to the [Features Section](#features) below for details of each comm
 | `e/END_DATE` | End date of the recurring period. One will not receive or pay for the recurring entry from this date.| Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31` that is after the `d/DATE`. If the end date is not specified, the default date set would be forever (`2200-12-31`) | `e/2016-02-13`, `e/2016-2-13`  |
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ### <a name="dateFormat"></a>Acceptable date formats
 
@@ -114,6 +120,8 @@ Note:
 - day must be between '1' to '31'.
 - if user give a day that is not supposed to exist, day will be rounded down. 
     - e.g. `2021-09-31` will be received as `2021-09-30` , as September only has 30 days.
+
+<div style="page-break-after: always;"></div>
 
 ### <a name="categoryList"></a>Available categories
 
