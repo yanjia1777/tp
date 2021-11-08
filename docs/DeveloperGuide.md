@@ -213,7 +213,7 @@ When `checkExceedBudget(entry,...)` is called, assuming `entry` is of type `Expe
 4) Lastly, `BudgetManager` will check if user has exceeded their threshold for that specific category and prints a
    warning message to the user if they have done so.
 
-#### Design
+#### Design considerations
 
 Aspect: how to check whether user exceeded budget
 

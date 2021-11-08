@@ -85,11 +85,11 @@ Refer to the [Features Section](#features) below for details of each comm
 |Tag | Description |Format | Example of input |
 |--------|----|-------------------|-------------|
 | `n/NAME`    | Name of the entry | Any string of characters                                            | `n/Hai di lao`, `n/123`|
-| `a/AMOUNT`  | Amount in dollars. Numbers after decimal points are in cents.   | Positive number smaller than 1 million. It will be automatically rounded to 2 decimal points if higher precision is given.| | 
+| `a/AMOUNT`  | Amount in dollars. Numbers after decimal points are in cents.   | Positive number smaller than 1 million. It will be automatically rounded to 2 decimal points if higher precision is given.| `a/12.50` | 
 | `d/DATE`    | Date or start date | Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31`. If the date is not specified, the default date set | `d/2016-02-13`, `d/2016-2-13`  would be the date of entry added.   |
 | `c/CATEGORY_NUMBER`| Category number | Please refer to the [available categories](#categoryList). If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be `c/7` which is `Others`.   | `c/1` |
-| `i/INTERVAL`| How often one receives or pay for entries| String of either MONTH or YEAR. The string is not case-sensitive.   | `i/mOnTH`, `i/year`, `i/YEAR` |                                                                |  |
-| `e/END_DATE` | End date of the recurring period. One will not receive or pay for the entry from this date.| Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31` that is after the `d/DATE`. If the end date is not specified, the default date set would be forever (`2200-12-31`) | `e/2016-02-13`, `e/2016-2-13`  |
+| `i/INTERVAL`| How often one receives or pay for entries| String of either MONTH or YEAR. The string is not case-sensitive.   | `i/mOnTH`, `i/year`, `i/YEAR` |                                                            
+| `e/END_DATE` | End date of the recurring period. One will not receive or pay for the recurring entry from this date.| Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31` that is after the `d/DATE`. If the end date is not specified, the default date set would be forever (`2200-12-31`) | `e/2016-02-13`, `e/2016-2-13`  |
 
 ---
 
@@ -163,6 +163,7 @@ Example: 5th Jaunary 2020
 - If the day is not available on some months or years, it will automatically be rounded down.
 
 Examples:
+
 - Netflix monthly subscription starts on `2021-09-21` and ends on `2030-03-20`.
     - `DATE` is `2021-03-21`; `INTERVAL` is `MONTH`; `END_DATE` is `2030-03-20`.
     - It will be billed on `2021-09-21`, `2021-10-21`, and so on until `2030-02-21`.
@@ -668,15 +669,17 @@ Please refresh page if table is not rendered properly.
 
 ## <a name="faq"></a>Frequently Asked Questions
 
-- Why are users allowed to make recurring entries' `END_DATE` shorter than the `INTERVAL` (e.g., set monthly `Expense`'s 
-`DATE` as `2021-11-04` and `END_DATE` as `2021-11-15`)?
-  - This is so that users can use the `END_DATE` as a reminder to themselves to cancel subscriptions or be aware of the 
-  end of receiving fixed incomes.
-  
-- Why does simply entering `view` show recurring entries that are not added to the first list still shown in the second list,
-but specifying filter options like `view month 12` only show entries that are added to the first list in the second list?
-  - This is because users may have recurring entries that start in the future. Only entering `view` without filter options
-  show recurring entries up to today's date. Thus, if only the entries that are added to the first list are shown in the 
-  second list, recurring entries that have not started yet would never be shown in the second list, and users will not
-  be able to see those that start in the future unless they specify to view those dates. `view` is meant to be a simple tool
-  to view all entries, including recurring entries.
+- Why are users allowed to make recurring entries' `END_DATE` shorter than the `INTERVAL` (e.g., set monthly `Expense`'s
+  `DATE` as `2021-11-04` and `END_DATE` as `2021-11-15`)?
+    - This is so that users can use the `END_DATE` as a reminder to themselves to cancel subscriptions or be aware of
+      the end of receiving fixed incomes.
+
+- Why does simply entering `view` show recurring entries that are not added to the first list still shown in the second
+  list, but specifying filter options like `view month 12` only show entries that are added to the first list in the
+  second list?
+    - This is because users may have recurring entries that start in the future. Only entering `view` without filter
+      options show recurring entries up to today's date. Thus, if only the entries that are added to the first list are
+      shown in the second list, recurring entries that have not started yet would never be shown in the second list, and
+      users will not be able to see those that start in the future unless they specify to view those dates. `view` is
+      meant to be a simple tool to view all entries, including recurring entries.
+      
