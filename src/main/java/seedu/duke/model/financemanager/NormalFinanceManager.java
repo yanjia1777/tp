@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that deals with operations on normal entries. Stores a list of entries.
+ */
 public class NormalFinanceManager extends FinanceManager {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -32,22 +35,29 @@ public class NormalFinanceManager extends FinanceManager {
     }
 
     //@@author pos0414
+    /**
+     * Filters the normal entries that matches the fields that user queried, from the list of stored normal entries.
+     * @param tags List of tags that user has queried.
+     * @param query Entry object that contains the details of the query that user has made.
+     * @return List of matching entries
+     * @throws MintException If tag given is invalid
+     */
     @Override
     public ArrayList<Entry> filterEntryByKeywords(ArrayList<String> tags, Entry query) throws MintException {
         assert tags.size() > 0 : "There should be more than one tag to be queried";
         ArrayList<Entry> filteredList = new ArrayList<>(entryList);
         for (String tag : tags) {
             switch (tag.trim()) {
-            case "n/":
+            case NAME_TAG:
                 filteredList = Filter.filterEntryByName(query.getName(), filteredList);
                 break;
-            case "d/":
+            case DATE_TAG:
                 filteredList = Filter.filterEntryByDate(query.getDate(), filteredList);
                 break;
-            case "a/":
+            case AMOUNT_TAG:
                 filteredList = Filter.filterEntryByAmount(query.getAmount(), filteredList);
                 break;
-            case "c/":
+            case CATEGORY_TAG:
                 filteredList = Filter.filterEntryByCategory(query.getCategory().ordinal(), filteredList);
                 break;
             default:
@@ -57,6 +67,11 @@ public class NormalFinanceManager extends FinanceManager {
         return filteredList;
     }
 
+    /**
+     * Deletes the entry in the entryList. To reach this point all validity checks and the existence of the
+     * entry inside the entryList have been checked. Thus assume the entry exists in the list.
+     * @param entry Entry to be deleted.
+     */
     @Override
     public void deleteEntry(Entry entry) {
         assert entryList.contains(entry) : "entryList should contain the entry to delete.";
@@ -87,6 +102,8 @@ public class NormalFinanceManager extends FinanceManager {
             throw new MintException(MintException.ERROR_EXPENSE_NOT_IN_LIST); // to link to exception class
         }
         ValidityChecker.checkTagsFormatSpacing(choice);
+        Parser parser = new Parser();
+        parser.checkDuplicateTagsForNormalEdit(choice);
         editSpecifiedEntry(choice, indexToBeChanged, entry);
         String newEntryStr = overWriteString(entryList.get(indexToBeChanged));
         Ui.printOutcomeOfEditAttempt();
@@ -110,21 +127,21 @@ public class NormalFinanceManager extends FinanceManager {
             int count = 0;
             for (String word : choice) {
                 assert (word != null);
-                if (word.contains(NAME_SEPARATOR)) {
+                if (word.contains(NAME_TAG)) {
                     count++;
                     String name = nonEmptyNewDescription(word);
                     entryFields.put("name", name);
-                } else if (word.contains(DATE_SEPARATOR)) {
+                } else if (word.contains(DATE_TAG)) {
                     count++;
-                    String dateStr = word.substring(word.indexOf(DATE_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String dateStr = word.substring(word.indexOf(DATE_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("date", dateStr);
-                } else if (word.contains(AMOUNT_SEPARATOR)) {
+                } else if (word.contains(AMOUNT_TAG)) {
                     count++;
-                    String amountStr = word.substring(word.indexOf(AMOUNT_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String amountStr = word.substring(word.indexOf(AMOUNT_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("amount",amountStr);
-                } else if (word.contains(CATEGORY_SEPARATOR)) {
+                } else if (word.contains(CATEGORY_TAG)) {
                     count++;
-                    String catNumStr = word.substring(word.indexOf(CATEGORY_SEPARATOR) + LENGTH_OF_SEPARATOR).trim();
+                    String catNumStr = word.substring(word.indexOf(CATEGORY_TAG) + LENGTH_OF_TAG).trim();
                     entryFields.put("catNum", catNumStr);
                 }
             }
