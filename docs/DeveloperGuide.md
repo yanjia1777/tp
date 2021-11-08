@@ -576,6 +576,8 @@ A smart and simple way to keep track of your expenses
     addR a/5 n/phone bills i/MOnth
     I've added: Expense | OTHERS | 2021-11-08 | phone bills |-$5.00 | MONTH | Forever :D
     ```
+     <div style="page-break-after: always;"></div>
+
 
 5. **Test case**: `addR income a/90 n/Full-time job i/MONTH e/2023-12-23`
 
@@ -667,6 +669,7 @@ A smart and simple way to keep track of your expenses
    deleteR e/2023-04-15
    Hmm.. That item is not in the list.
    ```
+     <div style="page-break-after: always;"></div>
 
 ### <a name="Edit-recurring-entry"></a>Editing a recurring `Entry`
 
@@ -758,6 +761,7 @@ A smart and simple way to keep track of your expenses
     Hmm.. That item is not in the list.
     ```
 
+     <div style="page-break-after: always;"></div>
 
 ### <a name="View"></a>Viewing entries
 
