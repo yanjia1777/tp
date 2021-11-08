@@ -22,24 +22,6 @@ step-by-step-instructions.
   - [Available date formats](#dateFormat)
   - [List of categories](#categoryList)
 - [Features](#features)
-<<<<<<< HEAD
-    - [Viewing help](#help)
-    - [Adding entries](#add)
-    - [Adding recurring entries](#addR)
-    - [Viewing entries](#view)
-    - [Deleting entries](#delete)
-    - [Deleting recurring entries](#deleteR)
-    - [Deleting all entries](#deleteAll)
-    - [Editing entries](#edit)
-    - [Editing recurring entries](#editR)
-    - [Viewing categories](#cat)
-    - [Setting budget](#set)
-    - [View monthly budget ](#budget)
-    - [Exiting the program](#exit)
-- [Available tag formats](#tagFormat)
-- [Available date formats](#dateFormat)
-- [List of categories](#categoryList)
-=======
   - [Notes about commands](#commandNote)
   - [Notes about recurring entries](#recurringNote)
   - [Viewing help](#help)
@@ -55,7 +37,6 @@ step-by-step-instructions.
   - [Setting budget](#set)
   - [View monthly budget ](#budget)
   - [Exiting the program](#exit)
->>>>>>> upstream/master
 - [Command Summary](#command-summary)
 - [Frequently Asked Questions](#faq)
 
@@ -190,12 +171,8 @@ Examples:
 - Nintendo yearly subscription starts on `2020-02-29` and ends on `2023-01-15`.
     - `DATE` is `2020-02-29`;`INTERVAL` is `YEAR`; `END_DATE` is `2023-01-15`.
     - It will be billed on `2020-02-29`, `2021-02-28`, and `2022-02-28` only.
-<<<<<<< HEAD
-    - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those years.
-=======
     - As February 29th is not available on non-Leap years, the date was rounded down to February 28th for those
       years.
->>>>>>> upstream/master
     - As `2023-01-15` is before the next recurring date of `2023-02-28`, it will not be recurred on `2023-02-28`.
 
 - The school starts to give monthly allowance on `2021-08-31` until `2023-08-31`.
