@@ -35,7 +35,7 @@ public class Ui {
 
     public static final String FIRST_TIME_USER_MESSAGE = "You must be a first time user!\n"
             + "Welcome! To get you started, type \"help\" to get a list of commands you can use.\n"
-            + "Alternatively, Type \"add n/[description] a/[amount]\" to add your very first item.\n"
+            + "Alternatively, Type \"add n/NAME a/AMOUNT\" to add your very first item.\n"
             + "To see what you have added, type \"view\"!";
     public static final String RETRY_FILE_CREATION_MESSAGE = "Seems like a directory had a text file's extension... "
             + "Deleting that and trying again... ";
