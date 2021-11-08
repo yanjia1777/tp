@@ -724,6 +724,9 @@ Please refresh page if table is not rendered properly.
 
 ## <a name="faq"></a>Frequently Asked Questions
 
+- Why are users able to record `AMOUNT` as "$0"?
+    - This is to allow users to keep a record of entries that are free after discounts or vouchers.
+
 - Why are users allowed to make recurring entries' `END_DATE` shorter than the `INTERVAL` (e.g., set monthly `Expense`'s
   `DATE` as `2021-11-04` and `END_DATE` as `2021-11-15`)?
     - This is so that users can use the `END_DATE` as a reminder to themselves to cancel subscriptions or be aware of
