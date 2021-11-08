@@ -3,7 +3,7 @@
 
 participant ":BudgetManager" as budgetManager
 participant ":FinanceManager" as financeManager
-participant ":XYZBudget" as xyzBudget
+participant "xyzBudget:XYZBudget" as xyzBudget
 participant ":Ui" as ui
 actor User as user
 
@@ -14,11 +14,11 @@ budgetManager -> financeManager : getEntryList()
 activate financeManager
 return entries
 
-budgetManager -> xyzBudget : getMonthlyBudgetFromCategory(entry.getCategory())
+budgetManager -> xyzBudget : getMonthlyBudgetFromCategory(entry.getCategory():ExpenseCategory)
 activate xyzBudget
 return xyzBudget
 
-budgetManager -> xyzBudget : getMonthlySpending(entries)
+budgetManager -> xyzBudget : getMonthlySpending(entries:Entry)
 activate xyzBudget
 return amountSpent
 
@@ -28,7 +28,7 @@ return spendingLimit
 
 opt isExceedBudget
 
-    budgetManager -> ui :printBudgetWarningMessage(budget.getCategory(), ...)
+    budgetManager -> ui :printBudgetWarningMessage(budget.getCategory():ExpenseCategory,...)
     activate ui
     ui --> user : warning message
     deactivate ui
