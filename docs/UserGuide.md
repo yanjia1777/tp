@@ -210,7 +210,7 @@ Examples:
   Food": `add n/Cheese Burger a/4.2 d/2021-04-20 c/0`
 - Adding the income I made from sales, amounting to $34 `add income n/Sales a/34 d/2021-02-19 c/1`
 
-Examples and expected Output
+Examples and Expected Output
 
 ```
 add n/Textbook a/15
@@ -237,7 +237,7 @@ Examples:
 - `addR a/5 n/phone bills c/4 i/year e/2023-10-26`
 - `addR income a/10000 n/salary d/2021-10-10 i/mOnTh`
 
-Examples and expected Output
+Examples and Expected Output
 
 ```
 addR a/90 d/2021-12-03 n/phone bills c/3 i/MONTH
@@ -289,7 +289,7 @@ Assume today's date is `2021-11-06`
 - `view month 4 year 2021`
 - `view from 2022-01-13 2022-03-15 by amount ascending`
 
-Examples and expected Output:
+Examples and Expected Output:
 
 ```
 view
@@ -376,7 +376,7 @@ Examples:
 - `delete n/Textbook d/2012-09-21 a/15`
 - `delete n/Cheese Burger d/2020-04-20 a/4.2`
 
-Examples and expected output:
+Examples and Expected Output:
 
 - If user query only matches 1 `Expense` or `Income` in the expense list
 
@@ -422,7 +422,7 @@ Examples:
 - `deleteR n/Netflix`
 - `deleteR i/mOnTh`
 
-Examples and expected output:
+Examples and Expected Output:
 
 - If user query only matches 1 `RecurringExpense` or `RecurringIncome` in the expense list
 
@@ -465,7 +465,7 @@ Examples:
 - `deleteAll`
 - `deleteall normal`
 
-Examples and expected output:
+Examples and Expected Output:
 
 ```
 deleteAll
@@ -503,7 +503,7 @@ Examples:
 - `edit n/Textbook d/2012-09-21 a/15`
 - `edit n/Cheese Burger d/2020-04-20 a/4.2`
 
-Examples and expected output:
+Examples and Expected Output:
 
 - If user query only matches 1 `Expense` or `Income` in the expense list
 
@@ -553,7 +553,7 @@ Examples:
 - `editR n/Textbook d/2012-09-21 a/15`
 - `editR n/Cheese Burger d/2020-04-20 a/4.2`
 
-Examples and expected output:
+Examples and Expected Output:
 
 - If user query only matches 1 `Expense` or `Income` in the expense list
 
@@ -651,7 +651,9 @@ Format: `exit`
 
 Expected Output:
 
-- `Bye! Thanks for using Mint. See you soon :D`
+```
+Bye! Thanks for using Mint. See you soon :D
+```
 
 ## <a name="Commannd Summary"></a>Command Summary
 
