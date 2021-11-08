@@ -16,7 +16,6 @@ package "Logic" <<Rectangle>> {
 
 
 package "parser" <<Rectangle>> {
-class ValidityChecker
 class           Parser
 }
 
@@ -27,7 +26,6 @@ class XYZCommand
 
 Main --> "1" Parser
 "{abstract}\n Command" <|-- XYZCommand
-Parser ..> ValidityChecker
 Parser ..> XYZCommand : returns >
 Main ..> "{abstract}\n Command": executes >
 

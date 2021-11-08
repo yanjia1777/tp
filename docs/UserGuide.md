@@ -138,6 +138,14 @@ Notes about the following list of commands:
 
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
+- Extraneous parameters in between the command and the first tag for commands that take in tag parameters will not be
+  considered if it is not valid.
+
+  e.g. if the command specifies `add oh yummy food income n/wage`, it will be interpreted as `add income n/wage`.
+
+  e.g. if the command specifies `delete hmm income a/15.0 c/1`, it will be interpreted as `delete a/15.0 c/1`, as
+  `delete` is used for both expense and income.
+
 ---
 
 ## <a name="recurringNote"></a>
