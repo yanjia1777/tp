@@ -47,7 +47,7 @@ step-by-step-instructions.
 
 ### <a name="settingUp"></a>Setting Up
 
-1. Download the latest version of tp.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v2.0b).
+1. Download the latest version of tp.jar from {[here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v2.0b).}
 
 2. Copy the tp.jar file to the folder you desire.
 
@@ -85,11 +85,11 @@ Refer to the [Features Section](#features) below for details of each comm
 |Tag | Description |Format | Example of input |
 |--------|----|-------------------|-------------|
 | `n/NAME`    | Name of the entry | Any string of characters                                            | `n/Hai di lao`, `n/123`|
-| `a/AMOUNT`  | Amount in dollars. Numbers after decimal points are in cents.   | Positive number smaller than 1 million. It will be automatically rounded to 2 decimal points if higher precision is given.| | 
+| `a/AMOUNT`  | Amount in dollars. Numbers after decimal points are in cents.   | Positive number smaller than 1 million. It will be automatically rounded to 2 decimal points if higher precision is given.| `a/12.50` | 
 | `d/DATE`    | Date or start date | Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31`. If the date is not specified, the default date set | `d/2016-02-13`, `d/2016-2-13`  would be the date of entry added.   |
 | `c/CATEGORY_NUMBER`| Category number | Please refer to the [available categories](#categoryList). If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be `c/7` which is `Others`.   | `c/1` |
-| `i/INTERVAL`| How often one receives or pay for entries| String of either MONTH or YEAR. The string is not case-sensitive.   | `i/mOnTH`, `i/year`, `i/YEAR` |                                                                |  |
-| `e/END_DATE` | End date of the recurring period. One will not receive or pay for the entry from this date.| Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31` that is after the `d/DATE`. If the end date is not specified, the default date set would be forever (`2200-12-31`) | `e/2016-02-13`, `e/2016-2-13`  |
+| `i/INTERVAL`| How often one receives or pay for entries| String of either MONTH or YEAR. The string is not case-sensitive.   | `i/mOnTH`, `i/year`, `i/YEAR` |                                                            
+| `e/END_DATE` | End date of the recurring period. One will not receive or pay for the recurring entry from this date.| Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31` that is after the `d/DATE`. If the end date is not specified, the default date set would be forever (`2200-12-31`) | `e/2016-02-13`, `e/2016-2-13`  |
 
 ---
 
@@ -163,6 +163,7 @@ Example: 5th Jaunary 2020
 - If the day is not available on some months or years, it will automatically be rounded down.
 
 Examples:
+
 - Netflix monthly subscription starts on `2021-09-21` and ends on `2030-03-20`.
     - `DATE` is `2021-03-21`; `INTERVAL` is `MONTH`; `END_DATE` is `2030-03-20`.
     - It will be billed on `2021-09-21`, `2021-10-21`, and so on until `2030-02-21`.

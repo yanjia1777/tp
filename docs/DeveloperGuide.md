@@ -213,7 +213,7 @@ When `checkExceedBudget(entry,...)` is called, assuming `entry` is of type `Expe
 4) Lastly, `BudgetManager` will check if user has exceeded their threshold for that specific category and prints a
    warning message to the user if they have done so.
 
-#### Design
+#### Design considerations
 
 Aspect: how to check whether user exceeded budget
 
@@ -447,7 +447,7 @@ Expected:
 
     - If there are no entries that match the query, then it would print a message to inform the user that.
     
-   ```
+    ```
     edit a/20 d/2021-12-03 n/Movie c/1
     Hmm.. That item is not in the list.
     ```
@@ -629,7 +629,7 @@ Expected:
         - Input `y`, then it would prompt the user to input the fields to update.
         - The user can then key in the fields to update, and it would update the `Entry` accordingly.
     
-   ```
+    ```
     editR a/15 n/phone bills d/2021-12-03 c/0 i/MONTH e/2023-10-10
     Is this what you want to edit?
         Expense | FOOD | 2021-12-03 | phone bills |-$15.00 | MONTH | 2023-10-10
@@ -638,7 +638,7 @@ Expected:
     What would you like to edit? Type the tag and what you want to change e.g. a/10
     a/40
     Got it! I will update the fields accordingly!
-   ```
+    ```
     - If there are multiple `Entry` that matches the query, it asks user if the user wants to edit the found `Entry`.
         - The user can then input the index of the entry that he/she wishes to edit.
         - The user can then key in the fields to update, and it would update the `Entry` accordingly.
