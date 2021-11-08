@@ -339,6 +339,8 @@ A smart and simple way to keep track of your expenses
     add income a/15 d/2021-12-03 n/Selling Textbooks c/7
     I've added: Income  | OTHERS | 2021-12-03 | Selling Textbooks | $15.00
     ```
+   
+<div style="page-break-after: always;"></div>
 
 4. **Test case**: `add a/15 d/2021-12-03 n/Textbook`
 
@@ -380,9 +382,11 @@ A smart and simple way to keep track of your expenses
     y
     I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
     ```
-     
-   - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
-   user wants to delete from a given list.
+   
+     <div style="page-break-after: always;"></div>
+
+    - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
+   user wants to delete from a given list. 
      - Enter `2`, then it would delete the second `Entry` shown and tell that it is deleted.
     
     ```
