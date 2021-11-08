@@ -86,7 +86,7 @@ Refer to the [Features Section](#features) below for details of each comm
 |--------|----|-------------------|-------------|
 | `n/NAME`    | Name of the entry | Any string of characters                                            | `n/Hai di lao`, `n/123`|
 | `a/AMOUNT`  | Amount in dollars. Numbers after decimal points are in cents.   | Positive number smaller than 1 million. It will be automatically rounded to 2 decimal points if higher precision is given.| `a/12.50` | 
-| `d/DATE`    | Date or start date | Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31`. If the date is not specified, the default date set | `d/2016-02-13`, `d/2016-2-13`  would be the date of entry added.   |
+| `d/DATE`    | Date or start date | Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31`. If the date is not specified, the default date set will be today.  | `d/2016-02-13`, `d/2016-2-13`  would be the date of entry added.   |
 | `c/CATEGORY_NUMBER`| Category number | Please refer to the [available categories](#categoryList). If the `CATEGORY_NUMBER` is not specified, the default `CATEGORY_NUMBER` would be `c/7` which is `Others`.   | `c/1` |
 | `i/INTERVAL`| How often one receives or pay for entries| String of either MONTH or YEAR. The string is not case-sensitive.   | `i/mOnTH`, `i/year`, `i/YEAR` |                                                            
 | `e/END_DATE` | End date of the recurring period. One will not receive or pay for the recurring entry from this date.| Any of the [acceptable date formats](#dateFormat) from `2000-01-01` to `2200-12-31` that is after the `d/DATE`. If the end date is not specified, the default date set would be forever (`2200-12-31`) | `e/2016-02-13`, `e/2016-2-13`  |
