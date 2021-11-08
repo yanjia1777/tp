@@ -108,6 +108,11 @@ public class Ui {
                 + INDENT + "Only deletes all entries of the corresponding type.\n"
                 + INDENT + "If no modifiers are specified, it defaults to deleting all entries regardless of type.\n"
                 + SOLID_LINE
+                + "VIEWING ENTRIES\n"
+                + "- Format: view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from STARTDATE [ENDDATE]] [up/ascending]\n"
+                + INDENT + "View expenses sorted by name, date, amount or category, in ascending or descending order.\n"
+                + INDENT + "View a certain month or year or specific date range.\n"
+                + SOLID_LINE
                 + "BUDGETING. Type \"cat\" to view category number.\n"
                 + "- set c/category number a/AMOUNT\n"
                 + INDENT + "Set spending limit for individual category. Example: set c/0 100\n"
@@ -115,8 +120,6 @@ public class Ui {
                 + INDENT + "View current month's expenditure and budget\n"
                 + SOLID_LINE
                 + "UTILITIES\n"
-                + "- view\n"
-                + INDENT + "View expenses\n"
                 + "- cat\n"
                 + INDENT + "View categories and category number\n"
                 + "- exit\n"
