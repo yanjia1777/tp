@@ -213,7 +213,6 @@ pursued option 2 and found it hard to add functionalities and do unit testing du
 also meant to make the live updating work, we had to deal with 7 commands: `add`, `addR`, `delete`, `deleteR`
 , `deleteAll`, `edit` and `editR`. Hence, we went with Option 1 due to scalability.
 
-{NOT DONE}
 
 ## <a name="scope"></a>Product scope
 
