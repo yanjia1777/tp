@@ -357,6 +357,7 @@ A smart and simple way to keep track of your expenses
    - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
    user wants to delete from a given list.
      - Enter `2`, then it would delete the second `Entry` shown and tell that it is deleted.
+    
     ```
    delete n/movie c/1
    Here is the list of items containing the keyword.
@@ -367,6 +368,7 @@ A smart and simple way to keep track of your expenses
     2
     I have deleted: Expense  | ENTERTAINMENT | 2021-11-03 | Movie | $20.00
     ```
+   
    - If there is no entry that matches the query, it tells that there is no matching `Entry` in the list.
      
     ```
@@ -403,7 +405,9 @@ A smart and simple way to keep track of your expenses
     cancel
     Ok. I have cancelled the process.
     ```
+   
    - If there is no entry that matches the query, it tells that there is no match in the list.
+    
     ```
     delete d/2021-11-04
     Hmm.. That item is not in the list.
@@ -431,6 +435,7 @@ A smart and simple way to keep track of your expenses
     a/8 n/Chicken Rice c/0 d/2000-09-22
     Got it! I will update the fields accordingly!
     ```
+   
     - If there are multiple entries that match the query, it asks the user to choose the index of Entry that the
     user wants to edit from a given list.
        - The user can then input the index of the entry that he/she wishes to edit.
@@ -561,6 +566,7 @@ A smart and simple way to keep track of your expenses
    Expected:
     - If there is one Recurring `Entry` that matches the query, it asks user if the user wants to delete the found recurring Entry.
         - Input `y`, then it would delete the recurring `Entry` and tell that it is deleted.
+    
    ```
    deleteR n/netflix i/month
    Is this what you want to delete?
@@ -573,6 +579,7 @@ A smart and simple way to keep track of your expenses
     - If there are multiple recurring entries that match the query, it asks the user to choose the index of Entry that the
       user wants to delete from a given list.
         - Enter `1`, then it would delete the first recurring `Entry` shown and tell that it is deleted.
+    
    ```
    deleteR n/netflix i/month
    Here is the list of items containing the keyword.
@@ -585,6 +592,7 @@ A smart and simple way to keep track of your expenses
    ```
   
    - If there is no entry that matches the query, it tells that there is no match in the list.
+    
    ```
    deleteR n/netflix i/month
    Hmm.. That item is not in the list.
@@ -608,6 +616,7 @@ A smart and simple way to keep track of your expenses
     - If there are multiple recurring entries that match the query, it asks the user to choose the index of recurring `Entry` that the
       user wants to delete from a given list.
         - Input `cancel`, then it exits the delete process.
+    
    ```
    deleteR e/2023-04-15
    Here is the list of items containing the keyword.
@@ -618,6 +627,7 @@ A smart and simple way to keep track of your expenses
    cancel
    Ok. I have cancelled the process.
    ```
+   
     - If there is no recurring entry that matches the query, it tells that there is no match in the list.
    
    ```
