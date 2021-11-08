@@ -132,10 +132,7 @@ Notes about the following list of commands:
 - Parameters with tags or optional modifiers can be in any order.
 
   e.g. if the command specifies `n/NAME` `a/AMOUNT`, the order `a/AMOUNT` `n/NAME` is also acceptable.
-- If a parameter is expected only once in the command but if you specify it multiple times, only the last occurrence of
-  the parameter will be taken.
 
-  e.g. if you specify `a/10 a/15`, only `a/10` will be taken.
 - Extraneous parameters for commands that do not take in parameters (such as `help`, `budget` and `exit`)
   will be ignored.
 
