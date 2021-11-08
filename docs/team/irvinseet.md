@@ -24,10 +24,10 @@ for use via a Command Line Interface (CLI).
     - What it does: 2 layered defense system. First, check for any invalid characters. Then, check if valid characters
       are used in correct manner.
     - Justification: This feature improves the product significantly as there are customized messages to tell the user
-      which part of their input went wrong. 
+      which part of their input went wrong.
     - Highlights: It was not easy to find the correct regex pattern to match as they are many factors to consider, such
       as optional tags.
-      
+
 - **Enhancement**: Allow users to key in entries without specify `date` or `category`
     - What it does: initialisation of fields when user do not specify some fields. e.g, `date` initialised
       to `LocalDate.now()` and `category` initialised to `OTHERS`
@@ -35,11 +35,12 @@ for use via a Command Line Interface (CLI).
       mostly key in their expenses on the same day. Also, they may want to key in quickly and then edit the relevant
       fields in their own time.
 
+<div style="page-break-after: always;"></div>
+
 - **Enhancement**: Allow users to key in entries
   in [10 different date formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
     - What it does: User can type in date in any of the 10 given formats and our program can identify it correctly.
-    - Justification: Different users have different preference in terms of keying in date, we want to ensure everyone
-      can enjoy the app.
+    - Justification: Different users have different preference in terms of keying in date.
 
 - **Enhancement**: Implemented a parsing fuction that reads input correctly despite jumbled up tags
     - What it does: `parseInputByTags` method, a one-size-fits-all which parse user inputs by tags regardless of order
