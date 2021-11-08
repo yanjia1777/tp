@@ -31,7 +31,7 @@ step-by-step-instructions.
     - [Setting budget](#set)
     - [View monthly budget ](#budget)
     - [Exiting the program](#exit)
-- [Available tag formats](#tagormat)
+- [Available tag formats](#tagFormat)
 - [Available date formats](#dateFormat)
 - [List of categories](#categoryList)
 - [Command Summary](#command-summary)
