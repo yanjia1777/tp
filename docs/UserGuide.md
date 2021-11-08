@@ -44,7 +44,7 @@ step-by-step-instructions.
 
 ### <a name="settingUp"></a>Setting Up
 
-1. Download the latest version of tp.jar from [here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v2.0b).
+1. Download the latest version of tp.jar from {[here](https://github.com/AY2122S1-CS2113T-W11-2/tp/releases/tag/v2.0b).}
 
 2. Copy the tp.jar file to the folder you desire.
 
