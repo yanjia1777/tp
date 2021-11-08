@@ -869,9 +869,9 @@ A smart and simple way to keep track of your expenses
     Expected:
     - A message to show that specified budget is successfully set to amount specified.
 
-     ```
-     Budget for FOOD set to $100.00
-     ```
+    ```
+    Budget for FOOD set to $100.00
+    ```
 
         - Then, key in `add n/haidilao c/0 a/80.01`
 
