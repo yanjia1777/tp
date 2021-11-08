@@ -52,6 +52,8 @@ The above **System Architecture** diagram shows the high-level design of Mint.
 On launch, the `Main` class initialises the app components in the correct sequence and links them up with each other, in
 the correct sequence.
 
+<div style="page-break-after: always;"></div>
+
 Apart from `Main`, Mint comprises six main components, namely:
 
 - `Ui`: The UI of the App
@@ -73,12 +75,16 @@ The Ui component,
 * pass them either to the `Logic` component or `Storage` component.
 * outputs entries requested by the user.
 
+
+<div style="page-break-after: always;"></div>
+
 The Sequence Diagram below illustrates the interactions of `Ui` component with the `Logic` component and the user for the `view` command. For detailed implementation of `Logic` class, refer to [Logic](#logic) section.
 
 ![](images/UiSequenceDiagram.png)
 
 > As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
 > command's case, unused arguments are represented as `..` to focus on the used arguments.
+
 
 ### <a name="logic"></a>Logic Component
 
@@ -107,6 +113,8 @@ The Sequence Diagram below illustrates the interactions within the `Logic` compo
 > command's case, unused arguments are represented as `...` to focus on the used arguments. Same reason for `checkExceedBudget` applies.
 > This also applies for the sequence diagrams in the following sections.
 
+<div style="page-break-after: always;"></div>
+
 ### <a name="model"></a>Model Component
 
 The `Model` package consists of three sub-components: `FinanceManager`, `Entry`, and `Budget`.
@@ -123,6 +131,8 @@ The `FinanceManager` component,
 - performs action on the list of `Entry` objects (e.g., add, delete, etc.)
 - depends on the `Ui` component as some action needs confirmation from the user (e.g. For edit, after the user chooses
   the entry to edit, the user needs to provide the fields to be edited.)
+
+<div style="page-break-after: always;"></div>
 
 The `Entry` component,
 
@@ -142,6 +152,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
     - when user want to set budget for a specific category
     - when other parts of the app requires the list of budgets e.g., `Ui` needs the list to print to the user, or
       `FinanceManager` needs to know if the user is nearing their spending limit to notify them.
+
+<div style="page-break-after: always;"></div>
 
 ### <a name="storage"></a>Storage Component
 
