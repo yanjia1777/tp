@@ -27,7 +27,7 @@ found [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=to
 - **Enhancement**: Parser for `edit` function
   - What it does: This enhancement was implemented so that the parser would be the one parsing the required information to the `edit` function. 
     In addition, to enhance the efficiency, a HashMap data structure was used to store the attributes of the new expense to overwrite the old expense.
-  - Justification: This is in an attempt to reduce the coupling as well as to make our program more efficient.
+  - Justification: This is in an attempt to make our code more OOP as well as to make our program more efficient.
   - Highlights: Implementing this part of the code was fun especially since it was an opportunity to try out a new data structure that I 
     have not really tried before. 
 
