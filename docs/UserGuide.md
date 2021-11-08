@@ -481,7 +481,7 @@ I have deleted: Expense | OTHERS | 2021-10-28 | Netflix |-$40.00 | MONTH | Forev
 
 <div style="page-break-after: always;"></div>
 
-## <a name="delete"></a>Deleting all entries: `deleteAll`
+## <a name="deleteAll"></a>Deleting all entries: `deleteAll`
 
 Deletes all existing entries.
 
