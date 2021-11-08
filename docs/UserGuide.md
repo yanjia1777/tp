@@ -124,7 +124,7 @@ Example: 5th Jaunary 2020
 ---
 
 
-:bulb: Notes about the following list of commands:
+Notes about the following list of commands:
 
 - Items in square brackets are optional.
 
@@ -132,20 +132,25 @@ Example: 5th Jaunary 2020
 - Parameters with tags or optional modifiers can be in any order.
 
   e.g. if the command specifies `n/NAME` `a/AMOUNT`, the order `a/AMOUNT` `n/NAME` is also acceptable.
-- If a parameter is expected only once in the command but if you specify it multiple times, only the last occurrence of
-  the parameter will be taken.
 
-  e.g. if you specify `a/10 a/15`, only `a/10` will be taken.
 - Extraneous parameters for commands that do not take in parameters (such as `help`, `budget` and `exit`)
   will be ignored.
 
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
+- Extraneous parameters in between the command and the first tag for commands that take in tag parameters will not be
+  considered if it is not valid.
+
+  e.g. if the command specifies `add oh yummy food income n/wage`, it will be interpreted as `add income n/wage`.
+
+  e.g. if the command specifies `delete hmm income a/15.0 c/1`, it will be interpreted as `delete a/15.0 c/1`, as
+  `delete` is used for both expense and income.
+
 ---
 
 ## <a name="recurringNote"></a>
 
-:bulb: Notes about recurring entries:
+Notes about recurring entries:
 
 - Recurring entries will be recurred on the same day as the `DATE` if the interval is `MONTH`; same day and month if the
   interval is `YEAR`
