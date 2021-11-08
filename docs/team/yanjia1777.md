@@ -13,8 +13,8 @@ for use via a Command Line Interface (CLI).
     The user is able to input the modifiers they wish to include in their viewing of the entries and all entries that match the requirements specified will be shown.
     The user is also able to input how they want the list to be sorted based on either name, amount, date or category, and also whether to sort the list in ascending or descending order.
   - Justification: This feature is essential to the product as it allows the user to know what entries they have in their application and allows them to visualize it as they want via sorting and filtering of these entries.
-  - Highlights: This feature is crucial to the program as it is the feature that will definitely be the most used among the other features. It was challenging to implement as they were many user concerns to take not of as it is the most important function in the application. There factors include:
-    - The default sorting and filtering if fields are omitted.
+  - Highlights: This feature is crucial to the program and is the feature that will be the most used among the other features. It was challenging to implement as they were many user concerns to take note of as it is the most important function in the application. These factors include:
+    - The default sorting and filtering if any fields are omitted.
     - The table is listed out in a clear and concise manner.
     - Net total is calculated at the bottom.
 
@@ -35,7 +35,7 @@ for use via a Command Line Interface (CLI).
   - Justification: This feature improves the product significantly as it allows for the label of all entries to line up with each other, allowing users to view the entries in a much more efficient and clear manner.
   - Highlights: It was challenging to implement as the indentations vary based on the longest entry in the entire list. The indentations could be left indent, middle indent or right indent based on the context of the label to improve the user-experience. The indentation are also done automatically and had to be calculated beforehand before printing of the entries.
   
-- **Code contributed**: [here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=totalCommits&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-25&tabOpen=true&tabType=authorship&tabAuthor=yanjia1777&tabRepo=AY2122S1-CS2113T-W11-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
+- **Code contributed**: [Here](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=totalCommits&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-25&tabOpen=true&tabType=authorship&tabAuthor=yanjia1777&tabRepo=AY2122S1-CS2113T-W11-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
 
 - **Community**:
   - PRs reviewed: [#38](https://github.com/nus-cs2113-AY2122S1/tp/pull/38),
@@ -56,8 +56,8 @@ for use via a Command Line Interface (CLI).
   - Added manual testing portion for view function.
   - Added manual testing potion for deleteAll function.
   
-- - **Contributions to team-based tasks**:
-- Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
-- Identified some bugs to be fixed.
-- Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
-  - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
+- **Contributions to team-based tasks**:
+  - Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
+  - Identified some bugs to be fixed.
+  - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
+    - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
