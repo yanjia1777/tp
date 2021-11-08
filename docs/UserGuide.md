@@ -663,3 +663,16 @@ Please refresh page if table is not rendered properly.
 |exit | `exit` |
 
 ## <a name="faq"></a>Frequently Asked Questions
+
+- Why are users allowed to make recurring entries' `END_DATE` shorter than the `INTERVAL` (e.g., set monthly `Expense`'s 
+`DATE` as `2021-11-04` and `END_DATE` as `2021-11-15`)?
+  - This is so that users can use the `END_DATE` as a reminder to themselves to cancel subscriptions or be aware of the 
+  end of receiving fixed incomes.
+  
+- Why does simply entering `view` show recurring entries that are not added to the first list still shown in the second list,
+but specifying filter options like `view month 12` only show entries that are added to the first list in the second list?
+  - This is because users may have recurring entries that start in the future. Only entering `view` without filter options
+  show recurring entries up to today's date. Thus, if only the entries that are added to the first list are shown in the 
+  second list, recurring entries that have not started yet would never be shown in the second list, and users will not
+  be able to see those that start in the future unless they specify to view those dates. `view` is meant to be a simple tool
+  to view all entries, including recurring entries.
