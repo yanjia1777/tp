@@ -109,7 +109,8 @@ public class Ui {
                 + INDENT + "If no modifiers are specified, it defaults to deleting all entries regardless of type.\n"
                 + SOLID_LINE
                 + "VIEWING ENTRIES\n"
-                + "- Format: view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from STARTDATE [ENDDATE]] [up/ascending]\n"
+                + "- Format: view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from STARTDATE [ENDDATE]]"
+                + "[up/ascending]\n"
                 + INDENT + "View expenses sorted by name, date, amount or category, in ascending or descending order.\n"
                 + INDENT + "View a certain month or year or specific date range.\n"
                 + SOLID_LINE
