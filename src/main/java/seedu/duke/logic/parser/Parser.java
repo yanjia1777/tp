@@ -56,7 +56,6 @@ public class Parser {
     public static final String STRING_END_DATE = "End date of the recurring period (should be after the start date"
             + " but within valid range)\n";
     public static final String ERROR_INVALID_CATNUM = "Please enter a valid category number! c/0 to c/7";
-    public static final String CAT_NUM_OTHERS = "7";
     public static final String ADD_ENTRY = "add";
     public static final String ADD_RECURRING = "addR";
     public static final String DELETE_ENTRY = "delete";
@@ -72,6 +71,40 @@ public class Parser {
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     public static final String SPACE = "\\s+";
+    public static final String AMOUNT_STR_DEFAULT = "0";
+    public static final String MONTH_STR_DEFAULT = "MONTH";
+    public static final String END_DATE_STR_DEFAULT = "2200-12-31";
+    public static final String CAT_NUM_FOOD = "0";
+    public static final String CAT_NUM_ENTERTAINMENT = "1";
+    public static final String CAT_NUM_TRASPORATION = "2";
+    public static final String CAT_NUM_HOUSEHOLD = "3";
+    public static final String CAT_NUM_APPAREL = "4";
+    public static final String CAT_NUM_BEAUTY = "5";
+    public static final String CAT_NUM_GIFT = "6";
+    public static final String CAT_NUM_OTHERS = "7";
+    public static final String CAT_NUM_ALLOWANCE = "0";
+    public static final String CAT_NUM_WAGES = "1";
+    public static final String CAT_NUM_SALARY = "2";
+    public static final String CAT_NUM_INTEREST = "3";
+    public static final String CAT_NUM_INVESTMENT = "4";
+    public static final String CAT_NUM_COMMISSION = "5";
+    public static final String TYPE_NAME = "n";
+    public static final String TYPE_DATE = "d";
+    public static final String TYPE_AMOUNT = "a";
+    public static final String TYPE_CATEGORY = "c";
+    public static final String TYPE_INTERVAL = "i";
+    public static final String TYPE_END_DATE = "e";
+    public static final String INCOME_KEYWORD = "income";
+    public static final String TYPE_NORMAL = "n";
+    public static final String NORMAL_KEYWORD = "normal";
+    public static final String RECURRING_KEYWORD = "recurring";
+    public static final String TYPE_RECURRING = "r";
+    public static final String NAME_KEYWORD = "name";
+    public static final String DATE_KEYWORD = "date";
+    public static final String AMOUNT_KEYWORD = "amount";
+    public static final String CAT_NUM_KEYWORD = "catNum";
+    public static final String END_DATE_KEYWORD = "endDate";
+    public static final String INTERVAL_KEYWORD = "interval";
     protected String command;
     protected String name;
     protected String dateStr;
@@ -110,7 +143,7 @@ public class Parser {
     }
 
     public String parserExtractCommand(String userInput) {
-        return userInput.split(" ", 2)[0];
+        return userInput.split(SPACE, 2)[0];
     }
 
     public int getCurrentTagIndex(String userInput) {
@@ -153,21 +186,21 @@ public class Parser {
 
     private ExpenseCategory setCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
-        case "0":
+        case CAT_NUM_FOOD:
             return ExpenseCategory.FOOD;
-        case "1":
+        case CAT_NUM_ENTERTAINMENT:
             return ExpenseCategory.ENTERTAINMENT;
-        case "2":
+        case CAT_NUM_TRASPORATION:
             return ExpenseCategory.TRANSPORTATION;
-        case "3":
+        case CAT_NUM_HOUSEHOLD:
             return ExpenseCategory.HOUSEHOLD;
-        case "4":
+        case CAT_NUM_APPAREL:
             return ExpenseCategory.APPAREL;
-        case "5":
+        case CAT_NUM_BEAUTY:
             return ExpenseCategory.BEAUTY;
-        case "6":
+        case CAT_NUM_GIFT:
             return ExpenseCategory.GIFT;
-        case "7":
+        case CAT_NUM_OTHERS:
             return ExpenseCategory.OTHERS;
         default:
             throw new MintException(ERROR_INVALID_CATNUM);
@@ -176,21 +209,21 @@ public class Parser {
 
     private IncomeCategory setIncomeCategoryViaCatNum(String catNum) throws MintException {
         switch (catNum) {
-        case "0":
+        case CAT_NUM_ALLOWANCE:
             return IncomeCategory.ALLOWANCE;
-        case "1":
+        case CAT_NUM_WAGES:
             return IncomeCategory.WAGES;
-        case "2":
+        case CAT_NUM_SALARY:
             return IncomeCategory.SALARY;
-        case "3":
+        case CAT_NUM_INTEREST:
             return IncomeCategory.INTEREST;
-        case "4":
+        case CAT_NUM_INVESTMENT:
             return IncomeCategory.INVESTMENT;
-        case "5":
+        case CAT_NUM_COMMISSION:
             return IncomeCategory.COMMISSION;
-        case "6":
+        case CAT_NUM_GIFT:
             return IncomeCategory.GIFT;
-        case "7":
+        case CAT_NUM_OTHERS:
             return IncomeCategory.OTHERS;
         default:
             throw new MintException(ERROR_INVALID_CATNUM);
@@ -199,28 +232,28 @@ public class Parser {
 
     private void setFieldsByTag(String description, String tagType) throws MintException {
         switch (tagType) {
-        case "n":
+        case TYPE_NAME:
             this.name = description;
             break;
-        case "d":
+        case TYPE_DATE:
             this.dateStr = description;
             break;
-        case "a":
+        case TYPE_AMOUNT:
             this.amountStr = description;
             break;
-        case "c":
-            this.catNumStr = description.split(" ", 2)[0];
+        case TYPE_CATEGORY:
+            this.catNumStr = description.split(SPACE, 2)[0];
             this.expenseCategory = setCategoryViaCatNum(catNumStr);
             this.incomeCategory = setIncomeCategoryViaCatNum(catNumStr);
             break;
-        case "i":
+        case TYPE_INTERVAL:
             if (isRecurring) {
                 this.intervalStr = description;
             } else {
                 throw new MintException(MintException.ERROR_INVALID_TAG_ERROR);
             }
             break;
-        case "e":
+        case TYPE_END_DATE:
             if (isRecurring) {
                 this.endDateStr = description;
             } else {
@@ -237,11 +270,11 @@ public class Parser {
     }
 
     private void initAmountStr() {
-        this.amountStr = "0";
+        this.amountStr = AMOUNT_STR_DEFAULT;
     }
 
     private void initIntervalStr() {
-        this.intervalStr = "MONTH";
+        this.intervalStr = MONTH_STR_DEFAULT;
     }
 
     private void initCatNumStr() {
@@ -249,10 +282,11 @@ public class Parser {
     }
 
     private void initEndDateStr() {
-        this.endDateStr = "2200-12-31";
+        this.endDateStr = END_DATE_STR_DEFAULT;
     }
 
     //@@author irvinseet
+
     /**
      * Parse user input based on tags specified and set fields accordingly to the tags.
      * Tags are of format " x/", where x can be any alphabet and there should be a space in front of it.
@@ -320,7 +354,8 @@ public class Parser {
     //@@author yanjia1777
     public void parseType(String userInput) throws MintException {
         parseInputByArguments(userInput);
-        if (argumentsArray.length > 1 && Objects.equals(argumentsArray[1], "income")) {
+        if (argumentsArray.length > 1 && Objects.equals(argumentsArray[1], INCOME_KEYWORD)) {
+
             type = Type.Income;
         } else {
             type = Type.Expense;
@@ -328,7 +363,7 @@ public class Parser {
     }
 
     public Entry checkType() {
-        if (Objects.equals(argumentsArray[1], "income")) {
+        if (Objects.equals(argumentsArray[1], INCOME_KEYWORD)) {
             return createIncomeObject();
         } else {
             return createExpenseObject();
@@ -344,7 +379,7 @@ public class Parser {
     private double amountTo2SF(String amountStr) {
         return Math.round(Double.parseDouble(amountStr) * 100.0) / 100.0;
     }
-    
+
     private Expense createExpenseObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
         amount = amountTo2SF(amountStr);
@@ -352,7 +387,7 @@ public class Parser {
         expenseCategory = ExpenseCategory.values()[catNum];
         return new Expense(name, date, amount, expenseCategory);
     }
-    
+
     //@@author yanjia1777
     private Income createIncomeObject() {
         date = LocalDate.parse(dateStr, dateFormatter);
@@ -366,6 +401,7 @@ public class Parser {
 
     /**
      * Creates a RecurringExpense object by parsing the string form of fields.
+     *
      * @return RecurringExpense object
      * @throws MintException When exception thrown while parsing
      */
@@ -385,6 +421,7 @@ public class Parser {
 
     /**
      * Creates a RecurringIncome object by parsing the string form of fields.
+     *
      * @return RecurringIncome object
      * @throws MintException When exception thrown while parsing
      */
@@ -404,6 +441,7 @@ public class Parser {
 
     /**
      * Prepare to add a normal entry by initializing & parsing fields.
+     *
      * @param userInput User input string
      * @return Command object for adding normal entry
      */
@@ -421,6 +459,7 @@ public class Parser {
 
     /**
      * Prepare to delete a normal entry by initializing, parsing, and identifying fields that user queried.
+     *
      * @param userInput User input string
      * @return Command object for deleting normal entry
      */
@@ -454,8 +493,10 @@ public class Parser {
     }
 
     //@@author pos0414
+
     /**
      * Prepare to edit normal entry by initializing, parsing, and identifying fields that user queried.
+     *
      * @param userInput User input string
      * @return Command object for editing normal entry
      */
@@ -475,6 +516,7 @@ public class Parser {
 
     /**
      * Prepare to add a recurring entry by initializing & parsing fields.
+     *
      * @param userInput User input string
      * @return Command object for adding recurring entry
      */
@@ -495,6 +537,7 @@ public class Parser {
 
     /**
      * Prepare to delete a recurring entry by initializing, parsing, and identifying fields that user queried.
+     *
      * @param userInput User input string
      * @return Command object for deleting recurring entry
      */
@@ -519,6 +562,7 @@ public class Parser {
 
     /**
      * Prepare to edit recurring entry by initializing, parsing, and identifying fields that user queried.
+     *
      * @param userInput User input string
      * @return Command object for editing recurring entry
      */
@@ -552,6 +596,7 @@ public class Parser {
     }
 
     //@@author Yitching
+
     /**
      * Prepares the user input by splitting it into the respective fields to overwrite existing recurring expense.
      *
@@ -572,7 +617,8 @@ public class Parser {
         String intervalStr = interval.toString();
         String catNumStr = String.valueOf(entry.getCategory().ordinal());
         String[] entryFieldsToAdd = {name, dateStr, amountStr, endDateStr, intervalStr, catNumStr};
-        String[] entryFieldKeys = {"name", "date", "amount", "endDate", "interval", "catNum"};
+        String[] entryFieldKeys = {NAME_KEYWORD, DATE_KEYWORD, AMOUNT_KEYWORD,
+            END_DATE_KEYWORD, INTERVAL_KEYWORD, CAT_NUM_KEYWORD};
         HashMap<String, String> entryFields = new HashMap<>();
         for (int index = 0; index < entryFieldsToAdd.length; index++) {
             entryFields.put(entryFieldKeys[index], entryFieldsToAdd[index]);
@@ -594,7 +640,7 @@ public class Parser {
         String dateStr = date.toString();
         String amountStr = String.valueOf(amountTo2SF(Double.toString(amount)));
         String[] entryFieldsToAdd = {name, dateStr, amountStr, catNumStr};
-        String[] entryFieldKeys = {"name", "date", "amount", "catNum"};
+        String[] entryFieldKeys = {NAME_KEYWORD, DATE_KEYWORD, AMOUNT_KEYWORD, CAT_NUM_KEYWORD};
         HashMap<String, String> entryFields = new HashMap<>();
         for (int index = 0; index < entryFieldsToAdd.length; index++) {
             entryFields.put(entryFieldKeys[index], entryFieldsToAdd[index]);
@@ -611,12 +657,12 @@ public class Parser {
      */
     public RecurringEntry convertRecurringEntryToRespectiveTypes(HashMap<String, String> entryFields,
             Type type) throws MintException {
-        String name = entryFields.get("name");
-        String dateStr = entryFields.get("date");
-        String amountStr = entryFields.get("amount");
-        String catNumStr = entryFields.get("catNum");
-        String intervalStr = entryFields.get("interval");
-        String endDateStr = entryFields.get("endDate");
+        String name = entryFields.get(NAME_KEYWORD);
+        String dateStr = entryFields.get(DATE_KEYWORD);
+        String amountStr = entryFields.get(AMOUNT_KEYWORD);
+        String catNumStr = entryFields.get(CAT_NUM_KEYWORD);
+        String intervalStr = entryFields.get(INTERVAL_KEYWORD);
+        String endDateStr = entryFields.get(END_DATE_KEYWORD);
 
         LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
         double amount = amountTo2SF(amountStr);
@@ -641,10 +687,10 @@ public class Parser {
      */
     public Entry convertEntryToRespectiveTypes(HashMap<String, String> entryFields,
             Type type) throws MintException {
-        String name = entryFields.get("name");
-        String dateStr = entryFields.get("date");
-        String amountStr = entryFields.get("amount");
-        String catNumStr = entryFields.get("catNum");
+        String name = entryFields.get(NAME_KEYWORD);
+        String dateStr = entryFields.get(DATE_KEYWORD);
+        String amountStr = entryFields.get(AMOUNT_KEYWORD);
+        String catNumStr = entryFields.get(CAT_NUM_KEYWORD);
 
         LocalDate date = LocalDate.parse(dateStr, ValidityChecker.dateFormatter);
         double amount = amountTo2SF(amountStr);
@@ -662,9 +708,10 @@ public class Parser {
     public Command prepareDeleteAll(String userInput) {
         try {
             parseInputByArguments(userInput);
-            if (Objects.equals(argumentsArray[1], "n") || Objects.equals(argumentsArray[1], "normal")) {
+            if (Objects.equals(argumentsArray[1], TYPE_NORMAL) || Objects.equals(argumentsArray[1], NORMAL_KEYWORD)) {
                 return new DeleteAllCommand(true, false);
-            } else if (Objects.equals(argumentsArray[1], "r") || Objects.equals(argumentsArray[1], "recurring")) {
+            } else if (Objects.equals(argumentsArray[1], TYPE_RECURRING)
+                    || Objects.equals(argumentsArray[1], RECURRING_KEYWORD)) {
                 return new DeleteAllCommand(false, true);
             } else {
                 throw new MintException(MintException.ERROR_NO_DELIMETER);
