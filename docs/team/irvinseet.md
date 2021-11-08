@@ -11,8 +11,6 @@ for use via a Command Line Interface (CLI).
     - What it does: `Budget`: base class which allows user to set spending limit and fetch spending related to
       respective budgets. `BudgetManager` which handles all `Budget`-related actions such as fetching monthly spending
       and limit.
-    - Justification: This feature improves the product significantly for the users as they can set budget for individual
-      categories as well as track the amount of money they spent in respective categories and make informed decisions.
 
 - **New Feature**: Implemented base class for expenses
     - What it does: Basic building block of our app. Each instance stores information about the expense.
@@ -20,8 +18,6 @@ for use via a Command Line Interface (CLI).
 - **New Feature**: Implemented categories' enumeration: `ExpenseCategory` and `IncomeCategory`
     - What it does: Assigned category to entries.
     - Justification: Allow user to easily assign categories to their entry for housekeeping purposes.
-    - Highlights: It also allowed the team to expand on our features such as allowing user to view their entries by
-      category or set budgets for specific categories.
 
 - **New Feature**: Implemented skeleton and formatting of help message in Ui
     - What it does: Prints a summary of all commands available.
@@ -46,7 +42,7 @@ for use via a Command Line Interface (CLI).
 
 - **Enhancement**: Allow users to key in entries
   in [10 different date formats](https://github.com/AY2122S1-CS2113T-W11-2/tp/blob/master/docs/UserGuide.md#acceptable-date-formats)
-    - What it does: User can type in date in any of the 10 given formats and our program can identify it correctly
+    - What it does: User can type in date in any of the 10 given formats and our program can identify it correctly.
     - Justification: Different users have different preference in terms of keying in date, we want to ensure everyone
       can enjoy the app.
 
@@ -68,11 +64,9 @@ for use via a Command Line Interface (CLI).
     - Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
         - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in
           application.
-    - Constantly pushed to enhance user-friendliness of our app.
 
 - **Community**:
     - PR reviewed: [#42](https://github.com/nus-cs2113-AY2122S1/tp/pull/42),
-
     - Reported bugs and suggestions for other teams in the class: [Here](https://github.com/irvinseet/ped/issues)
 
 - **Contributions to the UG**
