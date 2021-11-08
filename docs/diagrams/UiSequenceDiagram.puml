@@ -1,0 +1,45 @@
+@startuml
+
+box Logic
+Participant ":ViewCommand" as ViewCommand
+end box
+
+box Ui
+Participant ":Ui" as Ui
+end box
+
+Actor User
+
+-> ViewCommand : execute(...)
+activate ViewCommand
+
+ViewCommand -> ViewCommand : view(...)
+activate ViewCommand
+ViewCommand -> Ui : printView(entryList:ArrayList<Entry>,...)
+activate Ui
+loop for each entry
+    Ui -> Ui : printViewIndividualEntry(entry:Entry,...)
+    activate Ui
+    Ui -> User : print entry
+    Ui --> Ui
+    deactivate Ui
+end
+Ui --> ViewCommand : indentations[]
+deactivate Ui
+ViewCommand -> Ui : printViewRecurring(entryList:ArrayList<Entry>,...)
+activate Ui
+loop for each recurring entry
+    Ui -> Ui : printViewIndividualEntry(entry:Entry,...)
+    activate Ui
+    Ui -> User : print entry
+    Ui --> Ui
+    deactivate Ui
+end
+Ui --> ViewCommand
+deactivate Ui
+ViewCommand --> ViewCommand
+deactivate ViewCommand
+<-- ViewCommand
+deactivate ViewCommand
+
+@enduml
