@@ -1,0 +1,68 @@
+@startuml
+box Main
+Participant ":Duke" as Duke
+end box
+box Logic
+Participant "parser:Parser" as Parser
+Participant "<<class>>\n:ValidityChecker" as Valid
+Participant "cmd:AddCommand" as DeleteCommand
+end box
+
+box Model
+Participant "e:Income" as Entry2
+Participant "e:Expense" as Entry
+end box
+
+
+activate Duke
+Duke -> Parser : parseCommand("add n/movie a/12")
+activate Parser
+
+Parser -> Parser : prepareAddEntry("add n/movie a/12")
+activate Parser
+Parser -> Parser : parseInputByTags("add n/movie a/12")
+activate Parser
+Parser -> Valid : checkExistenceAndValidityOfTags(parser, "add n/movie a/12")
+activate Valid
+Valid --> Parser : validTags
+deactivate Valid
+
+Parser --> Parser
+deactivate Parser
+alt type == Type.Income
+    Parser -> Parser : createIncomeObject()
+    activate Parser
+    create Entry2
+    Parser -> Entry2 : create
+    activate Entry2
+    Entry2 --> Parser : e
+    deactivate Entry2
+    Parser --> Parser : e
+    deactivate Parser
+else
+    Parser -> Parser : createExpenseObject()
+    activate Parser
+        create Entry
+        Parser -> Entry : create
+        activate Entry
+        Entry --> Parser : e
+        deactivate Entry
+        Parser --> Parser : e
+        deactivate Parser
+end
+activate Parser
+
+
+create DeleteCommand
+Parser -> DeleteCommand : AddCommand(e)
+activate DeleteCommand
+DeleteCommand --> Parser : cmd
+deactivate DeleteCommand
+Parser --> Parser : cmd
+deactivate Parser
+Parser --> Duke : cmd
+
+deactivate Parser
+deactivate DeleteCommand
+
+@enduml

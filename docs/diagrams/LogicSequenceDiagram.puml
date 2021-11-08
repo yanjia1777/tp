@@ -3,23 +3,21 @@ box Main
 Participant ":Duke" as Duke
 end box
 box Ui
-Participant ":Ui" as Ui
+Participant "ui:Ui" as Ui
 end box
 box Logic
 Participant ":Parser" as Parser
-Participant ":ValidityChecker" as Valid
 Participant "cmd:AddCommand" as DeleteCommand
 end box
 
 box Model
-Participant ":NormalFinanceManager" as NormalFinanceManager
-Participant "e:Income" as Entry2
-Participant "e:Expense" as Entry
-Participant ":BudgetManager" as Budget
+Participant "nfm:NormalFinanceManager" as NormalFinanceManager
+Participant "e:Expense" as Entry2
+Participant "bm:BudgetManager" as Budget
 end box
 
 box Storage
-Participant ":NormalListDataManager" as NormalListDataManager
+Participant "nldm:NormalListDataManager" as NormalListDataManager
 end box
 
 activate Duke
@@ -27,38 +25,13 @@ Duke -> Parser : parseCommand("add n/movie a/12")
 activate Parser
 
 Parser -> Parser : prepareAddEntry("add n/movie a/12")
-activate Parser
-Parser -> Parser : parseInputByTags("add n/movie a/12")
-activate Parser
-Parser -> Valid : checkExistenceAndValidityOfTags(parser, "add n/movie a/12")
-activate Valid
-Valid --> Parser : validTags
-deactivate Valid
 
-Parser --> Parser
-deactivate Parser
-alt type == Type.Income
-    Parser -> Parser : createIncomeObject()
     activate Parser
     create Entry2
-    Parser -> Entry2 : create
+    Parser -> Entry2 : createExpenseObject()
     activate Entry2
     Entry2 --> Parser : e
     deactivate Entry2
-    Parser --> Parser : e
-    deactivate Parser
-else
-    Parser -> Parser : createExpenseObject()
-    activate Parser
-        create Entry
-        Parser -> Entry : create
-        activate Entry
-        Entry --> Parser : e
-        deactivate Entry
-        Parser --> Parser : e
-        deactivate Parser
-end
-activate Parser
 
 
 create DeleteCommand
@@ -72,7 +45,7 @@ Parser --> Duke : cmd
 
 deactivate Parser
 
-Duke -> DeleteCommand : execute(...)
+Duke -> DeleteCommand : execute(nfm,..,bm,nldm,..,ui)
 
 activate DeleteCommand
 DeleteCommand -> NormalFinanceManager : addEntry(e)

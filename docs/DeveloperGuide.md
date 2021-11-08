@@ -81,7 +81,7 @@ How the `Logic` component works:
 
 1. When `Logic` is called upon to parse a command, it uses `Parser` class to parse the user command.
 2. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its 
-   subclasses e.g.,`AddRecurringCommand`) by parsing the arguments and verifying through `ValidityChecker` class.
+   subclasses e.g.,`AddCommand`) by parsing the arguments.
 3. `Parser` encapsulates the details of the query as an `Entry` object from `Model`.
 4. `Parser` returns a `Command` object, which is executed by `Main`.
 5. The `Command` can communicate with the `Model` when it is executed 
@@ -90,9 +90,12 @@ How the `Logic` component works:
    (e.g. to add a recurring entry)
 
 The Sequence Diagram below illustrates the interactions within the `Logic` component for the 
-`parseCommand("add n/movie a/12")` API call.
+`parseCommand("add n/movie a/12")` API call. For detailed implementation of `Parser` class, refer to [Implementation](#implementation) section.
 
-![](images/LogicSequenceDiagram.png)
+![](images/CaptureLogicSequence.png)
+
+> As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
+> command's case, unused arguments are represented as `..` to focus on the used arguments.
 
 ### <a name="model"></a>Model Component
 
@@ -165,6 +168,24 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
    the `DataManagerActions` class.
 
 ## <a name="implementation"></a>Implementation
+
+### Parser
+
+The Sequence Diagram below illustrates the detailed interactions within the `Logic` component, focusing on `Parser` class,
+for the `parseCommand("add n/movie a/12")` API call.
+
+![](images/CaptureParserSequence.png)
+
+When `parseCommand("add n/movie a/12")` is called,
+
+1. The `Parser` prepares to return a `Command` object (more precisely, an object of one of its
+   subclasses e.g.,`AddCommand`) by parsing the arguments.
+2. Parsed fields (e.g., `name`, `amount`) are checked if they are valid through `ValidityChecker` class's static methods.
+3. If the parsed `type` is `Type.Income`, it creates an `Income` object based on the parsed fields.
+4. Else, which means the parsed `type` is `Type.Expense`, it creates an `Expense` object based on the parsed fields.
+>If the command is related to `RecurringEntry` (e.g.,`AddRecurringCommand`), `RecurringIncome` object is created for `Type.Income`,
+> and `RecurringExpense` object is created for `Type.Expense`.
+5. The `Command` object is created, and returned to the `Duke` class.
 
 ### BudgetManager
 
