@@ -85,6 +85,7 @@ The Sequence Diagram below illustrates the interactions of `Ui` component with t
 > As the `execute` method of `Duke` class takes in 7 arguments but only some are used in this
 > command's case, unused arguments are represented as `..` to focus on the used arguments.
 
+<div style="page-break-after: always;"></div>
 
 ### <a name="logic"></a>Logic Component
 
@@ -189,6 +190,8 @@ The `Budget` package consists of a `BudgetManager` and the `Budget`'s each of th
    `BudgetListDataManager`, `RecurringListDataManager` and `NormalListDataManager`. All of these classes inherit from
    the `DataManagerActions` class.
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="implementation"></a>Implementation
 
 ### Parser
@@ -270,6 +273,8 @@ also meant to make the live updating work, we had to deal with 7 commands: `add`
 ### <a name="value"></a>Value proposition
 
 A smart and simple way to keep track of your expenses
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="stories"></a>User Stories
 
