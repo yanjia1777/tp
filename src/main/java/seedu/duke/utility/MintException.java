@@ -14,7 +14,8 @@ public class MintException extends Exception {
     public static final String ERROR_INDEX_INVALID_NUMBER = "Please enter a valid number.";
     public static final String ERROR_INDEX_OUT_OF_BOUND = "Please enter a number between "
             + "1 and total number of items listed.";
-    public static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount!";
+    public static final String ERROR_INVALID_AMOUNT = "Please enter a valid amount! (Valid non-negative number below 1 "
+    + " million (after automatically rounding to 2s.f, no negative signs";
     public static final String ERROR_INVALID_DATE = "Please enter a valid date!";
     public static final String ERROR_INVALID_END_DATE = "End date must be after start date.";
     public static final String ERROR_INVALID_INTERVAL = "Please enter valid interval: MONTH, YEAR";
@@ -27,7 +28,8 @@ public class MintException extends Exception {
 
     public static final String ERROR_MISSING_TAG_TYPE = "\"/\" is strictly used for tagging purposes ONLY. "
             + "Please specify tag type, e.g. \"n/\"";
-    public static final String ERROR_AMOUNT_TOO_LARGE = "Please enter an amount less than or equal to 1 million!";
+    public static final String ERROR_AMOUNT_TOO_LARGE = "Please enter an amount below 1 million! (after automatically "
+            + "rounding to 2s.f.";
     public static final String ERROR_INVALID_FORWARD_SLASH = "\"/\" is strictly used for tagging purposes ONLY. "
             + "e.g. n/name or a/10";
     public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
