@@ -244,7 +244,8 @@ I've added: Income  | OTHERS | 2021-10-10 | salary | $10,000.00 | MONTH | Foreve
 
 ## <a name="view"></a>Viewing entries: `view`
 
-Shows a list of all the entries, each with the associated `NAME`, `DATE`, and `AMOUNT`.
+Shows a list of all the entries, each with the associated `NAME`, `CATEGORY_NUMBER`, `DATE`, and `AMOUNT` 
+(`INTERVAL` and `END_DATE` also for recurring entries.) 
 
 Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from STARTDATE [ENDDATE]] [up/ascending]`
 
@@ -266,9 +267,9 @@ Format: `view [income] [expense] [by SORTTYPE] [month MONTH] [year YEAR] [from S
       addition will be based on.
     - If no date options are specified correctly, it will default to viewing recurring entries up to current date.
     - There will be a separate list at the bottom to show the original recurring entries.
-        - If neither date options nor expense/income options are specified, the separate list will show all recurring
+        - If neither date options nor `[expense]`/`[income]` options are specified, the separate list will show all recurring
           entries.
-        - If expense/income options are specified but not date options, the separate list will show applicable recurring
+        - If `[expense]`/`[income]` options are specified but not date options, the separate list will show applicable recurring
           entries, where some may not have been added to the entries' list.
         - If date options are specified correctly, the separate list will only show recurring entries that were added to
           the entries' list.
@@ -672,11 +673,19 @@ Please refresh page if table is not rendered properly.
 `DATE` as `2021-11-04` and `END_DATE` as `2021-11-15`)?
   - This is so that users can use the `END_DATE` as a reminder to themselves to cancel subscriptions or be aware of the 
   end of receiving fixed incomes.
+
+- Why does simply entering `view` without date options show all the normal entries for  recurring entries only up to today's date in the entries' list?
+  - This is because if users do not specify the `END_DATE`, default is set to `2200-12-31`(forever). Thus, if we show all the recurring entries that are added,
+  recurring entries with `END_DATE` set as forever will show all recurring until `2200-12-31` which would hinder the users from viewing important, recent entries.
   
-- Why does simply entering `view` show recurring entries that are not added to the first list still shown in the second list,
-but specifying filter options like `view month 12` only show entries that are added to the first list in the second list?
+- Why does simply entering `view` show recurring entries that are not added to the entries' list still shown in the separate list,
+but specifying filter options like `view month 12` only show entries that are added to the entries' list in the separate list?
   - This is because users may have recurring entries that start in the future. Only entering `view` without filter options
-  show recurring entries up to today's date. Thus, if only the entries that are added to the first list are shown in the 
-  second list, recurring entries that have not started yet would never be shown in the second list, and users will not
+  show recurring entries up to today's date. Thus, if only the entries that are added to the entries' list are shown in the 
+  separate list, recurring entries that have not started yet would never be shown in the separate list, and users will not
   be able to see those that start in the future unless they specify to view those dates. `view` is meant to be a simple tool
   to view all entries, including recurring entries.
+
+![](images/FAQRecurring.PNG)
+This image explains what the entries' list and separate list indicate.
+  
