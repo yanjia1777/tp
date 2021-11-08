@@ -202,7 +202,7 @@ Aspect: how to check whether user exceeded budget
     - Pros: Easy to implement. Less coupling of components.
     - Cons: More LOC and slower runtime.
 
-- Option 2 2: instantly updates the budget's monthly spending when user `add`, `delete` or `edit` (recurring)
+- Option 2: instantly updates the budget's monthly spending when user `add`, `delete` or `edit` (recurring)
   entries.
     - Pros: Faster runtime and more responsive warning messages (such as when user `edit` the `Entry` to an overspent
       budget.)
