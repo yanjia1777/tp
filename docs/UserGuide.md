@@ -42,6 +42,8 @@ step-by-step-instructions.
 - [Command Summary](#command-summary)
 - [Frequently Asked Questions](#faq)
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="quickStart"></a>Quick Start
 
 > Before you get started, ensure that you have Java 11 or above installed in your Computer. Once that is done, follow
@@ -200,6 +202,8 @@ Examples:
 Shows a list of possible user commands
 
 Format: `help`
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="add"></a>Adding entries: `add`
 
