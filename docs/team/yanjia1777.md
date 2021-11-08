@@ -52,6 +52,12 @@ for use via a Command Line Interface (CLI).
 - **Contributions to the DG**
   - Added documentation for the Ui component under the Design section.
     - Added brief explanation of the Ui component.
-    - Added the sequence diagrams for the Ui component.
+    - Added the class and sequence diagrams for the Ui component.
   - Added manual testing portion for view function.
   - Added manual testing potion for deleteAll function.
+  
+- - **Contributions to team-based tasks**:
+- Gave inputs on the general direction during ideation phases (V1.0, V2.0, V2.1).
+- Identified some bugs to be fixed.
+- Updated User Guide (UG) and Developer Guide (DG) documentation that were not specific to any feature:
+  - Reviewed and updated overall User Guide and fixed inconsistencies between UG and error messages in application.
