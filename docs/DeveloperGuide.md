@@ -8,7 +8,7 @@
     - [Ui Component](#text-ui)
     - [Logic Component](#logic)
     - [Model Component](#model)
-        - [Finance Component](#finance)
+        - [FinanceManager and Entry Components](#finance)
         - [Budget Component](#budget)
     - [Storage Component](#storage)
 - [Implementation](#implementation)
@@ -101,7 +101,7 @@ The Sequence Diagram below illustrates the interactions within the `Logic` compo
 
 The `Model` package consists of three sub-components: `FinanceManager`, `Entry`, and `Budget`.
 
-##### <a name="finance"></a>Finance and Entry Components
+##### <a name="finance"></a>FinanceManager and Entry Components
 
 ![](images/Finance.png)
 
