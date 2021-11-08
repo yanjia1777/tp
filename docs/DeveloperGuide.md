@@ -866,22 +866,22 @@ A smart and simple way to keep track of your expenses
 3. **Test case**: `set c/0 a/100`, then `add n/haidilao c/0 a/80.01`.
     - First, key in `set c/0 a/100`.
 
-    Expected:
-    - A message to show that specified budget is successfully set to amount specified.
+        Expected:
+        - A message to show that specified budget is successfully set to amount specified.
+    
+        ```
+        Budget for FOOD set to $100.00
+        ```
 
-    ```
-    Budget for FOOD set to $100.00
-    ```
+    - Then, key in `add n/haidilao c/0 a/80.01`
 
-        - Then, key in `add n/haidilao c/0 a/80.01`
-
-    Expected:
-    - A message warning user to slow down their spending, since the threshold is 80% of the limit set.
-
-    ```
-    I've added: Expense | FOOD | 2021-11-07 | haidilao | $80.01 Slow down, you've set aside $100.00 for FOOD, but
-    you already spent $80.01.
-    ```
+        Expected:
+        - A message warning user to slow down their spending, since the threshold is 80% of the limit set.
+    
+        ```
+        I've added: Expense | FOOD | 2021-11-07 | haidilao | $80.01 Slow down, you've set aside $100.00 for FOOD, but
+        you already spent $80.01.
+        ```
 
 ### <a name="View-budget"></a>Viewing budget
 
@@ -892,28 +892,28 @@ A smart and simple way to keep track of your expenses
 2. **Test case**: `set c/0 a/100`, then `budget`.
     - First, key in `set c/0 a/100`.
 
-    Expected:
-    - A message to show that specified budget is successfully set to amount specified.
-
-    ```
-    Budget for FOOD set to $100.00
-    ```
+        Expected:
+        - A message to show that specified budget is successfully set to amount specified.
+    
+        ```
+        Budget for FOOD set to $100.00
+        ```
 
     - Then, key in `budget`
 
-    Expected:
-    - A list of budgets will be printed.
-    
-    ```
-    Here is the budget for NOVEMBER 2021
-       Category    | Amount | Budget  | Percentage
-         FOOD      |  $0.00 / $100.00 | 
-    ENTERTAINMENT  |  $0.00 / Not set | 
-    TRANSPORTATION |  $0.00 / Not set | 
-      HOUSEHOLD    |  $0.00 / Not set | 
-       APPAREL     |  $0.00 / Not set | 
-        BEAUTY     |  $0.00 / Not set | 
-         GIFT      |  $0.00 / Not set | 
-        OTHERS     | $80.01 / Not set | 
-    ```
+        Expected:
+        - A list of budgets will be printed.
+        
+        ```
+        Here is the budget for NOVEMBER 2021
+           Category    | Amount | Budget  | Percentage
+             FOOD      |  $0.00 / $100.00 | 
+        ENTERTAINMENT  |  $0.00 / Not set | 
+        TRANSPORTATION |  $0.00 / Not set | 
+          HOUSEHOLD    |  $0.00 / Not set | 
+           APPAREL     |  $0.00 / Not set | 
+            BEAUTY     |  $0.00 / Not set | 
+             GIFT      |  $0.00 / Not set | 
+            OTHERS     | $80.01 / Not set | 
+        ```
    
