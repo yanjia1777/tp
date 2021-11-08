@@ -140,6 +140,8 @@ Note:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="features"></a>Features
 
 ---
@@ -197,13 +199,15 @@ Examples:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="help"></a>Viewing help: `help`
 
 Shows a list of possible user commands
 
 Format: `help`
 
-<div style="page-break-after: always;"></div>
+
 
 ## <a name="add"></a>Adding entries: `add`
 
@@ -233,6 +237,8 @@ add income n/Sales a/34 d/2021-02-19 c/1
 I've added: Income  | WAGES | 2021-02-19 | Sales | $34.00
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## <a name="addR"></a>Adding Recurring Entries: `addR`
 
 Adds an expense or income to your tracker
@@ -259,6 +265,8 @@ I've added: Expense | APPAREL | 2021-10-29 | phone bills |-$5.00 | YEAR | 2023-1
 addR income a/10000 n/salary d/2021-10-10 i/mOnTh
 I've added: Income  | OTHERS | 2021-10-10 | salary | $10,000.00 | MONTH | Forever :D
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## <a name="view"></a>Viewing entries: `view`
 
@@ -404,6 +412,8 @@ Type "y" if yes. Type "n" if not.
 y
 I have deleted: Expense  | OTHERS | 2012-09-21 | Textbook | $40.00
 ```
+
+<div style="page-break-after: always;"></div>
 
 - If user query matches more than 1 `Expense` or `Income` in the list
 
@@ -591,6 +601,8 @@ What would you like to edit?
 n/NETFLIX
 Got it! I will update the fields accordingly!
 ```
+
+<div style="page-break-after: always;"></div>
 
 - If user query matches more than 1 `Expense` or `Income` in the list
 
