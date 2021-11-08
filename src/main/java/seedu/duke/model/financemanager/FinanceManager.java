@@ -5,20 +5,21 @@ import seedu.duke.model.entries.Entry;
 import seedu.duke.logic.parser.Parser;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
+/**
+ * Class that deals with operations on entries. Super class of NormalFinanceManger and RecurringFinanceManager.
+ * Contains common method of these two classes.
+ */
 public abstract class FinanceManager {
     public static final String STRING_PROMPT_EDIT = "What would you like to edit? "
             + "Type the tag and what you want to change e.g. a/10";
-    public static final String NAME_SEPARATOR = "n/";
-    public static final String DATE_SEPARATOR = "d/";
-    public static final String AMOUNT_SEPARATOR = "a/";
+    public static final String NAME_TAG = "n/";
+    public static final String DATE_TAG = "d/";
+    public static final String AMOUNT_TAG = "a/";
+    public static final String CATEGORY_TAG = "c/";
     public static final String userTagRaw = "(.*)\\s[a-z]/(.*)";
-    public static final int LENGTH_OF_SEPARATOR = 2;
-    public static final String ERROR_INVALID_DESCRIPTION = "Invalid description entered! Unable to edit expense.";
-    public static final String CATEGORY_SEPARATOR = "c/";
+    public static final int LENGTH_OF_TAG = 2;
     public static final String BLANK = "";
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public void deleteEntry(Entry entry) {
 
@@ -115,11 +116,11 @@ public abstract class FinanceManager {
      */
     protected String nonEmptyNewDescription(String word) throws MintException {
         String description;
-        String newDescription = word.substring(word.indexOf(NAME_SEPARATOR) + LENGTH_OF_SEPARATOR);
+        String newDescription = word.substring(word.indexOf(NAME_TAG) + LENGTH_OF_TAG);
         if (!newDescription.trim().equalsIgnoreCase(BLANK)) {
             description = newDescription.trim();
         } else {
-            throw new MintException(ERROR_INVALID_DESCRIPTION);
+            throw new MintException(MintException.ERROR_INVALID_DESCRIPTION);
         }
         return description;
     }

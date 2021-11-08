@@ -10,6 +10,9 @@ import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.ui.Ui;
 
 //@@author pos0414
+/**
+ * Super class of all the command classes.
+ */
 public abstract class Command {
     public abstract void execute(NormalFinanceManager normalFinanceManager,
             RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
