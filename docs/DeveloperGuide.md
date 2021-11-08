@@ -35,9 +35,9 @@
 - Inspiration for App Idea and OOP Structure:
 - Inspiration for User Guide and Developer Guide: AddressBook (Level 2) 
 
-  https://se-education.org/addressbook-level3/DeveloperGuide.html 
+  [https://se-education.org/addressbook-level3/DeveloperGuide.html](https://se-education.org/addressbook-level3/DeveloperGuide.html ) 
 
-  https://se-education.org/addressbook-level3/UserGuide.html
+  [https://se-education.org/addressbook-level3/UserGuide.html](https://se-education.org/addressbook-level3/UserGuide.html)
 
 ## <a name="design"></a>Design
 
