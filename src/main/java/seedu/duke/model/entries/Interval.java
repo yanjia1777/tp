@@ -3,6 +3,10 @@ package seedu.duke.model.entries;
 import seedu.duke.utility.MintException;
 
 //@@author pos0414
+
+/**
+ * Enumeration for available intervals of recurring entries (either month or year).
+ */
 public enum Interval {
     MONTH("MONTH"),
     YEAR("YEAR");

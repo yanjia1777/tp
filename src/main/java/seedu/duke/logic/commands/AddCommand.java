@@ -1,6 +1,5 @@
 package seedu.duke.logic.commands;
 
-
 import seedu.duke.model.budget.BudgetManager;
 import seedu.duke.model.entries.Entry;
 import seedu.duke.utility.MintException;
@@ -13,6 +12,10 @@ import seedu.duke.storage.RecurringListDataManager;
 import seedu.duke.ui.Ui;
 
 //@@author pos0414
+
+/**
+ * Command class used for adding a normal Entry to the list.
+ */
 public class AddCommand extends Command {
     private final Entry entry;
 
@@ -20,6 +23,18 @@ public class AddCommand extends Command {
         this.entry = entry;
     }
 
+    /**
+     * Adds a normal Entry to the list and saves the data to local data file.
+     * Checks if the added entry makes it go over spending limit, and print the outcome of addition.
+     * @param normalFinanceManager Used to add the entry to the list
+     * @param recurringFinanceManager Not used here, for general use in command classes
+     * @param budgetManager Used to check the budget
+     * @param normalListDataManager Used to save data of the added entry
+     * @param dataManagerActions Not used here, for general use in command classes
+     * @param recurringListDataManager Not used here, for general use in command classes
+     * @param budgetDataManager Not used here, for general use in command classes
+     * @param ui User interaction point
+     */
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
             RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,

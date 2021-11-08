@@ -15,6 +15,9 @@ import seedu.duke.ui.Ui;
 import java.util.ArrayList;
 
 //@@author pos0414
+/**
+ * Command class used for deleting a recurring entry from the list.
+ */
 public class DeleteRecurringCommand extends Command {
     private final Entry query;
     private final ArrayList<String> tags;
@@ -25,6 +28,19 @@ public class DeleteRecurringCommand extends Command {
         this.tags = tags;
     }
 
+    /**
+     * Lets the user choose a recurring entry to delete by indicating fields. If an entry is chosen,
+     * it deletes that recurring entry from the list and deletes the data from the local data file.
+     * Prints the outcome of deletion.
+     * @param normalFinanceManager Not used here, for general use in command classes
+     * @param recurringFinanceManager Used to delete the recurring entry from the list
+     * @param budgetManager Not used here, for general use in command classes
+     * @param normalListDataManager Used to delete the entry data from local data file
+     * @param dataManagerActions Not used here, for general use in command classes
+     * @param recurringListDataManager Used to delete the recurring entry data from local data file
+     * @param budgetDataManager Not used here, for general use in command classes
+     * @param ui User interaction point
+     */
     @Override
     public void execute(NormalFinanceManager normalFinanceManager,
             RecurringFinanceManager recurringFinanceManager, BudgetManager budgetManager,
